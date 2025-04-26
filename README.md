@@ -5,3 +5,5 @@ docker compose up --build
 
 
 A collection com os endpoints de teste estão no projeto. O arquivo se chama collection-g10-auth-endpoints.json
+
+Importe o arquivo json para que seja possível testar os endpoints.
