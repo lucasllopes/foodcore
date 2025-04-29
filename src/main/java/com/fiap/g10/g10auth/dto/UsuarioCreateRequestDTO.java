@@ -1,11 +1,11 @@
 package com.fiap.g10.g10auth.dto;
 
-import com.fiap.g10.g10auth.entity.TipoUsuario;
+import com.fiap.g10.g10auth.persistence.entity.TipoUsuario;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record UsuarioRequestDTO(
+public record UsuarioCreateRequestDTO(
         @NotBlank(message = "Nome é obrigatório")
         String nome,
 
@@ -36,9 +36,10 @@ public record UsuarioRequestDTO(
         @NotBlank(message = "Cidade é obrigatória")
         String cidade,
 
-        @NotBlank(message = "Estado é obrigatório")
-        String estado,
-
         @NotBlank(message = "CEP é obrigatório")
-        String cep
+        String cep,
+
+        @NotBlank(message = "Estado é obrigatório")
+        String estado
+
 ) {}

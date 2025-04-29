@@ -22,7 +22,7 @@ public class ExceptionHandlerController {
 
     @ExceptionHandler(DadoNaoEncontradoException.class)
     public ResponseEntity<MensagemErroDTO> tratarDadoNaoEncontrado(DadoNaoEncontradoException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MensagemErroDTO(ex.getMessage()));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MensagemErroDTO(ex.getMessage()));
     }
 
     @ExceptionHandler(SenhaIncorretaException.class)

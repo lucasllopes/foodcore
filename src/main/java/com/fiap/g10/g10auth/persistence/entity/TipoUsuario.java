@@ -1,4 +1,4 @@
-package com.fiap.g10.g10auth.entity;
+package com.fiap.g10.g10auth.persistence.entity;
 
 public enum TipoUsuario {
     CLIENTE("Cliente"),

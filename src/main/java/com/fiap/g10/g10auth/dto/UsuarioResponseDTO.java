@@ -1,6 +1,6 @@
 package com.fiap.g10.g10auth.dto;
 
-import com.fiap.g10.g10auth.entity.TipoUsuario;
+import com.fiap.g10.g10auth.persistence.entity.TipoUsuario;
 
 public record UsuarioResponseDTO(
         Long id,
@@ -12,5 +12,7 @@ public record UsuarioResponseDTO(
         String numero,
         String complemento,
         String bairro,
-        String cep
+        String cep,
+        String estado,
+        String cidade
 ) {}
