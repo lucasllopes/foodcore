@@ -2,14 +2,16 @@ package com.fiap.g10.g10auth.persistence.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "usuario")
 @Getter
 @Setter
-@Table(name = "usuario")
+@NoArgsConstructor
 public class UsuarioEntity {
 
     @Id
@@ -25,11 +27,7 @@ public class UsuarioEntity {
     @Enumerated(EnumType.STRING)
     private TipoUsuario tipo;
 
-    private String logradouro;
-    private String numero;
-    private String complemento;
-    private String bairro;
-    private String cep;
-    private String estado;
-    private String cidade;
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private EnderecoEntity endereco;
+
 }

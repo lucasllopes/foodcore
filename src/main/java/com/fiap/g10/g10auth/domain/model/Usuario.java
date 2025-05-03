@@ -17,16 +17,11 @@ public class Usuario {
     private String login;
     private String senha;
     private LocalDateTime dataUltimaAlteracao;
-    private String logradouro;
-    private String numero;
-    private String complemento;
-    private String bairro;
-    private String cep;
-    private String cidade;
-    private String estado;
+    private Endereco endereco;
     private TipoUsuario tipo;
 
-    public Usuario() {
+    private Usuario() {
+
     }
 
     public static Usuario novoUsuario(Long id, String senhaCodificada, UsuarioCreateRequestDTO dto) {
@@ -37,13 +32,7 @@ public class Usuario {
         usuario.login = dto.login();
         usuario.senha = senhaCodificada;
         usuario.tipo = dto.tipo();
-        usuario.logradouro = dto.logradouro();
-        usuario.numero = dto.numero();
-        usuario.complemento = dto.complemento();
-        usuario.bairro = dto.bairro();
-        usuario.cep = dto.cep();
-        usuario.cidade = dto.cidade();
-        usuario.estado = dto.estado();
+        usuario.endereco = Endereco.novoEndereco(dto);
         usuario.dataUltimaAlteracao = LocalDateTime.now();
         return usuario;
     }
@@ -58,15 +47,14 @@ public class Usuario {
         this.nome = dto.nome();
         this.email = dto.email();
         this.tipo = dto.tipo();
-        this.logradouro = dto.logradouro();
-        this.numero = dto.numero();
-        this.complemento = dto.complemento();
-        this.bairro = dto.bairro();
-        this.cep = dto.cep();
-        this.cidade = dto.cidade();
-        this.estado = dto.estado();
+
+        if (this.endereco != null) {
+            this.endereco.atualizarDados(dto);
+        }
+
         this.dataUltimaAlteracao = LocalDateTime.now();
     }
+
 
     public static Usuario reconstruirUsuario(UsuarioEntity entity) {
         Usuario usuario = new Usuario();
@@ -76,14 +64,9 @@ public class Usuario {
         usuario.login = entity.getLogin();
         usuario.senha = entity.getSenha();
         usuario.tipo = entity.getTipo();
-        usuario.logradouro = entity.getLogradouro();
-        usuario.numero = entity.getNumero();
-        usuario.complemento = entity.getComplemento();
-        usuario.bairro = entity.getBairro();
-        usuario.cep = entity.getCep();
-        usuario.cidade = entity.getCidade();
-        usuario.estado = entity.getEstado();
+        usuario.endereco = Endereco.reconstruirEndereco(entity.getEndereco());
         usuario.dataUltimaAlteracao = entity.getDataUltimaAlteracao();
         return usuario;
     }
+
 }
