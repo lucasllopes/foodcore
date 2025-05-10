@@ -30,9 +30,8 @@ public class Usuario {
 
     }
 
-    public static Usuario novoUsuario(Long id, String senhaCodificada, UsuarioCreateRequestDTO dto) {
+    public static Usuario novoUsuario(String senhaCodificada, UsuarioCreateRequestDTO dto) {
         Usuario usuario = new Usuario();
-        usuario.id = id;
         usuario.nome = dto.nome();
         usuario.email = dto.email();
         usuario.login = dto.login();

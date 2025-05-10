@@ -34,7 +34,7 @@ public class UsuarioController {
 
     @GetMapping
     public ResponseEntity<Page<UsuarioResponseDTO>> listarUsuarios(Pageable pageable) {
-        logger.info("Request para /usuarios -> GET TESTE");
+        logger.info("Request para /usuarios -> GET");
         Page<UsuarioResponseDTO> usuarios = usuarioService.listarUsuarioPaginado(pageable);
         return ResponseEntity.ok(usuarios);
     }

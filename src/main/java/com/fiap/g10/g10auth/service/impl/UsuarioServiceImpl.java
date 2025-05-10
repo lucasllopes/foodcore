@@ -50,7 +50,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         validarDuplicidadeParaCriacao(dto);
 
         String senhaCriptografada = passwordEncoder.encode(dto.senha());
-        Usuario usuario = UsuarioConverter.fromCreateDto(null, senhaCriptografada, dto);
+        Usuario usuario = UsuarioConverter.fromCreateDto(senhaCriptografada, dto);
 
         UsuarioEntity salvo = usuarioRepository.save(UsuarioConverter.toEntity(usuario));
         return UsuarioConverter.toResponseDTO(UsuarioConverter.toDomain(salvo));

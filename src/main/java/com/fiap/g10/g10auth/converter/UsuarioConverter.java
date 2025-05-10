@@ -9,8 +9,8 @@ import com.fiap.g10.g10auth.persistence.entity.UsuarioEntity;
 
 public class UsuarioConverter {
 
-    public static Usuario fromCreateDto(Long id, String senhaCodificada, UsuarioCreateRequestDTO dto) {
-        return Usuario.novoUsuario(id, senhaCodificada, dto);
+    public static Usuario fromCreateDto(String senhaCodificada, UsuarioCreateRequestDTO dto) {
+        return Usuario.novoUsuario(senhaCodificada, dto);
     }
 
     public static Usuario toDomain(UsuarioEntity entity) {
