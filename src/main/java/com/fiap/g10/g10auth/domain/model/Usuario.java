@@ -4,9 +4,15 @@ import com.fiap.g10.g10auth.dto.UsuarioCreateRequestDTO;
 import com.fiap.g10.g10auth.dto.UsuarioUpdateRequestDTO;
 import com.fiap.g10.g10auth.persistence.entity.TipoUsuario;
 import com.fiap.g10.g10auth.persistence.entity.UsuarioEntity;
+import lombok.Data;
 import lombok.Getter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @Getter
 public class Usuario {
@@ -68,5 +74,5 @@ public class Usuario {
         usuario.dataUltimaAlteracao = entity.getDataUltimaAlteracao();
         return usuario;
     }
-
 }
+

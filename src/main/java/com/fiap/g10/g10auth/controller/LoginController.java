@@ -1,14 +1,19 @@
 package com.fiap.g10.g10auth.controller;
 
+import com.fiap.g10.g10auth.domain.model.Usuario;
 import com.fiap.g10.g10auth.dto.LoginRequest;
-import com.fiap.g10.g10auth.service.LoginService;
-import com.fiap.g10.g10auth.service.impl.LoginServiceImpl;
+import com.fiap.g10.g10auth.infrastructure.UsuarioDetailsAdapter;
+import com.fiap.g10.g10auth.service.TokenService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/login")
@@ -16,21 +21,26 @@ public class LoginController {
 
     private final static Logger logger = LoggerFactory.getLogger(LoginController.class);
 
-    private final LoginService loginService;
+    private final TokenService tokenService;
 
-    public LoginController(LoginServiceImpl loginService) {
-        this.loginService = loginService;
+    private final AuthenticationManager authenticationManager;
+
+    public LoginController(TokenService tokenService, AuthenticationManager authenticationManager) {
+        this.tokenService = tokenService;
+        this.authenticationManager = authenticationManager;
     }
 
     @PostMapping
     public ResponseEntity<String> login(@RequestBody @Valid LoginRequest request) {
 
-        logger.info("Request para /login -> POST");
+        logger.info("Request para login");
 
-        boolean autenticado = loginService.autenticar(request.login(), request.senha());
+        var usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(request.login(), request.senha());
+        var authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
 
-        return autenticado
-                ? ResponseEntity.ok("Login realizado com sucesso")
-                : ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuário ou senha inválidas");
+        var usuarioDetails = (UsuarioDetailsAdapter) authentication.getPrincipal();
+
+        String token = tokenService.geraToken(usuarioDetails);
+        return ResponseEntity.ok(token);
     }
 }
