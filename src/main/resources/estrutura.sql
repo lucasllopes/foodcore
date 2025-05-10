@@ -1,15 +1,15 @@
 CREATE TABLE IF NOT EXISTS usuario (
-                                       id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                                       id BIGSERIAL PRIMARY KEY,
                                        nome VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     login VARCHAR(50) NOT NULL UNIQUE,
     senha VARCHAR(255) NOT NULL,
-    data_ultima_alteracao DATETIME,
+    data_ultima_alteracao TIMESTAMP,
     tipo VARCHAR(20) NOT NULL
     );
 
 CREATE TABLE IF NOT EXISTS endereco (
-                                        id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                                        id BIGSERIAL PRIMARY KEY,
                                         logradouro VARCHAR(100),
     numero VARCHAR(20),
     complemento VARCHAR(50),
