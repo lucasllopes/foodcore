@@ -2,6 +2,7 @@ package com.fiap.g10.g10auth.infrastructure;
 
 import com.fiap.g10.g10auth.domain.model.Usuario;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -21,7 +22,7 @@ public class UsuarioDetailsAdapter implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(usuario.getTipo());
+        return Collections.singleton(new SimpleGrantedAuthority("ROLE_" + usuario.getTipo().name()));
     }
 
     @Override
