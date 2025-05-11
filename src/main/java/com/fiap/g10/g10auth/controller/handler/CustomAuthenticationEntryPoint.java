@@ -20,12 +20,6 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType("application/json");
 
-//        Map<String, Object> responseBody = new HashMap<>();
-//        responseBody.put("status", HttpServletResponse.SC_UNAUTHORIZED);
-//        responseBody.put("error", "Unauthorized");
-//        responseBody.put("message", "Você precisa estar autenticado para acessar este recurso.");
-//        responseBody.put("path", request.getRequestURI());
-
         AuthErrorResponseDTO responseBody = new AuthErrorResponseDTO(
                 HttpServletResponse.SC_UNAUTHORIZED,
                 "Unauthorized",

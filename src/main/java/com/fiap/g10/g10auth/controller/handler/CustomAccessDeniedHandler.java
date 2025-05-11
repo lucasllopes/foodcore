@@ -20,12 +20,6 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         response.setContentType("application/json");
 
-//        Map<String, Object> responseBody = new HashMap<>();
-//        responseBody.put("status", HttpServletResponse.SC_FORBIDDEN);
-//        responseBody.put("error", "Forbidden");
-//        responseBody.put("message", "Você não tem permissão para acessar este recurso.");
-//        responseBody.put("path", request.getRequestURI());
-
         AuthErrorResponseDTO responseBody = new AuthErrorResponseDTO(
             HttpServletResponse.SC_FORBIDDEN,
             "Forbidden",
