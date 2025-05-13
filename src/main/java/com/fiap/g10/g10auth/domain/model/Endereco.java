@@ -7,6 +7,8 @@ import com.fiap.g10.g10auth.dto.UsuarioUpdateRequestDTO;
 import com.fiap.g10.g10auth.persistence.entity.EnderecoEntity;
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
 public class Endereco {
 
@@ -51,6 +53,13 @@ public class Endereco {
 
         return e;
     }
+
+    public static List<Endereco> reconstruirEndereco(List<EnderecoEntity> entities) {
+        return entities.stream()
+                .map(Endereco::reconstruirEndereco)
+                .toList();
+    }
+
 
     public void atualizarDados(EnderecoUpdateRequestDTO dto) {
         this.logradouro = dto.logradouro();

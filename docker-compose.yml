@@ -11,7 +11,7 @@ services:
     ports:
       - "5433:5432"
     volumes:
-      - dbdata:/var/lib/postgresql/data
+      - foodcore_dbdata:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
@@ -36,7 +36,7 @@ services:
       - app-network
 
 volumes:
-  dbdata:
+  foodcore_dbdata:
 
 networks:
   app-network:
