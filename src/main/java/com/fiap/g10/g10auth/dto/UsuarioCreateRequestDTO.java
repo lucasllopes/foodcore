@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.List;
+
 public record UsuarioCreateRequestDTO(
         @NotBlank(message = "Nome é obrigatório")
         String nome,
@@ -22,24 +24,7 @@ public record UsuarioCreateRequestDTO(
         @NotNull(message = "Tipo de usuário é obrigatório")
         TipoUsuario tipo,
 
-        @NotBlank(message = "Logradouro é obrigatório")
-        String logradouro,
-
-        @NotBlank(message = "Número é obrigatório")
-        String numero,
-
-        String complemento,
-
-        @NotBlank(message = "Bairro é obrigatório")
-        String bairro,
-
-        @NotBlank(message = "Cidade é obrigatória")
-        String cidade,
-
-        @NotBlank(message = "CEP é obrigatório")
-        String cep,
-
-        @NotBlank(message = "Estado é obrigatório")
-        String estado
+        @NotNull(message = "Necessário informar um endereço.")
+        List<EnderecoCreateRequestDTO> enderecos
 
 ) {}

@@ -25,7 +25,12 @@ public class EnderecoEntity {
     private String estado;
     private String cep;
 
-    @OneToOne
-    @JoinColumn(name = "usuario_id", nullable = false, unique = true)
+//    @OneToOne
+//    @JoinColumn(name = "usuario_id", nullable = false, unique = true)
+//    private UsuarioEntity usuario;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id")
     private UsuarioEntity usuario;
+
 }
