@@ -12,11 +12,13 @@ import com.fiap.g10.g10auth.exception.DadoDuplicadoException;
 import com.fiap.g10.g10auth.exception.DadoNaoEncontradoException;
 import com.fiap.g10.g10auth.persistence.repository.UsuarioRepository;
 import com.fiap.g10.g10auth.service.UsuarioService;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+@Transactional
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
 

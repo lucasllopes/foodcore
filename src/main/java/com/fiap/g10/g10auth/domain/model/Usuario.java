@@ -40,7 +40,7 @@ public class Usuario {
         usuario.senha = senhaCodificada;
         usuario.tipo = dto.tipo();
 
-        if (dto.enderecos() != null && !dto.enderecos().isEmpty()) {
+        if (!dto.enderecos().isEmpty()) {
             List<Endereco> enderecos = dto.enderecos()
                     .stream()
                     .map(Endereco::novoEndereco)
@@ -89,6 +89,19 @@ public class Usuario {
 
         usuario.dataUltimaAlteracao = entity.getDataUltimaAlteracao();
         return usuario;
+    }
+
+    public static Usuario reconstruirUsuarioToken(UsuarioEntity entity) {
+        Usuario usuario = new Usuario();
+        usuario.id = entity.getId();
+        usuario.nome = entity.getNome();
+        usuario.email = entity.getEmail();
+        usuario.login = entity.getLogin();
+        usuario.senha = entity.getSenha();
+        usuario.tipo = entity.getTipo();
+        usuario.dataUltimaAlteracao = entity.getDataUltimaAlteracao();
+        return usuario;
+
     }
 }
 

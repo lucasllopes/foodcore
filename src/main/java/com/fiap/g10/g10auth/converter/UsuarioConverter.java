@@ -31,7 +31,7 @@ public class UsuarioConverter {
         entity.setTipo(usuario.getTipo());
         entity.setDataUltimaAlteracao(usuario.getDataUltimaAlteracao());
 
-        if(usuario.getEndereco() != null && !usuario.getEndereco().isEmpty()){
+        if(!usuario.getEndereco().isEmpty()){
             List<EnderecoEntity> enderecoEntities = usuario.getEndereco()
                     .stream()
                     .map(endereco -> {
