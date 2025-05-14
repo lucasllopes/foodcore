@@ -115,7 +115,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         UsuarioEntity usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new DadoNaoEncontradoException("Usuário não encontrado."));
 
-        //usuario.setEndereco(null);
+        usuario.getEnderecos().clear();
         usuarioRepository.save(usuario);
 
         usuarioRepository.delete(usuario);

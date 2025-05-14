@@ -29,9 +29,6 @@ public class UsuarioEntity {
     @Enumerated(EnumType.STRING)
     private TipoUsuario tipo;
 
-//    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-//    private EnderecoEntity endereco;
-
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<EnderecoEntity> enderecos;
 
