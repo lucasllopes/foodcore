@@ -17,6 +17,6 @@ CREATE TABLE IF NOT EXISTS endereco (
     cidade VARCHAR(50),
     estado VARCHAR(50),
     cep VARCHAR(20),
-    usuario_id BIGINT NOT NULL UNIQUE,
+    usuario_id BIGINT NOT NULL,
     CONSTRAINT fk_endereco_usuario FOREIGN KEY (usuario_id) REFERENCES usuario(id) ON DELETE CASCADE
     );

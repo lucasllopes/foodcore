@@ -1,11 +1,13 @@
 package com.fiap.g10.g10auth.persistence.entity;
 
+import com.fiap.g10.g10auth.domain.model.Endereco;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "usuario")
@@ -27,7 +29,7 @@ public class UsuarioEntity {
     @Enumerated(EnumType.STRING)
     private TipoUsuario tipo;
 
-    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private EnderecoEntity endereco;
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<EnderecoEntity> enderecos;
 
 }

@@ -38,7 +38,7 @@ public class FilterToken extends OncePerRequestFilter {
             UsuarioEntity usuarioEntity = usuarioRepository.findByLoginIgnoreCase(login)
                     .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado."));
 
-            Usuario user = Usuario.reconstruirUsuario(usuarioEntity);
+            Usuario user = Usuario.reconstruirUsuarioToken(usuarioEntity);
 
             UsuarioDetailsAdapter usuarioDetailsAdapter = new UsuarioDetailsAdapter(user);
 

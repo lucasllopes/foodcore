@@ -1,5 +1,6 @@
 package com.fiap.g10.g10auth.domain.model;
 
+import com.fiap.g10.g10auth.dto.EnderecoResponseDTO;
 import com.fiap.g10.g10auth.dto.UsuarioCreateRequestDTO;
 import com.fiap.g10.g10auth.dto.UsuarioUpdateRequestDTO;
 import com.fiap.g10.g10auth.persistence.entity.TipoUsuario;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 public class Usuario {
@@ -23,8 +25,8 @@ public class Usuario {
     private String login;
     private String senha;
     private LocalDateTime dataUltimaAlteracao;
-    private Endereco endereco;
     private TipoUsuario tipo;
+    private List<Endereco> endereco;
 
     private Usuario() {
 
@@ -37,7 +39,17 @@ public class Usuario {
         usuario.login = dto.login();
         usuario.senha = senhaCodificada;
         usuario.tipo = dto.tipo();
-        usuario.endereco = Endereco.novoEndereco(dto);
+
+        if (!dto.enderecos().isEmpty()) {
+            List<Endereco> enderecos = dto.enderecos()
+                    .stream()
+                    .map(Endereco::novoEndereco)
+                    .toList();
+
+            usuario.endereco = enderecos;
+        }
+
+
         usuario.dataUltimaAlteracao = LocalDateTime.now();
         return usuario;
     }
@@ -53,8 +65,11 @@ public class Usuario {
         this.email = dto.email();
         this.tipo = dto.tipo();
 
-        if (this.endereco != null) {
-            this.endereco.atualizarDados(dto);
+        if (this.endereco != null && dto.enderecos() != null) {
+            int limite = Math.min(this.endereco.size(), dto.enderecos().size());
+            for (int i = 0; i < limite; i++) {
+                this.endereco.get(i).atualizarDados(dto.enderecos().get(i));
+            }
         }
 
         this.dataUltimaAlteracao = LocalDateTime.now();
@@ -69,9 +84,24 @@ public class Usuario {
         usuario.login = entity.getLogin();
         usuario.senha = entity.getSenha();
         usuario.tipo = entity.getTipo();
-        usuario.endereco = Endereco.reconstruirEndereco(entity.getEndereco());
+
+        usuario.endereco = Endereco.reconstruirEndereco(entity.getEnderecos());
+
         usuario.dataUltimaAlteracao = entity.getDataUltimaAlteracao();
         return usuario;
+    }
+
+    public static Usuario reconstruirUsuarioToken(UsuarioEntity entity) {
+        Usuario usuario = new Usuario();
+        usuario.id = entity.getId();
+        usuario.nome = entity.getNome();
+        usuario.email = entity.getEmail();
+        usuario.login = entity.getLogin();
+        usuario.senha = entity.getSenha();
+        usuario.tipo = entity.getTipo();
+        usuario.dataUltimaAlteracao = entity.getDataUltimaAlteracao();
+        return usuario;
+
     }
 }
 

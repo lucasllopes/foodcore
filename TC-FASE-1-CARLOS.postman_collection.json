@@ -1,0 +1,242 @@
+{
+	"info": {
+		"_postman_id": "ee6153bf-4e29-46c4-b3b6-f441220c000e",
+		"name": "TC-FASE-1-LUCAS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44286552",
+		"_collection_link": "https://carlospaulino-4598971.postman.co/workspace/Carlos-Paulino's-Workspace~37df3764-cc2b-40dc-8e1e-38e630fed7e9/collection/44286552-ee6153bf-4e29-46c4-b3b6-f441220c000e?action=share&source=collection_link&creator=44286552"
+	},
+	"item": [
+		{
+			"name": "get usuario by id",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imluc2VydDQxIiwiZXhwIjoxNzQ3MjU2NDY1fQ.0otrrjz9lZkbZlHuoVJ7SBOb0TqcUiOcACohHBGXiA8",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/usuarios/22",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"22"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get usuarios com paginacao",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imp2aXRvciIsImV4cCI6MTc0NzI1NzkzM30.Ijk2gfN3GNgPvBkvuoNig3ZrmHCjWdFQjCcicW_4aZc",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/usuarios?page=0&size=10&sort=id,DESC",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "10"
+						},
+						{
+							"key": "sort",
+							"value": "id,DESC"
+						},
+						{
+							"key": "token",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "criar usuario",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imluc2VydDM3IiwiZXhwIjoxNzQ3MTk3NDA3fQ.UPWoWRzJtf64GYiIM_elthik-g4f1FHyDIRxMd-TCm0",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"XXXXXXXX MUDOU41\",\r\n    \"email\": \"testeinsert41@email.com\",\r\n    \"login\": \"insert41\",\r\n    \"senha\": \"123\",\r\n    \"tipo\": \"CLIENTE\",\r\n    \"enderecos\": [\r\n        {\r\n            \"logradouro\": \"Rua Nova 41\",\r\n            \"numero\": \"123 41\",\r\n            \"complemento\": \"Apto 41\",\r\n            \"bairro\": \"Centro 41\",\r\n            \"cep\": \"01234-000 41\",\r\n            \"estado\": \"SP\",\r\n            \"cidade\": \"São Paulo\"\r\n        },\r\n                {\r\n            \"logradouro\": \"Rua Nova 41-2\",\r\n            \"numero\": \"123 41-2\",\r\n            \"complemento\": \"Apto 41-2\",\r\n            \"bairro\": \"Centro 41-2\",\r\n            \"cep\": \"01234-000 41-2\",\r\n            \"estado\": \"SP\",\r\n            \"cidade\": \"São Paulo\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/usuarios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "atualizar usuario",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imluc2VydDQxIiwiZXhwIjoxNzQ3MjU2NDY1fQ.0otrrjz9lZkbZlHuoVJ7SBOb0TqcUiOcACohHBGXiA8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n            \"nome\": \"XXXXXXXX MUDOU41 MUDOU\",\r\n            \"email\": \"testeinsert41MUDOU@email.com\",\r\n            \"login\": \"insert41\",\r\n            \"tipo\": \"CLIENTE\",\r\n            \"enderecos\": [\r\n                {\r\n                    \"logradouro\": \"Rua Nova 41 MUDOU\",\r\n                    \"numero\": \"123 41 MUDOU\",\r\n                    \"complemento\": \"Apto 41 MUDOU\",\r\n                    \"bairro\": \"Centro 41 MUDOU\",\r\n                    \"cep\": \"01234-000 41 MUDOU\",\r\n                    \"estado\": \"SP\",\r\n                    \"cidade\": \"São Paulo\"\r\n                },\r\n                {\r\n                    \"logradouro\": \"Rua Nova 41-2\",\r\n                    \"numero\": \"123 41-2\",\r\n                    \"complemento\": \"Apto 41-2\",\r\n                    \"bairro\": \"Centro 41-2\",\r\n                    \"cep\": \"01234-000 41-2\",\r\n                    \"estado\": \"SP\",\r\n                    \"cidade\": \"São Paulo\"\r\n                }\r\n            ]\r\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/usuarios/16",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"16"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "validar login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imluc2VydDIiLCJleHAiOjE3NDcxOTEyNjV9.i8UAedusiQs297bZoiDBDcIZCMKRDA4qpkJIsaACCA4",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"login\": \"jvitor\",\r\n  \"senha\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deletar usuario",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imp2aXRvciIsImV4cCI6MTc0NzI1NzkzM30.Ijk2gfN3GNgPvBkvuoNig3ZrmHCjWdFQjCcicW_4aZc",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/usuarios/16",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"16"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put alterar senha",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"senhaAtual\": \"123\",\r\n  \"novaSenha\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/usuarios/2/senha",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"2",
+						"senha"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

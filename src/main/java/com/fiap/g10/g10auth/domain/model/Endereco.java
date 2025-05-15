@@ -1,9 +1,13 @@
 package com.fiap.g10.g10auth.domain.model;
 
+import com.fiap.g10.g10auth.dto.EnderecoCreateRequestDTO;
+import com.fiap.g10.g10auth.dto.EnderecoUpdateRequestDTO;
 import com.fiap.g10.g10auth.dto.UsuarioCreateRequestDTO;
 import com.fiap.g10.g10auth.dto.UsuarioUpdateRequestDTO;
 import com.fiap.g10.g10auth.persistence.entity.EnderecoEntity;
 import lombok.Getter;
+
+import java.util.List;
 
 @Getter
 public class Endereco {
@@ -21,7 +25,7 @@ public class Endereco {
 
     }
 
-    public static Endereco novoEndereco(UsuarioCreateRequestDTO dto) {
+    public static Endereco novoEndereco(EnderecoCreateRequestDTO dto) {
         Endereco e = new Endereco();
 
         e.logradouro = dto.logradouro();
@@ -50,7 +54,14 @@ public class Endereco {
         return e;
     }
 
-    public void atualizarDados(UsuarioUpdateRequestDTO dto) {
+    public static List<Endereco> reconstruirEndereco(List<EnderecoEntity> entities) {
+        return entities.stream()
+                .map(Endereco::reconstruirEndereco)
+                .toList();
+    }
+
+
+    public void atualizarDados(EnderecoUpdateRequestDTO dto) {
         this.logradouro = dto.logradouro();
         this.numero = dto.numero();
         this.complemento = dto.complemento();
