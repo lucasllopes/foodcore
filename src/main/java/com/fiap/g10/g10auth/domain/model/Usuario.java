@@ -32,13 +32,13 @@ public class Usuario {
 
     }
 
-    public static Usuario novoUsuario(String senhaCodificada, UsuarioCreateRequestDTO dto) {
+    public static Usuario novoUsuario(String senhaCodificada, TipoUsuario tipo, UsuarioCreateRequestDTO dto) {
         Usuario usuario = new Usuario();
         usuario.nome = dto.nome();
         usuario.email = dto.email();
         usuario.login = dto.login();
         usuario.senha = senhaCodificada;
-        usuario.tipo = dto.tipo();
+        usuario.tipo = tipo;
 
         if (!dto.enderecos().isEmpty()) {
             List<Endereco> enderecos = dto.enderecos()

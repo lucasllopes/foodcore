@@ -6,6 +6,7 @@ import com.fiap.g10.g10auth.dto.EnderecoResponseDTO;
 import com.fiap.g10.g10auth.dto.UsuarioCreateRequestDTO;
 import com.fiap.g10.g10auth.dto.UsuarioResponseDTO;
 import com.fiap.g10.g10auth.persistence.entity.EnderecoEntity;
+import com.fiap.g10.g10auth.persistence.entity.TipoUsuario;
 import com.fiap.g10.g10auth.persistence.entity.UsuarioEntity;
 
 import java.util.List;
@@ -13,8 +14,8 @@ import java.util.stream.Collectors;
 
 public class UsuarioConverter {
 
-    public static Usuario fromCreateDto(String senhaCodificada, UsuarioCreateRequestDTO dto) {
-        return Usuario.novoUsuario(senhaCodificada, dto);
+    public static Usuario fromCreateDto(String senhaCodificada, TipoUsuario tipo, UsuarioCreateRequestDTO dto) {
+        return Usuario.novoUsuario(senhaCodificada, tipo, dto);
     }
 
     public static Usuario toDomain(UsuarioEntity entity) {
