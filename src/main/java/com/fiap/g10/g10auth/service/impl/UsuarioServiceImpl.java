@@ -12,6 +12,7 @@ import com.fiap.g10.g10auth.exception.DadoDuplicadoException;
 import com.fiap.g10.g10auth.exception.DadoNaoEncontradoException;
 import com.fiap.g10.g10auth.persistence.repository.UsuarioRepository;
 import com.fiap.g10.g10auth.service.UsuarioService;
+import com.fiap.g10.g10auth.service.strategy.CriarUsuarioStrategyFactory;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,10 +25,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
+    private final CriarUsuarioStrategyFactory strategyFactory;
 
-    public UsuarioServiceImpl(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
+    public UsuarioServiceImpl(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder, CriarUsuarioStrategyFactory strategyFactory) {
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
+        this.strategyFactory = strategyFactory;
     }
 
     @Override
@@ -49,13 +52,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public UsuarioResponseDTO cadastrarUsuario(UsuarioCreateRequestDTO dto) {
-        validarDuplicidadeParaCriacao(dto);
-
-        String senhaCriptografada = passwordEncoder.encode(dto.senha());
-        Usuario usuario = UsuarioConverter.fromCreateDto(senhaCriptografada, dto);
-
-        UsuarioEntity salvo = usuarioRepository.save(UsuarioConverter.toEntity(usuario));
-        return UsuarioConverter.toResponseDTO(UsuarioConverter.toDomain(salvo));
+        var strategy = strategyFactory.getStrategy(dto.tipo());
+        return strategy.criar(dto);
     }
 
 
