@@ -8,11 +8,11 @@
 		<version>3.4.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.fiap.g10</groupId>
-	<artifactId>g10-auth</artifactId>
+	<groupId>com.fiap.foodcore</groupId>
+	<artifactId>foodcore</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>g10-auth</name>
-	<description>g10-auth</description>
+	<name>foodcore</name>
+	<description>foodcore</description>
 	<url/>
 	<licenses>
 		<license/>

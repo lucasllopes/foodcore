@@ -7,3 +7,7 @@ docker compose up --build
 A collection com os endpoints de teste estão no projeto. O arquivo se chama collection-g10-auth-endpoints.json
 
 Importe o arquivo json no postman para que seja possível testar os endpoints.
+
+
+Para executar somente o banco de dados no docker utilize o seguinte comando:
+docker-compose -f docker-compose-local.yml up -d
