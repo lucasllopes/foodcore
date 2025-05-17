@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -28,12 +29,14 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("#id == principal.id  or hasRole('ROLE_DONO')")
     public ResponseEntity<UserResponseDTO> buscarPorId(@PathVariable Long id) {
         logger.info("Request para /usuarios/{ID} -> GET");
         return ResponseEntity.ok(userService.buscarPorId(id));
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ROLE_DONO')")
     public ResponseEntity<Page<UserResponseDTO>> listarUsuarios(Pageable pageable) {
         logger.info("Request para /usuarios -> GET");
         Page<UserResponseDTO> usuarios = userService.listarUsuarioPaginado(pageable);
@@ -47,12 +50,14 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("#id == principal.id")
     public ResponseEntity<UserResponseDTO> atualizar(@PathVariable Long id, @RequestBody @Valid UserUpdateRequestDTO dto) {
         logger.info("Request para /usuarios -> PUT");
         return ResponseEntity.ok(userService.atualizar(id, dto));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("#id == principal.id")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         logger.info("Request para /usuarios -> DELETE");
         userService.deletar(id);
@@ -60,6 +65,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}/senha")
+    @PreAuthorize("#id == principal.id")
     public ResponseEntity<String> trocarSenha(
             @PathVariable Long id,
             @RequestBody @Valid ChangePasswordRequestDTO dto
