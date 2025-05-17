@@ -1,5 +1,6 @@
 package com.fiap.foodcore.domain.model;
 
+import com.fiap.foodcore.dto.AddressCreateRequestDTO;
 import com.fiap.foodcore.dto.UserCreateRequestDTO;
 import com.fiap.foodcore.dto.UserUpdateRequestDTO;
 import com.fiap.foodcore.persistence.entity.UserType;
@@ -7,6 +8,7 @@ import com.fiap.foodcore.persistence.entity.UserEntity;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -42,7 +44,6 @@ public class User {
             user.address = addresses;
         }
 
-
         user.dataUltimaAlteracao = LocalDateTime.now();
         return user;
     }
@@ -58,14 +59,42 @@ public class User {
         this.email = dto.email();
         this.tipo = dto.tipo();
 
-        if (this.address != null && dto.enderecos() != null) {
-            int limite = Math.min(this.address.size(), dto.enderecos().size());
-            for (int i = 0; i < limite; i++) {
-                this.address.get(i).atualizarDados(dto.enderecos().get(i));
+        if (dto.enderecos() != null) {
+            if (this.address == null) {
+                this.address = new ArrayList<>();
             }
+         
+            List<Address> updatedAddresses = new ArrayList<>();
+      
+            for (int i = 0; i < dto.enderecos().size(); i++) {
+                if (i < this.address.size()) {
+                    Address existingAddress = this.address.get(i);
+                    existingAddress.atualizarDados(dto.enderecos().get(i));
+                    updatedAddresses.add(existingAddress);
+                } else {
+
+                    var addressCreateDto = getAddressCreateRequestDTO(dto, i);
+
+                    updatedAddresses.add(Address.novoEndereco(addressCreateDto));
+                }
+            }
+            this.address = updatedAddresses;
         }
 
         this.dataUltimaAlteracao = LocalDateTime.now();
+    }
+
+    private static AddressCreateRequestDTO getAddressCreateRequestDTO(UserUpdateRequestDTO dto, int i) {
+        var addressUpdateDto = dto.enderecos().get(i);
+        return new AddressCreateRequestDTO(
+                addressUpdateDto.logradouro(),
+                addressUpdateDto.numero(),
+                addressUpdateDto.complemento(),
+                addressUpdateDto.bairro(),
+                addressUpdateDto.cidade(),
+                addressUpdateDto.estado(),
+                addressUpdateDto.cep()
+        );
     }
 
 
