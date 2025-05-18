@@ -12,6 +12,17 @@ RUN mvn clean package -DskipTests
 
 FROM eclipse-temurin:21-jre AS execution
 WORKDIR /app
+
+RUN apt-get update \
+ && apt-get install -y locales \
+ && sed -i '/pt_BR.UTF-8/s/^# //' /etc/locale.gen \
+ && locale-gen pt_BR.UTF-8 \
+ && update-locale LANG=pt_BR.UTF-8
+
+ENV LANG=pt_BR.UTF-8 \
+    LANGUAGE=pt_BR:pt \
+    LC_ALL=pt_BR.UTF-8
+
 COPY --from=build /app/target/*.jar app.jar
 
 EXPOSE 8080
