@@ -21,7 +21,7 @@ public class TokenServiceImpl implements TokenService {
     private final String secret = "b2JkdBz!P9lKb2$q8KqLzJQbP29sWzVg";
 
     @Override
-    public String geraToken(UserDetailsAdapter usuario) {
+    public String generateToken(UserDetailsAdapter usuario) {
 
         try {
             Algorithm algoritmo = Algorithm.HMAC256(secret);
@@ -39,7 +39,7 @@ public class TokenServiceImpl implements TokenService {
     }
 
     @Override
-    public String verificaToken(String token){
+    public String validateToken(String token){
         DecodedJWT decodedJWT;
         try{
             Algorithm algorithm = Algorithm.HMAC256(secret);

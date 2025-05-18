@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponseDTO buscarPorId(Long id) {
+    public UserResponseDTO findById(Long id) {
         UserEntity entity = userRepository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Usuário não encontrado"));
 
@@ -44,21 +44,21 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public Page<UserResponseDTO> listarUsuarioPaginado(Pageable pageable) {
+    public Page<UserResponseDTO> listPaginatedUsers(Pageable pageable) {
         return userRepository.findAll(pageable)
                 .map(UserConverter::toDomain)
                 .map(UserConverter::toResponseDTO);
     }
 
     @Override
-    public UserResponseDTO cadastrarUsuario(UserCreateRequestDTO dto) {
+    public UserResponseDTO createUser(UserCreateRequestDTO dto) {
         var strategy = strategyFactory.getStrategy(dto.tipo());
         return strategy.create(dto);
     }
 
 
     @Override
-    public UserResponseDTO atualizar(Long id, UserUpdateRequestDTO dto) {
+    public UserResponseDTO updateUser(Long id, UserUpdateRequestDTO dto) {
         UserEntity entity = userRepository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Usuário não encontrado."));
 
@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
 
         validarDuplicidadeParaAtualizacao(dto, id);
 
-        user.atualizarDados(dto);
+        user.updateInformation(dto);
         UserEntity atualizado = userRepository.save(UserConverter.toEntity(user));
 
         return UserConverter.toResponseDTO(UserConverter.toDomain(atualizado));
@@ -91,7 +91,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void trocarSenha(Long id, ChangePasswordRequestDTO dto) {
+    public void changePassword(Long id, ChangePasswordRequestDTO dto) {
         UserEntity entity = userRepository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Usuário não encontrado"));
 
@@ -103,13 +103,13 @@ public class UserServiceImpl implements UserService {
         }
 
         String novaSenhaCriptografada = passwordEncoder.encode(dto.novaSenha());
-        user.trocarSenha(novaSenhaCriptografada);
+        user.changePassword(novaSenhaCriptografada);
 
         userRepository.save(UserConverter.toEntity(user));
     }
 
     @Override
-    public void deletar(Long id) {
+    public void deleteUser(Long id) {
         UserEntity usuario = userRepository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Usuário não encontrado."));
 

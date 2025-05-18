@@ -27,7 +27,7 @@ public class User {
 
     }
 
-    public static User novoUsuario(String senhaCodificada, UserType tipo, UserCreateRequestDTO dto) {
+    public static User newUser(String senhaCodificada, UserType tipo, UserCreateRequestDTO dto) {
         User user = new User();
         user.nome = dto.nome();
         user.email = dto.email();
@@ -49,12 +49,12 @@ public class User {
     }
 
 
-    public void trocarSenha(String novaSenha) {
+    public void changePassword(String novaSenha) {
         this.senha = novaSenha;
         this.dataUltimaAlteracao = LocalDateTime.now();
     }
 
-    public void atualizarDados(UserUpdateRequestDTO dto) {
+    public void updateInformation(UserUpdateRequestDTO dto) {
         this.nome = dto.nome();
         this.email = dto.email();
         this.tipo = dto.tipo();
@@ -98,7 +98,7 @@ public class User {
     }
 
 
-    public static User reconstruirUsuario(UserEntity entity) {
+    public static User rebuildUser(UserEntity entity) {
         User user = new User();
         user.id = entity.getId();
         user.nome = entity.getNome();
@@ -113,7 +113,7 @@ public class User {
         return user;
     }
 
-    public static User reconstruirUsuarioToken(UserEntity entity) {
+    public static User rebuildUserForTokenAuth(UserEntity entity) {
         User user = new User();
         user.id = entity.getId();
         user.nome = entity.getNome();

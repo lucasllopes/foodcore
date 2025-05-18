@@ -37,9 +37,9 @@ public class LoginController {
         var usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(request.login(), request.senha());
         var authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
 
-        var usuarioDetails = (UserDetailsAdapter) authentication.getPrincipal();
+        var userDetails = (UserDetailsAdapter) authentication.getPrincipal();
 
-        String token = tokenService.geraToken(usuarioDetails);
+        String token = tokenService.generateToken(userDetails);
         return ResponseEntity.ok(token);
     }
 }

@@ -35,12 +35,12 @@ public class FilterToken extends OncePerRequestFilter {
 
         try{
             if(token != null){
-                String login = tokenService.verificaToken(token);
+                String login = tokenService.validateToken(token);
 
                 UserEntity userEntity = userRepository.findByLoginIgnoreCase(login)
                         .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado."));
 
-                User user = User.reconstruirUsuarioToken(userEntity);
+                User user = User.rebuildUserForTokenAuth(userEntity);
 
                 UserDetailsAdapter userDetailsAdapter = new UserDetailsAdapter(user);
 

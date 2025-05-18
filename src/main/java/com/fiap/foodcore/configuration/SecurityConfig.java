@@ -35,12 +35,12 @@ public class SecurityConfig {
     private FilterToken filterToken;
 
     @Bean
-    public PasswordEncoder criptografar(){
+    public PasswordEncoder encrypt(){
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public SecurityFilterChain filtrosSeguranca(HttpSecurity http) throws Exception {
+    public SecurityFilterChain SecurityFilters(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(req -> {
                     req.requestMatchers("/login").permitAll();
@@ -70,7 +70,7 @@ public class SecurityConfig {
             UserEntity entity = repository.findByLoginIgnoreCase(username)
                     .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
 
-            User user = User.reconstruirUsuario(entity);
+            User user = User.rebuildUser(entity);
             return new UserDetailsAdapter(user);
 
         };

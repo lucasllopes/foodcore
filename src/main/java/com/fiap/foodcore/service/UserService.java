@@ -9,15 +9,15 @@ import org.springframework.data.domain.Pageable;
 
 public interface UserService {
 
-    UserResponseDTO buscarPorId(Long id);
+    UserResponseDTO findById(Long id);
 
-    Page<UserResponseDTO> listarUsuarioPaginado(Pageable pageable);
+    Page<UserResponseDTO> listPaginatedUsers(Pageable pageable);
 
-    UserResponseDTO cadastrarUsuario(UserCreateRequestDTO dto);
+    UserResponseDTO createUser(UserCreateRequestDTO dto);
 
-    UserResponseDTO atualizar(Long id, UserUpdateRequestDTO dto);
+    UserResponseDTO updateUser(Long id, UserUpdateRequestDTO dto);
 
-    void trocarSenha(Long id, ChangePasswordRequestDTO dto);
+    void changePassword(Long id, ChangePasswordRequestDTO dto);
 
-    void deletar(Long id);
+    void deleteUser(Long id);
 }

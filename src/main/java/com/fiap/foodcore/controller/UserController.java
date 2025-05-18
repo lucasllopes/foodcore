@@ -24,54 +24,54 @@ public class UserController {
 
     private final UserService userService;
 
-    public UserController(UserServiceImpl usuarioService) {
-        this.userService = usuarioService;
+    public UserController(UserServiceImpl userService) {
+        this.userService = userService;
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("#id == principal.id  or hasRole('ROLE_DONO')")
-    public ResponseEntity<UserResponseDTO> buscarPorId(@PathVariable Long id) {
+    public ResponseEntity<UserResponseDTO> findById(@PathVariable Long id) {
         logger.info("Request para /usuarios/{ID} -> GET");
-        return ResponseEntity.ok(userService.buscarPorId(id));
+        return ResponseEntity.ok(userService.findById(id));
     }
 
     @GetMapping
     @PreAuthorize("hasRole('ROLE_DONO')")
-    public ResponseEntity<Page<UserResponseDTO>> listarUsuarios(Pageable pageable) {
+    public ResponseEntity<Page<UserResponseDTO>> listPaginatedUsers(Pageable pageable) {
         logger.info("Request para /usuarios -> GET");
-        Page<UserResponseDTO> usuarios = userService.listarUsuarioPaginado(pageable);
+        Page<UserResponseDTO> usuarios = userService.listPaginatedUsers(pageable);
         return ResponseEntity.ok(usuarios);
     }
 
     @PostMapping
-    public ResponseEntity<UserResponseDTO> cadastrar(@RequestBody @Valid UserCreateRequestDTO dto) {
+    public ResponseEntity<UserResponseDTO> createUser(@RequestBody @Valid UserCreateRequestDTO dto) {
         logger.info("Request para /usuarios -> POST");
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.cadastrarUsuario(dto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(dto));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("#id == principal.id")
-    public ResponseEntity<UserResponseDTO> atualizar(@PathVariable Long id, @RequestBody @Valid UserUpdateRequestDTO dto) {
+    public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @RequestBody @Valid UserUpdateRequestDTO dto) {
         logger.info("Request para /usuarios -> PUT");
-        return ResponseEntity.ok(userService.atualizar(id, dto));
+        return ResponseEntity.ok(userService.updateUser(id, dto));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("#id == principal.id")
-    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         logger.info("Request para /usuarios -> DELETE");
-        userService.deletar(id);
+        userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}/senha")
     @PreAuthorize("#id == principal.id")
-    public ResponseEntity<String> trocarSenha(
+    public ResponseEntity<String> changePassword(
             @PathVariable Long id,
             @RequestBody @Valid ChangePasswordRequestDTO dto
     ) {
         logger.info("Request para /usuarios/{id}/senha -> PUT");
-        userService.trocarSenha(id, dto);
+        userService.changePassword(id, dto);
         return ResponseEntity.ok("Senha atualizada com sucesso.");
     }
 }

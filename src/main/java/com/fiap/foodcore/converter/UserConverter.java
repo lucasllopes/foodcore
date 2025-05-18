@@ -14,11 +14,11 @@ import java.util.stream.Collectors;
 public class UserConverter {
 
     public static User fromCreateDto(String senhaCodificada, UserType tipo, UserCreateRequestDTO dto) {
-        return User.novoUsuario(senhaCodificada, tipo, dto);
+        return User.newUser(senhaCodificada, tipo, dto);
     }
 
     public static User toDomain(UserEntity entity) {
-        return User.reconstruirUsuario(entity);
+        return User.rebuildUser(entity);
     }
 
     public static UserEntity toEntity(User user) {
