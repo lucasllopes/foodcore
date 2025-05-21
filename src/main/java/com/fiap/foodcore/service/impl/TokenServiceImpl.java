@@ -30,7 +30,7 @@ public class TokenServiceImpl implements TokenService {
                     .create()
                     .withIssuer("Foodcore")
                     .withSubject(usuario.getUsername())
-                    .withExpiresAt(expiraToken(30))
+                    .withExpiresAt(tokenExpiration(30))
                     .sign(algoritmo);
         }catch (JWTCreationException e){
             throw new TokenJwtException("Erro ao gerar JWT.");
@@ -51,7 +51,7 @@ public class TokenServiceImpl implements TokenService {
         }
     }
 
-    public Instant expiraToken(Integer minutos){
+    public Instant tokenExpiration(Integer minutos){
         return LocalDateTime.now().plusMinutes(minutos).toInstant(ZoneOffset.of("-03:00"));
     }
 }

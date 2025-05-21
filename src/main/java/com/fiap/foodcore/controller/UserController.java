@@ -31,35 +31,35 @@ public class UserController {
     @GetMapping("/{id}")
     @PreAuthorize("#id == principal.id  or hasRole('ROLE_DONO')")
     public ResponseEntity<UserResponseDTO> findById(@PathVariable Long id) {
-        logger.info("Request para /usuarios/{ID} -> GET");
+        logger.info("Handling GET request to /usuarios/{ID}");
         return ResponseEntity.ok(userService.findById(id));
     }
 
     @GetMapping
     @PreAuthorize("hasRole('ROLE_DONO')")
     public ResponseEntity<Page<UserResponseDTO>> listPaginatedUsers(Pageable pageable) {
-        logger.info("Request para /usuarios -> GET");
+        logger.info("Handling GET request to /usuarios");
         Page<UserResponseDTO> usuarios = userService.listPaginatedUsers(pageable);
         return ResponseEntity.ok(usuarios);
     }
 
     @PostMapping
     public ResponseEntity<UserResponseDTO> createUser(@RequestBody @Valid UserCreateRequestDTO dto) {
-        logger.info("Request para /usuarios -> POST");
+        logger.info("Handling POST request to /usuarios");
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(dto));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("#id == principal.id")
     public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @RequestBody @Valid UserUpdateRequestDTO dto) {
-        logger.info("Request para /usuarios -> PUT");
+        logger.info("Handling PUT request to /usuarios");
         return ResponseEntity.ok(userService.updateUser(id, dto));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("#id == principal.id")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        logger.info("Request para /usuarios -> DELETE");
+        logger.info("Handling DELETE request to /usuarios");
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
@@ -70,7 +70,7 @@ public class UserController {
             @PathVariable Long id,
             @RequestBody @Valid ChangePasswordRequestDTO dto
     ) {
-        logger.info("Request para /usuarios/{id}/senha -> PUT");
+        logger.info("Handling PUT request to /usuarios/{id}/senha");
         userService.changePassword(id, dto);
         return ResponseEntity.ok("Senha atualizada com sucesso.");
     }

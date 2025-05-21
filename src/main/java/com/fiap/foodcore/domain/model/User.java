@@ -27,7 +27,7 @@ public class User {
 
     }
 
-    public static User newUser(String senhaCodificada, UserType tipo, UserCreateRequestDTO dto) {
+    public static User fromCreateRequest(String senhaCodificada, UserType tipo, UserCreateRequestDTO dto) {
         User user = new User();
         user.nome = dto.nome();
         user.email = dto.email();
@@ -36,12 +36,11 @@ public class User {
         user.tipo = tipo;
 
         if (!dto.enderecos().isEmpty()) {
-            List<Address> addresses = dto.enderecos()
-                    .stream()
-                    .map(Address::novoEndereco)
-                    .toList();
 
-            user.address = addresses;
+            user.address = dto.enderecos()
+                    .stream()
+                    .map(Address::fromCreateRequest)
+                    .toList();
         }
 
         user.dataUltimaAlteracao = LocalDateTime.now();
@@ -69,13 +68,13 @@ public class User {
             for (int i = 0; i < dto.enderecos().size(); i++) {
                 if (i < this.address.size()) {
                     Address existingAddress = this.address.get(i);
-                    existingAddress.atualizarDados(dto.enderecos().get(i));
+                    existingAddress.updateFrom(dto.enderecos().get(i));
                     updatedAddresses.add(existingAddress);
                 } else {
 
                     var addressCreateDto = getAddressCreateRequestDTO(dto, i);
 
-                    updatedAddresses.add(Address.novoEndereco(addressCreateDto));
+                    updatedAddresses.add(Address.fromCreateRequest(addressCreateDto));
                 }
             }
             this.address = updatedAddresses;
@@ -107,7 +106,7 @@ public class User {
         user.senha = entity.getSenha();
         user.tipo = entity.getTipo();
 
-        user.address = Address.reconstruirEndereco(entity.getEnderecos());
+        user.address = Address.fromEntity(entity.getEnderecos());
 
         user.dataUltimaAlteracao = entity.getDataUltimaAlteracao();
         return user;

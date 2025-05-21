@@ -31,7 +31,7 @@ public class FilterToken extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String token = recuperaToken(request);
+        String token = extractToken(request);
 
         try{
             if(token != null){
@@ -57,7 +57,7 @@ public class FilterToken extends OncePerRequestFilter {
     }
 
 
-    private String recuperaToken(HttpServletRequest request){
+    private String extractToken(HttpServletRequest request){
         String tokenHeader = request.getHeader("Authorization");
 
         if(tokenHeader != null){

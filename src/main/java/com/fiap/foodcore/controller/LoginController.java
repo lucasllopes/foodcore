@@ -32,7 +32,7 @@ public class LoginController {
     @PostMapping
     public ResponseEntity<String> login(@RequestBody @Valid LoginRequest request) {
 
-        logger.info("Request para login");
+        logger.info("Request to /login -> POST");
 
         var usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(request.login(), request.senha());
         var authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);

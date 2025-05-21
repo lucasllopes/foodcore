@@ -28,16 +28,16 @@ public class CreateOwnerStrategy implements CreateUserStrategy {
 
     @Override
     public UserResponseDTO create(UserCreateRequestDTO dto) {
-        validarDuplicidadeParaCriacao(dto);
+        validateDuplicateForCreation(dto);
 
-        String senhaCriptografada = passwordEncoder.encode(dto.senha());
-        User user = UserConverter.fromCreateDto(senhaCriptografada, UserType.DONO, dto);
+        String encryptedPassword = passwordEncoder.encode(dto.senha());
+        User user = UserConverter.fromCreateDto(encryptedPassword, UserType.DONO, dto);
 
         UserEntity salvo = userRepository.save(UserConverter.toEntity(user));
         return UserConverter.toResponseDTO(UserConverter.toDomain(salvo));
     }
 
-    private void validarDuplicidadeParaCriacao(UserCreateRequestDTO dto) {
+    private void validateDuplicateForCreation(UserCreateRequestDTO dto) {
         userRepository.findByEmail(dto.email()).ifPresent(u -> {
             throw new DuplicatedDataException("Email já está em uso.");
         });

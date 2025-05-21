@@ -23,7 +23,7 @@ public class Address {
 
     }
 
-    public static Address novoEndereco(AddressCreateRequestDTO dto) {
+    public static Address fromCreateRequest(AddressCreateRequestDTO dto) {
         Address e = new Address();
 
         e.logradouro = dto.logradouro();
@@ -36,7 +36,7 @@ public class Address {
         return e;
     }
 
-    public static Address reconstruirEndereco(AddressEntity entity) {
+    public static Address fromEntity(AddressEntity entity) {
         if (entity == null) return null;
 
         Address e = new Address();
@@ -52,14 +52,14 @@ public class Address {
         return e;
     }
 
-    public static List<Address> reconstruirEndereco(List<AddressEntity> entities) {
+    public static List<Address> fromEntity(List<AddressEntity> entities) {
         return entities.stream()
-                .map(Address::reconstruirEndereco)
+                .map(Address::fromEntity)
                 .toList();
     }
 
 
-    public void atualizarDados(AddressUpdateRequestDTO dto) {
+    public void updateFrom(AddressUpdateRequestDTO dto) {
         this.logradouro = dto.logradouro();
         this.numero = dto.numero();
         this.complemento = dto.complemento();

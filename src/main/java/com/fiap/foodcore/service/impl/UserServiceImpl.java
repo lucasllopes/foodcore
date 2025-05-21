@@ -64,25 +64,15 @@ public class UserServiceImpl implements UserService {
 
         User user = UserConverter.toDomain(entity);
 
-        validarDuplicidadeParaAtualizacao(dto, id);
+        validateDuplicationForUpdate(dto, id);
 
         user.updateInformation(dto);
-        UserEntity atualizado = userRepository.save(UserConverter.toEntity(user));
+        UserEntity updatedUser  = userRepository.save(UserConverter.toEntity(user));
 
-        return UserConverter.toResponseDTO(UserConverter.toDomain(atualizado));
+        return UserConverter.toResponseDTO(UserConverter.toDomain(updatedUser));
     }
 
-    private void validarDuplicidadeParaCriacao(UserCreateRequestDTO dto) {
-        userRepository.findByEmail(dto.email()).ifPresent(u -> {
-            throw new DuplicatedDataException("Email já está em uso.");
-        });
-
-        userRepository.findByLogin(dto.login()).ifPresent(u -> {
-            throw new DuplicatedDataException("Login já está em uso.");
-        });
-    }
-
-    private void validarDuplicidadeParaAtualizacao(UserUpdateRequestDTO dto, Long idAtual) {
+    private void validateDuplicationForUpdate(UserUpdateRequestDTO dto, Long idAtual) {
         userRepository.findByEmail(dto.email()).ifPresent(u -> {
             if (!u.getId().equals(idAtual)) {
                 throw new DuplicatedDataException("Email já está em uso por outro usuário.");
@@ -97,26 +87,26 @@ public class UserServiceImpl implements UserService {
 
         User user = UserConverter.toDomain(entity);
 
-        boolean senhaAtualConfere = passwordEncoder.matches(dto.senhaAtual(), user.getSenha());
-        if (!senhaAtualConfere) {
+        boolean currentPasswordMatches = passwordEncoder.matches(dto.senhaAtual(), user.getSenha());
+        if (!currentPasswordMatches) {
             throw new WrongPasswordException("Senha atual incorreta.");
         }
 
-        String novaSenhaCriptografada = passwordEncoder.encode(dto.novaSenha());
-        user.changePassword(novaSenhaCriptografada);
+        String newEncryptedPassword = passwordEncoder.encode(dto.novaSenha());
+        user.changePassword(newEncryptedPassword);
 
         userRepository.save(UserConverter.toEntity(user));
     }
 
     @Override
     public void deleteUser(Long id) {
-        UserEntity usuario = userRepository.findById(id)
+        UserEntity user = userRepository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Usuário não encontrado."));
 
-        usuario.getEnderecos().clear();
-        userRepository.save(usuario);
+        user.getEnderecos().clear();
+        userRepository.save(user);
 
-        userRepository.delete(usuario);
+        userRepository.delete(user);
     }
 
 }
