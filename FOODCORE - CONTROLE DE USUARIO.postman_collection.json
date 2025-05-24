@@ -1,15 +1,24 @@
 {
 	"info": {
-		"_postman_id": "ee6153bf-4e29-46c4-b3b6-f441220c000e",
-		"name": "TC-FASE-1-LUCAS",
+		"_postman_id": "7a0f7363-e114-4f16-8c34-3525491779cf",
+		"name": "FOODCORE - CONTROLE DE USUARIO",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "44286552",
-		"_collection_link": "https://carlospaulino-4598971.postman.co/workspace/Carlos-Paulino's-Workspace~37df3764-cc2b-40dc-8e1e-38e630fed7e9/collection/44286552-ee6153bf-4e29-46c4-b3b6-f441220c000e?action=share&source=collection_link&creator=44286552"
+		"_exporter_id": "9099310"
 	},
 	"item": [
 		{
-			"name": "get usuario by id",
+			"name": "1 - GET USUARIO BY ID",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6InRlc3RlaW5zZXJ0MSIsImV4cCI6MTc0ODA0ODY1NX0.X7UgVIC1qaXtykIajVYsIqPQU2x8q0z9rUU3hnODd_I",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [
 					{
@@ -19,7 +28,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/usuarios/22",
+					"raw": "http://localhost:8080/usuarios/5",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -27,15 +36,25 @@
 					"port": "8080",
 					"path": [
 						"usuarios",
-						"22"
+						"5"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "get usuarios com paginacao",
+			"name": "2 - GET USUARIOS COM PAGINACAO",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imp2aXRvciIsImV4cCI6MTc0ODA1MTM2OX0.zH5qHvC0u3aKhfZHtZGG9soS796ZvU3qjR5OnhxwPBw",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [
 					{
@@ -45,7 +64,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/usuarios?page=0&size=10&sort=id,DESC",
+					"raw": "http://localhost:8080/usuarios?page=0&size=10&sort=id,ASC",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -64,13 +83,13 @@
 							"value": "10"
 						},
 						{
-							"key": "sort",
-							"value": "id,DESC"
-						},
-						{
 							"key": "token",
 							"value": "",
 							"disabled": true
+						},
+						{
+							"key": "sort",
+							"value": "id,ASC"
 						}
 					]
 				}
@@ -78,8 +97,18 @@
 			"response": []
 		},
 		{
-			"name": "criar usuario",
+			"name": "3 - POST - CRIAR USUARIO",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imp2aXRvciIsImV4cCI6MTc0Nzc5Njc5OX0.9vxaTJd-0VHacrhYn2BnsYX06HytY6FsJdwF4ppyZdc",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [
 					{
@@ -91,7 +120,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"nome\": \"XXXXXXXX MUDOU41\",\r\n    \"email\": \"testeinsert41@email.com\",\r\n    \"login\": \"insert41\",\r\n    \"senha\": \"123\",\r\n    \"tipo\": \"CLIENTE\",\r\n    \"enderecos\": [\r\n        {\r\n            \"logradouro\": \"Rua Nova 41\",\r\n            \"numero\": \"123 41\",\r\n            \"complemento\": \"Apto 41\",\r\n            \"bairro\": \"Centro 41\",\r\n            \"cep\": \"01234-000 41\",\r\n            \"estado\": \"SP\",\r\n            \"cidade\": \"São Paulo\"\r\n        },\r\n                {\r\n            \"logradouro\": \"Rua Nova 41-2\",\r\n            \"numero\": \"123 41-2\",\r\n            \"complemento\": \"Apto 41-2\",\r\n            \"bairro\": \"Centro 41-2\",\r\n            \"cep\": \"01234-000 41-2\",\r\n            \"estado\": \"SP\",\r\n            \"cidade\": \"São Paulo\"\r\n        }\r\n    ]\r\n}",
+					"raw": "{\r\n    \"nome\": \"USUARIO DE TESTE - INSERT 1\",\r\n    \"email\": \"usuario1testeinsert@email.com\",\r\n    \"login\": \"testeinsert1\",\r\n    \"senha\": \"123\",\r\n    \"tipo\": \"CLIENTE\",\r\n    \"enderecos\": [\r\n        {\r\n            \"logradouro\": \"Rua Nova 41\",\r\n            \"numero\": \"123\",\r\n            \"complemento\": \"Apto 41\",\r\n            \"bairro\": \"Centro 41\",\r\n            \"cep\": \"01234-000 41\",\r\n            \"estado\": \"SP\",\r\n            \"cidade\": \"São Paulo\"\r\n        },\r\n                {\r\n            \"logradouro\": \"Rua Nova 41-2\",\r\n            \"numero\": \"124\",\r\n            \"complemento\": \"Apto 41-2\",\r\n            \"bairro\": \"Centro 41-2\",\r\n            \"cep\": \"01234-000 41-2\",\r\n            \"estado\": \"SP\",\r\n            \"cidade\": \"São Paulo\"\r\n        }\r\n    ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -113,8 +142,18 @@
 			"response": []
 		},
 		{
-			"name": "atualizar usuario",
+			"name": "4 - PUT - ATUALIZAR USUARIO",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imp2aXRvciIsImV4cCI6MTc0Nzc5Njc5OX0.9vxaTJd-0VHacrhYn2BnsYX06HytY6FsJdwF4ppyZdc",
+							"type": "string"
+						}
+					]
+				},
 				"method": "PUT",
 				"header": [
 					{
@@ -125,7 +164,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": " {\r\n            \"nome\": \"XXXXXXXX MUDOU41 MUDOU\",\r\n            \"email\": \"testeinsert41MUDOU@email.com\",\r\n            \"login\": \"insert41\",\r\n            \"tipo\": \"CLIENTE\",\r\n            \"enderecos\": [\r\n                {\r\n                    \"logradouro\": \"Rua Nova 41 MUDOU\",\r\n                    \"numero\": \"123 41 MUDOU\",\r\n                    \"complemento\": \"Apto 41 MUDOU\",\r\n                    \"bairro\": \"Centro 41 MUDOU\",\r\n                    \"cep\": \"01234-000 41 MUDOU\",\r\n                    \"estado\": \"SP\",\r\n                    \"cidade\": \"São Paulo\"\r\n                },\r\n                {\r\n                    \"logradouro\": \"Rua Nova 41-2\",\r\n                    \"numero\": \"123 41-2\",\r\n                    \"complemento\": \"Apto 41-2\",\r\n                    \"bairro\": \"Centro 41-2\",\r\n                    \"cep\": \"01234-000 41-2\",\r\n                    \"estado\": \"SP\",\r\n                    \"cidade\": \"São Paulo\"\r\n                }\r\n            ]\r\n        }",
+					"raw": " {\r\n            \"nome\": \"TESTE INSERT 1 MUDOU PARA UPDATE 1\",\r\n            \"email\": \"testeinsertmudouaposupdate@email.com\",\r\n            \"login\": \"insert41\",\r\n            \"tipo\": \"CLIENTE\",\r\n            \"enderecos\": [\r\n                {\r\n                    \"logradouro\": \"Rua Nova 41 MUDOU\",\r\n                    \"numero\": \"123 41 MUDOU\",\r\n                    \"complemento\": \"Apto 41 MUDOU\",\r\n                    \"bairro\": \"Centro 41 MUDOU\",\r\n                    \"cep\": \"01234-000 41 MUDOU\",\r\n                    \"estado\": \"SP\",\r\n                    \"cidade\": \"São Paulo\"\r\n                },\r\n                {\r\n                    \"logradouro\": \"Rua Nova 41-2\",\r\n                    \"numero\": \"123 41-2\",\r\n                    \"complemento\": \"Apto 41-2\",\r\n                    \"bairro\": \"Centro 41-2\",\r\n                    \"cep\": \"01234-000 41-2\",\r\n                    \"estado\": \"SP\",\r\n                    \"cidade\": \"São Paulo\"\r\n                }\r\n            ]\r\n        }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -133,7 +172,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/usuarios/16",
+					"raw": "http://localhost:8080/usuarios/2",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -141,14 +180,14 @@
 					"port": "8080",
 					"path": [
 						"usuarios",
-						"16"
+						"2"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "validar login",
+			"name": "5 - POST - VALIDAR LOGIN",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -161,7 +200,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"login\": \"jvitor\",\r\n  \"senha\": \"123456\"\r\n}",
+					"raw": "{\r\n  \"login\": \"testeinsert1\",\r\n  \"senha\": \"123\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -183,7 +222,7 @@
 			"response": []
 		},
 		{
-			"name": "deletar usuario",
+			"name": "6 - DELETE - DELETAR USUARIO",
 			"request": {
 				"method": "DELETE",
 				"header": [
@@ -209,7 +248,7 @@
 			"response": []
 		},
 		{
-			"name": "put alterar senha",
+			"name": "7 - PUT - ALTERAR SENHA",
 			"request": {
 				"method": "PUT",
 				"header": [],

@@ -9,6 +9,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fiap.foodcore.exception.TokenJwtException;
 import com.fiap.foodcore.infrastructure.UserDetailsAdapter;
 import com.fiap.foodcore.service.TokenService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -18,7 +19,10 @@ import java.time.ZoneOffset;
 @Service
 public class TokenServiceImpl implements TokenService {
 
-    private final String secret = "b2JkdBz!P9lKb2$q8KqLzJQbP29sWzVg";
+    @Value("${jwt.secret}")
+    private String secret;
+
+    //private final String secret = "b2JkdBz!P9lKb2$q8KqLzJQbP29sWzVg";
 
     @Override
     public String generateToken(UserDetailsAdapter usuario) {

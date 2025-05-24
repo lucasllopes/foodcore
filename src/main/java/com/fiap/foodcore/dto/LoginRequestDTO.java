@@ -2,7 +2,7 @@ package com.fiap.foodcore.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
-public record LoginRequest(
+public record LoginRequestDTO(
         @NotBlank(message = "Login é obrigatório")
         String login,
 

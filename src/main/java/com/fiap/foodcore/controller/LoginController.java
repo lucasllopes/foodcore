@@ -1,6 +1,6 @@
 package com.fiap.foodcore.controller;
 
-import com.fiap.foodcore.dto.LoginRequest;
+import com.fiap.foodcore.dto.LoginRequestDTO;
 import com.fiap.foodcore.infrastructure.UserDetailsAdapter;
 import com.fiap.foodcore.service.TokenService;
 import jakarta.validation.Valid;
@@ -30,7 +30,7 @@ public class LoginController {
     }
 
     @PostMapping
-    public ResponseEntity<String> login(@RequestBody @Valid LoginRequest request) {
+    public ResponseEntity<String> login(@RequestBody @Valid LoginRequestDTO request) {
 
         logger.info("Request to /login -> POST");
 
