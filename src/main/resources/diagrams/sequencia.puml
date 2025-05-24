@@ -1,0 +1,50 @@
+@startuml
+title Foodcore - Fluxo Principal de Autenticação e Operações
+
+actor Cliente
+participant LoginController
+participant AuthenticationManager
+participant TokenService
+participant UserService
+participant UserRepository
+participant SecurityFilter
+
+== Autenticação ==
+Cliente -> LoginController: POST /login
+activate LoginController
+LoginController -> AuthenticationManager: authenticate(login, senha)
+activate AuthenticationManager
+AuthenticationManager -> UserService: loadUserByUsername()
+activate UserService
+UserService -> UserRepository: findByLoginIgnoreCase()
+UserRepository --> UserService: UserEntity
+UserService --> AuthenticationManager: UserDetailsAdapter
+AuthenticationManager --> LoginController: Authentication
+deactivate AuthenticationManager
+LoginController -> TokenService: generateToken()
+TokenService --> LoginController: JWT Token
+LoginController --> Cliente: Token JWT
+deactivate LoginController
+
+== Requisição Autenticada ==
+Cliente -> SecurityFilter: Request + Token
+activate SecurityFilter
+SecurityFilter -> TokenService: validateToken(token)
+TokenService --> SecurityFilter: login (validado)
+SecurityFilter -> SecurityFilter: setAuthentication()
+SecurityFilter --> Cliente: Response
+deactivate SecurityFilter
+
+== Operações de Usuário ==
+Cliente -> UserController: Request (CRUD Usuário)
+activate UserController
+UserController -> UserService: operação(dados)
+activate UserService
+UserService -> UserRepository: operação(dados)
+UserRepository --> UserService: resultado
+UserService --> UserController: DTO resposta
+UserController --> Cliente: Response
+deactivate UserController
+deactivate UserService
+
+@enduml

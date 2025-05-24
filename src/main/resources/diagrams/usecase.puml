@@ -1,0 +1,32 @@
+@startuml
+left to right direction
+title Foodcore - Diagrama de Casos de Uso
+
+:Cliente não autenticado: as Cliente
+:Usuário autenticado: as Usuario
+
+rectangle "Sistema Foodcore" {
+  usecase "Realizar Login" as UC1
+  usecase "Criar Conta" as UC2
+  usecase "Alterar Dados Pessoais" as UC3
+  usecase "Alterar Senha" as UC4
+  usecase "Excluir Conta" as UC5
+  usecase "Gerenciar Endereços" as UC6
+  usecase "Validar Token" as UC8
+
+  note right of UC1
+    Gera token JWT para
+    autenticação subsequente
+  end note
+}
+
+Cliente --> UC1
+Cliente --> UC2
+
+Usuario --> UC3
+Usuario --> UC4
+Usuario --> UC5
+Usuario --> UC6
+Usuario ..> UC8
+
+@enduml
