@@ -13,13 +13,11 @@ import com.fiap.foodcore.exception.DataNotFoundException;
 import com.fiap.foodcore.persistence.repository.UserRepository;
 import com.fiap.foodcore.service.UserService;
 import com.fiap.foodcore.service.strategy.CreateUserStrategyFactory;
-import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-@Transactional
 @Service
 public class UserServiceImpl implements UserService {
 
