@@ -56,7 +56,6 @@ public class User {
     public void updateInformation(UserUpdateRequestDTO dto) {
         this.nome = dto.nome();
         this.email = dto.email();
-        this.tipo = dto.tipo();
 
         if (dto.enderecos() != null) {
             if (this.address == null) {

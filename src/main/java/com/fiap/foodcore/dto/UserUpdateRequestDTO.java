@@ -15,9 +15,6 @@ public record UserUpdateRequestDTO(@NotBlank(message = "Nome é obrigatório")
                                       @NotBlank(message = "Email é obrigatório")
                                       String email,
 
-                                   @NotNull(message = "Tipo de usuário é obrigatório")
-                                      UserType tipo,
-
                                    @NotNull(message = "Necessário informar um endereço.")
                                    @NotEmpty(message = "A lista de endereços não pode estar vazia.")
                                    List<AddressUpdateRequestDTO> enderecos

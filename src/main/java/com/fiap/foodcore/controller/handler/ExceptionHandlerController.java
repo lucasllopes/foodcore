@@ -5,8 +5,6 @@ import com.fiap.foodcore.dto.ValidationErrorDTO;
 import com.fiap.foodcore.exception.DuplicatedDataException;
 import com.fiap.foodcore.exception.DataNotFoundException;
 import com.fiap.foodcore.exception.WrongPasswordException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -14,14 +12,13 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestControllerAdvice
 public class ExceptionHandlerController {
-
-    private static final Logger logger = LoggerFactory.getLogger(ExceptionHandlerController.class);
 
 
     @ExceptionHandler(DuplicatedDataException.class)
@@ -53,5 +50,10 @@ public class ExceptionHandlerController {
             errors.add(fieldError.getField() + ": " + fieldError.getDefaultMessage());
         }
         return ResponseEntity.status(status.value()).body(new ValidationErrorDTO(errors, status.value()));
+    }
+
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public ResponseEntity<MessageErrorDTO> tratarNotFound(NoHandlerFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageErrorDTO("Endpoint não encontrado"));
     }
 }
