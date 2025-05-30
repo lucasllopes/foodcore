@@ -60,6 +60,6 @@ public class ExceptionHandlerController {
 
     @ExceptionHandler(UserTypeNotFoundException.class)
     public ResponseEntity<MessageErrorDTO> handleUserTypeNotFound(UserTypeNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageErrorDTO("Tipo de usuário inválido. " + ex.getMessage()));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageErrorDTO("Tipo de usuário inválido. " + ex.getMessage()));
     }
 }
