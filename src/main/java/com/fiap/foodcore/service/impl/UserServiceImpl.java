@@ -10,6 +10,7 @@ import com.fiap.foodcore.exception.WrongPasswordException;
 import com.fiap.foodcore.persistence.entity.UserEntity;
 import com.fiap.foodcore.exception.DuplicatedDataException;
 import com.fiap.foodcore.exception.DataNotFoundException;
+import com.fiap.foodcore.persistence.entity.UserType;
 import com.fiap.foodcore.persistence.repository.UserRepository;
 import com.fiap.foodcore.service.UserService;
 import com.fiap.foodcore.service.strategy.CreateUserStrategyFactory;
@@ -50,10 +51,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDTO createUser(UserCreateRequestDTO dto) {
-        var strategy = strategyFactory.getStrategy(dto.tipo());
+        UserType userType = UserType.fromString(dto.tipo());
+        var strategy = strategyFactory.getStrategy(userType);
         return strategy.create(dto);
     }
-
 
     @Override
     public UserResponseDTO updateUser(Long id, UserUpdateRequestDTO dto) {

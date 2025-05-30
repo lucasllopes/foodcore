@@ -4,6 +4,7 @@ import com.fiap.foodcore.dto.MessageErrorDTO;
 import com.fiap.foodcore.dto.ValidationErrorDTO;
 import com.fiap.foodcore.exception.DuplicatedDataException;
 import com.fiap.foodcore.exception.DataNotFoundException;
+import com.fiap.foodcore.exception.UserTypeNotFoundException;
 import com.fiap.foodcore.exception.WrongPasswordException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,5 +56,10 @@ public class ExceptionHandlerController {
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseEntity<MessageErrorDTO> tratarNotFound(NoHandlerFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageErrorDTO("Endpoint não encontrado"));
+    }
+
+    @ExceptionHandler(UserTypeNotFoundException.class)
+    public ResponseEntity<MessageErrorDTO> handleUserTypeNotFound(UserTypeNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageErrorDTO("Tipo de usuário inválido. " + ex.getMessage()));
     }
 }

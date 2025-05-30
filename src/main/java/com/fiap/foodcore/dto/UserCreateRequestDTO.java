@@ -22,7 +22,7 @@ public record UserCreateRequestDTO(
         String senha,
 
         @NotNull(message = "Tipo de usuário é obrigatório")
-        UserType tipo,
+        String tipo,
 
         @NotNull(message = "Necessário informar um endereço.")
         List<AddressCreateRequestDTO> enderecos
