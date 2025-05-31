@@ -43,14 +43,14 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserResponseDTO> createUser(@RequestBody @Valid UserCreateRequestDTO dto) {
+    public ResponseEntity<UserResponseDTO> createUser(@Valid @RequestBody UserCreateRequestDTO dto) {
         logger.info("Handling POST request to /usuarios");
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(dto));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("#id == principal.id")
-    public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @RequestBody @Valid UserUpdateRequestDTO dto) {
+    public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @Valid @RequestBody UserUpdateRequestDTO dto) {
         logger.info("Handling PUT request to /usuarios");
         return ResponseEntity.ok(userService.updateUser(id, dto));
     }
@@ -67,7 +67,7 @@ public class UserController {
     @PreAuthorize("#id == principal.id")
     public ResponseEntity<String> changePassword(
             @PathVariable Long id,
-            @RequestBody @Valid ChangePasswordRequestDTO dto
+            @Valid @RequestBody ChangePasswordRequestDTO dto
     ) {
         logger.info("Handling PUT request to /usuarios/{id}/senha");
         userService.changePassword(id, dto);

@@ -1,6 +1,7 @@
 package com.fiap.foodcore.dto;
 
 import com.fiap.foodcore.persistence.entity.UserType;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -27,6 +28,7 @@ public record UserCreateRequestDTO(
 
         @NotNull(message = "Necessário informar um endereço.")
         @NotEmpty(message = "A lista de endereços não pode estar vazia.")
+        @Valid
         List<AddressCreateRequestDTO> enderecos
 
 ) {}

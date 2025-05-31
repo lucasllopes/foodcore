@@ -11,10 +11,7 @@ import com.fiap.foodcore.infrastructure.UserDetailsAdapter;
 import com.fiap.foodcore.service.TokenService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.*;
 
 @Service
 public class TokenServiceImpl implements TokenService {
@@ -56,7 +53,10 @@ public class TokenServiceImpl implements TokenService {
     }
 
     public Instant tokenExpiration(Integer minutos){
-        //TODO: configurar horario local do docker
-        return LocalDateTime.now().plusMinutes(minutos).toInstant(ZoneOffset.of("+00:00"));
+        ZoneId zoneId = ZoneId.of("America/Sao_Paulo");
+        return LocalDateTime.now(zoneId)
+                .plusMinutes(minutos)
+                .atZone(zoneId)
+                .toInstant();
     }
 }

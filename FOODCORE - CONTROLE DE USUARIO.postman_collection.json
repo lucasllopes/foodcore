@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "7a0f7363-e114-4f16-8c34-3525491779cf",
+		"_postman_id": "28fb32d0-24bb-4dc7-ad32-b63bf293eaa1",
 		"name": "FOODCORE - CONTROLE DE USUARIO",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "9099310"
@@ -14,7 +14,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imp2aXRvciIsImV4cCI6MTc0ODU2OTgxNX0.8YX_W_oDFqT7Mz0tIdj4m1WdtfnM5J1ygP4QJjF2Ves",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6InRlc3RlMWluc2VydDEiLCJleHAiOjE3NDg3MTYwMzR9.E19mNOvf3SYYm6oqqjuVP0VRbYZXpMuTw3Z8OLdxUW8",
 							"type": "string"
 						}
 					]
@@ -50,7 +50,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6InRlc3RlMWluc2VydDEiLCJleHAiOjE3NDg1NzExNTF9.Es45BblpJsq9KAi_cyhK3rsimuboXa7qCxBWbdUUTFg",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6InRlc3RlMWluc2VydDEiLCJleHAiOjE3NDg3MTU3MzN9.Y3YpeVnyQDnxaSP6VUl4pUt3FIC1erFQMbLRrE7yoj8",
 							"type": "string"
 						}
 					]
@@ -120,7 +120,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"nome\": \"USUARIO DE TESTE1 - INSERT 1\",\r\n    \"email\": \"usuario1testeinsert1@email.com\",\r\n    \"login\": \"teste1insert1\",\r\n    \"senha\": \"123456\",\r\n    \"tipo\": \"DONO\",\r\n    \"enderecos\": [\r\n        {\r\n            \"logradouro\": \"Rua Nova 1\",\r\n            \"numero\": \"123\",\r\n            \"complemento\": \"Apto 11\",\r\n            \"bairro\": \"Centro 11\",\r\n            \"cep\": \"01234-000 41\",\r\n            \"estado\": \"SP\",\r\n            \"cidade\": \"São Paulo\"\r\n        },\r\n                {\r\n            \"logradouro\": \"Rua Nova 41-2\",\r\n            \"numero\": \"124\",\r\n            \"complemento\": \"Apto 41-2\",\r\n            \"bairro\": \"Centro 41-2\",\r\n            \"cep\": \"01234-000 41-2\",\r\n            \"estado\": \"SP\",\r\n            \"cidade\": \"São Paulo\"\r\n        }\r\n    ]\r\n}",
+					"raw": "{\r\n    \"nome\": \"USUARIO DE TESTE1 - INSERT 1\",\r\n    \"email\": \"usuario1testeinsert1@email.com\",\r\n    \"login\": \"teste1insert1\",\r\n    \"senha\": \"123456\",\r\n    \"tipo\": \"DONO\",\r\n    \"enderecos\": [\r\n        {\r\n            \"logradouro\": \"Rua 1\",\r\n            \"numero\": \"123\",\r\n            \"complemento\": \"Apto 11\",\r\n            \"bairro\": \"Centro 11\",\r\n            \"cep\": \"01234-000 41\",\r\n            \"estado\": \"SP\",\r\n            \"cidade\": \"São Paulo\"\r\n        },\r\n        {\r\n            \"logradouro\": \"Rua 41-2\",\r\n            \"numero\": \"124\",\r\n            \"complemento\": \"Apto 41-2\",\r\n            \"bairro\": \"Centro 41-2\",\r\n            \"cep\": \"01234-000 41-2\",\r\n            \"estado\": \"SP\",\r\n            \"cidade\": \"São Paulo\"\r\n        }\r\n    ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -149,7 +149,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imp2aXRvciIsImV4cCI6MTc0ODU3MDg1MX0.hmckGq_HytiAMuFn14nMYcF78Mpt7RUy3NNQJg01Urg",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6InRlc3RlMWluc2VydDEiLCJleHAiOjE3NDg3MTU3MzN9.Y3YpeVnyQDnxaSP6VUl4pUt3FIC1erFQMbLRrE7yoj8",
 							"type": "string"
 						}
 					]
@@ -164,7 +164,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": " {\r\n            \"nome\": \"TESTE INSERT 1 MUDOU PARA UPDATE 1\",\r\n            \"email\": \"testeinsertmudouaposupdate@email.com\",\r\n            \"login\": \"insert4\",\r\n            \"enderecos\": [\r\n                {\r\n                    \"logradouro\": \"Rua Nova MUDOU\",\r\n                    \"numero\": \"123 41 MUDOU\",\r\n                    \"complemento\": \"Apto 41 MUDOU\",\r\n                    \"bairro\": \"Centro 41 MUDOU\",\r\n                    \"cep\": \"01234-000 41 MUDOU\",\r\n                    \"estado\": \"SP\",\r\n                    \"cidade\": \"São Paulo\"\r\n                },\r\n                {\r\n                    \"logradouro\": \"Rua Nova 41-2 MUDOU\",\r\n                    \"numero\": \"123 41-2 MUDOU\",\r\n                    \"complemento\": \"Apto 41-2 MUDOU\",\r\n                    \"bairro\": \"Centro 41-2 MUDOU\",\r\n                    \"cep\": \"01234-000 41-2 MUDOU\",\r\n                    \"estado\": \"SP\",\r\n                    \"cidade\": \"São Paulo\"\r\n                }\r\n            ]\r\n        }",
+					"raw": "{\r\n    \"nome\": \"TESTE INSERT 1 MUDOU PARA UPDATE 1\",\r\n    \"email\": \"testeinsertmudouaposupdate@email.com\",\r\n    \"enderecos\": [\r\n        {\r\n            \"logradouro\": \"Rua Nova MUDOU\",\r\n            \"numero\": \"123 41 MUDOU\",\r\n            \"complemento\": \"Apto 41 MUDOU\",\r\n            \"bairro\": \"Centro 41 MUDOU\",\r\n            \"cep\": \"01234-000 41 MUDOU\",\r\n            \"estado\": \"SP\",\r\n            \"cidade\": \"São Paulo\"\r\n        },\r\n        {\r\n            \"logradouro\": \"Rua Nova 41-2 MUDOU\",\r\n            \"numero\": \"123 41-2 MUDOU\",\r\n            \"complemento\": \"Apto 41-2 MUDOU\",\r\n            \"bairro\": \"Centro 41-2 MUDOU\",\r\n            \"cep\": \"01234-000 41-2 MUDOU\",\r\n            \"estado\": \"SP\",\r\n            \"cidade\": \"São Paulo\"\r\n        }\r\n    ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -200,7 +200,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"login\": \"teste1insert1\",\r\n  \"senha\": \"123456\"\r\n}",
+					"raw": "{\r\n    \"login\": \"teste1insert1\",\r\n    \"senha\": \"123456\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -229,7 +229,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6InRlc3RlaW5zZXJ0NCIsImV4cCI6MTc0ODU3MTAzOH0.psRuIVq7dV_FLoOKfoHDdbjE_hRdaxscMqaLM7UfdLE",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6InRlc3RlMWluc2VydDEiLCJleHAiOjE3NDg3MTYwMzR9.E19mNOvf3SYYm6oqqjuVP0VRbYZXpMuTw3Z8OLdxUW8",
 							"type": "string"
 						}
 					]
@@ -265,7 +265,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6InRlc3RlaW5zZXJ0MyIsImV4cCI6MTc0ODQ4MDg3OH0.lEMUk6rOR5W4ldsVuc5eMsbuRxffUsuCSB9aagQZpY4",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6InRlc3RlMWluc2VydDEiLCJleHAiOjE3NDg3MTU3NzV9.0eSx6SdaUT9TnYIAft0sdNDWOcUxQyK8WO_t4JftHFo",
 							"type": "string"
 						}
 					]
@@ -274,7 +274,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"senhaAtual\": \"123456\",\r\n  \"novaSenha\": \"123\"\r\n}",
+					"raw": "{\r\n    \"senhaAtual\": \"123456\",\r\n    \"novaSenha\": \"123\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

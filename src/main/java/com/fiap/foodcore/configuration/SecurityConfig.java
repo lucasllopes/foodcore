@@ -4,7 +4,6 @@ import com.fiap.foodcore.controller.handler.CustomAccessDeniedHandler;
 import com.fiap.foodcore.controller.handler.CustomAuthenticationEntryPoint;
 import com.fiap.foodcore.domain.model.User;
 import com.fiap.foodcore.infrastructure.UserDetailsAdapter;
-import com.fiap.foodcore.persistence.entity.UserType;
 import com.fiap.foodcore.persistence.entity.UserEntity;
 import com.fiap.foodcore.persistence.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
