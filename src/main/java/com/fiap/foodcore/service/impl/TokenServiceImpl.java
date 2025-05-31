@@ -56,6 +56,7 @@ public class TokenServiceImpl implements TokenService {
     }
 
     public Instant tokenExpiration(Integer minutos){
-        return LocalDateTime.now().plusMinutes(minutos).toInstant(ZoneOffset.of("-03:00"));
+        //TODO: configurar horario local do docker
+        return LocalDateTime.now().plusMinutes(minutos).toInstant(ZoneOffset.of("+00:00"));
     }
 }

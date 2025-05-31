@@ -45,7 +45,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(req -> {
                     req.requestMatchers("/login").permitAll();
                     req.requestMatchers(HttpMethod.POST, "/usuarios").permitAll();
-                    req.requestMatchers(HttpMethod.DELETE, "/usuarios/*").hasRole(UserType.DONO.name());
+                    req.requestMatchers(HttpMethod.DELETE, "/usuarios/*");
                     req.anyRequest().authenticated();
                 })
                 .exceptionHandling(ex -> ex

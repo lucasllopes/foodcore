@@ -5,7 +5,6 @@ import com.fiap.foodcore.dto.UserCreateRequestDTO;
 import com.fiap.foodcore.dto.UserResponseDTO;
 import com.fiap.foodcore.dto.UserUpdateRequestDTO;
 import com.fiap.foodcore.service.UserService;
-import com.fiap.foodcore.service.impl.UserServiceImpl;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
