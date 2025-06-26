@@ -1,7 +1,7 @@
 package com.fiap.foodcore.converter;
 
 import com.fiap.foodcore.domain.model.Address;
-import com.fiap.foodcore.persistence.entity.AddressEntity;
+import com.fiap.foodcore.adapter.out.persistence.entity.AddressEntity;
 
 public class AddressConverter {
 

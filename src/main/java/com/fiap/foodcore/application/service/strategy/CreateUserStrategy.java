@@ -1,4 +1,4 @@
-package com.fiap.foodcore.service.strategy;
+package com.fiap.foodcore.application.service.strategy;
 
 
 import com.fiap.foodcore.dto.UserCreateRequestDTO;

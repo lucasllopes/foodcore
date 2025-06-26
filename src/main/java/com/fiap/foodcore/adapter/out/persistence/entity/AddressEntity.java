@@ -1,4 +1,4 @@
-package com.fiap.foodcore.persistence.entity;
+package com.fiap.foodcore.adapter.out.persistence.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

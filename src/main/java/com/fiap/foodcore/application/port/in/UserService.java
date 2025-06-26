@@ -1,4 +1,4 @@
-package com.fiap.foodcore.service;
+package com.fiap.foodcore.application.port.in;
 
 import com.fiap.foodcore.dto.ChangePasswordRequestDTO;
 import com.fiap.foodcore.dto.UserCreateRequestDTO;
@@ -6,6 +6,7 @@ import com.fiap.foodcore.dto.UserResponseDTO;
 import com.fiap.foodcore.dto.UserUpdateRequestDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
 
 public interface UserService {
 

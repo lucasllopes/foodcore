@@ -2,7 +2,7 @@ package com.fiap.foodcore.controller;
 
 import com.fiap.foodcore.dto.LoginRequestDTO;
 import com.fiap.foodcore.infrastructure.UserDetailsAdapter;
-import com.fiap.foodcore.service.TokenService;
+import com.fiap.foodcore.application.port.out.TokenService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

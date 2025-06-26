@@ -1,4 +1,4 @@
-package com.fiap.foodcore.service.impl;
+package com.fiap.foodcore.adapter.in;
 
 import com.fiap.foodcore.converter.UserConverter;
 import com.fiap.foodcore.domain.model.User;
@@ -7,13 +7,13 @@ import com.fiap.foodcore.dto.UserCreateRequestDTO;
 import com.fiap.foodcore.dto.UserResponseDTO;
 import com.fiap.foodcore.dto.UserUpdateRequestDTO;
 import com.fiap.foodcore.exception.WrongPasswordException;
-import com.fiap.foodcore.persistence.entity.UserEntity;
+import com.fiap.foodcore.adapter.out.persistence.entity.UserEntity;
 import com.fiap.foodcore.exception.DuplicatedDataException;
 import com.fiap.foodcore.exception.DataNotFoundException;
-import com.fiap.foodcore.persistence.entity.UserType;
-import com.fiap.foodcore.persistence.repository.UserRepository;
-import com.fiap.foodcore.service.UserService;
-import com.fiap.foodcore.service.strategy.CreateUserStrategyFactory;
+import com.fiap.foodcore.adapter.out.persistence.entity.UserType;
+import com.fiap.foodcore.adapter.out.persistence.UserRepository;
+import com.fiap.foodcore.application.port.in.UserService;
+import com.fiap.foodcore.application.service.strategy.CreateUserStrategyFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;

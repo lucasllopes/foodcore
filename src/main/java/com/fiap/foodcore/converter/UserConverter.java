@@ -4,9 +4,9 @@ import com.fiap.foodcore.domain.model.User;
 import com.fiap.foodcore.dto.AddressResponseDTO;
 import com.fiap.foodcore.dto.UserCreateRequestDTO;
 import com.fiap.foodcore.dto.UserResponseDTO;
-import com.fiap.foodcore.persistence.entity.AddressEntity;
-import com.fiap.foodcore.persistence.entity.UserType;
-import com.fiap.foodcore.persistence.entity.UserEntity;
+import com.fiap.foodcore.adapter.out.persistence.entity.AddressEntity;
+import com.fiap.foodcore.adapter.out.persistence.entity.UserType;
+import com.fiap.foodcore.adapter.out.persistence.entity.UserEntity;
 
 import java.util.List;
 import java.util.stream.Collectors;

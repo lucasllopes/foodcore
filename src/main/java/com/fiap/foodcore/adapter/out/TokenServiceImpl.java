@@ -1,4 +1,4 @@
-package com.fiap.foodcore.service.impl;
+package com.fiap.foodcore.adapter.out;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -8,7 +8,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fiap.foodcore.exception.TokenJwtException;
 import com.fiap.foodcore.infrastructure.UserDetailsAdapter;
-import com.fiap.foodcore.service.TokenService;
+import com.fiap.foodcore.application.port.out.TokenService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import java.time.*;
@@ -18,8 +18,6 @@ public class TokenServiceImpl implements TokenService {
 
     @Value("${jwt.secret}")
     private String secret;
-
-    //private final String secret = "b2JkdBz!P9lKb2$q8KqLzJQbP29sWzVg";
 
     @Override
     public String generateToken(UserDetailsAdapter usuario) {

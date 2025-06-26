@@ -1,4 +1,4 @@
-package com.fiap.foodcore.persistence.entity;
+package com.fiap.foodcore.adapter.out.persistence.entity;
 
 import com.fiap.foodcore.exception.UserTypeNotFoundException;
 import org.springframework.security.core.GrantedAuthority;

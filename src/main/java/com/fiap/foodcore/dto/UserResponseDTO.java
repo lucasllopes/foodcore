@@ -1,6 +1,6 @@
 package com.fiap.foodcore.dto;
 
-import com.fiap.foodcore.persistence.entity.UserType;
+import com.fiap.foodcore.adapter.out.persistence.entity.UserType;
 
 import java.util.List;
 

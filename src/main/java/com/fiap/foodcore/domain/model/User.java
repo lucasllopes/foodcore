@@ -3,8 +3,8 @@ package com.fiap.foodcore.domain.model;
 import com.fiap.foodcore.dto.AddressCreateRequestDTO;
 import com.fiap.foodcore.dto.UserCreateRequestDTO;
 import com.fiap.foodcore.dto.UserUpdateRequestDTO;
-import com.fiap.foodcore.persistence.entity.UserType;
-import com.fiap.foodcore.persistence.entity.UserEntity;
+import com.fiap.foodcore.adapter.out.persistence.entity.UserType;
+import com.fiap.foodcore.adapter.out.persistence.entity.UserEntity;
 import lombok.Getter;
 
 import java.time.LocalDateTime;

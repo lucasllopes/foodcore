@@ -2,7 +2,7 @@ package com.fiap.foodcore.domain.model;
 
 import com.fiap.foodcore.dto.AddressCreateRequestDTO;
 import com.fiap.foodcore.dto.AddressUpdateRequestDTO;
-import com.fiap.foodcore.persistence.entity.AddressEntity;
+import com.fiap.foodcore.adapter.out.persistence.entity.AddressEntity;
 import lombok.Getter;
 
 import java.util.List;
