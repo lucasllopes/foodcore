@@ -1,11 +1,11 @@
 package com.fiap.foodcore.configuration;
 
-import com.fiap.foodcore.domain.model.User;
+import com.fiap.foodcore.core.model.domain.User;
 import com.fiap.foodcore.exception.TokenJwtException;
 import com.fiap.foodcore.infrastructure.UserDetailsAdapter;
 import com.fiap.foodcore.adapter.out.persistence.entity.UserEntity;
-import com.fiap.foodcore.adapter.out.persistence.UserRepository;
-import com.fiap.foodcore.application.port.out.TokenService;
+import com.fiap.foodcore.adapter.out.persistence.jpa.UserRepository;
+import com.fiap.foodcore.core.port.out.TokenServicePort;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,11 +22,11 @@ import java.io.IOException;
 @Component
 public class FilterToken extends OncePerRequestFilter {
 
-    private final TokenService tokenService;
+    private final TokenServicePort tokenServicePort;
     private final UserRepository userRepository;
 
-    private FilterToken(TokenService tokenService, UserRepository userRepository) {
-        this.tokenService = tokenService;
+    private FilterToken(TokenServicePort tokenServicePort, UserRepository userRepository) {
+        this.tokenServicePort = tokenServicePort;
         this.userRepository = userRepository;
     }
 
@@ -36,7 +36,7 @@ public class FilterToken extends OncePerRequestFilter {
 
         try{
             if(token != null){
-                String login = tokenService.validateToken(token);
+                String login = tokenServicePort.validateToken(token);
 
                 UserEntity userEntity = userRepository.findByLoginIgnoreCase(login)
                         .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado."));

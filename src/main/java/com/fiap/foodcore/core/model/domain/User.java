@@ -1,4 +1,4 @@
-package com.fiap.foodcore.domain.model;
+package com.fiap.foodcore.core.model.domain;
 
 import com.fiap.foodcore.dto.AddressCreateRequestDTO;
 import com.fiap.foodcore.dto.UserCreateRequestDTO;

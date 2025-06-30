@@ -8,13 +8,17 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fiap.foodcore.exception.TokenJwtException;
 import com.fiap.foodcore.infrastructure.UserDetailsAdapter;
-import com.fiap.foodcore.application.port.out.TokenService;
+import com.fiap.foodcore.core.port.out.TokenServicePort;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import java.time.*;
 
 @Service
-public class TokenServiceImpl implements TokenService {
+public class TokenServiceImpl implements TokenServicePort {
+
+    // TODO
+    //REFATORAR ESSA CLASSE
+
 
     @Value("${jwt.secret}")
     private String secret;

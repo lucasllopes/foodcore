@@ -2,7 +2,7 @@ package com.fiap.foodcore.controller;
 
 import com.fiap.foodcore.dto.LoginRequestDTO;
 import com.fiap.foodcore.infrastructure.UserDetailsAdapter;
-import com.fiap.foodcore.application.port.out.TokenService;
+import com.fiap.foodcore.core.port.out.TokenServicePort;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,12 +20,12 @@ public class LoginController {
 
     private final static Logger logger = LoggerFactory.getLogger(LoginController.class);
 
-    private final TokenService tokenService;
+    private final TokenServicePort tokenServicePort;
 
     private final AuthenticationManager authenticationManager;
 
-    public LoginController(TokenService tokenService, AuthenticationManager authenticationManager) {
-        this.tokenService = tokenService;
+    public LoginController(TokenServicePort tokenServicePort, AuthenticationManager authenticationManager) {
+        this.tokenServicePort = tokenServicePort;
         this.authenticationManager = authenticationManager;
     }
 
@@ -39,7 +39,7 @@ public class LoginController {
 
         var userDetails = (UserDetailsAdapter) authentication.getPrincipal();
 
-        String token = tokenService.generateToken(userDetails);
+        String token = tokenServicePort.generateToken(userDetails);
         return ResponseEntity.ok(token);
     }
 }

@@ -1,9 +1,9 @@
-package com.fiap.foodcore.converter;
+package com.fiap.foodcore.adapter.out.persistence.mapper;
 
-import com.fiap.foodcore.domain.model.Address;
+import com.fiap.foodcore.core.model.domain.Address;
 import com.fiap.foodcore.adapter.out.persistence.entity.AddressEntity;
 
-public class AddressConverter {
+public class AddressMapper {
 
     public static AddressEntity toEntity(Address address) {
         if (address == null) return null;

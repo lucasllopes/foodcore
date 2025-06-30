@@ -1,4 +1,4 @@
-package com.fiap.foodcore.adapter.out.persistence;
+package com.fiap.foodcore.adapter.out.persistence.jpa;
 
 import com.fiap.foodcore.adapter.out.persistence.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

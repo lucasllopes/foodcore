@@ -1,8 +1,7 @@
-package com.fiap.foodcore.application.port.out;
+package com.fiap.foodcore.core.port.out;
 
-public interface TokenService {
+public interface TokenServicePort {
 
     String generateToken(String subject);
-
     String validateToken(String token);
 }

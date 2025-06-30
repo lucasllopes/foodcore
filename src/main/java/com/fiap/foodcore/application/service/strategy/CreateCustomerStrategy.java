@@ -1,14 +1,15 @@
 package com.fiap.foodcore.application.service.strategy;
 
 
-import com.fiap.foodcore.converter.UserConverter;
-import com.fiap.foodcore.domain.model.User;
+import com.fiap.foodcore.adapter.in.web.mapper.UserDtoMapper;
+import com.fiap.foodcore.adapter.out.persistence.mapper.UserMapper;
+import com.fiap.foodcore.core.model.domain.User;
 import com.fiap.foodcore.dto.UserCreateRequestDTO;
 import com.fiap.foodcore.dto.UserResponseDTO;
 import com.fiap.foodcore.exception.DuplicatedDataException;
 import com.fiap.foodcore.adapter.out.persistence.entity.UserType;
 import com.fiap.foodcore.adapter.out.persistence.entity.UserEntity;
-import com.fiap.foodcore.adapter.out.persistence.UserRepository;
+import com.fiap.foodcore.adapter.out.persistence.jpa.UserRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -31,10 +32,10 @@ public class CreateCustomerStrategy implements CreateUserStrategy {
         validateDuplicateForCreation(dto);
 
         String encryptedPassword = passwordEncoder.encode(dto.senha());
-        User user = UserConverter.fromCreateDto(encryptedPassword, UserType.CLIENTE, dto);
+        User user = UserDtoMapper.fromCreateDto(encryptedPassword, UserType.CLIENTE, dto);
 
-        UserEntity salvo = userRepository.save(UserConverter.toEntity(user));
-        return UserConverter.toResponseDTO(UserConverter.toDomain(salvo));
+        UserEntity salvo = userRepository.save(UserMapper.toEntity(user));
+        return UserDtoMapper.toResponseDto(UserMapper.toDomain(salvo));
     }
 
     private void validateDuplicateForCreation(UserCreateRequestDTO dto) {
