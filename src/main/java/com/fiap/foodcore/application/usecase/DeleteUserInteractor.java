@@ -1,23 +1,19 @@
 package com.fiap.foodcore.application.usecase;
 
-import com.fiap.foodcore.core.port.in.DeleteUserUseCase;
-import com.fiap.foodcore.core.port.out.UserRepositoryPort;
+import com.fiap.foodcore.application.gateway.UserGateway;
 import com.fiap.foodcore.exception.DataNotFoundException;
-import org.springframework.stereotype.Service;
 
-@Service
-public class DeleteUserInteractor implements DeleteUserUseCase {
+public class DeleteUserInteractor {
 
-    private final UserRepositoryPort userRepositoryPort;
+    private final UserGateway userGateway;
 
-    public DeleteUserInteractor(UserRepositoryPort userRepositoryPort) {
-        this.userRepositoryPort = userRepositoryPort;
+    public DeleteUserInteractor(UserGateway userGateway) {
+        this.userGateway = userGateway;
     }
 
-    @Override
     public void execute(Long id) {
-        var user = userRepositoryPort.findById(id)
+        var user = userGateway.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Usuário não encontrado"));
-        userRepositoryPort.delete(user);
+        userGateway.delete(user);
     }
 }

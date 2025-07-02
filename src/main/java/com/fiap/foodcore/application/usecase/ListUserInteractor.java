@@ -1,27 +1,23 @@
 package com.fiap.foodcore.application.usecase;
 
-import com.fiap.foodcore.adapter.in.web.mapper.UserDtoMapper;
-import com.fiap.foodcore.core.model.domain.DomainPage;
-import com.fiap.foodcore.core.model.domain.PageRequestDomain;
-import com.fiap.foodcore.core.model.domain.User;
-import com.fiap.foodcore.core.port.in.ListUsersUseCase;
-import com.fiap.foodcore.core.port.out.UserRepositoryPort;
+import com.fiap.foodcore.infrastructure.gateways.mapper.UserDtoMapper;
+import com.fiap.foodcore.domain.DomainPage;
+import com.fiap.foodcore.domain.PageRequestDomain;
+import com.fiap.foodcore.domain.User;
+import com.fiap.foodcore.application.gateway.UserGateway;
 import com.fiap.foodcore.dto.UserResponseDTO;
-import org.springframework.stereotype.Service;
 
-@Service
-public class ListUserInteractor implements ListUsersUseCase {
+public class ListUserInteractor {
 
-    private final UserRepositoryPort userRepositoryPort;
+    private final UserGateway userGateway;
 
-    public ListUserInteractor(UserRepositoryPort userRepositoryPort) {
-        this.userRepositoryPort = userRepositoryPort;
+    public ListUserInteractor(UserGateway userGateway) {
+        this.userGateway = userGateway;
     }
 
-    @Override
     public DomainPage<UserResponseDTO> execute(PageRequestDomain pageRequest) {
         DomainPage<User> domainPage =
-                userRepositoryPort.findAll(pageRequest);
+                userGateway.findAll(pageRequest);
 
         return domainPage.map(UserDtoMapper::toResponseDto);
     }

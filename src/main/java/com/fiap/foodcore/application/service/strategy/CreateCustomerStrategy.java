@@ -1,15 +1,15 @@
 package com.fiap.foodcore.application.service.strategy;
 
 
-import com.fiap.foodcore.adapter.in.web.mapper.UserDtoMapper;
-import com.fiap.foodcore.adapter.out.persistence.mapper.UserMapper;
-import com.fiap.foodcore.core.model.domain.User;
+import com.fiap.foodcore.infrastructure.gateways.mapper.UserDtoMapper;
+import com.fiap.foodcore.infrastructure.gateways.mapper.UserMapper;
+import com.fiap.foodcore.domain.User;
 import com.fiap.foodcore.dto.UserCreateRequestDTO;
 import com.fiap.foodcore.dto.UserResponseDTO;
 import com.fiap.foodcore.exception.DuplicatedDataException;
-import com.fiap.foodcore.adapter.out.persistence.entity.UserType;
-import com.fiap.foodcore.adapter.out.persistence.entity.UserEntity;
-import com.fiap.foodcore.adapter.out.persistence.jpa.UserRepository;
+import com.fiap.foodcore.infrastructure.gateways.persistence.entity.UserType;
+import com.fiap.foodcore.infrastructure.gateways.persistence.entity.UserEntity;
+import com.fiap.foodcore.infrastructure.gateways.persistence.UserRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

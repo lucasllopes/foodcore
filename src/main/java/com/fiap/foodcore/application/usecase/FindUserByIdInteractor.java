@@ -1,24 +1,21 @@
 package com.fiap.foodcore.application.usecase;
 
-import com.fiap.foodcore.adapter.in.web.mapper.UserDtoMapper;
-import com.fiap.foodcore.core.port.in.FindUserByIdUseCase;
-import com.fiap.foodcore.core.port.out.UserRepositoryPort;
+import com.fiap.foodcore.infrastructure.gateways.mapper.UserDtoMapper;
+import com.fiap.foodcore.application.gateway.UserGateway;
 import com.fiap.foodcore.dto.UserResponseDTO;
 import com.fiap.foodcore.exception.DataNotFoundException;
-import org.springframework.stereotype.Service;
 
-@Service
-public class FindUserByIdInteractor implements FindUserByIdUseCase {
+public class FindUserByIdInteractor {
 
-    private final UserRepositoryPort userRepositoryPort;
+    private final UserGateway userGateway;
 
-    public FindUserByIdInteractor(UserRepositoryPort userGateway) {
-        this.userRepositoryPort = userGateway;
+    public FindUserByIdInteractor(UserGateway userGateway) {
+        this.userGateway = userGateway;
     }
 
-    @Override
     public UserResponseDTO execute(Long id) {
-        return userRepositoryPort.findById(id)
+
+        return userGateway.findById(id)
                 .map(UserDtoMapper::toResponseDto)
                 .orElseThrow(() -> new DataNotFoundException("Usuário não encontrado"));
     }

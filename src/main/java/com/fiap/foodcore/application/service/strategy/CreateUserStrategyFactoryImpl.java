@@ -1,7 +1,7 @@
 package com.fiap.foodcore.application.service.strategy;
 
 
-import com.fiap.foodcore.adapter.out.persistence.entity.UserType;
+import com.fiap.foodcore.infrastructure.gateways.persistence.entity.UserType;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
