@@ -5,7 +5,7 @@ import com.fiap.foodcore.domain.DomainPage;
 import com.fiap.foodcore.domain.PageRequestDomain;
 import com.fiap.foodcore.domain.User;
 import com.fiap.foodcore.application.gateway.UserGateway;
-import com.fiap.foodcore.dto.UserResponseDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.UserResponseDTO;
 
 public class ListUserInteractor {
 

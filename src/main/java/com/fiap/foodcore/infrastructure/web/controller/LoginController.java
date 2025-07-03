@@ -1,7 +1,7 @@
-package com.fiap.foodcore.infrastructure.controller;
+package com.fiap.foodcore.infrastructure.web.controller;
 
-import com.fiap.foodcore.dto.LoginRequestDTO;
-import com.fiap.foodcore.UserDetailsAdapter;
+import com.fiap.foodcore.infrastructure.web.controller.dto.LoginRequestDTO;
+import com.fiap.foodcore.infrastructure.security.UserDetailsAdapter;
 import com.fiap.foodcore.application.gateway.TokenGateway;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -39,7 +39,7 @@ public class LoginController {
 
         var userDetails = (UserDetailsAdapter) authentication.getPrincipal();
 
-        String token = tokenGateway.generateToken(userDetails);
+        String token = tokenGateway.generateToken(userDetails.getUsername());
         return ResponseEntity.ok(token);
     }
 }

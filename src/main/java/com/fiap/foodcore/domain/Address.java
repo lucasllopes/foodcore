@@ -1,7 +1,7 @@
 package com.fiap.foodcore.domain;
 
-import com.fiap.foodcore.dto.AddressCreateRequestDTO;
-import com.fiap.foodcore.dto.AddressUpdateRequestDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.AddressCreateRequestDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.AddressUpdateRequestDTO;
 import com.fiap.foodcore.infrastructure.gateways.persistence.entity.AddressEntity;
 import lombok.Getter;
 

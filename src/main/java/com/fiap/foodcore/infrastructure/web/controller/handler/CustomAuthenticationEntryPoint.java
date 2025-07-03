@@ -1,7 +1,7 @@
-package com.fiap.foodcore.infrastructure.controller.handler;
+package com.fiap.foodcore.infrastructure.web.controller.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fiap.foodcore.dto.AuthErrorResponseDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.AuthErrorResponseDTO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

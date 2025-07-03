@@ -2,8 +2,8 @@ package com.fiap.foodcore.application.usecase;
 
 import com.fiap.foodcore.infrastructure.gateways.persistence.entity.UserType;
 import com.fiap.foodcore.application.service.strategy.CreateUserStrategyFactory;
-import com.fiap.foodcore.dto.UserCreateRequestDTO;
-import com.fiap.foodcore.dto.UserResponseDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.UserCreateRequestDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.UserResponseDTO;
 
 public class CreateUserInteractor {
 

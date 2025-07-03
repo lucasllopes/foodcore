@@ -1,8 +1,8 @@
 package com.fiap.foodcore.domain;
 
-import com.fiap.foodcore.dto.AddressCreateRequestDTO;
-import com.fiap.foodcore.dto.UserCreateRequestDTO;
-import com.fiap.foodcore.dto.UserUpdateRequestDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.AddressCreateRequestDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.UserCreateRequestDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.UserUpdateRequestDTO;
 import com.fiap.foodcore.infrastructure.gateways.persistence.entity.UserType;
 import com.fiap.foodcore.infrastructure.gateways.persistence.entity.UserEntity;
 import lombok.Getter;

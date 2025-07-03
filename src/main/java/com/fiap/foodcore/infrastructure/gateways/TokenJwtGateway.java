@@ -1,4 +1,4 @@
-package com.fiap.foodcore;
+package com.fiap.foodcore.infrastructure.gateways;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -13,16 +13,13 @@ import org.springframework.stereotype.Service;
 import java.time.*;
 
 @Service
-public class TokenImpl implements TokenGateway {
-
-    // TODO
-    //REFATORAR ESSA CLASSE
+public class TokenJwtGateway implements TokenGateway {
 
     @Value("${jwt.secret}")
     private String secret;
 
     @Override
-    public String generateToken(UserDetailsAdapter usuario) {
+    public String generateToken(String username) {
 
         try {
             Algorithm algoritmo = Algorithm.HMAC256(secret);
@@ -30,7 +27,7 @@ public class TokenImpl implements TokenGateway {
             return JWT
                     .create()
                     .withIssuer("Foodcore")
-                    .withSubject(usuario.getUsername())
+                    .withSubject(username)
                     .withExpiresAt(tokenExpiration(30))
                     .sign(algoritmo);
         }catch (JWTCreationException e){

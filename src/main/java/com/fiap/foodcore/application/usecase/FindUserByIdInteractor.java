@@ -2,7 +2,7 @@ package com.fiap.foodcore.application.usecase;
 
 import com.fiap.foodcore.infrastructure.gateways.mapper.UserDtoMapper;
 import com.fiap.foodcore.application.gateway.UserGateway;
-import com.fiap.foodcore.dto.UserResponseDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.UserResponseDTO;
 import com.fiap.foodcore.exception.DataNotFoundException;
 
 public class FindUserByIdInteractor {

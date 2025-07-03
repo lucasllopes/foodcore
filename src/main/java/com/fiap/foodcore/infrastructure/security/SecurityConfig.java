@@ -1,9 +1,8 @@
-package com.fiap.foodcore.configuration;
+package com.fiap.foodcore.infrastructure.security;
 
-import com.fiap.foodcore.infrastructure.controller.handler.CustomAccessDeniedHandler;
-import com.fiap.foodcore.infrastructure.controller.handler.CustomAuthenticationEntryPoint;
+import com.fiap.foodcore.infrastructure.web.controller.handler.CustomAccessDeniedHandler;
+import com.fiap.foodcore.infrastructure.web.controller.handler.CustomAuthenticationEntryPoint;
 import com.fiap.foodcore.domain.User;
-import com.fiap.foodcore.UserDetailsAdapter;
 import com.fiap.foodcore.infrastructure.gateways.persistence.entity.UserEntity;
 import com.fiap.foodcore.infrastructure.gateways.persistence.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

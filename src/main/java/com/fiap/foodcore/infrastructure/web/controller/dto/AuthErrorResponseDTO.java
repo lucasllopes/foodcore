@@ -1,4 +1,4 @@
-package com.fiap.foodcore.dto;
+package com.fiap.foodcore.infrastructure.web.controller.dto;
 
 public record AuthErrorResponseDTO(
         int status,

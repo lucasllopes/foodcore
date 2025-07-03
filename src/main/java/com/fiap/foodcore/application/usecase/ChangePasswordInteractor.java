@@ -1,7 +1,7 @@
 package com.fiap.foodcore.application.usecase;
 
 import com.fiap.foodcore.application.gateway.UserGateway;
-import com.fiap.foodcore.dto.ChangePasswordRequestDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.ChangePasswordRequestDTO;
 import com.fiap.foodcore.exception.DataNotFoundException;
 import com.fiap.foodcore.exception.WrongPasswordException;
 import org.springframework.security.crypto.password.PasswordEncoder;

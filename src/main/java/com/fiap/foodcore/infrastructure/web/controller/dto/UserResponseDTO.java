@@ -1,4 +1,4 @@
-package com.fiap.foodcore.dto;
+package com.fiap.foodcore.infrastructure.web.controller.dto;
 
 import com.fiap.foodcore.infrastructure.gateways.persistence.entity.UserType;
 

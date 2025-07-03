@@ -3,10 +3,10 @@ package com.fiap.foodcore.infrastructure.gateways.mapper;
 
 import com.fiap.foodcore.infrastructure.gateways.persistence.entity.UserType;
 import com.fiap.foodcore.domain.User;
-import com.fiap.foodcore.dto.AddressResponseDTO;
-import com.fiap.foodcore.dto.UserCreateRequestDTO;
-import com.fiap.foodcore.dto.UserResponseDTO;
-import com.fiap.foodcore.dto.UserUpdateRequestDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.AddressResponseDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.UserCreateRequestDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.UserResponseDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.UserUpdateRequestDTO;
 
 import java.util.List;
 import java.util.stream.Collectors;

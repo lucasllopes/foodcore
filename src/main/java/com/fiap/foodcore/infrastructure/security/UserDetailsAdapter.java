@@ -1,4 +1,4 @@
-package com.fiap.foodcore;
+package com.fiap.foodcore.infrastructure.security;
 
 import com.fiap.foodcore.domain.User;
 import org.springframework.security.core.GrantedAuthority;

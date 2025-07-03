@@ -1,21 +1,21 @@
 package com.fiap.foodcore.infrastructure.gateways.persistence.entity;
 
 import com.fiap.foodcore.exception.UserTypeNotFoundException;
-//import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Arrays;
 
-public enum UserType { //implements GrantedAuthority {
+public enum UserType implements GrantedAuthority {
     CLIENTE("Cliente"),
     DONO("Dono de Restaurante");
 
 
     private final String description;
 
-    /*@Override
+    @Override
     public String getAuthority() {
         return "ROLE_" + name();
-    }*/
+    }
 
     UserType(String description) {
         this.description = description;

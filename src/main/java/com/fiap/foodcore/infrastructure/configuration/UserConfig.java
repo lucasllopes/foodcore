@@ -1,4 +1,4 @@
-package com.fiap.foodcore.configuration;
+package com.fiap.foodcore.infrastructure.configuration;
 
 import com.fiap.foodcore.application.gateway.UserGateway;
 import com.fiap.foodcore.application.service.strategy.CreateUserStrategyFactory;
