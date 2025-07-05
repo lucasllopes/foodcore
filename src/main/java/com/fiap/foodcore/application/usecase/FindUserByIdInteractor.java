@@ -1,8 +1,8 @@
 package com.fiap.foodcore.application.usecase;
 
-import com.fiap.foodcore.infrastructure.gateways.mapper.UserDtoMapper;
+import com.fiap.foodcore.application.usecase.mapper.UserMapper;
+import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
 import com.fiap.foodcore.application.gateway.UserGateway;
-import com.fiap.foodcore.infrastructure.web.controller.dto.UserResponseDTO;
 import com.fiap.foodcore.exception.DataNotFoundException;
 
 public class FindUserByIdInteractor {
@@ -13,10 +13,9 @@ public class FindUserByIdInteractor {
         this.userGateway = userGateway;
     }
 
-    public UserResponseDTO execute(Long id) {
-
+    public CreateUserOutput execute(Long id) {
         return userGateway.findById(id)
-                .map(UserDtoMapper::toResponseDto)
+                .map(UserMapper::fromDomain)
                 .orElseThrow(() -> new DataNotFoundException("Usuário não encontrado"));
     }
 }

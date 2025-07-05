@@ -1,9 +1,9 @@
 package com.fiap.foodcore.infrastructure.gateways;
 
-import com.fiap.foodcore.infrastructure.gateways.mapper.UserMapper;
+import com.fiap.foodcore.infrastructure.mapper.UserEntityMapper;
 import com.fiap.foodcore.application.gateway.UserGateway;
-import com.fiap.foodcore.domain.DomainPage;
-import com.fiap.foodcore.domain.PageRequestDomain;
+import com.fiap.foodcore.domain.pagination.DomainPage;
+import com.fiap.foodcore.domain.pagination.PageRequestDomain;
 import com.fiap.foodcore.domain.User;
 import com.fiap.foodcore.infrastructure.gateways.persistence.UserRepository;
 
@@ -20,7 +20,7 @@ public class UserRepositoryGateway implements UserGateway {
     @Override
     public Optional<User> findById(Long id) {
         return userRepository.findById(id)
-                .map(UserMapper::toDomain);
+                .map(UserEntityMapper::toDomain);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class UserRepositoryGateway implements UserGateway {
                         .of(pageRequest.page(), pageRequest.size())
         );
         var items = springPage.getContent().stream()
-                .map(UserMapper::toDomain)
+                .map(UserEntityMapper::toDomain)
                 .toList();
         return new DomainPage<>(items, springPage.getTotalElements());
     }
@@ -38,19 +38,19 @@ public class UserRepositoryGateway implements UserGateway {
     @Override
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email)
-                .map(UserMapper::toDomain);
+                .map(UserEntityMapper::toDomain);
     }
 
     @Override
     public User save(User user) {
-        var entity = UserMapper.toEntity(user);
+        var entity = UserEntityMapper.toEntity(user);
         var saved = userRepository.save(entity);
-        return UserMapper.toDomain(saved);
+        return UserEntityMapper.toDomain(saved);
     }
 
     @Override
     public void delete(User user) {
-        var entity = UserMapper.toEntity(user);
+        var entity = UserEntityMapper.toEntity(user);
         userRepository.delete(entity);
     }
 }

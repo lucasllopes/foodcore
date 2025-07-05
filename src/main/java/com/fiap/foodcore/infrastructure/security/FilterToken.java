@@ -5,6 +5,7 @@ import com.fiap.foodcore.exception.TokenJwtException;
 import com.fiap.foodcore.infrastructure.gateways.persistence.entity.UserEntity;
 import com.fiap.foodcore.infrastructure.gateways.persistence.UserRepository;
 import com.fiap.foodcore.application.gateway.TokenGateway;
+import com.fiap.foodcore.infrastructure.mapper.UserEntityMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -40,7 +41,7 @@ public class FilterToken extends OncePerRequestFilter {
                 UserEntity userEntity = userRepository.findByLoginIgnoreCase(login)
                         .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado."));
 
-                User user = User.rebuildUserForTokenAuth(userEntity);
+                User user = UserEntityMapper.rebuildUserForTokenAuth(userEntity);
 
                 UserDetailsAdapter userDetailsAdapter = new UserDetailsAdapter(user);
 

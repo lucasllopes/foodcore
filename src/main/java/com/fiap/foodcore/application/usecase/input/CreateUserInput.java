@@ -1,15 +1,14 @@
-package com.fiap.foodcore.infrastructure.web.controller.dto;
-
+package com.fiap.foodcore.application.usecase.input;
 
 import com.fiap.foodcore.domain.UserTypeDomain;
 
 import java.util.List;
 
-public record UserResponseDTO(
-        Long id,
+public record CreateUserInput(
         String nome,
         String email,
         String login,
+        String senha,
         UserTypeDomain tipo,
-        List<AddressResponseDTO> enderecos
+        List<CreateAddressInput> enderecos
 ) {}

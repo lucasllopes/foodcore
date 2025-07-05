@@ -1,9 +1,9 @@
 package com.fiap.foodcore.application.usecase;
 
-import com.fiap.foodcore.infrastructure.gateways.persistence.entity.UserType;
-import com.fiap.foodcore.application.service.strategy.CreateUserStrategyFactory;
-import com.fiap.foodcore.infrastructure.web.controller.dto.UserCreateRequestDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.UserResponseDTO;
+import com.fiap.foodcore.application.strategy.CreateUserStrategyFactory;
+import com.fiap.foodcore.application.usecase.input.CreateUserInput;
+import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
+import com.fiap.foodcore.domain.UserTypeDomain;
 
 public class CreateUserInteractor {
 
@@ -13,9 +13,9 @@ public class CreateUserInteractor {
         this.strategyFactory = strategyFactory;
     }
 
-    public UserResponseDTO execute(UserCreateRequestDTO dto) {
-        var userType = UserType.fromString(dto.tipo());
+    public CreateUserOutput execute(CreateUserInput createUserInput) {
+        var userType = UserTypeDomain.fromString(createUserInput.tipo().name());
         var strategy = strategyFactory.getStrategy(userType);
-        return strategy.create(dto);
+        return strategy.create(createUserInput);
     }
 }

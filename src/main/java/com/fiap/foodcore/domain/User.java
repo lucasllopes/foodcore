@@ -1,10 +1,7 @@
 package com.fiap.foodcore.domain;
 
-import com.fiap.foodcore.infrastructure.web.controller.dto.AddressCreateRequestDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.UserCreateRequestDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.UserUpdateRequestDTO;
-import com.fiap.foodcore.infrastructure.gateways.persistence.entity.UserType;
-import com.fiap.foodcore.infrastructure.gateways.persistence.entity.UserEntity;
+import com.fiap.foodcore.application.usecase.input.CreateUserInput;
+import com.fiap.foodcore.application.usecase.input.UpdateUserInput;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -20,26 +17,26 @@ public class User {
     private String login;
     private String senha;
     private LocalDateTime dataUltimaAlteracao;
-    private UserType tipo;
+    private UserTypeDomain tipo;
     private List<Address> address;
 
     private User() {
 
     }
 
-    public static User fromCreateRequest(String senhaCodificada, UserType tipo, UserCreateRequestDTO dto) {
+    public static User create(String senhaCodificada, UserTypeDomain tipo, CreateUserInput createUserInput) {
         User user = new User();
-        user.nome = dto.nome();
-        user.email = dto.email();
-        user.login = dto.login();
+        user.nome = createUserInput.nome();
+        user.email = createUserInput.email();
+        user.login = createUserInput.login();
         user.senha = senhaCodificada;
         user.tipo = tipo;
 
-        if (!dto.enderecos().isEmpty()) {
+        if (!createUserInput.enderecos().isEmpty()) {
 
-            user.address = dto.enderecos()
+            user.address = createUserInput.enderecos()
                     .stream()
-                    .map(Address::fromCreateRequest)
+                    .map(Address::create)
                     .toList();
         }
 
@@ -53,75 +50,67 @@ public class User {
         this.dataUltimaAlteracao = LocalDateTime.now();
     }
 
-    public void updateInformation(UserUpdateRequestDTO dto) {
-        this.nome = dto.nome();
-        this.email = dto.email();
+    public void updateInformation(UpdateUserInput input) {
+        this.nome = input.nome();
+        this.email = input.email();
 
-        if (dto.enderecos() != null) {
+        if (input.enderecos() != null) {
             if (this.address == null) {
                 this.address = new ArrayList<>();
             }
-         
+
             List<Address> updatedAddresses = new ArrayList<>();
-      
-            for (int i = 0; i < dto.enderecos().size(); i++) {
+
+            for (int i = 0; i < input.enderecos().size(); i++) {
                 if (i < this.address.size()) {
                     Address existingAddress = this.address.get(i);
-                    existingAddress.updateFrom(dto.enderecos().get(i));
+                    existingAddress.updateFrom(input.enderecos().get(i));
                     updatedAddresses.add(existingAddress);
                 } else {
-
-                    var addressCreateDto = getAddressCreateRequestDTO(dto, i);
-
-                    updatedAddresses.add(Address.fromCreateRequest(addressCreateDto));
+                    updatedAddresses.add(Address.create(input.enderecos().get(i)));
                 }
             }
+
             this.address = updatedAddresses;
         }
 
         this.dataUltimaAlteracao = LocalDateTime.now();
     }
 
-    private static AddressCreateRequestDTO getAddressCreateRequestDTO(UserUpdateRequestDTO dto, int i) {
-        var addressUpdateDto = dto.enderecos().get(i);
-        return new AddressCreateRequestDTO(
-                addressUpdateDto.logradouro(),
-                addressUpdateDto.numero(),
-                addressUpdateDto.complemento(),
-                addressUpdateDto.bairro(),
-                addressUpdateDto.cidade(),
-                addressUpdateDto.estado(),
-                addressUpdateDto.cep()
-        );
-    }
-
-
-    public static User rebuildUser(UserEntity entity) {
+    public static User rebuildUser(
+            Long id,
+            String nome,
+            String email,
+            String login,
+            String senha,
+            UserTypeDomain tipo,
+            List<Address> enderecos,
+            LocalDateTime dataUltimaAlteracao
+    ) {
         User user = new User();
-        user.id = entity.getId();
-        user.nome = entity.getNome();
-        user.email = entity.getEmail();
-        user.login = entity.getLogin();
-        user.senha = entity.getSenha();
-        user.tipo = entity.getTipo();
-
-        user.address = Address.fromEntity(entity.getEnderecos());
-
-        user.dataUltimaAlteracao = entity.getDataUltimaAlteracao();
+        user.id = id;
+        user.nome = nome;
+        user.email = email;
+        user.login = login;
+        user.senha = senha;
+        user.tipo = tipo;
+        user.address = enderecos;
+        user.dataUltimaAlteracao = dataUltimaAlteracao;
         return user;
     }
 
-    public static User rebuildUserForTokenAuth(UserEntity entity) {
+    public static User rebuildForAuthentication(
+            Long id,
+            String login,
+            String senha,
+            UserTypeDomain tipo
+    ) {
         User user = new User();
-        user.id = entity.getId();
-        user.nome = entity.getNome();
-        user.email = entity.getEmail();
-        user.login = entity.getLogin();
-        user.senha = entity.getSenha();
-        user.tipo = entity.getTipo();
-        user.dataUltimaAlteracao = entity.getDataUltimaAlteracao();
+        user.id = id;
+        user.login = login;
+        user.senha = senha;
+        user.tipo = tipo;
         return user;
-
     }
 }
 

@@ -1,4 +1,4 @@
-package com.fiap.foodcore.domain;
+package com.fiap.foodcore.domain.pagination;
 
 import java.util.ArrayList;
 import java.util.Collections;

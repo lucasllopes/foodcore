@@ -1,11 +1,11 @@
 package com.fiap.foodcore.application.usecase;
 
-import com.fiap.foodcore.infrastructure.gateways.mapper.UserDtoMapper;
-import com.fiap.foodcore.domain.DomainPage;
-import com.fiap.foodcore.domain.PageRequestDomain;
+import com.fiap.foodcore.application.usecase.mapper.UserMapper;
+import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
+import com.fiap.foodcore.domain.pagination.DomainPage;
+import com.fiap.foodcore.domain.pagination.PageRequestDomain;
 import com.fiap.foodcore.domain.User;
 import com.fiap.foodcore.application.gateway.UserGateway;
-import com.fiap.foodcore.infrastructure.web.controller.dto.UserResponseDTO;
 
 public class ListUserInteractor {
 
@@ -15,11 +15,11 @@ public class ListUserInteractor {
         this.userGateway = userGateway;
     }
 
-    public DomainPage<UserResponseDTO> execute(PageRequestDomain pageRequest) {
+    public DomainPage<CreateUserOutput> execute(PageRequestDomain pageRequest) {
         DomainPage<User> domainPage =
                 userGateway.findAll(pageRequest);
 
-        return domainPage.map(UserDtoMapper::toResponseDto);
+        return domainPage.map(UserMapper::fromDomain);
     }
 
 }

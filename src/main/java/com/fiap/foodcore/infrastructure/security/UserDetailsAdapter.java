@@ -2,11 +2,9 @@ package com.fiap.foodcore.infrastructure.security;
 
 import com.fiap.foodcore.domain.User;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 
 public class UserDetailsAdapter implements UserDetails {
 
@@ -22,7 +20,7 @@ public class UserDetailsAdapter implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority("ROLE_" + user.getTipo().name()));
+        return List.of(UserRole.from(user.getTipo()));
     }
 
     @Override

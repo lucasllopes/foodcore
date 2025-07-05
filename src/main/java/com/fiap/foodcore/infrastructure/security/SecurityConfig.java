@@ -1,5 +1,6 @@
 package com.fiap.foodcore.infrastructure.security;
 
+import com.fiap.foodcore.infrastructure.mapper.UserEntityMapper;
 import com.fiap.foodcore.infrastructure.web.controller.handler.CustomAccessDeniedHandler;
 import com.fiap.foodcore.infrastructure.web.controller.handler.CustomAuthenticationEntryPoint;
 import com.fiap.foodcore.domain.User;
@@ -68,7 +69,7 @@ public class SecurityConfig {
             UserEntity entity = repository.findByLoginIgnoreCase(username)
                     .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
 
-            User user = User.rebuildUser(entity);
+            User user = UserEntityMapper.toDomain(entity);
             return new UserDetailsAdapter(user);
 
         };

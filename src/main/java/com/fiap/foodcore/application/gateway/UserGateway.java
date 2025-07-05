@@ -1,7 +1,7 @@
 package com.fiap.foodcore.application.gateway;
 
-import com.fiap.foodcore.domain.DomainPage;
-import com.fiap.foodcore.domain.PageRequestDomain;
+import com.fiap.foodcore.domain.pagination.DomainPage;
+import com.fiap.foodcore.domain.pagination.PageRequestDomain;
 import com.fiap.foodcore.domain.User;
 
 import java.util.Optional;
@@ -13,6 +13,4 @@ public interface UserGateway {
     Optional<User> findByEmail(String email);
     User save(User user);
     void delete(User user);
-
-
 }

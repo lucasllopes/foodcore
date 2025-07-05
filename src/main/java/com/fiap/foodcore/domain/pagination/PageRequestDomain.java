@@ -1,4 +1,4 @@
-package com.fiap.foodcore.domain;
+package com.fiap.foodcore.domain.pagination;
 
 
 public record PageRequestDomain(int page, int size) {

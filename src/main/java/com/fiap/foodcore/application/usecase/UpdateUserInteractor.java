@@ -1,9 +1,9 @@
 package com.fiap.foodcore.application.usecase;
 
-import com.fiap.foodcore.infrastructure.gateways.mapper.UserDtoMapper;
+import com.fiap.foodcore.application.usecase.input.UpdateUserInput;
+import com.fiap.foodcore.application.usecase.mapper.UserMapper;
+import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
 import com.fiap.foodcore.application.gateway.UserGateway;
-import com.fiap.foodcore.infrastructure.web.controller.dto.UserResponseDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.UserUpdateRequestDTO;
 import com.fiap.foodcore.exception.DataNotFoundException;
 import com.fiap.foodcore.exception.DuplicatedDataException;
 
@@ -15,16 +15,16 @@ public class UpdateUserInteractor {
         this.userGateway = userGateway;
     }
 
-    public UserResponseDTO execute(Long id, UserUpdateRequestDTO dto) {
+    public CreateUserOutput execute(Long id, UpdateUserInput input) {
         var existing = userGateway.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Usuário não encontrado"));
 
-        userGateway.findByEmail(dto.email())
+        userGateway.findByEmail(input.email())
                 .filter(u -> !u.getId().equals(id))
                 .ifPresent(u -> { throw new DuplicatedDataException("Email já em uso"); });
 
-        var domain = UserDtoMapper.toDomain(existing, dto);
+        var domain = UserMapper.toDomain(existing, input);
         var saved = userGateway.save(domain);
-        return UserDtoMapper.toResponseDto(saved);
+        return UserMapper.fromDomain(saved);
     }
 }

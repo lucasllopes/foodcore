@@ -1,8 +1,13 @@
 package com.fiap.foodcore.infrastructure.web.controller;
 
 import com.fiap.foodcore.application.usecase.*;
-import com.fiap.foodcore.domain.DomainPage;
-import com.fiap.foodcore.domain.PageRequestDomain;
+import com.fiap.foodcore.application.usecase.input.CreateUserInput;
+import com.fiap.foodcore.application.usecase.input.UpdateUserInput;
+import com.fiap.foodcore.application.usecase.mapper.UserMapper;
+import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
+import com.fiap.foodcore.domain.pagination.DomainPage;
+import com.fiap.foodcore.domain.pagination.PageRequestDomain;
+import com.fiap.foodcore.infrastructure.presenter.UserPresenter;
 import com.fiap.foodcore.infrastructure.web.controller.dto.ChangePasswordRequestDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.UserCreateRequestDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.UserResponseDTO;
@@ -17,6 +22,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -37,12 +44,12 @@ public class UserController {
                           UpdateUserInteractor updateUser,
                           ChangePasswordInteractor changePassword,
                           DeleteUserInteractor deleteUser) {
-        this.findById       = findById;
-        this.listUsers      = listUsers;
-        this.createUser     = createUser;
-        this.updateUser     = updateUser;
+        this.findById = findById;
+        this.listUsers = listUsers;
+        this.createUser = createUser;
+        this.updateUser = updateUser;
         this.changePassword = changePassword;
-        this.deleteUser     = deleteUser;
+        this.deleteUser = deleteUser;
     }
 
 
@@ -50,25 +57,28 @@ public class UserController {
     @PreAuthorize("#id == principal.id  or hasRole('ROLE_DONO')")
     public ResponseEntity<UserResponseDTO> findById(@PathVariable Long id) {
         logger.info("Handling GET request to /usuarios/{ID}");
-        return ResponseEntity.ok(findById.execute(id));
+
+        CreateUserOutput output = findById.execute(id);
+        UserResponseDTO dto = UserPresenter.toDto(output);
+
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping
     @PreAuthorize("hasRole('ROLE_DONO')")
     public ResponseEntity<Page<UserResponseDTO>> listPaginatedUsers(Pageable pageable) {
+
         logger.info("Handling GET request to /usuarios");
 
-        //TODO
-        // TER METODO ESTATICO?
-        // REMOVER VALIDACOES DE VALORES ZERADOS
         PageRequestDomain pr = new PageRequestDomain(pageable.getPageNumber(), pageable.getPageSize());
 
-        DomainPage<UserResponseDTO> users = listUsers.execute(pr);
+        DomainPage<CreateUserOutput> outputs = listUsers.execute(pr);
+        List<UserResponseDTO> dtos = UserPresenter.toDtoList(outputs.getItems());
 
-        var paginatedUser = new PageImpl<>(
-                users.getItems(),
+        Page<UserResponseDTO> paginatedUser = new PageImpl<>(
+                dtos,
                 pageable,
-                users.getTotalElements()
+                outputs.getTotalElements()
         );
 
         return ResponseEntity.ok(paginatedUser);
@@ -77,14 +87,25 @@ public class UserController {
     @PostMapping
     public ResponseEntity<UserResponseDTO> createUser(@Valid @RequestBody UserCreateRequestDTO dto) {
         logger.info("Handling POST request to /usuarios");
-        return ResponseEntity.status(HttpStatus.CREATED).body(createUser.execute(dto));
+
+        CreateUserInput input = UserPresenter.toInputCreate(dto);
+        CreateUserOutput output = createUser.execute(input);
+
+        UserResponseDTO response = UserPresenter.toDto(output);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("#id == principal.id")
     public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @Valid @RequestBody UserUpdateRequestDTO dto) {
         logger.info("Handling PUT request to /usuarios");
-        return ResponseEntity.ok(updateUser.execute(id, dto));
+
+        UpdateUserInput input = UserPresenter.toInputUpdate(dto);
+        CreateUserOutput output = updateUser.execute(id, input);
+
+        UserResponseDTO response = UserPresenter.toDto(output);
+
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
@@ -102,7 +123,10 @@ public class UserController {
             @Valid @RequestBody ChangePasswordRequestDTO dto
     ) {
         logger.info("Handling PUT request to /usuarios/{id}/senha");
-        changePassword.execute(id, dto);
+
+        var changePasswordInput = UserPresenter.toChangePasswordInput(dto);
+
+        changePassword.execute(id, changePasswordInput);
         return ResponseEntity.ok("Senha atualizada com sucesso.");
     }
 }

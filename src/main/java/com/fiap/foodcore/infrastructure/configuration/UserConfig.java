@@ -1,8 +1,10 @@
 package com.fiap.foodcore.infrastructure.configuration;
 
+import com.fiap.foodcore.application.gateway.PasswordEncryptionGateway;
 import com.fiap.foodcore.application.gateway.UserGateway;
-import com.fiap.foodcore.application.service.strategy.CreateUserStrategyFactory;
+import com.fiap.foodcore.application.strategy.CreateUserStrategyFactory;
 import com.fiap.foodcore.application.usecase.*;
+import com.fiap.foodcore.infrastructure.gateways.BCryptPasswordEncryptionGateway;
 import com.fiap.foodcore.infrastructure.gateways.UserRepositoryGateway;
 import com.fiap.foodcore.infrastructure.gateways.persistence.UserRepository;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +17,11 @@ public class UserConfig {
     @Bean
     UserGateway userGateway(UserRepository userRepository) {
         return new UserRepositoryGateway(userRepository);
+    }
+
+    @Bean
+    PasswordEncryptionGateway passwordEncryptionGateway(PasswordEncoder passwordEncoder) {
+        return new BCryptPasswordEncryptionGateway(passwordEncoder);
     }
 
     @Bean
@@ -44,7 +51,7 @@ public class UserConfig {
 
     @Bean
     public ChangePasswordInteractor changePasswordInteractor(UserGateway userGateway,
-                                                             PasswordEncoder passwordEncoder) {
-        return new ChangePasswordInteractor(userGateway, passwordEncoder);
+                                                             PasswordEncryptionGateway passwordEncryptionGateway) {
+        return new ChangePasswordInteractor(userGateway, passwordEncryptionGateway);
     }
 }

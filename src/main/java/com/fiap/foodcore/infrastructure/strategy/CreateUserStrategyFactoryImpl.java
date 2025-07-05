@@ -1,7 +1,9 @@
-package com.fiap.foodcore.application.service.strategy;
+package com.fiap.foodcore.infrastructure.strategy;
 
 
-import com.fiap.foodcore.infrastructure.gateways.persistence.entity.UserType;
+import com.fiap.foodcore.application.strategy.CreateUserStrategy;
+import com.fiap.foodcore.application.strategy.CreateUserStrategyFactory;
+import com.fiap.foodcore.domain.UserTypeDomain;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
@@ -10,20 +12,20 @@ import java.util.Map;
 @Component
 public class CreateUserStrategyFactoryImpl implements CreateUserStrategyFactory {
 
-    private final Map<UserType, CreateUserStrategy> strategies;
+    private final Map<UserTypeDomain, CreateUserStrategy> strategies;
 
     public CreateUserStrategyFactoryImpl(
             @Qualifier("customer") CreateUserStrategy customer,
             @Qualifier("owner") CreateUserStrategy owner
     ) {
         this.strategies = Map.of(
-                UserType.CLIENTE, customer,
-                UserType.DONO, owner
+                UserTypeDomain.CLIENTE, customer,
+                UserTypeDomain.DONO, owner
         );
     }
 
     @Override
-    public CreateUserStrategy getStrategy(UserType userType) {
+    public CreateUserStrategy getStrategy(UserTypeDomain userType) {
         return strategies.get(userType);
     }
 }
