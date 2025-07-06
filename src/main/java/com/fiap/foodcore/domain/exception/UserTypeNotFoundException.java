@@ -1,4 +1,4 @@
-package com.fiap.foodcore.exception;
+package com.fiap.foodcore.domain.exception;
 
 public class UserTypeNotFoundException extends IllegalArgumentException {
 

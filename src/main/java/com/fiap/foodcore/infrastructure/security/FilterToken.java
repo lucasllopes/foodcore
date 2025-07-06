@@ -1,7 +1,7 @@
 package com.fiap.foodcore.infrastructure.security;
 
 import com.fiap.foodcore.domain.User;
-import com.fiap.foodcore.exception.TokenJwtException;
+import com.fiap.foodcore.application.exception.TokenJwtException;
 import com.fiap.foodcore.infrastructure.gateways.persistence.entity.UserEntity;
 import com.fiap.foodcore.infrastructure.gateways.persistence.UserRepository;
 import com.fiap.foodcore.application.gateway.TokenGateway;

@@ -1,6 +1,6 @@
 package com.fiap.foodcore.domain;
 
-import com.fiap.foodcore.exception.UserTypeNotFoundException;
+import com.fiap.foodcore.domain.exception.UserTypeNotFoundException;
 
 import java.util.Arrays;
 

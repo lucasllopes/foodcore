@@ -3,7 +3,7 @@ package com.fiap.foodcore.application.usecase;
 import com.fiap.foodcore.application.usecase.mapper.UserMapper;
 import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
 import com.fiap.foodcore.application.gateway.UserGateway;
-import com.fiap.foodcore.exception.DataNotFoundException;
+import com.fiap.foodcore.application.exception.DataNotFoundException;
 
 public class FindUserByIdInteractor {
 

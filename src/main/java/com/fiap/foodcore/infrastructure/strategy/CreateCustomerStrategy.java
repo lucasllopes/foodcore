@@ -7,7 +7,7 @@ import com.fiap.foodcore.application.usecase.mapper.UserMapper;
 import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
 import com.fiap.foodcore.infrastructure.mapper.UserEntityMapper;
 import com.fiap.foodcore.domain.User;
-import com.fiap.foodcore.exception.DuplicatedDataException;
+import com.fiap.foodcore.application.exception.DuplicatedDataException;
 import com.fiap.foodcore.infrastructure.gateways.persistence.entity.UserEntity;
 import com.fiap.foodcore.infrastructure.gateways.persistence.UserRepository;
 import org.springframework.beans.factory.annotation.Qualifier;

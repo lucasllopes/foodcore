@@ -1,6 +1,6 @@
 package com.fiap.foodcore.infrastructure.gateways.persistence.entity;
 
-import com.fiap.foodcore.exception.UserTypeNotFoundException;
+import com.fiap.foodcore.domain.exception.UserTypeNotFoundException;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Arrays;

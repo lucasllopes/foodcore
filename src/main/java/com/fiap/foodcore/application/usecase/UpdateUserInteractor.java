@@ -4,8 +4,8 @@ import com.fiap.foodcore.application.usecase.input.UpdateUserInput;
 import com.fiap.foodcore.application.usecase.mapper.UserMapper;
 import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
 import com.fiap.foodcore.application.gateway.UserGateway;
-import com.fiap.foodcore.exception.DataNotFoundException;
-import com.fiap.foodcore.exception.DuplicatedDataException;
+import com.fiap.foodcore.application.exception.DataNotFoundException;
+import com.fiap.foodcore.application.exception.DuplicatedDataException;
 
 public class UpdateUserInteractor {
 

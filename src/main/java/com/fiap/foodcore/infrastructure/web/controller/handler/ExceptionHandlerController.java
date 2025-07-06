@@ -2,10 +2,10 @@ package com.fiap.foodcore.infrastructure.web.controller.handler;
 
 import com.fiap.foodcore.infrastructure.web.controller.dto.MessageErrorDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.ValidationErrorDTO;
-import com.fiap.foodcore.exception.DuplicatedDataException;
-import com.fiap.foodcore.exception.DataNotFoundException;
-import com.fiap.foodcore.exception.UserTypeNotFoundException;
-import com.fiap.foodcore.exception.WrongPasswordException;
+import com.fiap.foodcore.application.exception.DuplicatedDataException;
+import com.fiap.foodcore.application.exception.DataNotFoundException;
+import com.fiap.foodcore.domain.exception.UserTypeNotFoundException;
+import com.fiap.foodcore.application.exception.WrongPasswordException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;

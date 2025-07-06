@@ -3,8 +3,8 @@ package com.fiap.foodcore.application.usecase;
 import com.fiap.foodcore.application.gateway.PasswordEncryptionGateway;
 import com.fiap.foodcore.application.gateway.UserGateway;
 import com.fiap.foodcore.application.usecase.input.ChangePasswordInput;
-import com.fiap.foodcore.exception.DataNotFoundException;
-import com.fiap.foodcore.exception.WrongPasswordException;
+import com.fiap.foodcore.application.exception.DataNotFoundException;
+import com.fiap.foodcore.application.exception.WrongPasswordException;
 
 public class ChangePasswordInteractor {
 

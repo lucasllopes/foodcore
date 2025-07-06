@@ -1,4 +1,4 @@
-package com.fiap.foodcore.exception;
+package com.fiap.foodcore.application.exception;
 
 public class TokenJwtException extends RuntimeException{
 
