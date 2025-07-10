@@ -20,7 +20,7 @@ public class Address {
 
     }
 
-    public static Address create(CreateAddressInput input) {
+    public static Address addAddress(CreateAddressInput input) {
         Address e = new Address();
 
         e.logradouro = input.logradouro();
@@ -33,7 +33,7 @@ public class Address {
         return e;
     }
 
-    public static Address create(AddressUpdateInput input) {
+    public static Address addAddress(AddressUpdateInput input) {
         Address e = new Address();
         e.logradouro = input.logradouro();
         e.numero = input.numero();
@@ -44,7 +44,6 @@ public class Address {
         e.cep = input.cep();
         return e;
     }
-
 
     public void updateFrom(AddressUpdateInput input) {
         this.logradouro = input.logradouro();

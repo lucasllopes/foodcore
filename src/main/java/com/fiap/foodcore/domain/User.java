@@ -36,7 +36,7 @@ public class User {
 
             user.address = createUserInput.enderecos()
                     .stream()
-                    .map(Address::create)
+                    .map(Address::addAddress)
                     .toList();
         }
 
@@ -67,7 +67,7 @@ public class User {
                     existingAddress.updateFrom(input.enderecos().get(i));
                     updatedAddresses.add(existingAddress);
                 } else {
-                    updatedAddresses.add(Address.create(input.enderecos().get(i)));
+                    updatedAddresses.add(Address.addAddress(input.enderecos().get(i)));
                 }
             }
 

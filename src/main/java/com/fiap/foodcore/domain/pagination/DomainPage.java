@@ -30,14 +30,6 @@ public class DomainPage<T> {
         return totalElements;
     }
 
-    public boolean isEmpty() {
-        return items.isEmpty();
-    }
-
-    public int getNumberOfElements() {
-        return items.size();
-    }
-
     public <R> DomainPage<R> map(Function<? super T, ? extends R> mapper) {
         List<R> mappedItems = items.stream()
                 .map(mapper)

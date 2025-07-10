@@ -59,7 +59,7 @@ public class CreateUserInteractorTest {
     void deveCriarUsuarioClienteComSucesso() {
         // Arrange
         CreateUserInput input = new CreateUserInput("User Customer", "usercustomer@email.com", "usercustomer", "123", UserTypeDomain.CLIENTE, List.of());
-        CreateUserOutput expectedOutput = new CreateUserOutput(1L, "User Customer", "lucas@email.com", "usercustomer", UserTypeDomain.CLIENTE, List.of());
+        CreateUserOutput expectedOutput = new CreateUserOutput(1L, "User Customer", "user@email.com", "usercustomer", UserTypeDomain.CLIENTE, List.of());
 
         when(strategyFactory.getStrategy(UserTypeDomain.CLIENTE)).thenReturn(clienteStrategy);
         when(clienteStrategy.create(input)).thenReturn(expectedOutput);
