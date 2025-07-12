@@ -6,6 +6,7 @@ import com.fiap.foodcore.domain.pagination.DomainPage;
 import com.fiap.foodcore.domain.pagination.PageRequestDomain;
 import com.fiap.foodcore.infrastructure.gateways.persistence.MenuRepository;
 import com.fiap.foodcore.infrastructure.mapper.MenuMapper;
+import com.fiap.foodcore.infrastructure.mapper.UserEntityMapper;
 
 
 import java.util.Optional;
@@ -26,21 +27,28 @@ public class MenuRepositoryGateway implements MenuGateway {
 
     @Override
     public DomainPage<Menu> findAll(PageRequestDomain pageRequest) {
-        return null;
+
+        var springPage = menuRepository.findAll(
+                org.springframework.data.domain.PageRequest
+                        .of(pageRequest.page(), pageRequest.size())
+        );
+        var items = springPage.getContent().stream()
+                .map(MenuMapper::toDomain)
+                .toList();
+        return new DomainPage<>(items, springPage.getTotalElements());
     }
 
-    @Override
-    public Optional<Menu> findByEmail(String email) {
-        return Optional.empty();
-    }
 
     @Override
     public Menu save(Menu menu) {
-        return null;
+        var entity = MenuMapper.toEntity(menu);
+        var saved = menuRepository.save(entity);
+        return MenuMapper.toDomain(saved);
     }
 
     @Override
     public void delete(Menu menu) {
-
+        var entity = MenuMapper.toEntity(menu);
+        menuRepository.delete(entity);
     }
 }

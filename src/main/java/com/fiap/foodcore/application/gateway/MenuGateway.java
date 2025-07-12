@@ -11,7 +11,6 @@ public interface MenuGateway {
 
     Optional<Menu> findById(Long id);
     DomainPage<Menu> findAll(PageRequestDomain pageRequest);
-    Optional<Menu> findByEmail(String email);
     Menu save(Menu menu);
     void delete(Menu menu);
 }
