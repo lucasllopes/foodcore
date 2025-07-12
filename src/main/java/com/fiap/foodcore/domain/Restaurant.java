@@ -10,16 +10,19 @@ import java.util.List;
 
 @Getter
 public class Restaurant {
-    private long id;
+
+    private Long id;
     private String name;
     private List<Address> address;
     private String cuisineType;
     private String openingHours;
     private String closingHours;
     private Long ownerId;
+
     private Restaurant(){
 
     }
+
     public static Restaurant create(CreateRestaurantInput input){
         Restaurant restaurant = new Restaurant();
         restaurant.name = input.name();
@@ -33,6 +36,26 @@ public class Restaurant {
         restaurant.openingHours = input.openingHours();
         restaurant.closingHours = input.closingHours();
         restaurant.ownerId = input.ownerId();
+        return restaurant;
+    }
+
+    public static Restaurant create(
+            Long id,
+            String name,
+            List<Address> address,
+            String cuisineType,
+            String openingHours,
+            String closingHours,
+            Long ownerId
+    ) {
+        Restaurant restaurant = new Restaurant();
+        restaurant.id = id;
+        restaurant.name = name;
+        restaurant.address = address;
+        restaurant.cuisineType = cuisineType;
+        restaurant.openingHours = openingHours;
+        restaurant.closingHours = closingHours;
+        restaurant.ownerId = ownerId;
         return restaurant;
     }
 }

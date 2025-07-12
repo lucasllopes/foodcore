@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -20,11 +21,10 @@ public class RestaurantEntity {
 
     private String name;
     @OneToMany(mappedBy = "restaurante", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<AddressEntity> addrres;
+    private List<AddressEntity> address;
     private String cuisineType;
     private String openingHours;
     private String closingHours;
     private Long ownerId;
-
 
 }

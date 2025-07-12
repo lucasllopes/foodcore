@@ -6,5 +6,10 @@ import com.fiap.foodcore.infrastructure.web.controller.dto.UserResponseDTO;
 
 import java.util.List;
 
-public record CreateRestaurantInput(
-        String name, List<CreateAddressInput> address, String cuisineType, String openingHours, String closingHours, Long ownerId) {}
+public record CreateRestaurantInput(String name,
+                                    List<CreateAddressInput> address,
+                                    String cuisineType,
+                                    String openingHours,
+                                    String closingHours,
+                                    Long ownerId) {
+}

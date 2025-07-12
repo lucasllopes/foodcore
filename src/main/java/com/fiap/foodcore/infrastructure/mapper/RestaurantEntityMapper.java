@@ -8,10 +8,24 @@ import java.util.stream.Collectors;
 
 public class RestaurantEntityMapper {
     public static Restaurant toDomain(RestaurantEntity entity) {
-        return null;
+        if (entity == null) return null;
+
+        Restaurant restaurant = Restaurant.create(
+                entity.getId(),
+                entity.getName(),
+                AddressEntityMapper.toDomain(entity.getAddress()),
+                entity.getCuisineType(),
+                entity.getOpeningHours(),
+                entity.getClosingHours(),
+                entity.getOwnerId()
+        );
+
+        return restaurant;
     }
 
     public static RestaurantEntity toEntity(Restaurant domain) {
+        if (domain == null) return null;
+
         RestaurantEntity entity = new RestaurantEntity();
         entity.setId(domain.getId());
         entity.setName(domain.getName());
@@ -21,7 +35,7 @@ public class RestaurantEntityMapper {
                     .map(AddressEntityMapper::toEntity)
                     .collect(Collectors.toList());
 
-            entity.setAddrres(addressEntities);
+            entity.setAddress(addressEntities);
         }
         entity.setCuisineType(domain.getCuisineType());
         entity.setOpeningHours(domain.getOpeningHours());

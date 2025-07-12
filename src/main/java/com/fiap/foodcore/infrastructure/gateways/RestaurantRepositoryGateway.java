@@ -12,18 +12,16 @@ import java.util.Optional;
 public class RestaurantRepositoryGateway implements RestaurantGateway {
 
     private final RestaurantRepository restaurantRepository;
-    private final RestaurantEntityMapper restaurantEntityMapper;
 
-    public RestaurantRepositoryGateway(RestaurantRepository restaurantRepository, RestaurantEntityMapper restaurantEntityMapper) {
+    public RestaurantRepositoryGateway(RestaurantRepository restaurantRepository) {
         this.restaurantRepository = restaurantRepository;
-        this.restaurantEntityMapper = restaurantEntityMapper;
     }
 
     @Override
     public Restaurant save(Restaurant restaurant) {
-        RestaurantEntity entity = restaurantEntityMapper.toEntity(restaurant);
+        RestaurantEntity entity = RestaurantEntityMapper.toEntity(restaurant);
         RestaurantEntity createdRestaurant = restaurantRepository.save(entity);
-        return restaurantEntityMapper.toDomain(createdRestaurant);
+        return RestaurantEntityMapper.toDomain(createdRestaurant);
     }
 
     @Override

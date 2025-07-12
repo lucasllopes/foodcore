@@ -6,29 +6,30 @@ import com.fiap.foodcore.infrastructure.web.controller.dto.RestaurantCreateReque
 import com.fiap.foodcore.infrastructure.web.controller.dto.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class RestaurantPresenter {
 
     public static RestaurantResponseDTO toDto(CreateRestaurantOutput output) {
-        return null;
-//                new UserResponseDTO(
-//                output.id(),
-//                output.nome(),
-//                output.email(),
-//                output.login(),
-//                output.tipo(),
-//                output.enderecos().stream().map(end ->
-//                        new AddressResponseDTO(
-//                                end.logradouro(),
-//                                end.numero(),
-//                                end.complemento(),
-//                                end.bairro(),
-//                                end.cep(),
-//                                end.estado(),
-//                                end.cidade()
-//                        )
-//                ).collect(Collectors.toList())
-//        );
+        return new RestaurantResponseDTO(
+                output.id(),
+                output.nome(),
+                output.address().stream().map(end ->
+                        new AddressResponseDTO(
+                                end.logradouro(),
+                                end.numero(),
+                                end.complemento(),
+                                end.bairro(),
+                                end.cep(),
+                                end.estado(),
+                                end.cidade()
+                        )
+                ).collect(Collectors.toList()),
+                output.cuisineType(),
+                output.openingHours(),
+                output.closingHours(),
+                output.ownerId()
+        );
     }
 
     public static CreateRestaurantInput toInputCreate(RestaurantCreateRequestDTO dto) {
