@@ -1,6 +1,5 @@
 package com.fiap.foodcore.domain;
 
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -10,13 +9,13 @@ public class Menu {
     private final Long id;
     private final String name;
     private final String description;
-    private final List<Item> itemsList;
+    private final List<Item> items;
 
     private Menu(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
         this.description = builder.description;
-        this.itemsList = builder.itemsList == null
+        this.items = builder.itemsList == null
                 ? Collections.emptyList()
                 : Collections.unmodifiableList(new ArrayList<>(builder.itemsList));
     }
@@ -25,7 +24,7 @@ public class Menu {
     public Long getId() { return id; }
     public String getName() { return name; }
     public String getDescription() { return description; }
-    public List<Item> getItemsList() { return itemsList; }
+    public List<Item> getItems() { return items; }
 
     // Builder
     public static class Builder {
