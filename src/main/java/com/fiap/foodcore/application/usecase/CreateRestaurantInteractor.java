@@ -1,4 +1,24 @@
 package com.fiap.foodcore.application.usecase;
 
-public class CreateRestaurantInteractor {
+import com.fiap.foodcore.application.gateway.RestaurantGateway;
+import com.fiap.foodcore.application.usecase.input.CreateRestaurantInput;
+import com.fiap.foodcore.application.usecase.mapper.RestaurantMapper;
+import com.fiap.foodcore.application.usecase.output.CreateRestaurantOutput;
+import com.fiap.foodcore.domain.Restaurant;
+
+public class CreateRestaurantInteractor{
+    private RestaurantGateway restaurantGateway;
+
+    public RestaurantGateway getRestaurantGateway(RestaurantGateway restaurantGateway) {
+        return this.restaurantGateway = restaurantGateway;
+    }
+    public CreateRestaurantOutput execute(CreateRestaurantInput createRestaurantInput) {
+        Restaurant restaurant = RestaurantMapper.toDomain(createRestaurantInput);
+        this.validateRestaurant(restaurant);
+        Restaurant savedRestaurant = this.restaurantGateway.save(restaurant);
+        return RestaurantMapper.fromDomain(savedRestaurant);
+    }
+    private void validateRestaurant(Restaurant restaurant){
+        //findById
+    }
 }
