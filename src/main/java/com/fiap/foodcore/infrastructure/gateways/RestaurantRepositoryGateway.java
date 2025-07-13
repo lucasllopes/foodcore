@@ -2,6 +2,7 @@ package com.fiap.foodcore.infrastructure.gateways;
 
 import com.fiap.foodcore.application.gateway.RestaurantGateway;
 import com.fiap.foodcore.domain.Restaurant;
+import com.fiap.foodcore.domain.exception.RestaurantNotFoundException;
 import com.fiap.foodcore.infrastructure.gateways.persistence.RestaurantRepository;
 import com.fiap.foodcore.infrastructure.gateways.persistence.entity.RestaurantEntity;
 import com.fiap.foodcore.infrastructure.mapper.RestaurantEntityMapper;
@@ -25,8 +26,9 @@ public class RestaurantRepositoryGateway implements RestaurantGateway {
     }
 
     @Override
-    public Optional<Restaurant> findById(Long id) {
-        return Optional.empty();
+    public Optional<Restaurant> findById(Long restaurantId) {
+        RestaurantEntity restaurant = restaurantRepository.findById(restaurantId).orElseThrow(() -> new RestaurantNotFoundException("Restaurante com id " + restaurantId + " não encontrado."));
+        return Optional.of(RestaurantEntityMapper.toDomain(restaurant));
     }
 
     @Override

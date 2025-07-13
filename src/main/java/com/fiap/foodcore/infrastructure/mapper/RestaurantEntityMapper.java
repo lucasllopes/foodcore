@@ -13,11 +13,11 @@ public class RestaurantEntityMapper {
         Restaurant restaurant = Restaurant.create(
                 entity.getId(),
                 entity.getName(),
-                RestaurantAddressEntityMapper.toDomain(entity.getAddress()),
+                RestaurantAddressEntityMapper.toDomain(entity.getAddresses()),
                 entity.getCuisineType(),
                 entity.getOpeningHours(),
                 entity.getClosingHours(),
-                entity.getOwnerId()
+                entity.getOwner().getId()
         );
 
         return restaurant;
@@ -35,11 +35,13 @@ public class RestaurantEntityMapper {
                     .map(RestaurantAddressEntityMapper::toEntity)
                     .collect(Collectors.toList());
 
-            entity.setAddress(addressEntities);
+            entity.setAddresses(addressEntities);
         }
         entity.setCuisineType(domain.getCuisineType());
         entity.setOpeningHours(domain.getOpeningHours());
-        entity.setOwnerId(domain.getOwnerId());
+        UserEntity owner = new UserEntity();
+        owner.setId(domain.getOwnerId());
+        entity.setOwner(owner);
         return entity;
     }
 }

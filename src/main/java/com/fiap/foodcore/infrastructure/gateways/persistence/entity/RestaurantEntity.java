@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.time.LocalTime;
 import java.util.List;
 
 @Entity
@@ -19,10 +21,13 @@ public class RestaurantEntity {
 
     private String name;
     @OneToMany(mappedBy = "restaurante", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<RestaurantAddressEntity> address;
+    private List<RestaurantAddressEntity> addresses;
     private String cuisineType;
-    private String openingHours;
-    private String closingHours;
-    private Long ownerId;
+    private LocalTime openingHours;
+    private LocalTime closingHours;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dono_id", nullable = false)
+    private UserEntity owner;
 
 }

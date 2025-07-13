@@ -1,11 +1,9 @@
 package com.fiap.foodcore.domain;
 
-import com.fiap.foodcore.application.usecase.input.CreateAddressInput;
 import com.fiap.foodcore.application.usecase.input.CreateRestaurantInput;
 import lombok.Getter;
 
-import java.sql.Time;
-import java.util.ArrayList;
+import java.time.LocalTime;
 import java.util.List;
 
 @Getter
@@ -15,8 +13,8 @@ public class Restaurant {
     private String name;
     private List<Address> address;
     private String cuisineType;
-    private String openingHours;
-    private String closingHours;
+    private LocalTime openingHours;
+    private LocalTime closingHours;
     private Long ownerId;
 
     private Restaurant(){
@@ -44,8 +42,8 @@ public class Restaurant {
             String name,
             List<Address> address,
             String cuisineType,
-            String openingHours,
-            String closingHours,
+            LocalTime openingHours,
+            LocalTime closingHours,
             Long ownerId
     ) {
         Restaurant restaurant = new Restaurant();
