@@ -22,8 +22,11 @@ public class RestaurantEntity {
     private String name;
     @OneToMany(mappedBy = "restaurante", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RestaurantAddressEntity> addresses;
+    @Column(name = "cuisine_type")
     private String cuisineType;
+    @Column(name = "opening_hours")
     private LocalTime openingHours;
+    @Column(name = "closing_hours")
     private LocalTime closingHours;
 
     @ManyToOne(fetch = FetchType.LAZY)

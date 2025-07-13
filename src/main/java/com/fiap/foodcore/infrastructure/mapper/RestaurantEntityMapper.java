@@ -1,6 +1,7 @@
 package com.fiap.foodcore.infrastructure.mapper;
 
 import com.fiap.foodcore.domain.Restaurant;
+import com.fiap.foodcore.infrastructure.gateways.persistence.entity.RestaurantAddressEntity;
 import com.fiap.foodcore.infrastructure.gateways.persistence.entity.RestaurantEntity;
 import com.fiap.foodcore.infrastructure.gateways.persistence.entity.UserEntity;
 
@@ -33,7 +34,9 @@ public class RestaurantEntityMapper {
                     .stream()
                     .map(RestaurantAddressEntityMapper::toEntity)
                     .collect(Collectors.toList());
-
+            for (RestaurantAddressEntity addrEntity : addressEntities) {
+                addrEntity.setRestaurante(entity);
+            }
             entity.setAddresses(addressEntities);
         }
         entity.setCuisineType(domain.getCuisineType());
