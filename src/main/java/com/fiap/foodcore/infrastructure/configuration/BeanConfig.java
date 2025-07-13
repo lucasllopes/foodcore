@@ -3,19 +3,22 @@ package com.fiap.foodcore.infrastructure.configuration;
 import com.fiap.foodcore.application.gateway.PasswordEncryptionGateway;
 import com.fiap.foodcore.application.gateway.RestaurantGateway;
 import com.fiap.foodcore.application.gateway.UserGateway;
+import com.fiap.foodcore.application.gateway.UserTypeGateway;
 import com.fiap.foodcore.application.strategy.CreateUserStrategyFactory;
 import com.fiap.foodcore.application.usecase.*;
 import com.fiap.foodcore.infrastructure.gateways.BCryptPasswordEncryptionGateway;
 import com.fiap.foodcore.infrastructure.gateways.RestaurantRepositoryGateway;
 import com.fiap.foodcore.infrastructure.gateways.UserRepositoryGateway;
+import com.fiap.foodcore.infrastructure.gateways.UserTypeRepositoryGateway;
 import com.fiap.foodcore.infrastructure.gateways.persistence.RestaurantRepository;
 import com.fiap.foodcore.infrastructure.gateways.persistence.UserRepository;
+import com.fiap.foodcore.infrastructure.gateways.persistence.UserTypeRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-public class UserConfig {
+public class BeanConfig {
 
     @Bean
     UserGateway userGateway(UserRepository userRepository) {
@@ -66,5 +69,15 @@ public class UserConfig {
     @Bean
     public CreateRestaurantInteractor createRestaurantInteractor(RestaurantGateway restaurantGateway) {
         return new CreateRestaurantInteractor();
+    }
+
+    @Bean
+    public UserTypeGateway userTypeGateway(UserTypeRepository userTypeRepository) {
+        return new UserTypeRepositoryGateway(userTypeRepository);
+    }
+
+    @Bean
+    public CreateUserTypeInteractor createUserTypeInteractor(UserTypeGateway userTypeGateway) {
+        return new CreateUserTypeInteractor(userTypeGateway);
     }
 }

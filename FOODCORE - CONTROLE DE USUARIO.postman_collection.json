@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "28fb32d0-24bb-4dc7-ad32-b63bf293eaa1",
+		"_postman_id": "29fadc7d-7b5d-4b68-825d-6ecbd26c319f",
 		"name": "FOODCORE - CONTROLE DE USUARIO",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "9099310"
@@ -292,6 +292,44 @@
 						"usuarios",
 						"6",
 						"senha"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "8 - POST Criar tipo usuario",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6InRlc3RlMWluc2VydDEiLCJleHAiOjE3NTIzNzc4NDB9.PtXA1VYbwborepRpt07prOjXlMVNGPJrJDTo1Ypr3Gg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Teste insert tipo usuario\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/tipos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tipos"
 					]
 				}
 			},
