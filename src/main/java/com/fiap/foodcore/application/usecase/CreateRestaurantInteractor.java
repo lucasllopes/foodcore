@@ -22,6 +22,5 @@ public class CreateRestaurantInteractor{
     }
     private void validateRestaurant(Restaurant restaurant){
         this.findUserByIdInteractor.execute(restaurant.getOwnerId());
-        this.restaurantGateway.findById(restaurant.getId());
     }
 }

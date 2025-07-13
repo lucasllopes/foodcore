@@ -44,8 +44,7 @@ WHERE NOT EXISTS (
 INSERT INTO endereco (logradouro, numero, complemento, bairro, cidade, estado, cep, usuario_id)
 SELECT 'Rua das XPTO', '123', 'Apto 301', 'Centro', 'São Paulo', 'SP', '01001-000', 2
 WHERE NOT EXISTS (
-    SELECT 1 FROM endereco
-    WHERE usuario_id = 2 AND logradouro = 'Rua das XPTO' AND numero = '123'
+    SELECT 1 FROM endereco WHERE usuario_id = 2
 );
 
 INSERT INTO endereco (logradouro, numero, complemento, bairro, cidade, estado, cep, usuario_id)

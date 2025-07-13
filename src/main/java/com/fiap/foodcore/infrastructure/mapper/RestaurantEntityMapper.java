@@ -27,7 +27,6 @@ public class RestaurantEntityMapper {
         if (domain == null) return null;
 
         RestaurantEntity entity = new RestaurantEntity();
-        entity.setId(domain.getId());
         entity.setName(domain.getName());
         if (domain.getAddress() != null && !domain.getAddress().isEmpty()) {
             var addressEntities = domain.getAddress()
@@ -39,6 +38,7 @@ public class RestaurantEntityMapper {
         }
         entity.setCuisineType(domain.getCuisineType());
         entity.setOpeningHours(domain.getOpeningHours());
+        entity.setClosingHours(domain.getClosingHours());
         UserEntity owner = new UserEntity();
         owner.setId(domain.getOwnerId());
         entity.setOwner(owner);
