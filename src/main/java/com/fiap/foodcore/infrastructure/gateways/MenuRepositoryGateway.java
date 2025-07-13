@@ -6,8 +6,6 @@ import com.fiap.foodcore.domain.pagination.DomainPage;
 import com.fiap.foodcore.domain.pagination.PageRequestDomain;
 import com.fiap.foodcore.infrastructure.gateways.persistence.MenuRepository;
 import com.fiap.foodcore.infrastructure.mapper.MenuMapper;
-import com.fiap.foodcore.infrastructure.mapper.UserEntityMapper;
-
 
 import java.util.Optional;
 

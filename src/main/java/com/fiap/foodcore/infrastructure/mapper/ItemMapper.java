@@ -1,5 +1,6 @@
 package com.fiap.foodcore.infrastructure.mapper;
 
+import com.fiap.foodcore.application.usecase.output.ItemOutput;
 import com.fiap.foodcore.domain.Item;
 import com.fiap.foodcore.infrastructure.gateways.persistence.entity.ItemEntity;
 
@@ -27,5 +28,17 @@ public class ItemMapper {
                 .availability(entity.getAvailability())
                 .photo(entity.getPhoto())
                 .build();
+    }
+
+    public static ItemOutput fromDomain(Item item){
+        if (item == null) return null;
+        return new ItemOutput(
+                item.getId(),
+                item.getName(),
+                item.getDescription(),
+                item.getPrice(),
+                item.getPhoto(),
+                item.getAvailability()
+        );
     }
 }
