@@ -8,7 +8,7 @@ import com.fiap.foodcore.application.usecase.output.CreateRestaurantOutput;
 import com.fiap.foodcore.domain.Restaurant;
 
 public class CreateRestaurantInteractor{
-    private RestaurantGateway restaurantGateway;
+    private final RestaurantGateway restaurantGateway;
     private final FindUserByIdInteractor findUserByIdInteractor;
     public CreateRestaurantInteractor(RestaurantGateway restaurantGateway, FindUserByIdInteractor findUserByIdInteractor){
         this.restaurantGateway = restaurantGateway;

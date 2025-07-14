@@ -6,6 +6,7 @@ import com.fiap.foodcore.domain.exception.RestaurantNotFoundException;
 import com.fiap.foodcore.infrastructure.gateways.persistence.RestaurantRepository;
 import com.fiap.foodcore.infrastructure.gateways.persistence.entity.RestaurantEntity;
 import com.fiap.foodcore.infrastructure.mapper.RestaurantEntityMapper;
+import com.fiap.foodcore.infrastructure.mapper.UserEntityMapper;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,8 +28,8 @@ public class RestaurantRepositoryGateway implements RestaurantGateway {
 
     @Override
     public Optional<Restaurant> findById(Long restaurantId) {
-        RestaurantEntity restaurant = restaurantRepository.findById(restaurantId).orElseThrow(() -> new RestaurantNotFoundException("Restaurante com id " + restaurantId + " não encontrado."));
-        return Optional.of(RestaurantEntityMapper.toDomain(restaurant));
+        return restaurantRepository.findById(restaurantId)
+                .map(RestaurantEntityMapper::toDomain);
     }
 
     @Override
@@ -37,7 +38,7 @@ public class RestaurantRepositoryGateway implements RestaurantGateway {
     }
 
     @Override
-    public void delete(Long id) {
-
+    public void delete(Long restaurantId) {
+        restaurantRepository.deleteById(restaurantId);
     }
 }

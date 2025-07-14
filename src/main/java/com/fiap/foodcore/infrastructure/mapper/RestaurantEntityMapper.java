@@ -42,6 +42,7 @@ public class RestaurantEntityMapper {
         entity.setCuisineType(domain.getCuisineType());
         entity.setOpeningHours(domain.getOpeningHours());
         entity.setClosingHours(domain.getClosingHours());
+        //TODO: Rever questão do owner
         UserEntity owner = new UserEntity();
         owner.setId(domain.getOwnerId());
         entity.setOwner(owner);

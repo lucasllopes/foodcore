@@ -46,6 +46,8 @@ public class SecurityConfig {
                     req.requestMatchers(HttpMethod.POST, "/usuarios").permitAll();
                     req.requestMatchers(HttpMethod.DELETE, "/usuarios/*");
                     req.requestMatchers(HttpMethod.POST, "/restaurantes").permitAll();
+                    req.requestMatchers(HttpMethod.GET, "/restaurantes/*").permitAll();
+                    req.requestMatchers(HttpMethod.DELETE, "/restaurantes/*").permitAll();
                     req.anyRequest().authenticated();
                 })
                 .exceptionHandling(ex -> ex
