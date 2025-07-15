@@ -32,6 +32,10 @@ public class RestaurantPresenter {
         );
     }
 
+    public static List<RestaurantResponseDTO> toDtoList(List<CreateRestaurantOutput> outputs) {
+        return outputs.stream().map(RestaurantPresenter::toDto).collect(Collectors.toList());
+    }
+
     public static CreateRestaurantInput toInputCreate(RestaurantCreateRequestDTO dto) {
         List<CreateAddressInput> addressesInput = dto.enderecos().stream()
                 .map(addressDto -> new CreateAddressInput(

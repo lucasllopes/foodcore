@@ -2,13 +2,12 @@ package com.fiap.foodcore.infrastructure.gateways;
 
 import com.fiap.foodcore.application.gateway.RestaurantGateway;
 import com.fiap.foodcore.domain.Restaurant;
-import com.fiap.foodcore.domain.exception.RestaurantNotFoundException;
+import com.fiap.foodcore.domain.pagination.DomainPage;
+import com.fiap.foodcore.domain.pagination.PageRequestDomain;
 import com.fiap.foodcore.infrastructure.gateways.persistence.RestaurantRepository;
 import com.fiap.foodcore.infrastructure.gateways.persistence.entity.RestaurantEntity;
 import com.fiap.foodcore.infrastructure.mapper.RestaurantEntityMapper;
-import com.fiap.foodcore.infrastructure.mapper.UserEntityMapper;
 
-import java.util.List;
 import java.util.Optional;
 
 public class RestaurantRepositoryGateway implements RestaurantGateway {
@@ -20,21 +19,28 @@ public class RestaurantRepositoryGateway implements RestaurantGateway {
     }
 
     @Override
-    public Restaurant save(Restaurant restaurant) {
-        RestaurantEntity entity = RestaurantEntityMapper.toEntity(restaurant);
-        RestaurantEntity createdRestaurant = restaurantRepository.save(entity);
-        return RestaurantEntityMapper.toDomain(createdRestaurant);
-    }
-
-    @Override
     public Optional<Restaurant> findById(Long restaurantId) {
         return restaurantRepository.findById(restaurantId)
                 .map(RestaurantEntityMapper::toDomain);
     }
 
     @Override
-    public List<Restaurant> findAll() {
-        return null;
+    public DomainPage<Restaurant> findAll(PageRequestDomain pageRequest) {
+        var springPage = restaurantRepository.findAll(
+                org.springframework.data.domain.PageRequest
+                        .of(pageRequest.page(), pageRequest.size())
+        );
+        var items = springPage.getContent().stream()
+                .map(RestaurantEntityMapper::toDomain)
+                .toList();
+        return new DomainPage<>(items, springPage.getTotalElements());
+    }
+
+    @Override
+    public Restaurant save(Restaurant restaurant) {
+        RestaurantEntity entity = RestaurantEntityMapper.toEntity(restaurant);
+        RestaurantEntity createdRestaurant = restaurantRepository.save(entity);
+        return RestaurantEntityMapper.toDomain(createdRestaurant);
     }
 
     @Override

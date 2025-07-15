@@ -77,6 +77,11 @@ public class BeanConfig {
     }
 
     @Bean
+    public ListRestaurantInteractor listRestaurantInteractor(RestaurantGateway restaurantGateway) {
+        return new ListRestaurantInteractor(restaurantGateway);
+    }
+
+    @Bean
     public DeleteRestaurantInteractor deleteRestaurantInteractor(RestaurantGateway restaurantGateway, FindRestaurantByIdInteractor findRestaurantByIdInteractor) {
         return new DeleteRestaurantInteractor(restaurantGateway, findRestaurantByIdInteractor);
     }

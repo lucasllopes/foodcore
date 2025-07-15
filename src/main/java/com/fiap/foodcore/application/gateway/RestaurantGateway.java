@@ -1,14 +1,15 @@
 package com.fiap.foodcore.application.gateway;
 
 import com.fiap.foodcore.domain.Restaurant;
+import com.fiap.foodcore.domain.pagination.DomainPage;
+import com.fiap.foodcore.domain.pagination.PageRequestDomain;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface RestaurantGateway {
 
-    Restaurant save(Restaurant restaurant);
     Optional<Restaurant> findById(Long id);
-    List<Restaurant> findAll();
+    DomainPage<Restaurant> findAll(PageRequestDomain pageRequest);
+    Restaurant save(Restaurant restaurant);
     void delete(Long id);
 }
