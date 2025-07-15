@@ -70,10 +70,12 @@ public class BeanConfig {
     public CreateRestaurantInteractor createRestaurantInteractor(RestaurantGateway restaurantGateway, FindUserByIdInteractor findUserByIdInteractor) {
         return new CreateRestaurantInteractor(restaurantGateway, findUserByIdInteractor);
     }
+
     @Bean
     public FindRestaurantByIdInteractor findRestaurantByIdInteractor(RestaurantGateway restaurantGateway) {
         return new FindRestaurantByIdInteractor(restaurantGateway);
     }
+
     @Bean
     public DeleteRestaurantInteractor deleteRestaurantInteractor(RestaurantGateway restaurantGateway, FindRestaurantByIdInteractor findRestaurantByIdInteractor) {
         return new DeleteRestaurantInteractor(restaurantGateway, findRestaurantByIdInteractor);
