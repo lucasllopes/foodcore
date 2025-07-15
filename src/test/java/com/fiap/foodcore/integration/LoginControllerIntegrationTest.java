@@ -8,6 +8,7 @@ import com.fiap.foodcore.infrastructure.presenter.UserPresenter;
 import com.fiap.foodcore.infrastructure.web.controller.dto.LoginRequestDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.UserCreateRequestDTO;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,9 @@ public class LoginControllerIntegrationTest {
     void setup() {
         RestAssured.port = port;
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
+        RestAssured.requestSpecification = given()
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON);
     }
 
 
@@ -46,7 +50,6 @@ public class LoginControllerIntegrationTest {
         LoginRequestDTO loginRequest = new LoginRequestDTO(createUser.login(), createUser.senha());
 
         given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(loginRequest)
                 .when()
                 .post("/login")
@@ -64,7 +67,6 @@ public class LoginControllerIntegrationTest {
         LoginRequestDTO loginRequest = new LoginRequestDTO(createUser.login(), createUser.senha());
 
         given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(loginRequest)
                 .when()
                 .post("/login")
@@ -82,7 +84,6 @@ public class LoginControllerIntegrationTest {
         LoginRequestDTO loginRequest = new LoginRequestDTO(createUser.login(), "senhaErrada");
 
         given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(loginRequest)
                 .when()
                 .post("/login")

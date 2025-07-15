@@ -6,11 +6,12 @@ import com.fiap.foodcore.application.usecase.input.CreateUserInput;
 import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
 import com.fiap.foodcore.helper.UserTestHelper;
 import com.fiap.foodcore.infrastructure.presenter.UserPresenter;
-import com.fiap.foodcore.infrastructure.web.controller.dto.LoginRequestDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.ChangePasswordRequestDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.UserCreateRequestDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.UserResponseDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.UserUpdateRequestDTO;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +19,10 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 
+import static com.fiap.foodcore.helper.UserTestHelper.authenticateAndGetToken;
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasKey;
+import static org.hamcrest.Matchers.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase
@@ -30,7 +30,7 @@ public class UserControllerIntegrationTest {
 
     @Autowired
     private CreateUserInteractor createUserInteractor;
-
+    
     @LocalServerPort
     private int port;
 
@@ -38,20 +38,21 @@ public class UserControllerIntegrationTest {
     void setup() {
         RestAssured.port = port;
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
+        RestAssured.requestSpecification = given()
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON);
     }
 
     @Test
     void shouldCreateOwnerUserSuccessfully() {
-        UserCreateRequestDTO dto = UserTestHelper.createValidOwnerUserRequest();
+        UserCreateRequestDTO dto = UserTestHelper.createValidGenericOwnerRequest();
 
         given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(dto)
                 .when()
                 .post("/usuarios")
                 .then()
                 .statusCode(HttpStatus.CREATED.value())
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body("$", hasKey("id"))
                 .body("$", hasKey("nome"))
                 .body("$", hasKey("email"))
@@ -62,21 +63,18 @@ public class UserControllerIntegrationTest {
                 .body("email", equalTo(dto.email()))
                 .body("login", equalTo(dto.login()))
                 .body("tipo", equalTo(dto.tipo()));
-
     }
 
     @Test
     void shouldCreateCustomerUserSuccessfully() {
-        UserCreateRequestDTO dto = UserTestHelper.createValidCustomerUserRequest();
+        UserCreateRequestDTO dto = UserTestHelper.createValidGenericCustomerRequest();
 
         given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(dto)
                 .when()
                 .post("/usuarios")
                 .then()
                 .statusCode(HttpStatus.CREATED.value())
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body("$", hasKey("id"))
                 .body("$", hasKey("nome"))
                 .body("$", hasKey("email"))
@@ -92,28 +90,21 @@ public class UserControllerIntegrationTest {
 
     @Test
     void shouldUpdateOwnerUserSuccessfully() {
-        UserCreateRequestDTO createUser = UserTestHelper.createValidOwnerUserToUpdateRequest();
+        UserCreateRequestDTO owner = UserTestHelper.createValidOwnerUserToUpdateRequest();
 
-        CreateUserInput input = UserPresenter.toInputCreate(createUser);
-        CreateUserOutput output = createUserInteractor.execute(input);
+        UserResponseDTO response = createUser(owner);
 
-        UserResponseDTO response = UserPresenter.toDto(output);
-        
-        LoginRequestDTO loginRequest = new LoginRequestDTO(createUser.login(), createUser.senha());
-
-        String token = getToken(loginRequest);
+        String token = authenticateAndGetToken(owner);
 
         UserUpdateRequestDTO updateUser = UserTestHelper.createValidOwnerUserUpdateRequest();
 
         given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("Authorization", "Bearer " + token)
                 .body(updateUser)
                 .when()
                 .put("/usuarios/{id}", response.id())
                 .then()
                 .statusCode(HttpStatus.OK.value())
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body("$", hasKey("id"))
                 .body("$", hasKey("nome"))
                 .body("$", hasKey("email"))
@@ -125,28 +116,21 @@ public class UserControllerIntegrationTest {
 
     @Test
     void shouldUpdateCustomerUserSuccessfully() {
-        UserCreateRequestDTO createUser = UserTestHelper.createValidCustomerUserToUpdateRequest();
+        UserCreateRequestDTO customer = UserTestHelper.createValidCustomerUserToUpdateRequest();
 
-        CreateUserInput input = UserPresenter.toInputCreate(createUser);
-        CreateUserOutput output = createUserInteractor.execute(input);
+        UserResponseDTO response = createUser(customer);
 
-        UserResponseDTO response = UserPresenter.toDto(output);
-
-        LoginRequestDTO loginRequest = new LoginRequestDTO(createUser.login(), createUser.senha());
-
-        String token = getToken(loginRequest);
+        String token = authenticateAndGetToken(customer);
 
         UserUpdateRequestDTO updateUser = UserTestHelper.createValidCustomerUserUpdateRequest();
 
         given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("Authorization", "Bearer " + token)
                 .body(updateUser)
                 .when()
                 .put("/usuarios/{id}", response.id())
                 .then()
                 .statusCode(HttpStatus.OK.value())
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body("$", hasKey("id"))
                 .body("$", hasKey("nome"))
                 .body("$", hasKey("email"))
@@ -160,19 +144,13 @@ public class UserControllerIntegrationTest {
 
     @Test
     void shouldDeleteOwnerUserSuccessfully() {
-        UserCreateRequestDTO createUser = UserTestHelper.createValidGenericUserRequest();
+        UserCreateRequestDTO owner = UserTestHelper.createValidGenericOwnerRequest();
 
-        CreateUserInput input = UserPresenter.toInputCreate(createUser);
-        CreateUserOutput output = createUserInteractor.execute(input);
+        UserResponseDTO response = createUser(owner);
 
-        UserResponseDTO response = UserPresenter.toDto(output);
-
-        LoginRequestDTO loginRequest = new LoginRequestDTO(createUser.login(), createUser.senha());
-
-        String token = getToken(loginRequest);
+        String token = authenticateAndGetToken(owner);
 
         given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("Authorization", "Bearer " + token)
                 .when()
                 .delete("/usuarios/{id}", response.id())
@@ -183,19 +161,13 @@ public class UserControllerIntegrationTest {
 
     @Test
     void shouldDeleteCustomerUserSuccessfully() {
-        UserCreateRequestDTO createUser = UserTestHelper.createValidGenericUserRequest();
+        UserCreateRequestDTO customer = UserTestHelper.createValidGenericCustomerRequest();
 
-        CreateUserInput input = UserPresenter.toInputCreate(createUser);
-        CreateUserOutput output = createUserInteractor.execute(input);
+        UserResponseDTO response = createUser(customer);
 
-        UserResponseDTO response = UserPresenter.toDto(output);
-
-        LoginRequestDTO loginRequest = new LoginRequestDTO(createUser.login(), createUser.senha());
-
-        String token = getToken(loginRequest);
+        String token = authenticateAndGetToken(customer);
 
         given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("Authorization", "Bearer " + token)
                 .when()
                 .delete("/usuarios/{id}", response.id())
@@ -204,17 +176,115 @@ public class UserControllerIntegrationTest {
 
     }
 
-    private static String getToken(LoginRequestDTO loginRequest) {
-        return given()
-                        .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .body(loginRequest)
-                        .when()
-                        .post("/login")
-                        .then()
-                        .statusCode(HttpStatus.OK.value())
-                        .extract()
-                        .asString();
+    @Test
+    void shouldListUsersSuccessfully(){
+        UserCreateRequestDTO owner = UserTestHelper.createValidGenericOwnerRequest();
 
+        UserResponseDTO ownerResponse = createUser(owner);
+
+        UserCreateRequestDTO customer = UserTestHelper.createValidGenericCustomerRequest();
+
+        UserResponseDTO customerResponse = createUser(customer);
+
+        String token = authenticateAndGetToken(owner);
+
+        given()
+                //.contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("Authorization", "Bearer " + token)
+                .when()
+                .get("/usuarios")
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .body("content", notNullValue())
+                .body("content.size()", greaterThan(0))
+                .body("content.login", hasItems(customerResponse.login(), ownerResponse.login()))
+                .body("content.nome", hasItems(customerResponse.nome(), ownerResponse.nome()))
+                .body("totalElements", greaterThanOrEqualTo(2));
+
+    }
+
+    @Test
+    void shouldFindUserByIdSuccessfully(){
+        UserCreateRequestDTO createOwnerUser = UserTestHelper.createValidGenericOwnerRequest();
+
+        UserResponseDTO responseOwner = createUser(createOwnerUser);
+
+        UserCreateRequestDTO createCustomerUser = UserTestHelper.createValidGenericCustomerRequest();
+
+        UserResponseDTO responseCustumer = createUser(createCustomerUser);
+
+        String token = authenticateAndGetToken(createOwnerUser);
+
+        given()
+                .header("Authorization", "Bearer " + token)
+                .when()
+                .get("/usuarios/{id}", responseCustumer.id())
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .body("id", notNullValue())
+                .body("login", equalTo(responseCustumer.login()))
+                .body("nome", equalTo(responseCustumer.nome()));
+    }
+
+
+    @Test
+    void shouldChangePasswordSuccessfully(){
+        UserCreateRequestDTO createOwnerUser = UserTestHelper.createValidGenericOwnerRequest();
+
+        UserResponseDTO response = createUser(createOwnerUser);
+
+        String token = authenticateAndGetToken(createOwnerUser);
+
+        ChangePasswordRequestDTO changePasswordRequestDTO = new ChangePasswordRequestDTO(createOwnerUser.senha(), "novasenha");
+
+        given()
+                .header("Authorization", "Bearer " + token)
+                .body(changePasswordRequestDTO)
+                .when()
+                .put("/usuarios/{id}/senha", response.id())
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .body(equalTo("Senha atualizada com sucesso."));
+    }
+
+
+    @Test
+    void shouldFailNoAuthenticate(){
+        UserCreateRequestDTO createOwnerUser = UserTestHelper.createValidGenericOwnerRequest();
+
+        UserResponseDTO response = createUser(createOwnerUser);
+
+        ChangePasswordRequestDTO changePasswordRequestDTO = new ChangePasswordRequestDTO(createOwnerUser.senha(), "novasenha");
+
+        given()
+                .body(changePasswordRequestDTO)
+                .when()
+                .put("/usuarios/{id}/senha", response.id())
+                .then()
+                .statusCode(HttpStatus.UNAUTHORIZED.value());
+    }
+
+    @Test
+    void shouldFailInvalidateJwtToken(){
+        UserCreateRequestDTO createOwnerUser = UserTestHelper.createValidGenericOwnerRequest();
+
+        UserResponseDTO response = createUser(createOwnerUser);
+
+        ChangePasswordRequestDTO changePasswordRequestDTO = new ChangePasswordRequestDTO(createOwnerUser.senha(), "novasenha");
+
+        given()
+                .header("Authorization", "Bearer invalid_token")
+                .body(changePasswordRequestDTO)
+                .when()
+                .put("/usuarios/{id}/senha", response.id())
+                .then()
+                .statusCode(HttpStatus.UNAUTHORIZED.value());
+    }
+
+    public UserResponseDTO createUser(UserCreateRequestDTO dto) {
+        CreateUserInput inputOwner = UserPresenter.toInputCreate(dto);
+        CreateUserOutput outputOwner = createUserInteractor.execute(inputOwner);
+        return UserPresenter.toDto(outputOwner);
     }
 
 }

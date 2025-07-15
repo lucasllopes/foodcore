@@ -2,13 +2,13 @@ package com.fiap.foodcore.helper;
 
 import com.fiap.foodcore.domain.User;
 import com.fiap.foodcore.domain.UserTypeDomain;
-import com.fiap.foodcore.infrastructure.web.controller.dto.AddressCreateRequestDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.AddressUpdateRequestDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.UserCreateRequestDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.UserUpdateRequestDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.*;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 import java.util.UUID;
+
+import static io.restassured.RestAssured.given;
 
 public class UserTestHelper {
 
@@ -26,31 +26,6 @@ public class UserTestHelper {
                 UserTypeDomain.DONO, List.of(), null);
 
     }
-
-    public static UserCreateRequestDTO createValidOwnerUserRequest() {
-        return new UserCreateRequestDTO("User",
-                "user@email.com",
-                "user",
-                "password",
-                "DONO",
-                List.of(
-                        createValidAddressRequest("Rua das Flores", "123", "APTO 123", "Centro", "São Paulo", "SP", "01234-567"),
-                        createValidAddressRequest("Av. Brasil", "456", null, "Jardins", "São Paulo", "SP", "12345-678")
-                ));
-    }
-
-    public static UserCreateRequestDTO createValidCustomerUserRequest() {
-        return new UserCreateRequestDTO("Customer",
-                "customer@email.com",
-                "customer",
-                "password",
-                "CLIENTE",
-                List.of(
-                        createValidAddressRequest("Rua das Flores", "123", "APTO 123", "Centro", "São Paulo", "SP", "01234-567"),
-                        createValidAddressRequest("Av. Brasil", "456", null, "Jardins", "São Paulo", "SP", "12345-678")
-                ));
-    }
-
 
     public static AddressCreateRequestDTO createValidAddressRequest(
             String logradouro,
@@ -118,9 +93,10 @@ public class UserTestHelper {
     }
 
     public static UserCreateRequestDTO createValidGenericOwnerRequest() {
+        String suffix = UUID.randomUUID().toString().substring(0, 8);
         return new UserCreateRequestDTO("Generic Owner",
-                "generic_owner@email.com",
-                "genericowner",
+                "generic_owner"+suffix+"@email.com",
+                "genericowner"+suffix,
                 "password",
                 "DONO",
                 List.of(
@@ -130,9 +106,10 @@ public class UserTestHelper {
     }
 
     public static UserCreateRequestDTO createValidGenericCustomerRequest() {
+        String suffix = UUID.randomUUID().toString().substring(0, 8);
         return new UserCreateRequestDTO("Generic Customer",
-                "generic_customer@email.com",
-                "genericcustomer",
+                "generic_customer"+suffix+"@email.com",
+                "genericcustomer"+suffix,
                 "password",
                 "CLIENTE",
                 List.of(
@@ -152,5 +129,18 @@ public class UserTestHelper {
                         createValidAddressRequest("Rua das Flores", "123", "APTO 123", "Centro", "São Paulo", "SP", "01234-567"),
                         createValidAddressRequest("Av. Brasil", "456", null, "Jardins", "São Paulo", "SP", "12345-678")
                 ));
+    }
+
+    public static String authenticateAndGetToken(UserCreateRequestDTO dto) {
+        LoginRequestDTO loginRequest = new LoginRequestDTO(dto.login(), dto.senha());
+        return given()
+                .body(loginRequest)
+                .when()
+                .post("/login")
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .extract()
+                .asString();
+
     }
 }

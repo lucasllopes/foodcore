@@ -85,7 +85,7 @@ public class UserController {
         return ResponseEntity.ok(paginatedUser);
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping
     public ResponseEntity<UserResponseDTO> createUser(@Valid @RequestBody UserCreateRequestDTO dto) {
         logger.info("Handling POST request to /usuarios");
 
@@ -96,7 +96,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @PutMapping(path = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping("/{id}")
     @PreAuthorize("#id == principal.id")
     public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @Valid @RequestBody UserUpdateRequestDTO dto) {
         logger.info("Handling PUT request to /usuarios");
@@ -109,7 +109,7 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping(path = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping("/{id}")
     @PreAuthorize("#id == principal.id")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         logger.info("Handling DELETE request to /usuarios");
