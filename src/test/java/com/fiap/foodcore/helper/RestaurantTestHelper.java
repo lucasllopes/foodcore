@@ -16,8 +16,8 @@ public class RestaurantTestHelper {
                 List.of(
                         createValidAddressRequest("R. Joaquim Távora", "1039", null, "Vila Mariana", "São Paulo", "SP", "04015-002")
                 ),
-                LocalTime.of(10, 30, 01),
-                LocalTime.of(22, 00, 00),
+                LocalTime.of(10, 30),
+                LocalTime.of(22, 00),
                 ownerId
         );
     }

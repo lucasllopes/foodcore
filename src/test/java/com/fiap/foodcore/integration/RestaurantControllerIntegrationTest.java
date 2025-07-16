@@ -45,10 +45,10 @@ public class RestaurantControllerIntegrationTest {
                 .accept(ContentType.JSON);
     }
 
-    //@Test
+    @Test
     void shouldCreateRestaurant(){
 
-        UserCreateRequestDTO owner = UserTestHelper.createValidOwnerUserToUpdateRequest();
+        UserCreateRequestDTO owner = UserTestHelper.createValidOwnerUserToCreateRestaurantRequest();
 
         UserResponseDTO response = createUser(owner);
 
@@ -71,9 +71,9 @@ public class RestaurantControllerIntegrationTest {
                 .body("$", hasKey("ownerId"))
                 .body("nome", equalTo(dto.nome()))
                 .body("cuisineType", equalTo(dto.cuisineType()))
-                .body("openingHours", equalTo(dto.openingHours()))
-                .body("closingHours", equalTo(dto.closingHours()))
-                .body("ownerId", equalTo(dto.ownerId()));
+                .body("openingHours", equalTo(dto.openingHours().toString()))
+                .body("closingHours", equalTo(dto.closingHours().toString()))
+                .body("ownerId", equalTo(dto.ownerId().intValue()));
 
     }
 

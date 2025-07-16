@@ -61,6 +61,18 @@ public class UserTestHelper {
                 ));
     }
 
+    public static UserCreateRequestDTO createValidOwnerUserToCreateRestaurantRequest() {
+        return new UserCreateRequestDTO("Owner Old",
+                "owner_restaurant@email.com",
+                "ownerrestaurant",
+                "password",
+                "DONO",
+                List.of(
+                        createValidAddressRequest("Rua das Flores", "123", "APTO 123", "Centro", "São Paulo", "SP", "01234-567"),
+                        createValidAddressRequest("Av. Brasil", "456", null, "Jardins", "São Paulo", "SP", "12345-678")
+                ));
+    }
+
 
     public static UserCreateRequestDTO createValidCustomerUserToUpdateRequest() {
         return new UserCreateRequestDTO("Customer Old",
