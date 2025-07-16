@@ -4,6 +4,7 @@ import com.fiap.foodcore.domain.User;
 import com.fiap.foodcore.domain.UserTypeDomain;
 import com.fiap.foodcore.infrastructure.web.controller.dto.*;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 
 import java.util.List;
 import java.util.UUID;
@@ -146,6 +147,21 @@ public class UserTestHelper {
     public static String authenticateAndGetToken(UserCreateRequestDTO dto) {
         LoginRequestDTO loginRequest = new LoginRequestDTO(dto.login(), dto.senha());
         return given()
+                .body(loginRequest)
+                .when()
+                .post("/login")
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .extract()
+                .asString();
+
+    }
+
+
+    /* TODO Remover esse metodo e utilizar o authenticateAndGetToken" */
+    public static String getToken(LoginRequestDTO loginRequest) {
+        return given()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(loginRequest)
                 .when()
                 .post("/login")
