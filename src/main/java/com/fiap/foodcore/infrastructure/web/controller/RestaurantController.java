@@ -29,15 +29,18 @@ public class RestaurantController {
     private final FindRestaurantByIdInteractor findRestaurantByIdInteractor;
     private final DeleteRestaurantInteractor deleteRestaurantInteractor;
     private final ListRestaurantInteractor listRestaurantInteractor;
+    private final UpdateRestaurantInteractor updateRestaurantInteractor;
 
     public RestaurantController(CreateRestaurantInteractor createRestaurantInteractor,
                                 FindRestaurantByIdInteractor findRestaurantByIdInteractor,
                                 DeleteRestaurantInteractor deleteRestaurantInteractor,
-                                ListRestaurantInteractor listRestaurantInteractor) {
+                                ListRestaurantInteractor listRestaurantInteractor,
+                                UpdateRestaurantInteractor updateRestaurantInteractor) {
         this.createRestaurantInteractor = createRestaurantInteractor;
         this.findRestaurantByIdInteractor = findRestaurantByIdInteractor;
         this.deleteRestaurantInteractor = deleteRestaurantInteractor;
         this.listRestaurantInteractor = listRestaurantInteractor;
+        this.updateRestaurantInteractor = updateRestaurantInteractor;
     }
 
     @GetMapping("/{id}")
@@ -78,6 +81,17 @@ public class RestaurantController {
 
         RestaurantResponseDTO response = RestaurantPresenter.toDto(output);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<RestaurantResponseDTO> updateRestaurant(@PathVariable Long id, @Valid @RequestBody RestaurantUpdateRequestDTO dto) {
+        logger.info("Handling PUT request to /restaurantes");
+
+        UpdateRestaurantInput input = RestaurantPresenter.toInputUpdate(dto);
+        CreateRestaurantOutput output = updateRestaurantInteractor.execute(id, input);
+
+        RestaurantResponseDTO response = RestaurantPresenter.toDto(output);
+
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping(path = "/{id}")

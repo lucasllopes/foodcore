@@ -1,5 +1,6 @@
 package com.fiap.foodcore.infrastructure.presenter;
 
+import com.fiap.foodcore.application.usecase.UpdateRestaurantInput;
 import com.fiap.foodcore.application.usecase.input.*;
 import com.fiap.foodcore.application.usecase.output.CreateRestaurantOutput;
 import com.fiap.foodcore.infrastructure.web.controller.dto.RestaurantCreateRequestDTO;
@@ -56,6 +57,28 @@ public class RestaurantPresenter {
                 dto.openingHours(),
                 dto.closingHours(),
                 dto.ownerId()
+        );
+    }
+
+    public static UpdateRestaurantInput toInputUpdate(RestaurantUpdateRequestDTO dto) {
+        List<AddressUpdateInput> addressesInput = dto.enderecos().stream()
+                .map(addressDto -> new AddressUpdateInput(
+                        addressDto.logradouro(),
+                        addressDto.numero(),
+                        addressDto.complemento(),
+                        addressDto.bairro(),
+                        addressDto.cidade(),
+                        addressDto.cep(),
+                        addressDto.estado()
+                ))
+                .toList();
+
+        return new UpdateRestaurantInput(
+                dto.name(),
+                addressesInput,
+                dto.cuisineType(),
+                dto.openingHours(),
+                dto.closingHours()
         );
     }
 }

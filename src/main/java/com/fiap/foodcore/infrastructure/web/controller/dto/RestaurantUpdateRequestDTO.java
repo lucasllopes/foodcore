@@ -1,4 +1,4 @@
-package com.fiap.foodcore.infrastructure.web.controller;
+package com.fiap.foodcore.infrastructure.web.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fiap.foodcore.infrastructure.web.controller.dto.AddressUpdateRequestDTO;
