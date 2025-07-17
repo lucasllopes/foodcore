@@ -1,5 +1,6 @@
-package com.fiap.foodcore.application.usecase;
+package com.fiap.foodcore.application.usecase.interactor;
 
+import com.fiap.foodcore.application.usecase.ListUserUseCase;
 import com.fiap.foodcore.application.usecase.mapper.UserMapper;
 import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
 import com.fiap.foodcore.domain.pagination.DomainPage;
@@ -7,7 +8,7 @@ import com.fiap.foodcore.domain.pagination.PageRequestDomain;
 import com.fiap.foodcore.domain.User;
 import com.fiap.foodcore.application.gateway.UserGateway;
 
-public class ListUserInteractor {
+public class ListUserInteractor implements ListUserUseCase {
 
     private final UserGateway userGateway;
 
@@ -15,6 +16,7 @@ public class ListUserInteractor {
         this.userGateway = userGateway;
     }
 
+    @Override
     public DomainPage<CreateUserOutput> execute(PageRequestDomain pageRequest) {
         DomainPage<User> domainPage =
                 userGateway.findAll(pageRequest);

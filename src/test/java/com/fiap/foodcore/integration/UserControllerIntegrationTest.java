@@ -1,7 +1,7 @@
 package com.fiap.foodcore.integration;
 
 
-import com.fiap.foodcore.application.usecase.CreateUserInteractor;
+import com.fiap.foodcore.application.usecase.interactor.CreateUserInteractor;
 import com.fiap.foodcore.application.usecase.input.CreateUserInput;
 import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
 import com.fiap.foodcore.helper.UserTestHelper;

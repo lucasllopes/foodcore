@@ -1,12 +1,13 @@
-package com.fiap.foodcore.application.usecase;
+package com.fiap.foodcore.application.usecase.interactor;
 
 import com.fiap.foodcore.application.gateway.PasswordEncryptionGateway;
 import com.fiap.foodcore.application.gateway.UserGateway;
+import com.fiap.foodcore.application.usecase.ChangePasswordUseCase;
 import com.fiap.foodcore.application.usecase.input.ChangePasswordInput;
 import com.fiap.foodcore.application.exception.DataNotFoundException;
 import com.fiap.foodcore.application.exception.WrongPasswordException;
 
-public class ChangePasswordInteractor {
+public class ChangePasswordInteractor implements ChangePasswordUseCase {
 
     private final UserGateway userGateway;
     private final PasswordEncryptionGateway passwordEncryptionGateway;
@@ -17,6 +18,7 @@ public class ChangePasswordInteractor {
         this.passwordEncryptionGateway = passwordEncryptionGateway;
     }
 
+    @Override
     public void execute(Long id, ChangePasswordInput input) {
         var user = userGateway.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Usuário não encontrado"));

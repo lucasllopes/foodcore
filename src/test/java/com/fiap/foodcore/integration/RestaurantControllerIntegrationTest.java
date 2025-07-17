@@ -1,6 +1,6 @@
 package com.fiap.foodcore.integration;
 
-import com.fiap.foodcore.application.usecase.CreateUserInteractor;
+import com.fiap.foodcore.application.usecase.interactor.CreateUserInteractor;
 import com.fiap.foodcore.application.usecase.input.CreateUserInput;
 import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
 import com.fiap.foodcore.helper.UserTestHelper;
@@ -17,8 +17,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
-
-import java.time.LocalTime;
 
 import static com.fiap.foodcore.helper.RestaurantTestHelper.createValidRestarantRequest;
 import static com.fiap.foodcore.helper.UserTestHelper.authenticateAndGetToken;

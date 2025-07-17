@@ -3,7 +3,7 @@ package com.fiap.foodcore.infrastructure.web.controller;
 import com.fiap.foodcore.application.usecase.*;
 import com.fiap.foodcore.application.usecase.input.CreateUserInput;
 import com.fiap.foodcore.application.usecase.input.UpdateUserInput;
-import com.fiap.foodcore.application.usecase.mapper.UserMapper;
+import com.fiap.foodcore.application.usecase.interactor.*;
 import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
 import com.fiap.foodcore.domain.pagination.DomainPage;
 import com.fiap.foodcore.domain.pagination.PageRequestDomain;
@@ -19,7 +19,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -32,19 +31,19 @@ public class UserController {
 
     private final static Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    private final FindUserByIdInteractor findById;
-    private final ListUserInteractor listUsers;
-    private final CreateUserInteractor createUser;
-    private final UpdateUserInteractor updateUser;
-    private final ChangePasswordInteractor changePassword;
-    private final DeleteUserInteractor deleteUser;
+    private final FindUserByIdUseCase findById;
+    private final ListUserUseCase listUsers;
+    private final CreateUserUseCase createUser;
+    private final UpdateUserUseCase updateUser;
+    private final ChangePasswordUseCase changePassword;
+    private final DeleteUserUseCase deleteUser;
 
-    public UserController(FindUserByIdInteractor findById,
-                          ListUserInteractor listUsers,
-                          CreateUserInteractor createUser,
-                          UpdateUserInteractor updateUser,
-                          ChangePasswordInteractor changePassword,
-                          DeleteUserInteractor deleteUser) {
+    public UserController(FindUserByIdUseCase findById,
+                          ListUserUseCase listUsers,
+                          CreateUserUseCase createUser,
+                          UpdateUserUseCase updateUser,
+                          ChangePasswordUseCase changePassword,
+                          DeleteUserUseCase deleteUser) {
         this.findById = findById;
         this.listUsers = listUsers;
         this.createUser = createUser;

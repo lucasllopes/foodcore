@@ -4,7 +4,7 @@ import com.fiap.foodcore.application.exception.DataNotFoundException;
 import com.fiap.foodcore.application.exception.WrongPasswordException;
 import com.fiap.foodcore.application.gateway.PasswordEncryptionGateway;
 import com.fiap.foodcore.application.gateway.UserGateway;
-import com.fiap.foodcore.application.usecase.ChangePasswordInteractor;
+import com.fiap.foodcore.application.usecase.interactor.ChangePasswordInteractor;
 import com.fiap.foodcore.application.usecase.input.ChangePasswordInput;
 import com.fiap.foodcore.helper.UserTestHelper;
 import org.junit.jupiter.api.Test;
@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class ChangePasswordInteractorTest {
+class ChangePasswordUseCaseTest {
 
     @Mock
     private UserGateway userGateway;

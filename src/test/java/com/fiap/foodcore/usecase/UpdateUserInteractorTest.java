@@ -3,7 +3,7 @@ package com.fiap.foodcore.usecase;
 import com.fiap.foodcore.application.exception.DataNotFoundException;
 import com.fiap.foodcore.application.exception.DuplicatedDataException;
 import com.fiap.foodcore.application.gateway.UserGateway;
-import com.fiap.foodcore.application.usecase.UpdateUserInteractor;
+import com.fiap.foodcore.application.usecase.interactor.UpdateUserInteractor;
 import com.fiap.foodcore.application.usecase.input.UpdateUserInput;
 import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
 import com.fiap.foodcore.domain.User;

@@ -22,9 +22,9 @@ public class UserTypeController {
 
     private final static Logger logger = LoggerFactory.getLogger(UserTypeController.class);
 
-    private final CreateUserTypeInteractor createUserType;
+    private final CreateUserTypeUseCase createUserType;
 
-    public UserTypeController(CreateUserTypeInteractor createUserType) {
+    public UserTypeController(CreateUserTypeUseCase createUserType) {
         this.createUserType = createUserType;
     }
 

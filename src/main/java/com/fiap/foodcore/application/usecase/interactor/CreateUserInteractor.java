@@ -1,11 +1,12 @@
-package com.fiap.foodcore.application.usecase;
+package com.fiap.foodcore.application.usecase.interactor;
 
 import com.fiap.foodcore.application.strategy.CreateUserStrategyFactory;
+import com.fiap.foodcore.application.usecase.CreateUserUseCase;
 import com.fiap.foodcore.application.usecase.input.CreateUserInput;
 import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
 import com.fiap.foodcore.domain.UserTypeDomain;
 
-public class CreateUserInteractor {
+public class CreateUserInteractor implements CreateUserUseCase{
 
     private final CreateUserStrategyFactory strategyFactory;
 
@@ -13,6 +14,7 @@ public class CreateUserInteractor {
         this.strategyFactory = strategyFactory;
     }
 
+    @Override
     public CreateUserOutput execute(CreateUserInput createUserInput) {
         var userType = UserTypeDomain.fromString(createUserInput.tipo().name());
         var strategy = strategyFactory.getStrategy(userType);

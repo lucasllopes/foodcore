@@ -3,6 +3,7 @@ package com.fiap.foodcore.helper;
 import com.fiap.foodcore.domain.User;
 import com.fiap.foodcore.domain.UserTypeDomain;
 import com.fiap.foodcore.infrastructure.web.controller.dto.*;
+import io.restassured.http.ContentType;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
@@ -147,21 +148,8 @@ public class UserTestHelper {
     public static String authenticateAndGetToken(UserCreateRequestDTO dto) {
         LoginRequestDTO loginRequest = new LoginRequestDTO(dto.login(), dto.senha());
         return given()
-                .body(loginRequest)
-                .when()
-                .post("/login")
-                .then()
-                .statusCode(HttpStatus.OK.value())
-                .extract()
-                .asString();
-
-    }
-
-
-    /* TODO Remover esse metodo e utilizar o authenticateAndGetToken" */
-    public static String getToken(LoginRequestDTO loginRequest) {
-        return given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
                 .body(loginRequest)
                 .when()
                 .post("/login")

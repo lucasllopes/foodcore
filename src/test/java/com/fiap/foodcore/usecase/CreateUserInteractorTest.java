@@ -2,7 +2,7 @@ package com.fiap.foodcore.usecase;
 
 import com.fiap.foodcore.application.strategy.CreateUserStrategy;
 import com.fiap.foodcore.application.strategy.CreateUserStrategyFactory;
-import com.fiap.foodcore.application.usecase.CreateUserInteractor;
+import com.fiap.foodcore.application.usecase.interactor.CreateUserInteractor;
 import com.fiap.foodcore.application.usecase.input.CreateUserInput;
 import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
 import com.fiap.foodcore.domain.UserTypeDomain;

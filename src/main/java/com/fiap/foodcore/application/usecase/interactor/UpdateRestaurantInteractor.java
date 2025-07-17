@@ -1,18 +1,14 @@
-package com.fiap.foodcore.application.usecase;
+package com.fiap.foodcore.application.usecase.interactor;
 
-import com.fiap.foodcore.application.exception.DataNotFoundException;
-import com.fiap.foodcore.application.exception.DuplicatedDataException;
 import com.fiap.foodcore.application.gateway.RestaurantGateway;
-import com.fiap.foodcore.application.gateway.UserGateway;
-import com.fiap.foodcore.application.usecase.input.UpdateUserInput;
+import com.fiap.foodcore.application.usecase.UpdateRestaurantUseCase;
+import com.fiap.foodcore.application.usecase.input.UpdateRestaurantInput;
 import com.fiap.foodcore.application.usecase.mapper.RestaurantMapper;
-import com.fiap.foodcore.application.usecase.mapper.UserMapper;
 import com.fiap.foodcore.application.usecase.output.CreateRestaurantOutput;
-import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
 import com.fiap.foodcore.domain.Restaurant;
 import com.fiap.foodcore.domain.exception.RestaurantNotFoundException;
 
-public class UpdateRestaurantInteractor {
+public class UpdateRestaurantInteractor implements UpdateRestaurantUseCase {
 
     private final RestaurantGateway restaurantGateway;
 
@@ -20,6 +16,7 @@ public class UpdateRestaurantInteractor {
         this.restaurantGateway = restaurantGateway;
     }
 
+    @Override
     public CreateRestaurantOutput execute(Long id, UpdateRestaurantInput input) {
         var existing = this.restaurantGateway.findById(id).orElseThrow(() -> new RestaurantNotFoundException("Restaurante não encontrado"));
 

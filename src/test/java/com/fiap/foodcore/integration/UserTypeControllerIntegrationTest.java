@@ -2,13 +2,11 @@
 
 package com.fiap.foodcore.integration;
 
-import com.fiap.foodcore.application.usecase.CreateUserInteractor;
-import com.fiap.foodcore.application.usecase.CreateUserTypeInteractor;
+import com.fiap.foodcore.application.usecase.interactor.CreateUserInteractor;
 import com.fiap.foodcore.application.usecase.input.CreateUserInput;
 import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
 import com.fiap.foodcore.helper.UserTestHelper;
 import com.fiap.foodcore.infrastructure.presenter.UserPresenter;
-import com.fiap.foodcore.infrastructure.web.controller.dto.LoginRequestDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.UserCreateRequestDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.UserResponseDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.UserTypeRequestDTO;
@@ -22,6 +20,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
+import static com.fiap.foodcore.helper.UserTestHelper.authenticateAndGetToken;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasKey;
@@ -29,9 +28,6 @@ import static org.hamcrest.Matchers.hasKey;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase
 public class UserTypeControllerIntegrationTest {
-
-    @Autowired
-    private CreateUserTypeInteractor createUserTypeInteractor;
 
     @Autowired
     private CreateUserInteractor createUserInteractor;
@@ -47,12 +43,10 @@ public class UserTypeControllerIntegrationTest {
 
     @Test
     void shouldCreateOwnerTypeSuccessfully() {
-        UserCreateRequestDTO createUser = UserTestHelper.createValidGenericUserRequest();
 
-        CreateUserInput input = UserPresenter.toInputCreate(createUser);
-        createUserInteractor.execute(input);
-        LoginRequestDTO loginRequest = new LoginRequestDTO(createUser.login(), createUser.senha());
-        String token = UserTestHelper.getToken(loginRequest);
+        UserCreateRequestDTO owner = UserTestHelper.createValidGenericOwnerRequest();
+        createUser(owner);
+        String token = authenticateAndGetToken(owner);
 
         UserTypeRequestDTO requestDTO = new UserTypeRequestDTO("DONO");
 
@@ -69,4 +63,11 @@ public class UserTypeControllerIntegrationTest {
                 .body("$", hasKey("name"))
                 .body("name", equalTo(requestDTO.name()));
     }
+
+    public UserResponseDTO createUser(UserCreateRequestDTO dto) {
+        CreateUserInput inputOwner = UserPresenter.toInputCreate(dto);
+        CreateUserOutput outputOwner = createUserInteractor.execute(inputOwner);
+        return UserPresenter.toDto(outputOwner);
+    }
+
 }

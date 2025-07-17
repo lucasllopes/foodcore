@@ -1,5 +1,6 @@
-package com.fiap.foodcore.application.usecase;
+package com.fiap.foodcore.application.usecase.interactor;
 
+import com.fiap.foodcore.application.usecase.UpdateUserUseCase;
 import com.fiap.foodcore.application.usecase.input.UpdateUserInput;
 import com.fiap.foodcore.application.usecase.mapper.UserMapper;
 import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
@@ -7,7 +8,7 @@ import com.fiap.foodcore.application.gateway.UserGateway;
 import com.fiap.foodcore.application.exception.DataNotFoundException;
 import com.fiap.foodcore.application.exception.DuplicatedDataException;
 
-public class UpdateUserInteractor {
+public class UpdateUserInteractor implements UpdateUserUseCase {
 
     private final UserGateway userGateway;
 
@@ -15,6 +16,7 @@ public class UpdateUserInteractor {
         this.userGateway = userGateway;
     }
 
+    @Override
     public CreateUserOutput execute(Long id, UpdateUserInput input) {
         var existing = userGateway.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Usuário não encontrado"));
