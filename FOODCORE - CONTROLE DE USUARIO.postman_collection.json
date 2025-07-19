@@ -44,6 +44,9 @@
 		},
 		{
 			"name": "2 - GET USUARIOS COM PAGINACAO",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -63,6 +66,15 @@
 						"type": "text"
 					}
 				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
 					"raw": "http://localhost:8080/usuarios?page=0&sort=id,DESC&size=15",
 					"protocol": "http",
@@ -305,7 +317,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6InRlc3RlMWluc2VydDEiLCJleHAiOjE3NTIzNzc4NDB9.PtXA1VYbwborepRpt07prOjXlMVNGPJrJDTo1Ypr3Gg",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6InRlc3RlMWluc2VydDEiLCJleHAiOjE3NTI4ODUxOTV9.f_omXBfntX2cojnWTCw0Sps4OoOToBb-JdwnyqyvsZw",
 							"type": "string"
 						}
 					]
@@ -314,7 +326,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\":\"Teste insert tipo usuario\"\r\n}",
+					"raw": "{\r\n    \"name\":\"MECANICO\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -330,6 +342,118 @@
 					"port": "8080",
 					"path": [
 						"tipos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "9 - PUT Alterar tipo usuário",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6InRlc3RlMWluc2VydDEiLCJleHAiOjE3NTI4ODUxOTV9.f_omXBfntX2cojnWTCw0Sps4OoOToBb-JdwnyqyvsZw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"PILOTO\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/tipos/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tipos",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "10 - GET TIPO USUARIO BY ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6InRlc3RlMWluc2VydDEiLCJleHAiOjE3NTI4ODY1OTd9.RJKAGpZspcIPxmanIg9IPhBQXb0QQtyP_KGCNOurROc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imluc2VydDQxIiwiZXhwIjoxNzQ3MjU2NDY1fQ.0otrrjz9lZkbZlHuoVJ7SBOb0TqcUiOcACohHBGXiA8",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/tipos/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tipos",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "11 - GET TIPO USUARIO BY NOME",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6InRlc3RlMWluc2VydDEiLCJleHAiOjE3NTI4ODg0NjR9.NDSnha9y75GeTOEix_tIhrWK9zWf6-Z6fXv2UpYxvy4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imluc2VydDQxIiwiZXhwIjoxNzQ3MjU2NDY1fQ.0otrrjz9lZkbZlHuoVJ7SBOb0TqcUiOcACohHBGXiA8",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/tipos/name/PILOTO",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tipos",
+						"name",
+						"PILOTO"
 					]
 				}
 			},

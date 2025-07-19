@@ -3,6 +3,7 @@ package com.fiap.foodcore.application.gateway;
 import com.fiap.foodcore.domain.UserType;
 import com.fiap.foodcore.domain.pagination.DomainPage;
 import com.fiap.foodcore.domain.pagination.PageRequestDomain;
+import org.apache.el.stream.Stream;
 
 import java.util.Optional;
 
@@ -12,4 +13,6 @@ public interface UserTypeGateway {
     Optional<UserType> findById(Long id);
     DomainPage<UserType> findAll(PageRequestDomain pageRequest);
     void delete(UserType user);
+
+    Optional<UserType> findByNameIgnoreCase(String name);
 }

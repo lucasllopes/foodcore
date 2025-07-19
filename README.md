@@ -20,3 +20,7 @@ O plugin do jacoco deve gerar um relatório na pasta target:
 Exemplo: file:///C:/Users/Lucas/IdeaProjects/foodcore/target/site/jacoco/index.html
 
 
+Para acessar a documentação Swagger, inicie a aplicação e acesse a URL:
+http://localhost:8080/swagger-ui/index.html#/
+
+A maioria dos endpoints exige autenticação. Para isso, utilize o endpoint de login informando o usuário e a senha de um usuário existente.

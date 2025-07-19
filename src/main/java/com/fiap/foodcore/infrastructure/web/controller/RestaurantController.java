@@ -2,6 +2,7 @@ package com.fiap.foodcore.infrastructure.web.controller;
 
 import com.fiap.foodcore.application.usecase.*;
 import com.fiap.foodcore.application.usecase.input.CreateRestaurantInput;
+import com.fiap.foodcore.application.usecase.input.UpdateRestaurantInput;
 import com.fiap.foodcore.application.usecase.output.CreateRestaurantOutput;
 import com.fiap.foodcore.domain.pagination.DomainPage;
 import com.fiap.foodcore.domain.pagination.PageRequestDomain;
@@ -25,17 +26,17 @@ public class RestaurantController {
 
     private final static Logger logger = LoggerFactory.getLogger(RestaurantController.class);
 
-    private final CreateRestaurantInteractor createRestaurantInteractor;
-    private final FindRestaurantByIdInteractor findRestaurantByIdInteractor;
-    private final DeleteRestaurantInteractor deleteRestaurantInteractor;
-    private final ListRestaurantInteractor listRestaurantInteractor;
-    private final UpdateRestaurantInteractor updateRestaurantInteractor;
+    private final CreateRestaurantUseCase createRestaurantInteractor;
+    private final FindRestaurantByIdUseCase findRestaurantByIdInteractor;
+    private final DeleteRestaurantUseCase deleteRestaurantInteractor;
+    private final ListRestaurantUseCase listRestaurantInteractor;
+    private final UpdateRestaurantUseCase updateRestaurantInteractor;
 
-    public RestaurantController(CreateRestaurantInteractor createRestaurantInteractor,
-                                FindRestaurantByIdInteractor findRestaurantByIdInteractor,
-                                DeleteRestaurantInteractor deleteRestaurantInteractor,
-                                ListRestaurantInteractor listRestaurantInteractor,
-                                UpdateRestaurantInteractor updateRestaurantInteractor) {
+    public RestaurantController(CreateRestaurantUseCase createRestaurantInteractor,
+                                FindRestaurantByIdUseCase findRestaurantByIdInteractor,
+                                DeleteRestaurantUseCase deleteRestaurantInteractor,
+                                ListRestaurantUseCase listRestaurantInteractor,
+                                UpdateRestaurantUseCase updateRestaurantInteractor) {
         this.createRestaurantInteractor = createRestaurantInteractor;
         this.findRestaurantByIdInteractor = findRestaurantByIdInteractor;
         this.deleteRestaurantInteractor = deleteRestaurantInteractor;

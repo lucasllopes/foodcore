@@ -1,6 +1,6 @@
 package com.fiap.foodcore.application.usecase.mapper;
 
-import com.fiap.foodcore.application.usecase.UpdateRestaurantInput;
+import com.fiap.foodcore.application.usecase.input.UpdateRestaurantInput;
 import com.fiap.foodcore.application.usecase.input.CreateRestaurantInput;
 import com.fiap.foodcore.application.usecase.output.AddressOutput;
 import com.fiap.foodcore.application.usecase.output.CreateRestaurantOutput;

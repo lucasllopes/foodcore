@@ -6,6 +6,10 @@ import com.fiap.foodcore.infrastructure.web.controller.handler.CustomAuthenticat
 import com.fiap.foodcore.domain.User;
 import com.fiap.foodcore.infrastructure.gateways.persistence.entity.UserEntity;
 import com.fiap.foodcore.infrastructure.gateways.persistence.UserRepository;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -42,6 +46,11 @@ public class SecurityConfig {
     public SecurityFilterChain SecurityFilters(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(req -> {
+                    req.requestMatchers(
+                            "/v3/api-docs/**",
+                            "/swagger-ui/**",
+                            "/swagger-ui.html"
+                    ).permitAll();
                     req.requestMatchers("/login").permitAll();
                     req.requestMatchers(HttpMethod.POST, "/usuarios").permitAll();
                     req.requestMatchers(HttpMethod.DELETE, "/usuarios/*");
@@ -88,5 +97,21 @@ public class SecurityConfig {
     @Bean
     public AuthenticationEntryPoint customAuthenticationEntryPoint() {
         return new CustomAuthenticationEntryPoint();
+    }
+
+    @Bean
+    public OpenAPI openAPIWithJWT() {
+        final String schemeName = "bearerAuth";
+
+        return new OpenAPI()
+                .info(new Info().title("FoodCore API").version("v1"))
+                .addSecurityItem(new SecurityRequirement().addList(schemeName))
+                .components(new io.swagger.v3.oas.models.Components()
+                        .addSecuritySchemes(schemeName,
+                                new SecurityScheme()
+                                        .name(schemeName)
+                                        .type(SecurityScheme.Type.HTTP)
+                                        .scheme("bearer")
+                                        .bearerFormat("JWT")));
     }
 }

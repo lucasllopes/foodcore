@@ -1,0 +1,27 @@
+package com.fiap.foodcore.application.usecase.interactor.restaurant;
+
+import com.fiap.foodcore.application.gateway.RestaurantGateway;
+import com.fiap.foodcore.application.usecase.UpdateRestaurantUseCase;
+import com.fiap.foodcore.application.usecase.input.UpdateRestaurantInput;
+import com.fiap.foodcore.application.usecase.mapper.RestaurantMapper;
+import com.fiap.foodcore.application.usecase.output.CreateRestaurantOutput;
+import com.fiap.foodcore.domain.Restaurant;
+import com.fiap.foodcore.domain.exception.RestaurantNotFoundException;
+
+public class UpdateRestaurantInteractor implements UpdateRestaurantUseCase {
+
+    private final RestaurantGateway restaurantGateway;
+
+    public UpdateRestaurantInteractor(RestaurantGateway restaurantGateway) {
+        this.restaurantGateway = restaurantGateway;
+    }
+
+    @Override
+    public CreateRestaurantOutput execute(Long id, UpdateRestaurantInput input) {
+        var existing = this.restaurantGateway.findById(id).orElseThrow(() -> new RestaurantNotFoundException("Restaurante não encontrado"));
+
+        var restaurant = RestaurantMapper.toDomain(existing, input);
+        Restaurant savedRestaurant1 = restaurantGateway.save(restaurant);
+        return RestaurantMapper.fromDomain(savedRestaurant1);
+    }
+}

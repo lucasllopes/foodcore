@@ -1,9 +1,10 @@
 package com.fiap.foodcore.infrastructure.presenter;
 
-import com.fiap.foodcore.application.usecase.UpdateRestaurantInput;
+
 import com.fiap.foodcore.application.usecase.input.AddressUpdateInput;
 import com.fiap.foodcore.application.usecase.input.CreateAddressInput;
 import com.fiap.foodcore.application.usecase.input.CreateRestaurantInput;
+import com.fiap.foodcore.application.usecase.input.UpdateRestaurantInput;
 import com.fiap.foodcore.application.usecase.output.AddressOutput;
 import com.fiap.foodcore.application.usecase.output.CreateRestaurantOutput;
 import com.fiap.foodcore.infrastructure.web.controller.dto.AddressResponseDTO;

@@ -7,27 +7,27 @@ import com.fiap.foodcore.domain.pagination.PageRequestDomain;
 import com.fiap.foodcore.infrastructure.gateways.persistence.UserTypeRepository;
 import com.fiap.foodcore.infrastructure.gateways.persistence.entity.UserTypeEntity;
 import com.fiap.foodcore.infrastructure.mapper.UserTypeEntityMapper;
-
 import java.util.Optional;
 
 public class UserTypeRepositoryGateway implements UserTypeGateway {
 
-    private final UserTypeRepository restaurantRepository;
+    private final UserTypeRepository userTypeRepository;
 
     public UserTypeRepositoryGateway(UserTypeRepository userTypeRepository) {
-        this.restaurantRepository = userTypeRepository;
+        this.userTypeRepository = userTypeRepository;
     }
 
     @Override
     public UserType save(UserType userType) {
         UserTypeEntity entity = UserTypeEntityMapper.toEntity(userType);
-        UserTypeEntity userTypeCreated = restaurantRepository.save(entity);
+        UserTypeEntity userTypeCreated = userTypeRepository.save(entity);
         return UserTypeEntityMapper.toDomain(userTypeCreated);
     }
 
     @Override
     public Optional<UserType> findById(Long id) {
-        return Optional.empty();
+        return userTypeRepository.findById(id)
+                .map(UserTypeEntityMapper::toDomain);
     }
 
     @Override
@@ -38,5 +38,11 @@ public class UserTypeRepositoryGateway implements UserTypeGateway {
     @Override
     public void delete(UserType user) {
 
+    }
+
+    @Override
+    public Optional<UserType> findByNameIgnoreCase(String name) {
+        return userTypeRepository.findByNameIgnoreCase(name)
+                .map(UserTypeEntityMapper::toDomain);
     }
 }

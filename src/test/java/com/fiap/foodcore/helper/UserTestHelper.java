@@ -3,7 +3,9 @@ package com.fiap.foodcore.helper;
 import com.fiap.foodcore.domain.User;
 import com.fiap.foodcore.domain.UserTypeDomain;
 import com.fiap.foodcore.infrastructure.web.controller.dto.*;
+import io.restassured.http.ContentType;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 
 import java.util.List;
 import java.util.UUID;
@@ -53,6 +55,18 @@ public class UserTestHelper {
         return new UserCreateRequestDTO("Owner Old",
                 "owner_old@email.com",
                 "ownerneedupdate",
+                "password",
+                "DONO",
+                List.of(
+                        createValidAddressRequest("Rua das Flores", "123", "APTO 123", "Centro", "São Paulo", "SP", "01234-567"),
+                        createValidAddressRequest("Av. Brasil", "456", null, "Jardins", "São Paulo", "SP", "12345-678")
+                ));
+    }
+
+    public static UserCreateRequestDTO createValidOwnerUserToCreateRestaurantRequest() {
+        return new UserCreateRequestDTO("Owner Old",
+                "owner_restaurant@email.com",
+                "ownerrestaurant",
                 "password",
                 "DONO",
                 List.of(
@@ -134,6 +148,8 @@ public class UserTestHelper {
     public static String authenticateAndGetToken(UserCreateRequestDTO dto) {
         LoginRequestDTO loginRequest = new LoginRequestDTO(dto.login(), dto.senha());
         return given()
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
                 .body(loginRequest)
                 .when()
                 .post("/login")

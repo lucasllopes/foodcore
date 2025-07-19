@@ -6,6 +6,12 @@ import com.fiap.foodcore.application.gateway.UserGateway;
 import com.fiap.foodcore.application.gateway.UserTypeGateway;
 import com.fiap.foodcore.application.strategy.CreateUserStrategyFactory;
 import com.fiap.foodcore.application.usecase.*;
+import com.fiap.foodcore.application.usecase.interactor.restaurant.*;
+import com.fiap.foodcore.application.usecase.interactor.user.*;
+import com.fiap.foodcore.application.usecase.interactor.usertype.CreateUserTypeInteractor;
+import com.fiap.foodcore.application.usecase.interactor.usertype.FindUserTypeByIdInteractor;
+import com.fiap.foodcore.application.usecase.interactor.usertype.FindUserTypeByNameInteractor;
+import com.fiap.foodcore.application.usecase.interactor.usertype.UpdateUserTypeInteractor;
 import com.fiap.foodcore.infrastructure.gateways.BCryptPasswordEncryptionGateway;
 import com.fiap.foodcore.infrastructure.gateways.RestaurantRepositoryGateway;
 import com.fiap.foodcore.infrastructure.gateways.UserRepositoryGateway;
@@ -31,32 +37,32 @@ public class BeanConfig {
     }
 
     @Bean
-    public CreateUserInteractor createUserInteractor(CreateUserStrategyFactory strategyFactory) {
+    public CreateUserUseCase createUserInteractor(CreateUserStrategyFactory strategyFactory) {
         return new CreateUserInteractor(strategyFactory);
     }
 
     @Bean
-    public FindUserByIdInteractor findUserByIdInteractor(UserGateway userGateway) {
+    public FindUserByIdUseCase findUserByIdInteractor(UserGateway userGateway) {
         return new FindUserByIdInteractor(userGateway);
     }
 
     @Bean
-    public ListUserInteractor listUserInteractor(UserGateway userGateway) {
+    public ListUserUseCase listUserInteractor(UserGateway userGateway) {
         return new ListUserInteractor(userGateway);
     }
 
     @Bean
-    public UpdateUserInteractor updateUserInteractor(UserGateway userGateway) {
+    public UpdateUserUseCase updateUserInteractor(UserGateway userGateway) {
         return new UpdateUserInteractor(userGateway);
     }
 
     @Bean
-    public DeleteUserInteractor deleteUserInteractor(UserGateway userGateway) {
+    public DeleteUserUseCase deleteUserInteractor(UserGateway userGateway) {
         return new DeleteUserInteractor(userGateway);
     }
 
     @Bean
-    public ChangePasswordInteractor changePasswordInteractor(UserGateway userGateway,
+    public ChangePasswordUseCase changePasswordInteractor(UserGateway userGateway,
                                                              PasswordEncryptionGateway passwordEncryptionGateway) {
         return new ChangePasswordInteractor(userGateway, passwordEncryptionGateway);
     }
@@ -72,22 +78,22 @@ public class BeanConfig {
     }
 
     @Bean
-    public FindRestaurantByIdInteractor findRestaurantByIdInteractor(RestaurantGateway restaurantGateway) {
+    public FindRestaurantByIdUseCase findRestaurantByIdInteractor(RestaurantGateway restaurantGateway) {
         return new FindRestaurantByIdInteractor(restaurantGateway);
     }
 
     @Bean
-    public ListRestaurantInteractor listRestaurantInteractor(RestaurantGateway restaurantGateway) {
+    public ListRestaurantUseCase listRestaurantInteractor(RestaurantGateway restaurantGateway) {
         return new ListRestaurantInteractor(restaurantGateway);
     }
     @Bean
-    public UpdateRestaurantInteractor updateRestaurantInteractor(RestaurantGateway restaurantGateway) {
+    public UpdateRestaurantUseCase updateRestaurantInteractor(RestaurantGateway restaurantGateway) {
         return new UpdateRestaurantInteractor(restaurantGateway);
     }
 
     @Bean
-    public DeleteRestaurantInteractor deleteRestaurantInteractor(RestaurantGateway restaurantGateway, FindRestaurantByIdInteractor findRestaurantByIdInteractor) {
-        return new DeleteRestaurantInteractor(restaurantGateway, findRestaurantByIdInteractor);
+    public DeleteRestaurantUseCase deleteRestaurantInteractor(RestaurantGateway restaurantGateway, FindRestaurantByIdUseCase findRestaurantByIdUseCase) {
+        return new DeleteRestaurantInteractor(restaurantGateway, findRestaurantByIdUseCase);
     }
 
     @Bean
@@ -96,7 +102,22 @@ public class BeanConfig {
     }
 
     @Bean
-    public CreateUserTypeInteractor createUserTypeInteractor(UserTypeGateway userTypeGateway) {
+    public CreateUserTypeUseCase createUserTypeInteractor(UserTypeGateway userTypeGateway) {
         return new CreateUserTypeInteractor(userTypeGateway);
+    }
+
+    @Bean
+    public UpdateUserTypeUseCase updateUserTypeInteractor(UserTypeGateway userTypeGateway) {
+        return new UpdateUserTypeInteractor(userTypeGateway);
+    }
+
+    @Bean
+    public FindUserTypeByIdUseCase findUserTypeByIdInteractor(UserTypeGateway userTypeGateway) {
+        return new FindUserTypeByIdInteractor(userTypeGateway);
+    }
+
+    @Bean
+    public FindUserTypeByNameUseCase findUserTypeByNameUseCase(UserTypeGateway userTypeGateway) {
+        return new FindUserTypeByNameInteractor(userTypeGateway);
     }
 }

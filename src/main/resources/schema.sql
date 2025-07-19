@@ -60,6 +60,7 @@ CREATE TABLE IF NOT EXISTS restaurante (
 --     );
 
 CREATE TABLE IF NOT EXISTS tipo_usuario (
-                                           id BIGSERIAL PRIMARY KEY,
-                                           name VARCHAR(100)
-    );
+id BIGSERIAL PRIMARY KEY,
+name VARCHAR(100),
+last_modified TIMESTAMP
+);

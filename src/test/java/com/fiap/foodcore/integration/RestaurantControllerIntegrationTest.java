@@ -1,6 +1,7 @@
 package com.fiap.foodcore.integration;
 
-import com.fiap.foodcore.application.usecase.CreateUserInteractor;
+import com.fiap.foodcore.application.usecase.CreateUserUseCase;
+import com.fiap.foodcore.application.usecase.interactor.user.CreateUserInteractor;
 import com.fiap.foodcore.application.usecase.input.CreateUserInput;
 import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
 import com.fiap.foodcore.helper.UserTestHelper;
@@ -18,8 +19,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 
-import java.time.LocalTime;
-
 import static com.fiap.foodcore.helper.RestaurantTestHelper.createValidRestarantRequest;
 import static com.fiap.foodcore.helper.UserTestHelper.authenticateAndGetToken;
 import static io.restassured.RestAssured.given;
@@ -31,7 +30,7 @@ import static org.hamcrest.Matchers.hasKey;
 public class RestaurantControllerIntegrationTest {
 
     @Autowired
-    private CreateUserInteractor createUserInteractor;
+    private CreateUserUseCase createUserUseCase;
 
     @LocalServerPort
     private int port;
@@ -45,10 +44,10 @@ public class RestaurantControllerIntegrationTest {
                 .accept(ContentType.JSON);
     }
 
-    //@Test
+    @Test
     void shouldCreateRestaurant(){
 
-        UserCreateRequestDTO owner = UserTestHelper.createValidOwnerUserToUpdateRequest();
+        UserCreateRequestDTO owner = UserTestHelper.createValidOwnerUserToCreateRestaurantRequest();
 
         UserResponseDTO response = createUser(owner);
 
@@ -71,16 +70,18 @@ public class RestaurantControllerIntegrationTest {
                 .body("$", hasKey("ownerId"))
                 .body("nome", equalTo(dto.nome()))
                 .body("cuisineType", equalTo(dto.cuisineType()))
-                .body("openingHours", equalTo(dto.openingHours()))
-                .body("closingHours", equalTo(dto.closingHours()))
-                .body("ownerId", equalTo(dto.ownerId()));
+                .body("openingHours", equalTo(dto.openingHours().toString()))
+                .body("closingHours", equalTo(dto.closingHours().toString()))
+                .body("ownerId", equalTo(dto.ownerId().intValue()));
 
     }
 
 
     public UserResponseDTO createUser(UserCreateRequestDTO dto) {
         CreateUserInput inputOwner = UserPresenter.toInputCreate(dto);
-        CreateUserOutput outputOwner = createUserInteractor.execute(inputOwner);
+        CreateUserOutput outputOwner = createUserUseCase.execute(inputOwner);
         return UserPresenter.toDto(outputOwner);
     }
+
+
 }
