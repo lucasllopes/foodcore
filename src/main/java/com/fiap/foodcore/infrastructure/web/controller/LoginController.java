@@ -3,6 +3,7 @@ package com.fiap.foodcore.infrastructure.web.controller;
 import com.fiap.foodcore.infrastructure.web.controller.dto.LoginRequestDTO;
 import com.fiap.foodcore.infrastructure.security.UserDetailsAdapter;
 import com.fiap.foodcore.application.gateway.TokenGateway;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/login")
+@Tag(name = "1 - Autenticação", description = "Endpoints para autenticação")
 public class LoginController {
 
     private final static Logger logger = LoggerFactory.getLogger(LoginController.class);
