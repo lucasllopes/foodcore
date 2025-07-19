@@ -17,10 +17,14 @@ public class ListRestaurantInteractor implements ListRestaurantUseCase {
     }
 
     @Override
-    public DomainPage<CreateRestaurantOutput> execute(PageRequestDomain pageRequest) {
-        DomainPage<Restaurant> domainPage =
-                restaurantGateway.findAll(pageRequest);
-
-        return domainPage.map(RestaurantMapper::fromDomain);
+    public DomainPage<CreateRestaurantOutput> execute(String name, PageRequestDomain pageRequest) {
+        DomainPage<Restaurant> restaurants = findRestaurants(name, pageRequest);
+        return restaurants.map(RestaurantMapper::fromDomain);
+    }
+    private DomainPage<Restaurant> findRestaurants(String name, PageRequestDomain pageRequest) {
+        if (name == null || name.isBlank()) {
+            return restaurantGateway.findAll(pageRequest);
+        }
+        return restaurantGateway.findAllByName(name, pageRequest);
     }
 }

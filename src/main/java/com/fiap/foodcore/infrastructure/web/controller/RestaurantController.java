@@ -55,13 +55,13 @@ public class RestaurantController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<RestaurantResponseDTO>> listPaginatedRestaurants(Pageable pageable) {
+    public ResponseEntity<Page<RestaurantResponseDTO>> listPaginatedRestaurants(@RequestParam(required = false) String name, Pageable pageable) {
 
         logger.info("Handling GET request to /restaurantes");
 
         PageRequestDomain pr = new PageRequestDomain(pageable.getPageNumber(), pageable.getPageSize());
 
-        DomainPage<CreateRestaurantOutput> outputs = listRestaurantInteractor.execute(pr);
+        DomainPage<CreateRestaurantOutput> outputs = listRestaurantInteractor.execute(name, pr);
         List<RestaurantResponseDTO> dtos = RestaurantPresenter.toDtoList(outputs.getItems());
 
         Page<RestaurantResponseDTO> paginatedRestaurant = new PageImpl<>(

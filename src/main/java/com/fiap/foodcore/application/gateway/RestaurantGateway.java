@@ -12,6 +12,7 @@ public interface RestaurantGateway {
     Optional<Restaurant> findById(Long id);
     Optional<Restaurant> findByName(String name);
     DomainPage<Restaurant> findAll(PageRequestDomain pageRequest);
+    DomainPage<Restaurant> findAllByName(String name, PageRequestDomain pageRequest);
     Restaurant save(Restaurant restaurant);
     void delete(Long id);
 }
