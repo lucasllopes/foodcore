@@ -1,5 +1,6 @@
 package com.fiap.foodcore.infrastructure.web.controller.handler;
 
+import com.fiap.foodcore.domain.exception.UserTypeNotOwnerException;
 import com.fiap.foodcore.infrastructure.web.controller.dto.MessageErrorDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.ValidationErrorDTO;
 import com.fiap.foodcore.application.exception.DuplicatedDataException;
@@ -60,5 +61,9 @@ public class ExceptionHandlerController {
     @ExceptionHandler(UserTypeNotFoundException.class)
     public ResponseEntity<MessageErrorDTO> handleUserTypeNotFound(UserTypeNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageErrorDTO("Tipo de usuário inválido. " + ex.getMessage()));
+    }
+    @ExceptionHandler(UserTypeNotOwnerException.class)
+    public ResponseEntity<MessageErrorDTO> handleUserTypeNotOwner(UserTypeNotOwnerException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageErrorDTO("O usuário informado não é do tipo Dono."));
     }
 }
