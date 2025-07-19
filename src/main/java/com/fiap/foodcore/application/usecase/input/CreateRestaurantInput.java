@@ -8,7 +8,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 public record CreateRestaurantInput(String name,
-                                    List<CreateAddressInput> address,
+                                    CreateAddressInput address,
                                     String cuisineType,
                                     LocalTime openingHours,
                                     LocalTime closingHours,

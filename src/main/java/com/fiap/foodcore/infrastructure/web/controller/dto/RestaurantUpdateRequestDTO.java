@@ -23,8 +23,6 @@ public record RestaurantUpdateRequestDTO(@NotBlank(message = "Nome é obrigatór
                                    @JsonFormat(pattern = "HH:mm")
                                    LocalTime closingHours,
                                          @NotNull(message = "Necessário informar um endereço.")
-                                   @NotEmpty(message = "A lista de endereços não pode estar vazia.")
-                                   @Valid
-                                   List<AddressUpdateRequestDTO> enderecos
+                                   AddressUpdateRequestDTO endereco
 ) {
 }

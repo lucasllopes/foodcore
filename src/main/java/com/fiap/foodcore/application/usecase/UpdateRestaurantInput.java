@@ -8,7 +8,7 @@ import java.util.List;
 public record UpdateRestaurantInput(
         String nome,
 
-        List<AddressUpdateInput> enderecos,
+        AddressUpdateInput enderecos,
         String cuisineType,
         LocalTime openingHours,
         LocalTime closingHours

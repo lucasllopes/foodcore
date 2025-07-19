@@ -14,7 +14,7 @@ public class RestaurantEntityMapper {
         Restaurant restaurant = Restaurant.create(
                 entity.getId(),
                 entity.getName(),
-                RestaurantAddressEntityMapper.toDomain(entity.getAddresses()),
+                RestaurantAddressEntityMapper.toDomain(entity.getAddress()),
                 entity.getCuisineType(),
                 entity.getOpeningHours(),
                 entity.getClosingHours(),
@@ -30,16 +30,7 @@ public class RestaurantEntityMapper {
         RestaurantEntity entity = new RestaurantEntity();
         entity.setId(domain.getId());
         entity.setName(domain.getName());
-        if (domain.getAddress() != null && !domain.getAddress().isEmpty()) {
-            var addressEntities = domain.getAddress()
-                    .stream()
-                    .map(RestaurantAddressEntityMapper::toEntity)
-                    .collect(Collectors.toList());
-            for (RestaurantAddressEntity addrEntity : addressEntities) {
-                addrEntity.setRestaurante(entity);
-            }
-            entity.setAddresses(addressEntities);
-        }
+        entity.setAddress(RestaurantAddressEntityMapper.toEntity(domain.getAddress()));
         entity.setCuisineType(domain.getCuisineType());
         entity.setOpeningHours(domain.getOpeningHours());
         entity.setClosingHours(domain.getClosingHours());

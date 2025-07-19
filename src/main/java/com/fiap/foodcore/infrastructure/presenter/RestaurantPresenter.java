@@ -1,10 +1,15 @@
 package com.fiap.foodcore.infrastructure.presenter;
 
 import com.fiap.foodcore.application.usecase.UpdateRestaurantInput;
-import com.fiap.foodcore.application.usecase.input.*;
+import com.fiap.foodcore.application.usecase.input.AddressUpdateInput;
+import com.fiap.foodcore.application.usecase.input.CreateAddressInput;
+import com.fiap.foodcore.application.usecase.input.CreateRestaurantInput;
+import com.fiap.foodcore.application.usecase.output.AddressOutput;
 import com.fiap.foodcore.application.usecase.output.CreateRestaurantOutput;
+import com.fiap.foodcore.infrastructure.web.controller.dto.AddressResponseDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.RestaurantCreateRequestDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.*;
+import com.fiap.foodcore.infrastructure.web.controller.dto.RestaurantResponseDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.RestaurantUpdateRequestDTO;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,24 +17,25 @@ import java.util.stream.Collectors;
 public class RestaurantPresenter {
 
     public static RestaurantResponseDTO toDto(CreateRestaurantOutput output) {
+        AddressResponseDTO addressResponseDTO = getAddressResponseDTO(output.address());
         return new RestaurantResponseDTO(
                 output.id(),
-                output.nome(),
-                output.address().stream().map(end ->
-                        new AddressResponseDTO(
-                                end.logradouro(),
-                                end.numero(),
-                                end.complemento(),
-                                end.bairro(),
-                                end.cep(),
-                                end.estado(),
-                                end.cidade()
-                        )
-                ).collect(Collectors.toList()),
+                output.nome(), addressResponseDTO,
                 output.cuisineType(),
                 output.openingHours(),
                 output.closingHours(),
                 output.ownerId()
+        );
+    }
+    private static AddressResponseDTO getAddressResponseDTO(AddressOutput addressOutput){
+        return new AddressResponseDTO(
+                addressOutput.logradouro(),
+                addressOutput.numero(),
+                addressOutput.complemento(),
+                addressOutput.bairro(),
+                addressOutput.cep(),
+                addressOutput.estado(),
+                addressOutput.cidade()
         );
     }
 
@@ -38,21 +44,18 @@ public class RestaurantPresenter {
     }
 
     public static CreateRestaurantInput toInputCreate(RestaurantCreateRequestDTO dto) {
-        List<CreateAddressInput> addressesInput = dto.enderecos().stream()
-                .map(addressDto -> new CreateAddressInput(
-                        addressDto.logradouro(),
-                        addressDto.numero(),
-                        addressDto.complemento(),
-                        addressDto.bairro(),
-                        addressDto.cidade(),
-                        addressDto.cep(),
-                        addressDto.estado()
-                ))
-                .toList();
+        CreateAddressInput addressInput =  new CreateAddressInput(
+                dto.endereco().logradouro(),
+                dto.endereco().numero(),
+                dto.endereco().complemento(),
+                dto.endereco().bairro(),
+                dto.endereco().cidade(),
+                dto.endereco().cep(),
+                dto.endereco().estado());
 
         return new CreateRestaurantInput(
                 dto.nome(),
-                addressesInput,
+                addressInput,
                 dto.cuisineType(),
                 dto.openingHours(),
                 dto.closingHours(),
@@ -61,21 +64,19 @@ public class RestaurantPresenter {
     }
 
     public static UpdateRestaurantInput toInputUpdate(RestaurantUpdateRequestDTO dto) {
-        List<AddressUpdateInput> addressesInput = dto.enderecos().stream()
-                .map(addressDto -> new AddressUpdateInput(
-                        addressDto.logradouro(),
-                        addressDto.numero(),
-                        addressDto.complemento(),
-                        addressDto.bairro(),
-                        addressDto.cidade(),
-                        addressDto.cep(),
-                        addressDto.estado()
-                ))
-                .toList();
+        AddressUpdateInput addressInput = new AddressUpdateInput(
+                dto.endereco().logradouro(),
+                dto.endereco().numero(),
+                dto.endereco().complemento(),
+                dto.endereco().bairro(),
+                dto.endereco().cidade(),
+                dto.endereco().cep(),
+                dto.endereco().estado()
+        );
 
         return new UpdateRestaurantInput(
                 dto.name(),
-                addressesInput,
+                addressInput,
                 dto.cuisineType(),
                 dto.openingHours(),
                 dto.closingHours()

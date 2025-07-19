@@ -6,7 +6,7 @@ import java.util.List;
 
 public record RestaurantResponseDTO(Long id,
                                     String nome,
-                                    List<AddressResponseDTO> address,
+                                    AddressResponseDTO address,
                                     String cuisineType,
                                     LocalTime openingHours,
                                     LocalTime closingHours,

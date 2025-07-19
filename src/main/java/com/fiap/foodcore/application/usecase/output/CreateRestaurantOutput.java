@@ -10,7 +10,7 @@ import java.util.List;
 
 public record CreateRestaurantOutput(Long id,
                                      String nome,
-                                     List<AddressOutput> address,
+                                     AddressOutput address,
                                      String cuisineType,
                                      LocalTime openingHours,
                                      LocalTime closingHours,

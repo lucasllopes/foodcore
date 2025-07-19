@@ -24,8 +24,7 @@ public class RestaurantAddressEntity {
     private String estado;
     private String cep;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "restaurante_id")
+    @OneToOne(mappedBy = "address")
     private RestaurantEntity restaurante;
 
 }

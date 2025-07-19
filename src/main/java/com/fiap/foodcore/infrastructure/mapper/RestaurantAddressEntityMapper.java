@@ -23,20 +23,16 @@ public class RestaurantAddressEntityMapper {
         return entity;
     }
 
-    public static List<Address> toDomain(List<RestaurantAddressEntity> entities) {
-        if (entities == null) return List.of();
-
-        return entities.stream()
-                .map(entity -> Address.rebuildAddress(
-                        entity.getId(),
-                        entity.getLogradouro(),
-                        entity.getNumero(),
-                        entity.getComplemento(),
-                        entity.getBairro(),
-                        entity.getCidade(),
-                        entity.getEstado(),
-                        entity.getCep()
-                ))
-                .collect(Collectors.toList());
+    public static Address toDomain(RestaurantAddressEntity entity) {
+        return Address.rebuildAddress(
+                entity.getId(),
+                entity.getLogradouro(),
+                entity.getNumero(),
+                entity.getComplemento(),
+                entity.getBairro(),
+                entity.getCidade(),
+                entity.getEstado(),
+                entity.getCep()
+        );
     }
 }

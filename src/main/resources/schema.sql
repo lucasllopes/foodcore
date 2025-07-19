@@ -21,6 +21,17 @@ CREATE TABLE IF NOT EXISTS endereco (
     CONSTRAINT fk_endereco_usuario FOREIGN KEY (usuario_id) REFERENCES usuario(id) ON DELETE CASCADE
     );
 
+CREATE TABLE IF NOT EXISTS endereco_restaurante (
+                                                    id BIGSERIAL PRIMARY KEY,
+                                                    logradouro VARCHAR(100),
+    numero VARCHAR(20),
+    complemento VARCHAR(50),
+    bairro VARCHAR(50),
+    cidade VARCHAR(50),
+    estado VARCHAR(50),
+    cep VARCHAR(20)
+    );
+
 CREATE TABLE IF NOT EXISTS restaurante (
                                            id BIGSERIAL PRIMARY KEY,
                                            name VARCHAR(100),
@@ -28,22 +39,15 @@ CREATE TABLE IF NOT EXISTS restaurante (
     opening_hours TIME,
     closing_hours TIME,
     dono_id BIGINT NOT NULL,
-    CONSTRAINT fk_restaurante_dono FOREIGN KEY (dono_id) REFERENCES usuario(id) ON DELETE CASCADE
+    address_id BIGINT NOT NULL,
+
+    CONSTRAINT fk_restaurante_dono FOREIGN KEY (dono_id) REFERENCES usuario(id) ON DELETE CASCADE,
+    CONSTRAINT fk_restaurante_address FOREIGN KEY (address_id) REFERENCES endereco_restaurante(id) ON DELETE CASCADE
     );
 
 
-CREATE TABLE IF NOT EXISTS endereco_restaurante (
-                                        id BIGSERIAL PRIMARY KEY,
-                                        logradouro VARCHAR(100),
-    numero VARCHAR(20),
-    complemento VARCHAR(50),
-    bairro VARCHAR(50),
-    cidade VARCHAR(50),
-    estado VARCHAR(50),
-    cep VARCHAR(20),
-    restaurante_id BIGINT NOT NULL,
-    CONSTRAINT fk_endereco_restaurante FOREIGN KEY (restaurante_id) REFERENCES restaurante(id) ON DELETE CASCADE
-    );
+
+
 
 -- CREATE TABLE IF NOT EXISTS restaurante (
 --                                            id BIGSERIAL PRIMARY KEY,

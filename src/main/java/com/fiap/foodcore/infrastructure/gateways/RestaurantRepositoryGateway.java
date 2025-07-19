@@ -25,6 +25,12 @@ public class RestaurantRepositoryGateway implements RestaurantGateway {
     }
 
     @Override
+    public Optional<Restaurant> findByName(String name) {
+        return restaurantRepository.findByName(name)
+                .map(RestaurantEntityMapper::toDomain);
+    }
+
+    @Override
     public DomainPage<Restaurant> findAll(PageRequestDomain pageRequest) {
         var springPage = restaurantRepository.findAll(
                 org.springframework.data.domain.PageRequest

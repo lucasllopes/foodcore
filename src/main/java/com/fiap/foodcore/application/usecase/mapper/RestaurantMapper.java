@@ -19,20 +19,19 @@ public class RestaurantMapper {
     }
 
     public static CreateRestaurantOutput fromDomain(Restaurant restaurant) {
+        AddressOutput addressOutput = new AddressOutput(
+                restaurant.getAddress().getLogradouro(),
+                restaurant.getAddress().getNumero(),
+                restaurant.getAddress().getComplemento(),
+                restaurant.getAddress().getBairro(),
+                restaurant.getAddress().getCep(),
+                restaurant.getAddress().getEstado(),
+                restaurant.getAddress().getCidade()
+        );
         return new CreateRestaurantOutput(
                 restaurant.getId(),
                 restaurant.getName(),
-                restaurant.getAddress().stream()
-                        .map(endereco -> new AddressOutput(
-                                endereco.getLogradouro(),
-                                endereco.getNumero(),
-                                endereco.getComplemento(),
-                                endereco.getBairro(),
-                                endereco.getCep(),
-                                endereco.getEstado(),
-                                endereco.getCidade()
-                        ))
-                        .collect(Collectors.toList()),
+                addressOutput,
                 restaurant.getCuisineType(),
                 restaurant.getOpeningHours(),
                 restaurant.getClosingHours(),

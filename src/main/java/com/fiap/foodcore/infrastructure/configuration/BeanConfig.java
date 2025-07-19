@@ -67,8 +67,8 @@ public class BeanConfig {
     }
 
     @Bean
-    public CreateRestaurantInteractor createRestaurantInteractor(RestaurantGateway restaurantGateway, FindUserByIdInteractor findUserByIdInteractor) {
-        return new CreateRestaurantInteractor(restaurantGateway, findUserByIdInteractor);
+    public CreateRestaurantInteractor createRestaurantInteractor(RestaurantGateway restaurantGateway, UserGateway userGateway) {
+        return new CreateRestaurantInteractor(restaurantGateway, userGateway);
     }
 
     @Bean

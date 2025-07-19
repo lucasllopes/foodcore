@@ -20,8 +20,9 @@ public class RestaurantEntity {
     private Long id;
 
     private String name;
-    @OneToMany(mappedBy = "restaurante", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<RestaurantAddressEntity> addresses;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id", nullable = false, unique = true)
+    private RestaurantAddressEntity address;
     @Column(name = "cuisine_type")
     private String cuisineType;
     @Column(name = "opening_hours")

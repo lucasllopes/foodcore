@@ -16,7 +16,7 @@ public class Restaurant {
 
     private Long id;
     private String name;
-    private List<Address> address;
+    private Address address;
     private String cuisineType;
     private LocalTime openingHours;
     private LocalTime closingHours;
@@ -29,11 +29,8 @@ public class Restaurant {
     public static Restaurant create(CreateRestaurantInput input){
         Restaurant restaurant = new Restaurant();
         restaurant.name = input.name();
-        if (!input.address().isEmpty()) {
-            restaurant.address = input.address()
-                    .stream()
-                    .map(Address::addAddress)
-                    .toList();
+        if (input.address() != null) {
+            restaurant.address = Address.addAddress(input.address());
         }
         restaurant.cuisineType = input.cuisineType();
         restaurant.openingHours = input.openingHours();
@@ -45,7 +42,7 @@ public class Restaurant {
     public static Restaurant create(
             Long id,
             String name,
-            List<Address> address,
+            Address address,
             String cuisineType,
             LocalTime openingHours,
             LocalTime closingHours,
@@ -66,25 +63,6 @@ public class Restaurant {
         this.cuisineType = input.cuisineType();
         this.openingHours = input.openingHours();
         this.closingHours = input.closingHours();
-
-        if (input.enderecos() != null) {
-            if (this.address == null) {
-                this.address = new ArrayList<>();
-            }
-
-            List<Address> updatedAddresses = new ArrayList<>();
-
-            for (int i = 0; i < input.enderecos().size(); i++) {
-                if (i < this.address.size()) {
-                    Address existingAddress = this.address.get(i);
-                    existingAddress.updateFrom(input.enderecos().get(i));
-                    updatedAddresses.add(existingAddress);
-                } else {
-                    updatedAddresses.add(Address.addAddress(input.enderecos().get(i)));
-                }
-            }
-
-            this.address = updatedAddresses;
-        }
+        this.address = Address.addAddress(input.enderecos());
     }
 }

@@ -14,4 +14,8 @@ public enum UserTypeDomain {
                 .findFirst()
                 .orElseThrow(() -> new UserTypeNotFoundException("Valor inválido para tipo de usuário"));
     }
+
+    public static boolean isOwner(UserTypeDomain userTypeDomain){
+        return userTypeDomain == UserTypeDomain.DONO;
+    }
 }

@@ -22,9 +22,7 @@ public record RestaurantCreateRequestDTO(
         String cuisineType,
 
         @NotNull(message = "Necessário informar um endereço.")
-        @NotEmpty(message = "A lista de endereços não pode estar vazia.")
-        @Valid
-        List<AddressCreateRequestDTO> enderecos,
+        AddressCreateRequestDTO endereco,
         @DateTimeFormat(pattern = "HH:mm")
         @JsonFormat(pattern = "HH:mm")
         LocalTime openingHours,
