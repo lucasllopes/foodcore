@@ -1,10 +1,10 @@
-package com.fiap.foodcore.usecase;
+package com.fiap.foodcore.usecase.user;
 
 import com.fiap.foodcore.application.exception.DataNotFoundException;
 import com.fiap.foodcore.application.exception.WrongPasswordException;
 import com.fiap.foodcore.application.gateway.PasswordEncryptionGateway;
 import com.fiap.foodcore.application.gateway.UserGateway;
-import com.fiap.foodcore.application.usecase.interactor.ChangePasswordInteractor;
+import com.fiap.foodcore.application.usecase.interactor.user.ChangePasswordInteractor;
 import com.fiap.foodcore.application.usecase.input.ChangePasswordInput;
 import com.fiap.foodcore.helper.UserTestHelper;
 import org.junit.jupiter.api.Test;

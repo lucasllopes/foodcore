@@ -1,8 +1,8 @@
-package com.fiap.foodcore.usecase;
+package com.fiap.foodcore.usecase.user;
 
 import com.fiap.foodcore.application.exception.DataNotFoundException;
 import com.fiap.foodcore.application.gateway.UserGateway;
-import com.fiap.foodcore.application.usecase.interactor.FindUserByIdInteractor;
+import com.fiap.foodcore.application.usecase.interactor.user.FindUserByIdInteractor;
 import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
 import com.fiap.foodcore.helper.UserTestHelper;
 import org.junit.jupiter.api.Assertions;

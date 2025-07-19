@@ -1,4 +1,4 @@
-package com.fiap.foodcore.application.usecase.interactor;
+package com.fiap.foodcore.application.usecase.interactor.user;
 
 import com.fiap.foodcore.application.gateway.UserGateway;
 import com.fiap.foodcore.application.exception.DataNotFoundException;

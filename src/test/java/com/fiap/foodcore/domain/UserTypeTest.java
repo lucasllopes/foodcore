@@ -33,4 +33,13 @@ public class UserTypeTest {
 
         assertEquals("NewName", userType.getName());
     }
+
+    @Test
+    void shouldUpdateLastModifiedOnUpdate() {
+        UserType userType = UserType.create("owner");
+        userType.update("customer");
+
+        assertNotNull(userType.getLastModified());
+        assertEquals("customer", userType.getName());
+    }
 }

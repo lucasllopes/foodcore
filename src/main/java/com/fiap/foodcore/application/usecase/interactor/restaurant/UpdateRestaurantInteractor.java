@@ -1,4 +1,4 @@
-package com.fiap.foodcore.application.usecase.interactor;
+package com.fiap.foodcore.application.usecase.interactor.restaurant;
 
 import com.fiap.foodcore.application.gateway.RestaurantGateway;
 import com.fiap.foodcore.application.usecase.UpdateRestaurantUseCase;

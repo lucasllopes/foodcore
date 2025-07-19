@@ -68,7 +68,7 @@ public class UserTypeController {
     }
 
     @GetMapping("/name/{name}")
-    public ResponseEntity<UserTypeResponseDTO> findById(@PathVariable String name) {
+    public ResponseEntity<UserTypeResponseDTO> findByName(@PathVariable String name) {
         logger.info("Handling GET request to /usuarios/{name}");
 
         CreateUserTypeOutput output = findUserTypeByNameUseCase.execute(name);

@@ -1,4 +1,4 @@
-package com.fiap.foodcore.application.usecase.interactor;
+package com.fiap.foodcore.application.usecase.interactor.usertype;
 
 import com.fiap.foodcore.application.exception.DataNotFoundException;
 import com.fiap.foodcore.application.exception.DuplicatedDataException;
@@ -7,7 +7,6 @@ import com.fiap.foodcore.application.usecase.UpdateUserTypeUseCase;
 import com.fiap.foodcore.application.usecase.input.UpdateUserTypeInput;
 import com.fiap.foodcore.application.usecase.mapper.UserTypeMapper;
 import com.fiap.foodcore.application.usecase.output.UpdateUserTypeOutput;
-import com.fiap.foodcore.domain.UserType;
 
 public class UpdateUserTypeInteractor implements UpdateUserTypeUseCase {
 

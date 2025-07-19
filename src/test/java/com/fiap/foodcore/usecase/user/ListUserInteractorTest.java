@@ -1,7 +1,7 @@
-package com.fiap.foodcore.usecase;
+package com.fiap.foodcore.usecase.user;
 
 import com.fiap.foodcore.application.gateway.UserGateway;
-import com.fiap.foodcore.application.usecase.interactor.ListUserInteractor;
+import com.fiap.foodcore.application.usecase.interactor.user.ListUserInteractor;
 import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
 import com.fiap.foodcore.domain.User;
 import com.fiap.foodcore.domain.pagination.DomainPage;

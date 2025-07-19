@@ -3,7 +3,6 @@ package com.fiap.foodcore.infrastructure.web.controller;
 import com.fiap.foodcore.application.usecase.*;
 import com.fiap.foodcore.application.usecase.input.CreateRestaurantInput;
 import com.fiap.foodcore.application.usecase.input.UpdateRestaurantInput;
-import com.fiap.foodcore.application.usecase.interactor.*;
 import com.fiap.foodcore.application.usecase.output.CreateRestaurantOutput;
 import com.fiap.foodcore.domain.pagination.DomainPage;
 import com.fiap.foodcore.domain.pagination.PageRequestDomain;

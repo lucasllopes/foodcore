@@ -1,7 +1,7 @@
-package com.fiap.foodcore.usecase;
+package com.fiap.foodcore.usecase.usertype;
 
 import com.fiap.foodcore.application.gateway.UserTypeGateway;
-import com.fiap.foodcore.application.usecase.interactor.CreateUserTypeInteractor;
+import com.fiap.foodcore.application.usecase.interactor.usertype.CreateUserTypeInteractor;
 import com.fiap.foodcore.application.usecase.input.CreateUserTypeInput;
 import com.fiap.foodcore.application.usecase.output.CreateUserTypeOutput;
 import com.fiap.foodcore.domain.UserType;

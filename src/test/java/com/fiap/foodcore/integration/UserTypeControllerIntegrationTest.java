@@ -2,14 +2,14 @@
 
 package com.fiap.foodcore.integration;
 
-import com.fiap.foodcore.application.usecase.interactor.CreateUserInteractor;
+import com.fiap.foodcore.application.usecase.CreateUserUseCase;
 import com.fiap.foodcore.application.usecase.input.CreateUserInput;
 import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
 import com.fiap.foodcore.helper.UserTestHelper;
 import com.fiap.foodcore.infrastructure.presenter.UserPresenter;
 import com.fiap.foodcore.infrastructure.web.controller.dto.UserCreateRequestDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.UserResponseDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.UserTypeRequestDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.UserTypeUpdateRequestDTO;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,7 +30,7 @@ import static org.hamcrest.Matchers.hasKey;
 public class UserTypeControllerIntegrationTest {
 
     @Autowired
-    private CreateUserInteractor createUserInteractor;
+    private CreateUserUseCase useCase;
 
     @LocalServerPort
     private int port;
@@ -64,10 +64,103 @@ public class UserTypeControllerIntegrationTest {
                 .body("name", equalTo(requestDTO.name()));
     }
 
-    public UserResponseDTO createUser(UserCreateRequestDTO dto) {
-        CreateUserInput inputOwner = UserPresenter.toInputCreate(dto);
-        CreateUserOutput outputOwner = createUserInteractor.execute(inputOwner);
-        return UserPresenter.toDto(outputOwner);
+    @Test
+    void shouldGetUserTypeByIdSuccessfully() {
+        UserCreateRequestDTO owner = UserTestHelper.createValidGenericOwnerRequest();
+        createUser(owner);
+        String token = UserTestHelper.authenticateAndGetToken(owner);
+
+        UserTypeRequestDTO requestDTO = new UserTypeRequestDTO("OWNER");
+
+        var createdTypeId =
+                given()
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .header("Authorization", "Bearer " + token)
+                        .body(requestDTO)
+                        .when()
+                        .post("/tipos")
+                        .then()
+                        .statusCode(HttpStatus.CREATED.value())
+                        .extract()
+                        .jsonPath().getInt("id");
+
+        given()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("Authorization", "Bearer " + token)
+                .when()
+                .get("/tipos/" + createdTypeId)
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .body("id", equalTo(createdTypeId))
+                .body("name", equalTo("OWNER"));
     }
 
+    @Test
+    void shouldGetUserTypeByNameSuccessfully() {
+        UserCreateRequestDTO owner = UserTestHelper.createValidGenericOwnerRequest();
+        createUser(owner);
+        String token = authenticateAndGetToken(owner);
+
+        UserTypeRequestDTO requestDTO = new UserTypeRequestDTO("GENERIC TYPE");
+
+        given()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("Authorization", "Bearer " + token)
+                .body(requestDTO)
+                .when()
+                .post("/tipos")
+                .then()
+                .statusCode(HttpStatus.CREATED.value());
+
+        given()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("Authorization", "Bearer " + token)
+                .when()
+                .get("/tipos/name/GENERIC TYPE")
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .body("name", equalTo("GENERIC TYPE"));
+    }
+
+    @Test
+    void shouldUpdateUserTypeSuccessfully() {
+        // Arrange
+        UserCreateRequestDTO owner = UserTestHelper.createValidGenericOwnerRequest();
+        createUser(owner);
+        String token = authenticateAndGetToken(owner);
+
+        UserTypeRequestDTO createDTO = new UserTypeRequestDTO("GERENTE");
+
+        Long createdTypeId =
+                given()
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .header("Authorization", "Bearer " + token)
+                        .body(createDTO)
+                        .when()
+                        .post("/tipos")
+                        .then()
+                        .statusCode(HttpStatus.CREATED.value())
+                        .extract()
+                        .jsonPath()
+                        .getLong("id");
+
+        UserTypeUpdateRequestDTO updateDTO = new UserTypeUpdateRequestDTO("ADMIN");
+
+        given()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("Authorization", "Bearer " + token)
+                .body(updateDTO)
+                .when()
+                .put("/tipos/" + createdTypeId)
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .body("id", equalTo(createdTypeId.intValue()))
+                .body("name", equalTo(updateDTO.name()));
+    }
+
+    public void createUser(UserCreateRequestDTO dto) {
+        CreateUserInput inputOwner = UserPresenter.toInputCreate(dto);
+        CreateUserOutput outputOwner = useCase.execute(inputOwner);
+        UserPresenter.toDto(outputOwner);
+    }
 }

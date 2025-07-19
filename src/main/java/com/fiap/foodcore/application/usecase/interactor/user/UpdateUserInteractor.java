@@ -1,4 +1,4 @@
-package com.fiap.foodcore.application.usecase.interactor;
+package com.fiap.foodcore.application.usecase.interactor.user;
 
 import com.fiap.foodcore.application.usecase.UpdateUserUseCase;
 import com.fiap.foodcore.application.usecase.input.UpdateUserInput;
