@@ -16,7 +16,7 @@ public class CreateUserTypeInteractor implements CreateUserTypeUseCase {
 
     @Override
     public CreateUserTypeOutput execute(CreateUserTypeInput input){
-        var userType = UserTypeMapper.toDomain(input);
+        var userType = UserTypeMapper.toDomain(input.name());
         var userTypeCreated = gateway.save(userType);
         return UserTypeMapper.fromDomain(userTypeCreated);
 

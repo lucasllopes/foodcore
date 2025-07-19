@@ -1,6 +1,9 @@
 package com.fiap.foodcore.domain;
 
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UserTypeTest {
@@ -16,7 +19,7 @@ public class UserTypeTest {
 
     @Test
     void shouldReconstructUserTypeWithIdAndName() {
-        UserType userType = UserType.reconstruct(1L, "owner");
+        UserType userType = UserType.reconstruct(1L, "owner", LocalDateTime.now());
 
         assertNotNull(userType);
         assertEquals(1L, userType.getId());

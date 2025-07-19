@@ -8,7 +8,7 @@ public class UserTypeEntityMapper {
     public static UserType toDomain(UserTypeEntity entity) {
         if (entity == null) return null;
 
-        UserType userType = UserType.reconstruct(entity.getId(),entity.getName());
+        UserType userType = UserType.reconstruct(entity.getId(),entity.getName(), entity.getLastModified());
 
         return userType;
     }
@@ -20,6 +20,7 @@ public class UserTypeEntityMapper {
         UserTypeEntity entity = new UserTypeEntity();
         entity.setId(domain.getId());
         entity.setName(domain.getName());
+        entity.setLastModified(domain.getLastModified());
 
         return entity;
     }

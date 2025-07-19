@@ -100,4 +100,19 @@ public class BeanConfig {
     public CreateUserTypeUseCase createUserTypeInteractor(UserTypeGateway userTypeGateway) {
         return new CreateUserTypeInteractor(userTypeGateway);
     }
+
+    @Bean
+    public UpdateUserTypeUseCase updateUserTypeInteractor(UserTypeGateway userTypeGateway) {
+        return new UpdateUserTypeInteractor(userTypeGateway);
+    }
+
+    @Bean
+    public FindUserTypeByIdUseCase findUserTypeByIdInteractor(UserTypeGateway userTypeGateway) {
+        return new FindUserTypeByIdInteractor(userTypeGateway);
+    }
+
+    @Bean
+    public FindUserTypeByNameUseCase findUserTypeByNameUseCase(UserTypeGateway userTypeGateway) {
+        return new FindUserTypeByNameInteractor(userTypeGateway);
+    }
 }
