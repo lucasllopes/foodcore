@@ -11,8 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface RestaurantRepository extends JpaRepository<RestaurantEntity, Long> {
-    @Query("SELECT r FROM RestaurantEntity r WHERE r.name LIKE %:name%")
-    Optional<RestaurantEntity> findByName(@Param("name") String name);
-    @Query("SELECT r FROM RestaurantEntity r WHERE r.name LIKE %:name%")
-    Page<RestaurantEntity> findAllByName(@Param("name") String name, Pageable pageable);
+
+    Optional<RestaurantEntity> findByNameIgnoreCase(String name);
+    Page<RestaurantEntity> findByNameContainingIgnoreCase(String name, Pageable pageable);
 }

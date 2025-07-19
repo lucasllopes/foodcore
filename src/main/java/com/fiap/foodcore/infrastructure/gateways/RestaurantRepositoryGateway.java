@@ -26,7 +26,7 @@ public class RestaurantRepositoryGateway implements RestaurantGateway {
 
     @Override
     public Optional<Restaurant> findByName(String name) {
-        return restaurantRepository.findByName(name)
+        return restaurantRepository.findByNameIgnoreCase(name)
                 .map(RestaurantEntityMapper::toDomain);
     }
 
@@ -43,7 +43,7 @@ public class RestaurantRepositoryGateway implements RestaurantGateway {
     }
     @Override
     public DomainPage<Restaurant> findAllByName(String name, PageRequestDomain pageRequest) {
-        var springPage = restaurantRepository.findAllByName(name,
+        var springPage = restaurantRepository.findByNameContainingIgnoreCase(name,
                 org.springframework.data.domain.PageRequest
                         .of(pageRequest.page(), pageRequest.size())
         );
