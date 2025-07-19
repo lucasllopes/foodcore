@@ -1,5 +1,6 @@
 package com.fiap.foodcore.integration;
 
+import com.fiap.foodcore.application.usecase.CreateUserUseCase;
 import com.fiap.foodcore.application.usecase.interactor.user.CreateUserInteractor;
 import com.fiap.foodcore.application.usecase.input.CreateUserInput;
 import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
@@ -25,7 +26,7 @@ import static io.restassured.RestAssured.given;
 public class LoginControllerIntegrationTest {
 
     @Autowired
-    private CreateUserInteractor createUserInteractor;
+    private CreateUserUseCase createUserUseCase;
 
     @LocalServerPort
     private int port;
@@ -45,7 +46,7 @@ public class LoginControllerIntegrationTest {
         UserCreateRequestDTO createUser = UserTestHelper.createValidGenericOwnerRequest();
 
         CreateUserInput input = UserPresenter.toInputCreate(createUser);
-        CreateUserOutput output = createUserInteractor.execute(input);
+        CreateUserOutput output = createUserUseCase.execute(input);
 
         LoginRequestDTO loginRequest = new LoginRequestDTO(createUser.login(), createUser.senha());
 
@@ -62,7 +63,7 @@ public class LoginControllerIntegrationTest {
         UserCreateRequestDTO createUser = UserTestHelper.createValidGenericCustomerRequest();
 
         CreateUserInput input = UserPresenter.toInputCreate(createUser);
-        CreateUserOutput output = createUserInteractor.execute(input);
+        CreateUserOutput output = createUserUseCase.execute(input);
 
         LoginRequestDTO loginRequest = new LoginRequestDTO(createUser.login(), createUser.senha());
 
@@ -79,7 +80,7 @@ public class LoginControllerIntegrationTest {
         UserCreateRequestDTO createUser = UserTestHelper.createValidGenericUserRequest();
 
         CreateUserInput input = UserPresenter.toInputCreate(createUser);
-        CreateUserOutput output = createUserInteractor.execute(input);
+        CreateUserOutput output = createUserUseCase.execute(input);
 
         LoginRequestDTO loginRequest = new LoginRequestDTO(createUser.login(), "senhaErrada");
 

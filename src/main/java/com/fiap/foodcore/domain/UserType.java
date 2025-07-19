@@ -44,8 +44,4 @@ public class UserType {
     public LocalDateTime getLastModified() {
         return lastModified;
     }
-
-    public void setLastModified(LocalDateTime lastModified) {
-        this.lastModified = lastModified;
-    }
 }

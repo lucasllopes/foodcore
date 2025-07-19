@@ -1,5 +1,6 @@
 package com.fiap.foodcore.integration;
 
+import com.fiap.foodcore.application.usecase.CreateUserUseCase;
 import com.fiap.foodcore.application.usecase.interactor.user.CreateUserInteractor;
 import com.fiap.foodcore.application.usecase.input.CreateUserInput;
 import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
@@ -29,7 +30,7 @@ import static org.hamcrest.Matchers.hasKey;
 public class RestaurantControllerIntegrationTest {
 
     @Autowired
-    private CreateUserInteractor createUserInteractor;
+    private CreateUserUseCase createUserUseCase;
 
     @LocalServerPort
     private int port;
@@ -78,7 +79,7 @@ public class RestaurantControllerIntegrationTest {
 
     public UserResponseDTO createUser(UserCreateRequestDTO dto) {
         CreateUserInput inputOwner = UserPresenter.toInputCreate(dto);
-        CreateUserOutput outputOwner = createUserInteractor.execute(inputOwner);
+        CreateUserOutput outputOwner = createUserUseCase.execute(inputOwner);
         return UserPresenter.toDto(outputOwner);
     }
 
