@@ -20,6 +20,8 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
+import java.util.UUID;
+
 import static com.fiap.foodcore.helper.UserTestHelper.authenticateAndGetToken;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
@@ -48,7 +50,7 @@ public class UserTypeControllerIntegrationTest {
         createUser(owner);
         String token = authenticateAndGetToken(owner);
 
-        UserTypeRequestDTO requestDTO = new UserTypeRequestDTO("DONO");
+        UserTypeRequestDTO requestDTO = new UserTypeRequestDTO("Generic User" + UUID.randomUUID());
 
         given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -61,7 +63,7 @@ public class UserTypeControllerIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body("$", hasKey("id"))
                 .body("$", hasKey("name"))
-                .body("name", equalTo(requestDTO.name()));
+                .body("name", equalTo(requestDTO.name().toUpperCase()));
     }
 
     @Test
@@ -119,7 +121,7 @@ public class UserTypeControllerIntegrationTest {
                 .get("/tipos/name/GENERIC TYPE")
                 .then()
                 .statusCode(HttpStatus.OK.value())
-                .body("name", equalTo("GENERIC TYPE"));
+                .body("[0].name", equalTo("GENERIC TYPE"));
     }
 
     @Test

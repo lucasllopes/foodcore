@@ -13,6 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -37,7 +38,7 @@ public class UpdateUserTypeInteractorTest {
         UserType updatedUserType = UserType.reconstruct(id, "OWNER", null);
 
         when(userTypeGateway.findById(id)).thenReturn(Optional.of(existingUserType));
-        when(userTypeGateway.findByNameIgnoreCase("OWNER")).thenReturn(Optional.empty());
+        when(userTypeGateway.findByNameIgnoreCase("OWNER")).thenReturn(List.of());
         when(userTypeGateway.save(existingUserType)).thenReturn(updatedUserType);
 
         // Act
@@ -79,7 +80,8 @@ public class UpdateUserTypeInteractorTest {
         UserType duplicatedUserType = UserType.reconstruct(2L, "OWNER", null);
 
         when(userTypeGateway.findById(id)).thenReturn(Optional.of(existingUserType));
-        when(userTypeGateway.findByNameIgnoreCase("OWNER")).thenReturn(Optional.of(duplicatedUserType));
+        when(userTypeGateway.findByNameIgnoreCase("OWNER")).thenReturn(List.of(duplicatedUserType));
+
 
         // Act & Assert
         assertThrows(DuplicatedDataException.class, () -> {

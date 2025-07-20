@@ -14,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/tipos")
 public class UserTypeController {
@@ -68,12 +70,15 @@ public class UserTypeController {
     }
 
     @GetMapping("/name/{name}")
-    public ResponseEntity<UserTypeResponseDTO> findByName(@PathVariable String name) {
-        logger.info("Handling GET request to /usuarios/{name}");
+    public ResponseEntity<List<UserTypeResponseDTO>> findByName(@PathVariable String name) {
+        logger.info("Handling GET request to /tipos/name/{}", name);
 
-        CreateUserTypeOutput output = findUserTypeByNameUseCase.execute(name);
-        UserTypeResponseDTO dto = UserTypePresenter.toDto(output);
+        List<CreateUserTypeOutput> outputList = findUserTypeByNameUseCase.execute(name);
 
-        return ResponseEntity.ok(dto);
+        List<UserTypeResponseDTO> responseList = outputList.stream()
+                .map(UserTypePresenter::toDto)
+                .toList();
+
+        return ResponseEntity.ok(responseList);
     }
 }

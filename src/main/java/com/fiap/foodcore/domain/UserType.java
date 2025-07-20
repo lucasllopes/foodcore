@@ -2,7 +2,7 @@ package com.fiap.foodcore.domain;
 
 import java.time.LocalDateTime;
 
-public class UserType {
+public class  UserType {
 
     private Long id;
     private String name;

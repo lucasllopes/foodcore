@@ -7,6 +7,8 @@ import com.fiap.foodcore.domain.pagination.PageRequestDomain;
 import com.fiap.foodcore.infrastructure.gateways.persistence.UserTypeRepository;
 import com.fiap.foodcore.infrastructure.gateways.persistence.entity.UserTypeEntity;
 import com.fiap.foodcore.infrastructure.mapper.UserTypeEntityMapper;
+
+import java.util.List;
 import java.util.Optional;
 
 public class UserTypeRepositoryGateway implements UserTypeGateway {
@@ -41,8 +43,9 @@ public class UserTypeRepositoryGateway implements UserTypeGateway {
     }
 
     @Override
-    public Optional<UserType> findByNameIgnoreCase(String name) {
-        return userTypeRepository.findByNameIgnoreCase(name)
-                .map(UserTypeEntityMapper::toDomain);
+    public List<UserType> findByNameIgnoreCase(String name) {
+        return userTypeRepository.findByNameIgnoreCase(name).stream()
+                .map(UserTypeEntityMapper::toDomain)
+                .toList();
     }
 }

@@ -21,9 +21,14 @@ public class UpdateUserTypeInteractor implements UpdateUserTypeUseCase {
         var existing = gateway.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Tipo de usuário não encontrado"));
 
-        gateway.findByNameIgnoreCase(input.name())
-                .filter(u -> !u.getId().equals(id))
-                .ifPresent(u -> { throw new DuplicatedDataException("Esse tipo de usuário já está cadastrado"); });
+        var existingUserTypes = gateway.findByNameIgnoreCase(input.name());
+
+        boolean existsDuplicate = existingUserTypes.stream()
+                .anyMatch(u -> !u.getId().equals(id));
+
+        if (existsDuplicate) {
+            throw new DuplicatedDataException("Esse tipo de usuário já está cadastrado");
+        }
 
         existing.update(input.name());
 

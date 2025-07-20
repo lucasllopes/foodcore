@@ -11,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -34,26 +35,31 @@ public class FindUserTypeByNameInteractorTest {
         UserType userType = UserType.reconstruct(id, name, null);
         CreateUserTypeOutput expectedOutput = new CreateUserTypeOutput(id, name);
 
-        when(gateway.findByNameIgnoreCase(name)).thenReturn(Optional.of(userType));
+        when(gateway.findByNameIgnoreCase(name)).thenReturn(List.of(userType));
 
         // Act
-        CreateUserTypeOutput result = interactor.execute(name);
+        List<CreateUserTypeOutput> result = interactor.execute(name);
 
         // Assert
         assertNotNull(result);
-        assertEquals(expectedOutput.id(), result.id());
-        assertEquals(expectedOutput.name(), result.name());
+        assertEquals(1, result.size());
+        assertEquals(expectedOutput.id(), result.getFirst().id());
+        assertEquals(expectedOutput.name(), result.getFirst().name());
         verify(gateway).findByNameIgnoreCase(name);
     }
 
     @Test
-    void shouldThrowDataNotFoundExceptionWhenNameNotFound() {
+    void shouldReturnEmptyListWhenUserTypeNotFound() {
         // Arrange
-        String name = "USER DOES NOT EXIST";
-        when(gateway.findByNameIgnoreCase(name)).thenReturn(Optional.empty());
+        String name = "USER TYPE DOES NOT EXIST";
+        when(gateway.findByNameIgnoreCase(name)).thenReturn(List.of());
 
-        // Act & Assert
-        assertThrows(DataNotFoundException.class, () -> interactor.execute(name));
+        // Act
+        List<CreateUserTypeOutput> result = interactor.execute(name);
+
+        // Assert
+        assertNotNull(result);
+        assertTrue(result.isEmpty());
         verify(gateway).findByNameIgnoreCase(name);
     }
 }
