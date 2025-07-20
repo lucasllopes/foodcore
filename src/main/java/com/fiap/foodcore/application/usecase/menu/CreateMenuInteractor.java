@@ -22,6 +22,7 @@ public class CreateMenuInteractor {
                 .itemsList(
                         createMenuInput.items().stream()
                                 .map(item -> new Item.Builder()
+                                        .name(item.name())
                                         .description(item.description())
                                         .price(item.price())
                                         .availability(item.availability())

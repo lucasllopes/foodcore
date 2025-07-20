@@ -4,6 +4,7 @@ import com.fiap.foodcore.application.gateway.MenuGateway;
 import com.fiap.foodcore.domain.Menu;
 import com.fiap.foodcore.domain.pagination.DomainPage;
 import com.fiap.foodcore.domain.pagination.PageRequestDomain;
+import com.fiap.foodcore.infrastructure.gateways.persistence.ItemRepository;
 import com.fiap.foodcore.infrastructure.gateways.persistence.MenuRepository;
 import com.fiap.foodcore.infrastructure.mapper.MenuMapper;
 
@@ -12,9 +13,11 @@ import java.util.Optional;
 public class MenuRepositoryGateway implements MenuGateway {
 
     private final MenuRepository menuRepository;
+    private final ItemRepository itemRepository;
 
-    public MenuRepositoryGateway(MenuRepository menuRepository) {
+    public MenuRepositoryGateway(MenuRepository menuRepository, ItemRepository itemRepository) {
         this.menuRepository = menuRepository;
+        this.itemRepository = itemRepository;
     }
 
     @Override
@@ -40,6 +43,13 @@ public class MenuRepositoryGateway implements MenuGateway {
     @Override
     public Menu save(Menu menu) {
         var entity = MenuMapper.toEntity(menu);
+
+        var persistedItems = entity.getItems().stream()
+                .map(item -> item.getId() == null ? itemRepository.save(item) : item)
+                .toList();
+
+        entity.setItems(persistedItems);
+
         var saved = menuRepository.save(entity);
         return MenuMapper.toDomain(saved);
     }
