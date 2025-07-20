@@ -2,8 +2,6 @@ package com.fiap.foodcore.application.usecase.input;
 
 public record CreateMenuInput(
         String nome,
-        String descricao,
-        String imagem,
-        Long restauranteId) {
+        String descricao ) {
 
 }

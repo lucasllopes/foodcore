@@ -1,6 +1,6 @@
 package com.fiap.foodcore.application.usecase.menu;
 
-import com.fiap.foodcore.application.usecase.output.MenuOutput;
+import com.fiap.foodcore.application.usecase.output.MenuCreateOutput;
 import com.fiap.foodcore.domain.Menu;
 import com.fiap.foodcore.domain.pagination.DomainPage;
 import com.fiap.foodcore.domain.pagination.PageRequestDomain;
@@ -15,7 +15,7 @@ public class ListMenuInteractor {
         this.menuRepositoryGateway = menuRepositoryGateway;
     }
 
-    public DomainPage<MenuOutput> execute(PageRequestDomain pageRequest) {
+    public DomainPage<MenuCreateOutput> execute(PageRequestDomain pageRequest) {
         DomainPage<Menu> domainPage = menuRepositoryGateway.findAll(pageRequest);
         return domainPage.map(MenuMapper::fromDomain);
     }

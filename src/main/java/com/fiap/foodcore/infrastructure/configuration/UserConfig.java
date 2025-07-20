@@ -19,6 +19,7 @@ public class UserConfig {
         return new UserRepositoryGateway(userRepository);
     }
 
+
     @Bean
     PasswordEncryptionGateway passwordEncryptionGateway(PasswordEncoder passwordEncoder) {
         return new BCryptPasswordEncryptionGateway(passwordEncoder);

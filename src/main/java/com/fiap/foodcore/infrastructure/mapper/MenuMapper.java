@@ -1,7 +1,7 @@
 package com.fiap.foodcore.infrastructure.mapper;
 
 
-import com.fiap.foodcore.application.usecase.output.MenuOutput;
+import com.fiap.foodcore.application.usecase.output.MenuCreateOutput;
 import com.fiap.foodcore.domain.Item;
 import com.fiap.foodcore.domain.Menu;
 import com.fiap.foodcore.infrastructure.gateways.persistence.entity.MenuEntity;
@@ -44,9 +44,9 @@ public class MenuMapper {
         return builder.build();
     }
 
-    public static MenuOutput fromDomain(Menu menu) {
+    public static MenuCreateOutput fromDomain(Menu menu) {
         if (menu == null) return null;
-        return new MenuOutput(
+        return new MenuCreateOutput(
                 menu.getId(),
                 menu.getName(),
                 menu.getDescription(),

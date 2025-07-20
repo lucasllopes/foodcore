@@ -1,9 +1,11 @@
 package com.fiap.foodcore.domain;
 
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+
 
 public class Menu {
     private final Long id;
