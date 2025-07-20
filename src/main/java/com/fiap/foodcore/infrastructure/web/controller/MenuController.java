@@ -14,9 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -52,7 +50,8 @@ public class MenuController {
         return ResponseEntity.ok(paginatedUser);
     }
 
-    public ResponseEntity<MenuResponseDTO> createMenu(MenuCreateRequestDTO menuDto) {
+    @PostMapping
+    public ResponseEntity<MenuResponseDTO> createMenu(@RequestBody  MenuCreateRequestDTO menuDto) {
         logger.info("Handling POST request to /cardapios");
 
         MenuCreateOutput output = createMenuInteractor.execute(MenuPresenter.fromCreateInputRequestDTO(menuDto));
