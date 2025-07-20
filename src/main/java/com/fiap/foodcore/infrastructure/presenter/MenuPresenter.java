@@ -1,11 +1,16 @@
 package com.fiap.foodcore.infrastructure.presenter;
 
 import com.fiap.foodcore.application.usecase.input.CreateMenuInput;
+import com.fiap.foodcore.application.usecase.input.CreateMenuItemInput;
+import com.fiap.foodcore.application.usecase.output.ItemOutput;
 import com.fiap.foodcore.application.usecase.output.MenuCreateOutput;
 import com.fiap.foodcore.infrastructure.web.controller.dto.MenuCreateRequestDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.MenuResponseDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.MenuCreateResponseDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.MenuItemCreateRequestDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.MenuItemResponseCreateDTO;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MenuPresenter {
 
@@ -15,7 +20,17 @@ public class MenuPresenter {
                 null, // id normalmente gerado pelo sistema
                 dto.name(),
                 dto.description(),
-                null // itens podem ser adicionados depois
+                dto.items().stream().map(
+                        item -> new ItemOutput(
+                                null, // id normalmente gerado pelo sistema
+                                item.name(),
+                                item.description(),
+                                item.price(),
+                                item.availability(),
+                                item.photo()
+                        )
+                ).collect(Collectors.toList()
+                )
         );
     }
 
@@ -23,21 +38,36 @@ public class MenuPresenter {
         if (output == null) return null;
         return new MenuCreateRequestDTO(
                 output.name(),
-                output.description()
+                output.description(),
+                output.items().stream().map(item -> new MenuItemCreateRequestDTO(
+                        item.name(),
+                        item.description(),
+                        item.price(),
+                        item.availability(),
+                        item.photo()
+                )).collect(Collectors.toList())
         );
     }
 
 
-
-    public static MenuResponseDTO toResponseDTO(MenuCreateOutput output) {
+    public static MenuCreateResponseDTO toResponseDTO(MenuCreateOutput output) {
         if (output == null) return null;
-        return new MenuResponseDTO(
+        return new MenuCreateResponseDTO(
                 output.name(),
-                output.description()
+                output.description(),
+                output.items().stream()
+                        .map(item -> new MenuItemResponseCreateDTO(
+                                item.id(),
+                                item.name(),
+                                item.description(),
+                                item.price(),
+                                item.availability(),
+                                item.photo()
+                        )).collect(Collectors.toList())
         );
     }
 
-    public static List<MenuResponseDTO> toDtoList(List<MenuCreateOutput> outputs) {
+    public static List<MenuCreateResponseDTO> toDtoList(List<MenuCreateOutput> outputs) {
         if (outputs == null) return null;
         return outputs.stream()
                 .map(MenuPresenter::toResponseDTO)
@@ -48,7 +78,15 @@ public class MenuPresenter {
         if (dto == null) return null;
         return new CreateMenuInput(
                 dto.name(),
-                dto.description()
+                dto.description(),
+                dto.items().stream()
+                        .map(item -> new CreateMenuItemInput(
+                                item.name(),
+                                item.description(),
+                                item.price(),
+                                item.availability(),
+                                item.photo()
+                        )).collect(Collectors.toList())
         );
     }
 

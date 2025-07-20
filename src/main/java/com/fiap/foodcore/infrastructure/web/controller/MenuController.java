@@ -7,7 +7,7 @@ import com.fiap.foodcore.domain.pagination.DomainPage;
 import com.fiap.foodcore.domain.pagination.PageRequestDomain;
 import com.fiap.foodcore.infrastructure.presenter.MenuPresenter;
 import com.fiap.foodcore.infrastructure.web.controller.dto.MenuCreateRequestDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.MenuResponseDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.MenuCreateResponseDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -33,15 +33,15 @@ public class MenuController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<MenuResponseDTO>> listMenus(Pageable pageable) {
+    public ResponseEntity<Page<MenuCreateResponseDTO>> listMenus(Pageable pageable) {
         logger.info("Handling GET request to /cardapios");
 
         PageRequestDomain pr = new PageRequestDomain(pageable.getPageNumber(), pageable.getPageSize());
 
         DomainPage<MenuCreateOutput> outputs = listMenuInteractor.execute(pr);
-        List<MenuResponseDTO> dtos = MenuPresenter.toDtoList(outputs.getItems());
+        List<MenuCreateResponseDTO> dtos = MenuPresenter.toDtoList(outputs.getItems());
 
-        Page<MenuResponseDTO> paginatedUser = new PageImpl<>(
+        Page<MenuCreateResponseDTO> paginatedUser = new PageImpl<>(
                 dtos,
                 pageable,
                 outputs.getTotalElements()
@@ -51,11 +51,11 @@ public class MenuController {
     }
 
     @PostMapping
-    public ResponseEntity<MenuResponseDTO> createMenu(@RequestBody  MenuCreateRequestDTO menuDto) {
+    public ResponseEntity<MenuCreateResponseDTO> createMenu(@RequestBody  MenuCreateRequestDTO menuDto) {
         logger.info("Handling POST request to /cardapios");
 
         MenuCreateOutput output = createMenuInteractor.execute(MenuPresenter.fromCreateInputRequestDTO(menuDto));
-        MenuResponseDTO dto = MenuPresenter.toResponseDTO(output);
+        MenuCreateResponseDTO dto = MenuPresenter.toResponseDTO(output);
 
         return ResponseEntity.status(201).body(dto);
     }

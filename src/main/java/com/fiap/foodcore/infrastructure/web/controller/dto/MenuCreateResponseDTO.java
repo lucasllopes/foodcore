@@ -1,8 +1,12 @@
 package com.fiap.foodcore.infrastructure.web.controller.dto;
 
+import java.math.BigDecimal;
 import java.util.List;
 
-public record MenuCreateRequestDTO (
+public record MenuCreateResponseDTO(
         String name,
         String description,
-        List<MenuItemCreateRequestDTO> items) {}
+        List<MenuItemResponseCreateDTO> items
+){
+
+}
