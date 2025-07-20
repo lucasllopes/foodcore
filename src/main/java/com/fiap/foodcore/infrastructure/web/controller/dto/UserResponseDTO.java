@@ -1,6 +1,7 @@
 package com.fiap.foodcore.infrastructure.web.controller.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fiap.foodcore.domain.UserTypeDomain;
 
 import java.util.List;
@@ -11,5 +12,7 @@ public record UserResponseDTO(
         String email,
         String login,
         UserTypeDomain tipo,
-        List<AddressResponseDTO> enderecos
+        List<AddressResponseDTO> enderecos,
+        @JsonInclude(JsonInclude.Include.NON_NULL)
+        UserTypeResponseDTO tipoUsuario
 ) {}

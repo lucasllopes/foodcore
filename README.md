@@ -4,7 +4,7 @@ Clone o projeto, acesse o diretório onde está localizado o arquivo Dockerfile 
 docker compose up --build
 
 
-A collection com os endpoints de teste estão no projeto. O arquivo se chama collection-g10-auth-endpoints.json
+A collection com os endpoints de teste estão no projeto. O arquivo se chama FOODCORE - CONTROLE DE USUARIO.postman_collection
 
 Importe o arquivo json no postman para que seja possível testar os endpoints.
 

@@ -1,5 +1,6 @@
 package com.fiap.foodcore.infrastructure.mapper;
 
+import com.fiap.foodcore.application.usecase.mapper.UserMapper;
 import com.fiap.foodcore.domain.User;
 import com.fiap.foodcore.domain.UserTypeDomain;
 import com.fiap.foodcore.infrastructure.gateways.persistence.entity.UserEntity;
@@ -12,7 +13,7 @@ public class UserEntityMapper {
     public static User toDomain(UserEntity entity) {
         if (entity == null) return null;
 
-        return User.rebuildUser(
+        return User.rebuildUserWithType(
                 entity.getId(),
                 entity.getNome(),
                 entity.getEmail(),
@@ -20,7 +21,8 @@ public class UserEntityMapper {
                 entity.getSenha(),
                 UserTypeDomain.valueOf(entity.getTipo().name()),
                 AddressEntityMapper.toDomain(entity.getEnderecos()),
-                entity.getDataUltimaAlteracao()
+                entity.getDataUltimaAlteracao(),
+                UserTypeEntityMapper.toDomain(entity.getTipoUsuario())
         );
     }
 
@@ -44,6 +46,10 @@ public class UserEntityMapper {
                     .collect(Collectors.toList());
 
             entity.setEnderecos(addressEntities);
+        }
+
+        if(user.getUserType() != null){
+            entity.setTipoUsuario(UserTypeEntityMapper.toEntity(user.getUserType()));
         }
 
         return entity;

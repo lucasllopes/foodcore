@@ -31,4 +31,8 @@ public class UserEntity {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AddressEntity> enderecos;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "tipo_usuario_id")
+    private UserTypeEntity tipoUsuario;
+
 }

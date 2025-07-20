@@ -1,16 +1,14 @@
 package com.fiap.foodcore.infrastructure.web.controller;
 
 import com.fiap.foodcore.application.usecase.*;
+import com.fiap.foodcore.application.usecase.input.AssignUserTypeToUserInput;
 import com.fiap.foodcore.application.usecase.input.CreateUserInput;
 import com.fiap.foodcore.application.usecase.input.UpdateUserInput;
 import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
 import com.fiap.foodcore.domain.pagination.DomainPage;
 import com.fiap.foodcore.domain.pagination.PageRequestDomain;
 import com.fiap.foodcore.infrastructure.presenter.UserPresenter;
-import com.fiap.foodcore.infrastructure.web.controller.dto.ChangePasswordRequestDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.UserCreateRequestDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.UserResponseDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.UserUpdateRequestDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.*;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,21 +34,23 @@ public class UserController {
     private final UpdateUserUseCase updateUser;
     private final ChangePasswordUseCase changePassword;
     private final DeleteUserUseCase deleteUser;
+    private final AssignUserTypeToUserUseCase assignUserTypeToUser;
 
     public UserController(FindUserByIdUseCase findById,
                           ListUserUseCase listUsers,
                           CreateUserUseCase createUser,
                           UpdateUserUseCase updateUser,
                           ChangePasswordUseCase changePassword,
-                          DeleteUserUseCase deleteUser) {
+                          DeleteUserUseCase deleteUser,
+                          AssignUserTypeToUserUseCase assignUserTypeToUser) {
         this.findById = findById;
         this.listUsers = listUsers;
         this.createUser = createUser;
         this.updateUser = updateUser;
         this.changePassword = changePassword;
         this.deleteUser = deleteUser;
+        this.assignUserTypeToUser = assignUserTypeToUser;
     }
-
 
     @GetMapping("/{id}")
     @PreAuthorize("#id == principal.id  or hasRole('ROLE_DONO')")
@@ -127,5 +127,18 @@ public class UserController {
 
         changePassword.execute(id, changePasswordInput);
         return ResponseEntity.ok("Senha atualizada com sucesso.");
+    }
+
+    @PutMapping("/{id}/tipo")
+    @PreAuthorize("hasRole('ROLE_DONO')")
+    public ResponseEntity<UserResponseDTO> assignUserType(
+            @PathVariable Long id,
+            @RequestBody @Valid AssignUserTypeToUserDTO dto) {
+
+        AssignUserTypeToUserInput input = UserPresenter.toAssignUserTypeToUserInput(dto);
+        CreateUserOutput output = assignUserTypeToUser.execute(id, input);
+
+        UserResponseDTO response = UserPresenter.toDto(output);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

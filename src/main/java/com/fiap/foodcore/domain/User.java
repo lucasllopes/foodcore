@@ -19,6 +19,7 @@ public class User {
     private LocalDateTime dataUltimaAlteracao;
     private UserTypeDomain tipo;
     private List<Address> address;
+    private UserType userType;
 
     private User() {
 
@@ -99,6 +100,30 @@ public class User {
         return user;
     }
 
+    public static User rebuildUserWithType(
+            Long id,
+            String nome,
+            String email,
+            String login,
+            String senha,
+            UserTypeDomain tipo,
+            List<Address> enderecos,
+            LocalDateTime dataUltimaAlteracao,
+            UserType userType
+    ) {
+        User user = new User();
+        user.id = id;
+        user.nome = nome;
+        user.email = email;
+        user.login = login;
+        user.senha = senha;
+        user.tipo = tipo;
+        user.address = enderecos;
+        user.dataUltimaAlteracao = dataUltimaAlteracao;
+        user.userType = userType;
+        return user;
+    }
+
     public static User rebuildForAuthentication(
             Long id,
             String login,
@@ -111,6 +136,12 @@ public class User {
         user.senha = senha;
         user.tipo = tipo;
         return user;
+    }
+
+    public User assignUserType(UserType existingUserType) {
+        this.userType = existingUserType;
+        this.dataUltimaAlteracao = LocalDateTime.now();
+        return this;
     }
 }
 

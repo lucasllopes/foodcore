@@ -76,12 +76,9 @@ public class RestaurantControllerIntegrationTest {
 
     }
 
-
     public UserResponseDTO createUser(UserCreateRequestDTO dto) {
         CreateUserInput inputOwner = UserPresenter.toInputCreate(dto);
         CreateUserOutput outputOwner = createUserUseCase.execute(inputOwner);
         return UserPresenter.toDto(outputOwner);
     }
-
-
 }

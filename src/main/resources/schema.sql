@@ -1,3 +1,9 @@
+CREATE TABLE IF NOT EXISTS tipo_usuario (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    last_modified TIMESTAMP
+);
+
 CREATE TABLE IF NOT EXISTS usuario (
                                        id BIGSERIAL PRIMARY KEY,
                                        nome VARCHAR(100) NOT NULL,
@@ -5,7 +11,9 @@ CREATE TABLE IF NOT EXISTS usuario (
     login VARCHAR(50) NOT NULL UNIQUE,
     senha VARCHAR(255) NOT NULL,
     data_ultima_alteracao TIMESTAMP,
-    tipo VARCHAR(20) NOT NULL
+    tipo VARCHAR(20) NOT NULL,
+    tipo_usuario_id BIGINT,
+    CONSTRAINT fk_tipo_usuario FOREIGN KEY (tipo_usuario_id) REFERENCES tipo_usuario(id)
     );
 
 CREATE TABLE IF NOT EXISTS endereco (
@@ -59,8 +67,3 @@ CREATE TABLE IF NOT EXISTS restaurante (
 --     CONSTRAINT fk_restaurante_dono FOREIGN KEY (dono_id) REFERENCES usuario(id) ON DELETE CASCADE
 --     );
 
-CREATE TABLE IF NOT EXISTS tipo_usuario (
-id BIGSERIAL PRIMARY KEY,
-name VARCHAR(100),
-last_modified TIMESTAMP
-);

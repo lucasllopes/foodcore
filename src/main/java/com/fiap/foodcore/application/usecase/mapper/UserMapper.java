@@ -4,6 +4,7 @@ import com.fiap.foodcore.application.usecase.input.CreateUserInput;
 import com.fiap.foodcore.application.usecase.input.UpdateUserInput;
 import com.fiap.foodcore.application.usecase.output.AddressOutput;
 import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
+import com.fiap.foodcore.application.usecase.output.CreateUserTypeOutput;
 import com.fiap.foodcore.domain.UserTypeDomain;
 import com.fiap.foodcore.domain.User;
 
@@ -41,7 +42,10 @@ public class UserMapper {
                                 endereco.getEstado(),
                                 endereco.getCidade()
                         ))
-                        .collect(Collectors.toList())
+                        .collect(Collectors.toList()),
+                user.getUserType() != null
+                        ? new CreateUserTypeOutput(user.getUserType().getId(), user.getUserType().getName())
+                        : null
         );
     }
 }

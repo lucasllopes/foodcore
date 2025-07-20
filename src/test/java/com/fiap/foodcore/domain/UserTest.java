@@ -11,8 +11,7 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class UserTest {
 
@@ -84,5 +83,32 @@ public class UserTest {
         assertEquals("login", user.getLogin());
         assertEquals("password123", user.getSenha());
         assertEquals(UserTypeDomain.CLIENTE, user.getTipo());
+    }
+
+    @Test
+    void shouldAssignUserType() {
+        // Arrange
+        User user = User.rebuildUser(
+                1L,
+                "User",
+                "user@email.com",
+                "login",
+                "123",
+                null,
+                List.of(),
+                LocalDateTime.now().minusDays(1)
+        );
+
+        assertNull(user.getTipo());
+
+        UserType userType = UserType.reconstruct(10L, "OWNER", LocalDateTime.now().minusDays(10));
+
+        // Act
+        user.assignUserType(userType);
+
+        // Assert
+        assertEquals(userType, user.getUserType());
+        assertNotNull(user.getDataUltimaAlteracao());
+        assertTrue(user.getDataUltimaAlteracao().isAfter(LocalDateTime.now().minusSeconds(5)));
     }
 }

@@ -6,10 +6,7 @@ import com.fiap.foodcore.application.usecase.input.CreateUserInput;
 import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
 import com.fiap.foodcore.helper.UserTestHelper;
 import com.fiap.foodcore.infrastructure.presenter.UserPresenter;
-import com.fiap.foodcore.infrastructure.web.controller.dto.ChangePasswordRequestDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.UserCreateRequestDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.UserResponseDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.UserUpdateRequestDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.*;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
@@ -287,4 +284,41 @@ public class UserControllerIntegrationTest {
         return UserPresenter.toDto(outputOwner);
     }
 
+    @Test
+    void shouldAssignUserTypeToUserSuccessfully() {
+
+        UserCreateRequestDTO userDTO = UserTestHelper.createValidGenericOwnerRequest();
+        UserResponseDTO userResponse = createUser(userDTO);
+
+        UserTypeRequestDTO userTypeRequestDTO = new UserTypeRequestDTO("USER TYPE TEST");
+
+        String adminToken = authenticateAndGetToken(userDTO);
+
+        Long createdTypeId =
+                given()
+                        .contentType(ContentType.JSON)
+                        .header("Authorization", "Bearer " + adminToken)
+                        .body(userTypeRequestDTO)
+                        .when()
+                        .post("/tipos")
+                        .then()
+                        .statusCode(HttpStatus.CREATED.value())
+                        .extract()
+                        .jsonPath()
+                        .getLong("id");
+
+        // Act
+        given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", "Bearer " + adminToken)
+                .body(String.format("{\"idUserType\": %d}", createdTypeId))
+                .when()
+                .put("/usuarios/{id}/tipo", userResponse.id())
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .body("id", equalTo(userResponse.id().intValue()))
+                .body("tipoUsuario", notNullValue())
+                .body("tipoUsuario.id", equalTo(createdTypeId.intValue()))
+                .body("tipoUsuario.name", equalTo(userTypeRequestDTO.name()));
+    }
 }

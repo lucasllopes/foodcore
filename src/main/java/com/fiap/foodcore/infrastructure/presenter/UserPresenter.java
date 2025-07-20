@@ -4,6 +4,7 @@ import com.fiap.foodcore.application.usecase.input.*;
 import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
 import com.fiap.foodcore.domain.UserTypeDomain;
 import com.fiap.foodcore.infrastructure.web.controller.dto.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,7 +28,10 @@ public class UserPresenter {
                                 end.estado(),
                                 end.cidade()
                         )
-                ).collect(Collectors.toList())
+                ).collect(Collectors.toList()),
+                output.userTypeOutput() != null
+                        ? new UserTypeResponseDTO(output.userTypeOutput().id(),output.userTypeOutput().name())
+                        : null
         );
     }
 
@@ -78,5 +82,9 @@ public class UserPresenter {
 
     public static ChangePasswordInput toChangePasswordInput(ChangePasswordRequestDTO dto) {
         return new ChangePasswordInput(dto.senhaAtual(), dto.novaSenha());
+    }
+
+    public static AssignUserTypeToUserInput toAssignUserTypeToUserInput(AssignUserTypeToUserDTO dto) {
+        return new AssignUserTypeToUserInput(dto.idUserType());
     }
 }
