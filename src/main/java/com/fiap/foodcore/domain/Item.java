@@ -29,14 +29,16 @@ public class Item {
     public String getAvailability() { return availability; }
     public String getPhoto() { return photo; }
 
-//    public void atualizarValores(Item novoItem) {
-//        if (novoItem == null) return;
-//        // Exemplo: atualize os campos relevantes
-//        this.name = novoItem.getName();
-//        this.descricao = novoItem.getDescricao();
-//        this.preco = novoItem.getPreco();
-//        // Adicione outros campos conforme necessário
-//    }
+    public Item atualizarInformacoes(String novoNome, String novaDescricao, BigDecimal novoPreco, String novaDisponibilidade, String novaFoto) {
+        return new Builder()
+                .id(this.id)
+                .name(novoNome != null ? novoNome : this.name)
+                .description(novaDescricao != null ? novaDescricao : this.description)
+                .price(novoPreco != null ? novoPreco : this.price)
+                .availability(novaDisponibilidade != null ? novaDisponibilidade : this.availability)
+                .photo(novaFoto != null ? novaFoto : this.photo)
+                .build();
+    }
 
     // Builder
     public static class Builder {

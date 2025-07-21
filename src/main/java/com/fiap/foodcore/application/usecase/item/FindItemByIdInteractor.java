@@ -1,5 +1,6 @@
 package com.fiap.foodcore.application.usecase.item;
 
+import com.fiap.foodcore.application.exception.DataNotFoundException;
 import com.fiap.foodcore.application.gateway.ItemGateway;
 import com.fiap.foodcore.application.usecase.output.ItemCreateOutput;
 
@@ -12,7 +13,7 @@ public class FindItemByIdInteractor {
 
     public ItemCreateOutput execute(Long id) {
         var item = itemGateway.findById(id)
-                .orElseThrow(() -> new RuntimeException("Item não encontrado"));
+                .orElseThrow(() -> new DataNotFoundException("Item não encontrado"));
 
         return new ItemCreateOutput(
                 item.getId(),

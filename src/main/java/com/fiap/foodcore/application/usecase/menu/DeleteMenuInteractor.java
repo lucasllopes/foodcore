@@ -6,7 +6,7 @@ import com.fiap.foodcore.infrastructure.gateways.persistence.MenuRepository;
 public class DeleteMenuInteractor {
     private final MenuGateway menuGateway;
 
-    public DeleteMenuInteractor(MenuRepository menuRepository, MenuGateway menuGateway) {
+    public DeleteMenuInteractor(MenuGateway menuGateway) {
         this.menuGateway = menuGateway;
     }
 

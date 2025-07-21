@@ -24,8 +24,15 @@ public class UpdateItemInteractor {
                     throw new DuplicatedDataException("Nome item já em uso");
                 });
 
-        var domain = ItemMapper.toDomain(input);
-        var saved = itemGateway.save(domain);
+        var atualizado = existing.atualizarInformacoes(
+                input.name(),
+                input.description(),
+                input.price(),
+                input.availability(),
+                input.photo()
+        );
+
+        var saved = itemGateway.save(atualizado);
         return ItemMapper.fromDomain(saved);
     }
 }

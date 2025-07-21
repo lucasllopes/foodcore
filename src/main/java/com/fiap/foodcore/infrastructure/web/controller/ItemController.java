@@ -1,9 +1,6 @@
 package com.fiap.foodcore.infrastructure.web.controller;
 
-import com.fiap.foodcore.application.usecase.item.CreateItemInteractor;
-import com.fiap.foodcore.application.usecase.item.DeleteItemInteractor;
-import com.fiap.foodcore.application.usecase.item.ListItemInteractor;
-import com.fiap.foodcore.application.usecase.item.UpdateItemInteractor;
+import com.fiap.foodcore.application.usecase.item.*;
 import com.fiap.foodcore.application.usecase.output.ItemCreateOutput;
 import com.fiap.foodcore.domain.pagination.DomainPage;
 import com.fiap.foodcore.domain.pagination.PageRequestDomain;
@@ -31,12 +28,14 @@ public class ItemController {
     private final CreateItemInteractor createItemInteractor;
     private final UpdateItemInteractor updateItemInteractor;
     private final DeleteItemInteractor deleteItemInteractor;
+    private final FindItemByIdInteractor findItemByIdInteractor;
 
-    public ItemController(ListItemInteractor listItemInteractor, CreateItemInteractor createItemInteractor, UpdateItemInteractor updateItemInteractor, DeleteItemInteractor deleteItemInteractor) {
+    public ItemController(ListItemInteractor listItemInteractor, CreateItemInteractor createItemInteractor, UpdateItemInteractor updateItemInteractor, DeleteItemInteractor deleteItemInteractor, FindItemByIdInteractor findItemByIdInteractor) {
         this.listItemInteractor = listItemInteractor;
         this.createItemInteractor = createItemInteractor;
         this.updateItemInteractor = updateItemInteractor;
         this.deleteItemInteractor = deleteItemInteractor;
+        this.findItemByIdInteractor = findItemByIdInteractor;
     }
 
     @GetMapping
@@ -55,6 +54,16 @@ public class ItemController {
         );
 
         return ResponseEntity.ok(paginatedUser);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ItemCreateResponseDTO> findById(@PathVariable Long id) {
+        logger.info("Handling GET request to /cardapios/items/{}", id);
+
+        ItemCreateOutput output = findItemByIdInteractor.execute(id);
+        ItemCreateResponseDTO dto = ItemPresenter.toDto(output);
+
+        return ResponseEntity.ok(dto);
     }
 
     @PostMapping
@@ -87,6 +96,8 @@ public class ItemController {
         deleteItemInteractor.execute(id);
         return ResponseEntity.noContent().build();
     }
+
+
 
 
 }
