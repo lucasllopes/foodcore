@@ -68,7 +68,10 @@ public class MenuController {
     public ResponseEntity<MenuCreateResponseDTO> updateMenu(@PathVariable Long id, @RequestBody MenuUpdateRequestDTO menuDto) {
         logger.info("Handling PUT request to /cardapios/{}", id);
         MenuCreateOutput output = updateMenuInteractor.execute(id, menuDto);
-        return ResponseEntity.notFound().build();
+
+        MenuCreateResponseDTO response = MenuPresenter.toResponseDTO(output);
+
+        return ResponseEntity.ok(response);
     }
 
 
