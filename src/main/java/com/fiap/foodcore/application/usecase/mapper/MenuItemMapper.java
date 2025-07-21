@@ -8,6 +8,7 @@ import com.fiap.foodcore.infrastructure.web.controller.dto.MenuItemUpdateRequest
 public class MenuItemMapper {
     public static Item fromDto(MenuItemUpdateRequestDTO menuItemUpdateRequestDTO) {
         return new Item.Builder()
+                .id(menuItemUpdateRequestDTO.id())
                 .name(menuItemUpdateRequestDTO.name())
                 .description(menuItemUpdateRequestDTO.description())
                 .price(menuItemUpdateRequestDTO.price())

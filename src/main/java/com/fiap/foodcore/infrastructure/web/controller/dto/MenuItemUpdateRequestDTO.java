@@ -3,6 +3,9 @@ package com.fiap.foodcore.infrastructure.web.controller.dto;
 import java.math.BigDecimal;
 
 public record MenuItemUpdateRequestDTO(
+
+        Long id,
+
         String name,
 
         String description,

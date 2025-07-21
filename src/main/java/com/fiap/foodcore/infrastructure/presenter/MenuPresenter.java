@@ -50,6 +50,7 @@ public class MenuPresenter {
     public static MenuCreateResponseDTO toResponseDTO(MenuCreateOutput output) {
         if (output == null) return null;
         return new MenuCreateResponseDTO(
+                output.id(),
                 output.name(),
                 output.description(),
                 output.items().stream()
