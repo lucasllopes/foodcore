@@ -1,10 +1,7 @@
 package com.fiap.foodcore.infrastructure.configuration;
 
 import com.fiap.foodcore.application.gateway.MenuGateway;
-import com.fiap.foodcore.application.usecase.menu.CreateMenuInteractor;
-import com.fiap.foodcore.application.usecase.menu.DeleteMenuInteractor;
-import com.fiap.foodcore.application.usecase.menu.ListMenuInteractor;
-import com.fiap.foodcore.application.usecase.menu.UpdateMenuInteractor;
+import com.fiap.foodcore.application.usecase.menu.*;
 import com.fiap.foodcore.infrastructure.gateways.MenuRepositoryGateway;
 import com.fiap.foodcore.infrastructure.gateways.persistence.ItemRepository;
 import com.fiap.foodcore.infrastructure.gateways.persistence.MenuRepository;
@@ -42,6 +39,11 @@ public class MenuConfig {
     @Bean
     public DeleteMenuInteractor deleteMenuInteractor(MenuGateway menuGateway) {
         return new DeleteMenuInteractor(menuGateway);
+    }
+
+    @Bean
+    public FindMenuByIdInteractor findMenuByIdInteractor(MenuGateway menuGateway) {
+        return new FindMenuByIdInteractor(menuGateway);
     }
 
 }

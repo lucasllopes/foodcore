@@ -1,9 +1,6 @@
 package com.fiap.foodcore.infrastructure.web.controller;
 
-import com.fiap.foodcore.application.usecase.menu.CreateMenuInteractor;
-import com.fiap.foodcore.application.usecase.menu.DeleteMenuInteractor;
-import com.fiap.foodcore.application.usecase.menu.ListMenuInteractor;
-import com.fiap.foodcore.application.usecase.menu.UpdateMenuInteractor;
+import com.fiap.foodcore.application.usecase.menu.*;
 import com.fiap.foodcore.application.usecase.output.MenuCreateOutput;
 import com.fiap.foodcore.domain.pagination.DomainPage;
 import com.fiap.foodcore.domain.pagination.PageRequestDomain;
@@ -31,12 +28,14 @@ public class MenuController {
     private final ListMenuInteractor listMenuInteractor;
     private final UpdateMenuInteractor updateMenuInteractor;
     private final DeleteMenuInteractor deleteMenuInteractor;
+    private final FindMenuByIdInteractor findMenuByIdInteractor;
 
-    public MenuController(CreateMenuInteractor createMenuInteractor, ListMenuInteractor listMenuInteractor, UpdateMenuInteractor updateMenuInteractor, DeleteMenuInteractor deleteMenuInteractor) {
+    public MenuController(CreateMenuInteractor createMenuInteractor, ListMenuInteractor listMenuInteractor, UpdateMenuInteractor updateMenuInteractor, DeleteMenuInteractor deleteMenuInteractor, FindMenuByIdInteractor findMenuByIdInteractor) {
         this.createMenuInteractor = createMenuInteractor;
         this.listMenuInteractor = listMenuInteractor;
         this.updateMenuInteractor = updateMenuInteractor;
         this.deleteMenuInteractor = deleteMenuInteractor;
+        this.findMenuByIdInteractor = findMenuByIdInteractor;
     }
 
     @GetMapping
@@ -55,6 +54,16 @@ public class MenuController {
         );
 
         return ResponseEntity.ok(paginatedUser);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<MenuCreateResponseDTO> findMenuById(@PathVariable Long id) {
+        logger.info("Handling GET request to /cardapios with id={}", id);
+
+        MenuCreateOutput output = findMenuByIdInteractor.execute(id);
+        MenuCreateResponseDTO dto = MenuPresenter.toResponseDTO(output);
+
+        return ResponseEntity.ok(dto);
     }
 
     @PostMapping
@@ -78,7 +87,7 @@ public class MenuController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteMenu(@PathVariable Long id) {
+    public ResponseEntity<MenuCreateResponseDTO> deleteMenu(@PathVariable Long id) {
         logger.info("Handling DELETE request to /cardapios/{}", id);
         deleteMenuInteractor.execute(id);
         return ResponseEntity.noContent().build();
