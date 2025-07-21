@@ -12,6 +12,7 @@ public class MenuItemMapper {
                 .name(menuItemUpdateRequestDTO.name())
                 .description(menuItemUpdateRequestDTO.description())
                 .price(menuItemUpdateRequestDTO.price())
+                .availability(menuItemUpdateRequestDTO.availability())
                 .photo(menuItemUpdateRequestDTO.photo())
                 .build();
     }
