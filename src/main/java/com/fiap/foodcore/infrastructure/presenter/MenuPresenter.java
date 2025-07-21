@@ -4,10 +4,7 @@ import com.fiap.foodcore.application.usecase.input.CreateMenuInput;
 import com.fiap.foodcore.application.usecase.input.CreateMenuItemInput;
 import com.fiap.foodcore.application.usecase.output.ItemOutput;
 import com.fiap.foodcore.application.usecase.output.MenuCreateOutput;
-import com.fiap.foodcore.infrastructure.web.controller.dto.MenuCreateRequestDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.MenuCreateResponseDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.MenuItemCreateRequestDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.MenuItemResponseCreateDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -75,6 +72,24 @@ public class MenuPresenter {
     }
 
     public static CreateMenuInput fromCreateInputRequestDTO(MenuCreateRequestDTO dto) {
+        if (dto == null) return null;
+        return new CreateMenuInput(
+                dto.name(),
+                dto.description(),
+                dto.items().stream()
+                        .map(item -> new CreateMenuItemInput(
+                                item.name(),
+                                item.description(),
+                                item.price(),
+                                item.availability(),
+                                item.photo()
+                        )).collect(Collectors.toList())
+        );
+    }
+
+
+
+    public static CreateMenuInput fromUpdateInputRequestDTO(MenuUpdateRequestDTO dto) {
         if (dto == null) return null;
         return new CreateMenuInput(
                 dto.name(),

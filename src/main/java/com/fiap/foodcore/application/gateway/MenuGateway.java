@@ -13,4 +13,5 @@ public interface MenuGateway {
     DomainPage<Menu> findAll(PageRequestDomain pageRequest);
     Menu save(Menu menu);
     void delete(Menu menu);
+    Optional<Menu> findByName(String name);
 }

@@ -59,4 +59,10 @@ public class MenuRepositoryGateway implements MenuGateway {
         var entity = MenuMapper.toEntity(menu);
         menuRepository.delete(entity);
     }
+
+    @Override
+    public Optional<Menu> findByName(String name) {
+        return menuRepository.findByName(name)
+                .map(MenuMapper::toDomain);
+    }
 }

@@ -29,6 +29,15 @@ public class Item {
     public String getAvailability() { return availability; }
     public String getPhoto() { return photo; }
 
+//    public void atualizarValores(Item novoItem) {
+//        if (novoItem == null) return;
+//        // Exemplo: atualize os campos relevantes
+//        this.name = novoItem.getName();
+//        this.descricao = novoItem.getDescricao();
+//        this.preco = novoItem.getPreco();
+//        // Adicione outros campos conforme necessário
+//    }
+
     // Builder
     public static class Builder {
         private Long id;

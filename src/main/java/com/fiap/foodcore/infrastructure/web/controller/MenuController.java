@@ -2,12 +2,14 @@ package com.fiap.foodcore.infrastructure.web.controller;
 
 import com.fiap.foodcore.application.usecase.menu.CreateMenuInteractor;
 import com.fiap.foodcore.application.usecase.menu.ListMenuInteractor;
+import com.fiap.foodcore.application.usecase.menu.UpdateMenuInteractor;
 import com.fiap.foodcore.application.usecase.output.MenuCreateOutput;
 import com.fiap.foodcore.domain.pagination.DomainPage;
 import com.fiap.foodcore.domain.pagination.PageRequestDomain;
 import com.fiap.foodcore.infrastructure.presenter.MenuPresenter;
 import com.fiap.foodcore.infrastructure.web.controller.dto.MenuCreateRequestDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.MenuCreateResponseDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.MenuUpdateRequestDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -26,10 +28,12 @@ public class MenuController {
 
     private final CreateMenuInteractor createMenuInteractor;
     private final ListMenuInteractor listMenuInteractor;
+    private final UpdateMenuInteractor updateMenuInteractor;
 
-    public MenuController(CreateMenuInteractor createMenuInteractor, ListMenuInteractor listMenuInteractor) {
+    public MenuController(CreateMenuInteractor createMenuInteractor, ListMenuInteractor listMenuInteractor, UpdateMenuInteractor updateMenuInteractor) {
         this.createMenuInteractor = createMenuInteractor;
         this.listMenuInteractor = listMenuInteractor;
+        this.updateMenuInteractor = updateMenuInteractor;
     }
 
     @GetMapping
@@ -51,7 +55,7 @@ public class MenuController {
     }
 
     @PostMapping
-    public ResponseEntity<MenuCreateResponseDTO> createMenu(@RequestBody  MenuCreateRequestDTO menuDto) {
+    public ResponseEntity<MenuCreateResponseDTO> createMenu(@RequestBody MenuCreateRequestDTO menuDto) {
         logger.info("Handling POST request to /cardapios");
 
         MenuCreateOutput output = createMenuInteractor.execute(MenuPresenter.fromCreateInputRequestDTO(menuDto));
@@ -59,5 +63,13 @@ public class MenuController {
 
         return ResponseEntity.status(201).body(dto);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<MenuCreateResponseDTO> updateMenu(@PathVariable Long id, @RequestBody MenuUpdateRequestDTO menuDto) {
+        logger.info("Handling PUT request to /cardapios/{}", id);
+        MenuCreateOutput output = updateMenuInteractor.execute(id, menuDto);
+        return ResponseEntity.notFound().build();
+    }
+
 
 }
