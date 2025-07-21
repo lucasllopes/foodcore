@@ -23,7 +23,7 @@ import static io.restassured.RestAssured.given;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase
-public class LoginControllerIntegrationTest {
+public class LoginControllerImplIntegrationTest {
 
     @Autowired
     private CreateUserUseCase createUserUseCase;

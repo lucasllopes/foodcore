@@ -8,6 +8,7 @@ import com.fiap.foodcore.infrastructure.gateways.persistence.entity.UserEntity;
 import com.fiap.foodcore.infrastructure.gateways.persistence.UserRepository;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,7 +105,23 @@ public class SecurityConfig {
         final String schemeName = "bearerAuth";
 
         return new OpenAPI()
-                .info(new Info().title("FoodCore API").version("v1"))
+                .info(new Info()
+                        .title("Foodcore")
+                        .description("Tech challenge desenvolvido durante as aulas da Pós Tech " +
+                                "de Arquitetura e Desenvolvimento Java da FIAP\n" +
+                                "\n" +
+                                "RM362083 - Caike Rodrigues Queiroz \n" +
+                                "\n" +
+                                "RM362794 - Carlos Alberto Paulino\n" +
+                                "\n" +
+                                "RM361370 - Guilherme Marques Ferreira\n" +
+                                "\n" +
+                                "RM364724 - José Vitor de Oliveira Agatte\n" +
+                                "\n" +
+                                "RM361913 - Lucas Lopes Da Silva"
+                        )
+                        .version("v1")
+                        .license(new License().name("Github - Foodcore").url("https://github.com/lucasllopes/foodcore")))
                 .addSecurityItem(new SecurityRequirement().addList(schemeName))
                 .components(new io.swagger.v3.oas.models.Components()
                         .addSecuritySchemes(schemeName,

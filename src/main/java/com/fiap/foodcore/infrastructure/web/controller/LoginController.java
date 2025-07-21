@@ -1,48 +1,79 @@
 package com.fiap.foodcore.infrastructure.web.controller;
 
 import com.fiap.foodcore.infrastructure.web.controller.dto.LoginRequestDTO;
-import com.fiap.foodcore.infrastructure.security.UserDetailsAdapter;
-import com.fiap.foodcore.application.gateway.TokenGateway;
+import com.fiap.foodcore.infrastructure.web.controller.dto.MessageErrorDTO;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/login")
-@Tag(name = "1 - Autenticação", description = "Endpoints para autenticação")
-public class LoginController {
+@Tag(name = "2 - Autenticação", description = "Endpoint para autenticação do usuário")
+public interface LoginController {
 
-    private final static Logger logger = LoggerFactory.getLogger(LoginController.class);
-
-    private final TokenGateway tokenGateway;
-
-    private final AuthenticationManager authenticationManager;
-
-    public LoginController(TokenGateway tokenGateway, AuthenticationManager authenticationManager) {
-        this.tokenGateway = tokenGateway;
-        this.authenticationManager = authenticationManager;
-    }
-
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> login(@RequestBody @Valid LoginRequestDTO request) {
-
-        logger.info("Request to /login -> POST");
-
-        var usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(request.login(), request.senha());
-        var authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
-
-        var userDetails = (UserDetailsAdapter) authentication.getPrincipal();
-
-        String token = tokenGateway.generateToken(userDetails.getUsername());
-        return ResponseEntity.ok(token);
-    }
+    @Operation(
+            description = "Ao passar um login e uma senha, verifica se as " +
+                            "credenciais do usuário estão corretas, e devolve um token de acesso.",
+            summary = "Autenticar o usuário",
+            requestBody = @RequestBody(
+                    description = "Credenciais do usuário",
+                    required = true,
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = LoginRequestDTO.class),
+                            examples = {
+                                    @ExampleObject(
+                                            name = "Exemplo de Login",
+                                            summary = "Credenciais válidas",
+                                            description = "Login e senha de um usuário válido",
+                                            value = """
+                                                    {
+                                                        "login": "teste1insert1",
+                                                        "senha": "123456"
+                                                    }
+                                                    """
+                                    )
+                            }
+                    )
+            )
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    description = "Ok",
+                    responseCode = "200",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = String.class)
+                            )
+                    }
+            ),
+            @ApiResponse(
+                    description = "Unauthorized",
+                    responseCode = "401",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = MessageErrorDTO.class),
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Mensagem de erro para credenciais inválidas",
+                                                    summary = "Erro credenciais inválidas",
+                                                    description = "Mensagem de erro para credenciais inválidas",
+                                                    value = """
+                                                    {
+                                                        "mensagem": "Usuário inexistente ou senha inválida"
+                                                    }
+                                                    """
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    ResponseEntity<String> login(LoginRequestDTO request);
 }

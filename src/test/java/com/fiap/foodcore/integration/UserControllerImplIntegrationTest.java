@@ -23,7 +23,7 @@ import static org.hamcrest.Matchers.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase
-public class UserControllerIntegrationTest {
+public class UserControllerImplIntegrationTest {
 
     @Autowired
     private CreateUserUseCase createUserUseCase;
