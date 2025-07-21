@@ -1,7 +1,7 @@
 package com.fiap.foodcore.infrastructure.presenter;
 
 import com.fiap.foodcore.application.usecase.input.CreateMenuInput;
-import com.fiap.foodcore.application.usecase.input.CreateMenuItemInput;
+import com.fiap.foodcore.application.usecase.input.CreateItemInput;
 import com.fiap.foodcore.application.usecase.output.ItemOutput;
 import com.fiap.foodcore.application.usecase.output.MenuCreateOutput;
 import com.fiap.foodcore.infrastructure.web.controller.dto.*;
@@ -78,7 +78,7 @@ public class MenuPresenter {
                 dto.name(),
                 dto.description(),
                 dto.items().stream()
-                        .map(item -> new CreateMenuItemInput(
+                        .map(item -> new CreateItemInput(
                                 item.name(),
                                 item.description(),
                                 item.price(),
@@ -96,7 +96,7 @@ public class MenuPresenter {
                 dto.name(),
                 dto.description(),
                 dto.items().stream()
-                        .map(item -> new CreateMenuItemInput(
+                        .map(item -> new CreateItemInput(
                                 item.name(),
                                 item.description(),
                                 item.price(),

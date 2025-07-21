@@ -5,6 +5,6 @@ import java.util.List;
 public record CreateMenuInput(
         String nome,
         String descricao,
-        List<CreateMenuItemInput> items) {
+        List<CreateItemInput> items) {
 
 }
