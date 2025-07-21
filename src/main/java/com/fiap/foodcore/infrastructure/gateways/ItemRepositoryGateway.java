@@ -2,6 +2,8 @@ package com.fiap.foodcore.infrastructure.gateways;
 
 import com.fiap.foodcore.application.gateway.ItemGateway;
 import com.fiap.foodcore.domain.Item;
+import com.fiap.foodcore.domain.pagination.DomainPage;
+import com.fiap.foodcore.domain.pagination.PageRequestDomain;
 import com.fiap.foodcore.infrastructure.gateways.persistence.ItemRepository;
 import com.fiap.foodcore.infrastructure.mapper.ItemMapper;
 
@@ -13,6 +15,16 @@ public class ItemRepositoryGateway implements ItemGateway {
 
     public ItemRepositoryGateway(ItemRepository itemRepository) {
         this.itemRepository = itemRepository;
+    }
+
+    @Override
+    public DomainPage<Item> findAll(PageRequestDomain pageRequest){
+        var page = itemRepository.findAll(   org.springframework.data.domain.PageRequest
+                .of(pageRequest.page(), pageRequest.size()));
+        var items = page.getContent().stream()
+                .map(ItemMapper::toDomain)
+                .toList();
+        return new DomainPage<>(items, page.getTotalElements());
     }
 
     @Override
