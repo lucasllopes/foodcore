@@ -5,4 +5,4 @@ import java.util.List;
 public record MenuCreateRequestDTO (
         String name,
         String description,
-        List<MenuItemCreateRequestDTO> items) {}
+        List<ItemCreateRequestDTO> items) {}

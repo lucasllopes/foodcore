@@ -1,8 +1,8 @@
-package com.fiap.foodcore.application.usecase.input;
+package com.fiap.foodcore.application.usecase.output;
 
 import java.math.BigDecimal;
 
-public record UpdateItemInput(
+public record ItemCreateOutput(
         Long id,
         String name,
         String description,

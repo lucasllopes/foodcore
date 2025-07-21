@@ -2,7 +2,7 @@ package com.fiap.foodcore.infrastructure.web.controller.dto;
 
 import java.math.BigDecimal;
 
-public record MenuItemResponseCreateDTO(
+public record ItemCreateResponseDTO(
         Long id,
 
         String name,

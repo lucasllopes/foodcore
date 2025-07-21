@@ -2,7 +2,7 @@ package com.fiap.foodcore.infrastructure.presenter;
 
 import com.fiap.foodcore.application.usecase.input.CreateMenuInput;
 import com.fiap.foodcore.application.usecase.input.CreateItemInput;
-import com.fiap.foodcore.application.usecase.output.ItemOutput;
+import com.fiap.foodcore.application.usecase.output.ItemCreateOutput;
 import com.fiap.foodcore.application.usecase.output.MenuCreateOutput;
 import com.fiap.foodcore.infrastructure.web.controller.dto.*;
 
@@ -18,7 +18,7 @@ public class MenuPresenter {
                 dto.name(),
                 dto.description(),
                 dto.items().stream().map(
-                        item -> new ItemOutput(
+                        item -> new ItemCreateOutput(
                                 null, // id normalmente gerado pelo sistema
                                 item.name(),
                                 item.description(),
@@ -36,7 +36,7 @@ public class MenuPresenter {
         return new MenuCreateRequestDTO(
                 output.name(),
                 output.description(),
-                output.items().stream().map(item -> new MenuItemCreateRequestDTO(
+                output.items().stream().map(item -> new ItemCreateRequestDTO(
                         item.name(),
                         item.description(),
                         item.price(),
@@ -54,7 +54,7 @@ public class MenuPresenter {
                 output.name(),
                 output.description(),
                 output.items().stream()
-                        .map(item -> new MenuItemResponseCreateDTO(
+                        .map(item -> new ItemCreateResponseDTO(
                                 item.id(),
                                 item.name(),
                                 item.description(),

@@ -1,12 +1,12 @@
 package com.fiap.foodcore.application.usecase.mapper;
 
-import com.fiap.foodcore.application.usecase.output.ItemOutput;
+import com.fiap.foodcore.application.usecase.output.ItemCreateOutput;
 import com.fiap.foodcore.domain.Item;
-import com.fiap.foodcore.infrastructure.web.controller.dto.MenuItemUpdateRequestDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.ItemUpdateRequestDTO;
 
 
 public class MenuItemMapper {
-    public static Item fromDto(MenuItemUpdateRequestDTO menuItemUpdateRequestDTO) {
+    public static Item fromDto(ItemUpdateRequestDTO menuItemUpdateRequestDTO) {
         return new Item.Builder()
                 .id(menuItemUpdateRequestDTO.id())
                 .name(menuItemUpdateRequestDTO.name())
@@ -17,8 +17,8 @@ public class MenuItemMapper {
                 .build();
     }
 
-    public static ItemOutput toOutput(Item item) {
-        return new ItemOutput(
+    public static ItemCreateOutput toOutput(Item item) {
+        return new ItemCreateOutput(
                 item.getId(),
                 item.getName(),
                 item.getDescription(),

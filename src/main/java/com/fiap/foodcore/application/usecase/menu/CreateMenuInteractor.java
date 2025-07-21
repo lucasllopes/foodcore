@@ -1,7 +1,7 @@
 package com.fiap.foodcore.application.usecase.menu;
 
 import com.fiap.foodcore.application.usecase.input.CreateMenuInput;
-import com.fiap.foodcore.application.usecase.output.ItemOutput;
+import com.fiap.foodcore.application.usecase.output.ItemCreateOutput;
 import com.fiap.foodcore.application.usecase.output.MenuCreateOutput;
 import com.fiap.foodcore.domain.Item;
 import com.fiap.foodcore.domain.Menu;
@@ -37,7 +37,7 @@ public class CreateMenuInteractor {
                 menu.getName(),
                 menu.getDescription(),
                 menu.getItems().stream()
-                        .map(item -> new ItemOutput(
+                        .map(item -> new ItemCreateOutput(
                                 item.getId(),
                                 item.getName(),
                                 item.getDescription(),

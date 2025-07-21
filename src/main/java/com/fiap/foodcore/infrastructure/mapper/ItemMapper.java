@@ -1,6 +1,7 @@
 package com.fiap.foodcore.infrastructure.mapper;
 
-import com.fiap.foodcore.application.usecase.output.ItemOutput;
+import com.fiap.foodcore.application.usecase.input.UpdateItemInput;
+import com.fiap.foodcore.application.usecase.output.ItemCreateOutput;
 import com.fiap.foodcore.domain.Item;
 import com.fiap.foodcore.infrastructure.gateways.persistence.entity.ItemEntity;
 
@@ -30,9 +31,9 @@ public class ItemMapper {
                 .build();
     }
 
-    public static ItemOutput fromDomain(Item item){
+    public static ItemCreateOutput fromDomain(Item item){
         if (item == null) return null;
-        return new ItemOutput(
+        return new ItemCreateOutput(
                 item.getId(),
                 item.getName(),
                 item.getDescription(),
@@ -41,4 +42,16 @@ public class ItemMapper {
                 item.getAvailability()
         );
     }
+
+    public static Item toDomain(UpdateItemInput input) {
+        if (input == null) return null;
+        return new Item.Builder()
+                .name(input.name())
+                .description(input.description())
+                .price(input.price())
+                .availability(input.availability())
+                .photo(input.photo())
+                .build();
+    }
+
 }
