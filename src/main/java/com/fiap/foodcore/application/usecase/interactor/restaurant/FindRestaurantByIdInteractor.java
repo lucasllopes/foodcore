@@ -18,6 +18,6 @@ public class FindRestaurantByIdInteractor implements FindRestaurantByIdUseCase {
     public CreateRestaurantOutput execute(Long id) {
         return restaurantGateway.findById(id)
                 .map(RestaurantMapper::fromDomain)
-                .orElseThrow(() -> new DataNotFoundException("Restaurante não encontrado"));
+                .orElseThrow(() -> new DataNotFoundException("Restaurante não encontrado."));
     }
 }
