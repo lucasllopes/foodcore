@@ -2,6 +2,7 @@ package com.fiap.foodcore.domain;
 
 import com.fiap.foodcore.application.usecase.input.AddressUpdateInput;
 import com.fiap.foodcore.application.usecase.input.CreateAddressInput;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
