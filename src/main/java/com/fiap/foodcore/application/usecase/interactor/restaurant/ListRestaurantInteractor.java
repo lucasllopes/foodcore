@@ -1,7 +1,7 @@
 package com.fiap.foodcore.application.usecase.interactor.restaurant;
 
 import com.fiap.foodcore.application.gateway.RestaurantGateway;
-import com.fiap.foodcore.application.usecase.ListRestaurantUseCase;
+import com.fiap.foodcore.application.usecase.restaurant.ListRestaurantUseCase;
 import com.fiap.foodcore.application.usecase.mapper.RestaurantMapper;
 import com.fiap.foodcore.application.usecase.output.CreateRestaurantOutput;
 import com.fiap.foodcore.domain.Restaurant;

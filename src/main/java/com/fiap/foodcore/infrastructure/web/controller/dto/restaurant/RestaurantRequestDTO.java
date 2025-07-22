@@ -1,5 +1,6 @@
-package com.fiap.foodcore.infrastructure.web.controller.dto;
+package com.fiap.foodcore.infrastructure.web.controller.dto.restaurant;
 
+import com.fiap.foodcore.infrastructure.web.controller.dto.AddressResponseDTO;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;

@@ -1,12 +1,10 @@
 package com.fiap.foodcore.domain;
 
-import com.fiap.foodcore.application.usecase.input.UpdateRestaurantInput;
-import com.fiap.foodcore.application.usecase.input.CreateRestaurantInput;
+import com.fiap.foodcore.application.usecase.input.restaurant.UpdateRestaurantInput;
+import com.fiap.foodcore.application.usecase.input.restaurant.CreateRestaurantInput;
 import lombok.Getter;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 public class Restaurant {

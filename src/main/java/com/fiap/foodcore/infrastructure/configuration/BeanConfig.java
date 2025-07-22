@@ -12,6 +12,10 @@ import com.fiap.foodcore.application.usecase.interactor.usertype.CreateUserTypeI
 import com.fiap.foodcore.application.usecase.interactor.usertype.FindUserTypeByIdInteractor;
 import com.fiap.foodcore.application.usecase.interactor.usertype.FindUserTypeByNameInteractor;
 import com.fiap.foodcore.application.usecase.interactor.usertype.UpdateUserTypeInteractor;
+import com.fiap.foodcore.application.usecase.restaurant.DeleteRestaurantUseCase;
+import com.fiap.foodcore.application.usecase.restaurant.FindRestaurantByIdUseCase;
+import com.fiap.foodcore.application.usecase.restaurant.ListRestaurantUseCase;
+import com.fiap.foodcore.application.usecase.restaurant.UpdateRestaurantUseCase;
 import com.fiap.foodcore.infrastructure.gateways.BCryptPasswordEncryptionGateway;
 import com.fiap.foodcore.infrastructure.gateways.RestaurantRepositoryGateway;
 import com.fiap.foodcore.infrastructure.gateways.UserRepositoryGateway;

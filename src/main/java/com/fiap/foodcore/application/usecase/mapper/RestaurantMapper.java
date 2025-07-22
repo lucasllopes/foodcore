@@ -1,12 +1,10 @@
 package com.fiap.foodcore.application.usecase.mapper;
 
-import com.fiap.foodcore.application.usecase.input.UpdateRestaurantInput;
-import com.fiap.foodcore.application.usecase.input.CreateRestaurantInput;
+import com.fiap.foodcore.application.usecase.input.restaurant.UpdateRestaurantInput;
+import com.fiap.foodcore.application.usecase.input.restaurant.CreateRestaurantInput;
 import com.fiap.foodcore.application.usecase.output.AddressOutput;
 import com.fiap.foodcore.application.usecase.output.CreateRestaurantOutput;
 import com.fiap.foodcore.domain.Restaurant;
-
-import java.util.stream.Collectors;
 
 public class RestaurantMapper {
 
@@ -24,9 +22,9 @@ public class RestaurantMapper {
                 restaurant.getAddress().getNumero(),
                 restaurant.getAddress().getComplemento(),
                 restaurant.getAddress().getBairro(),
+                restaurant.getAddress().getCidade(),
                 restaurant.getAddress().getCep(),
-                restaurant.getAddress().getEstado(),
-                restaurant.getAddress().getCidade()
+                restaurant.getAddress().getEstado()
         );
         return new CreateRestaurantOutput(
                 restaurant.getId(),

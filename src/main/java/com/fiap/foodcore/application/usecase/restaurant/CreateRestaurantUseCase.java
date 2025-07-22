@@ -1,6 +1,6 @@
-package com.fiap.foodcore.application.usecase;
+package com.fiap.foodcore.application.usecase.restaurant;
 
-import com.fiap.foodcore.application.usecase.input.CreateRestaurantInput;
+import com.fiap.foodcore.application.usecase.input.restaurant.CreateRestaurantInput;
 import com.fiap.foodcore.application.usecase.output.CreateRestaurantOutput;
 
 public interface CreateRestaurantUseCase {

@@ -1,10 +1,9 @@
 package com.fiap.foodcore.helper;
 
 import com.fiap.foodcore.infrastructure.web.controller.dto.AddressCreateRequestDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.RestaurantCreateRequestDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.restaurant.RestaurantCreateRequestDTO;
 
 import java.time.LocalTime;
-import java.util.List;
 
 public class RestaurantTestHelper {
 

@@ -1,4 +1,4 @@
-package com.fiap.foodcore.application.usecase;
+package com.fiap.foodcore.application.usecase.restaurant;
 
 import com.fiap.foodcore.application.usecase.output.CreateRestaurantOutput;
 import com.fiap.foodcore.domain.pagination.DomainPage;
