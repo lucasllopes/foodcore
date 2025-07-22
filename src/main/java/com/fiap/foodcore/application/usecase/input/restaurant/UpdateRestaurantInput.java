@@ -1,4 +1,6 @@
-package com.fiap.foodcore.application.usecase.input;
+package com.fiap.foodcore.application.usecase.input.restaurant;
+
+import com.fiap.foodcore.application.usecase.input.AddressUpdateInput;
 
 import java.time.LocalTime;
 import java.util.List;

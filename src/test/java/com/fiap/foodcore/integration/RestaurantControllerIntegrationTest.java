@@ -1,12 +1,11 @@
 package com.fiap.foodcore.integration;
 
 import com.fiap.foodcore.application.usecase.CreateUserUseCase;
-import com.fiap.foodcore.application.usecase.interactor.user.CreateUserInteractor;
 import com.fiap.foodcore.application.usecase.input.CreateUserInput;
 import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
 import com.fiap.foodcore.helper.UserTestHelper;
 import com.fiap.foodcore.infrastructure.presenter.UserPresenter;
-import com.fiap.foodcore.infrastructure.web.controller.dto.RestaurantCreateRequestDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.restaurant.RestaurantCreateRequestDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.UserCreateRequestDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.UserResponseDTO;
 import io.restassured.RestAssured;

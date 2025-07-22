@@ -1,8 +1,8 @@
 package com.fiap.foodcore.application.usecase.interactor.restaurant;
 
 import com.fiap.foodcore.application.gateway.RestaurantGateway;
-import com.fiap.foodcore.application.usecase.DeleteRestaurantUseCase;
-import com.fiap.foodcore.application.usecase.FindRestaurantByIdUseCase;
+import com.fiap.foodcore.application.usecase.restaurant.DeleteRestaurantUseCase;
+import com.fiap.foodcore.application.usecase.restaurant.FindRestaurantByIdUseCase;
 import com.fiap.foodcore.application.usecase.output.CreateRestaurantOutput;
 
 public class DeleteRestaurantInteractor implements DeleteRestaurantUseCase {

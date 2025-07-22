@@ -1,6 +1,7 @@
-package com.fiap.foodcore.infrastructure.web.controller.dto;
+package com.fiap.foodcore.infrastructure.web.controller.dto.restaurant;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fiap.foodcore.infrastructure.web.controller.dto.AddressResponseDTO;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Time;

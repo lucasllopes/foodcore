@@ -1,5 +1,6 @@
-package com.fiap.foodcore.application.usecase.input;
+package com.fiap.foodcore.application.usecase.input.restaurant;
 
+import com.fiap.foodcore.application.usecase.input.CreateAddressInput;
 import com.fiap.foodcore.domain.UserTypeDomain;
 import com.fiap.foodcore.infrastructure.web.controller.dto.AddressResponseDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.UserResponseDTO;

@@ -3,12 +3,11 @@ package com.fiap.foodcore.application.usecase.interactor.restaurant;
 import com.fiap.foodcore.application.exception.DataNotFoundException;
 import com.fiap.foodcore.application.exception.DuplicatedDataException;
 import com.fiap.foodcore.application.gateway.RestaurantGateway;
-import com.fiap.foodcore.application.usecase.UpdateRestaurantUseCase;
-import com.fiap.foodcore.application.usecase.input.UpdateRestaurantInput;
+import com.fiap.foodcore.application.usecase.restaurant.UpdateRestaurantUseCase;
+import com.fiap.foodcore.application.usecase.input.restaurant.UpdateRestaurantInput;
 import com.fiap.foodcore.application.usecase.mapper.RestaurantMapper;
 import com.fiap.foodcore.application.usecase.output.CreateRestaurantOutput;
 import com.fiap.foodcore.domain.Restaurant;
-import com.fiap.foodcore.domain.exception.RestaurantNotFoundException;
 
 public class UpdateRestaurantInteractor implements UpdateRestaurantUseCase {
 

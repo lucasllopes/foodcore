@@ -1,14 +1,16 @@
 package com.fiap.foodcore.infrastructure.web.controller;
 
-import com.fiap.foodcore.application.usecase.*;
-import com.fiap.foodcore.application.usecase.input.CreateRestaurantInput;
-import com.fiap.foodcore.application.usecase.input.UpdateRestaurantInput;
+import com.fiap.foodcore.application.usecase.input.restaurant.CreateRestaurantInput;
+import com.fiap.foodcore.application.usecase.input.restaurant.UpdateRestaurantInput;
 import com.fiap.foodcore.application.usecase.output.CreateRestaurantOutput;
+import com.fiap.foodcore.application.usecase.restaurant.*;
 import com.fiap.foodcore.domain.pagination.DomainPage;
 import com.fiap.foodcore.domain.pagination.PageRequestDomain;
 import com.fiap.foodcore.domain.pagination.SortOrder;
 import com.fiap.foodcore.infrastructure.presenter.RestaurantPresenter;
-import com.fiap.foodcore.infrastructure.web.controller.dto.*;
+import com.fiap.foodcore.infrastructure.web.controller.dto.restaurant.RestaurantCreateRequestDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.restaurant.RestaurantResponseDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.restaurant.RestaurantUpdateRequestDTO;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -3,14 +3,14 @@ package com.fiap.foodcore.infrastructure.presenter;
 
 import com.fiap.foodcore.application.usecase.input.AddressUpdateInput;
 import com.fiap.foodcore.application.usecase.input.CreateAddressInput;
-import com.fiap.foodcore.application.usecase.input.CreateRestaurantInput;
-import com.fiap.foodcore.application.usecase.input.UpdateRestaurantInput;
+import com.fiap.foodcore.application.usecase.input.restaurant.CreateRestaurantInput;
+import com.fiap.foodcore.application.usecase.input.restaurant.UpdateRestaurantInput;
 import com.fiap.foodcore.application.usecase.output.AddressOutput;
 import com.fiap.foodcore.application.usecase.output.CreateRestaurantOutput;
 import com.fiap.foodcore.infrastructure.web.controller.dto.AddressResponseDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.RestaurantCreateRequestDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.RestaurantResponseDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.RestaurantUpdateRequestDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.restaurant.RestaurantCreateRequestDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.restaurant.RestaurantResponseDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.restaurant.RestaurantUpdateRequestDTO;
 
 import java.util.List;
 import java.util.stream.Collectors;
