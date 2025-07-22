@@ -19,7 +19,7 @@ public class ListUserInteractor implements ListUserUseCase {
     @Override
     public DomainPage<CreateUserOutput> execute(PageRequestDomain pageRequest) {
         DomainPage<User> domainPage =
-                userGateway.findAll(pageRequest);
+                userGateway.findAllPage(pageRequest);
 
         return domainPage.map(UserMapper::fromDomain);
     }

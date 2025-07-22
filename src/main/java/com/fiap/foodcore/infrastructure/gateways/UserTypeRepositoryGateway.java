@@ -6,6 +6,7 @@ import com.fiap.foodcore.domain.pagination.DomainPage;
 import com.fiap.foodcore.domain.pagination.PageRequestDomain;
 import com.fiap.foodcore.infrastructure.gateways.persistence.UserTypeRepository;
 import com.fiap.foodcore.infrastructure.gateways.persistence.entity.UserTypeEntity;
+import com.fiap.foodcore.infrastructure.mapper.UserEntityMapper;
 import com.fiap.foodcore.infrastructure.mapper.UserTypeEntityMapper;
 
 import java.util.List;
@@ -39,7 +40,8 @@ public class UserTypeRepositoryGateway implements UserTypeGateway {
 
     @Override
     public void delete(UserType user) {
-
+        UserTypeEntity entity = UserTypeEntityMapper.toEntity(user);
+        userTypeRepository.delete(entity);
     }
 
     @Override

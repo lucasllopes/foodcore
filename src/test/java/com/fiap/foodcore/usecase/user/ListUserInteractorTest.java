@@ -30,15 +30,15 @@ class ListUserInteractorTest {
     @Test
     void deveRetornarPaginaComUsuarios() {
         // Arrange
-        PageRequestDomain pageRequest = new PageRequestDomain(0, 10);
+        PageRequestDomain pageRequest = new PageRequestDomain(0, 10, List.of());
 
         var user1 = UserTestHelper.getUserWithIdParametrized(11L);
 
         var user2 = UserTestHelper.getUserWithIdParametrized(25L);
 
-        DomainPage<User> domainPage = new DomainPage<>(List.of(user1, user2), 2);
+        DomainPage<User> domainPage = new DomainPage<>(List.of(user1, user2), 0, 10, 2);
 
-        when(userGateway.findAll(pageRequest)).thenReturn(domainPage);
+        when(userGateway.findAllPage(pageRequest)).thenReturn(domainPage);
 
         // Act
         DomainPage<CreateUserOutput> result = interactor.execute(pageRequest);
@@ -49,6 +49,6 @@ class ListUserInteractorTest {
         assertEquals(11, result.getItems().get(0).id());
         assertEquals(25, result.getItems().get(1).id());
 
-        verify(userGateway, times(1)).findAll(pageRequest);
+        verify(userGateway, times(1)).findAllPage(pageRequest);
     }
 }

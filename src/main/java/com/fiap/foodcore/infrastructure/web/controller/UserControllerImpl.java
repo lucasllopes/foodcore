@@ -7,6 +7,7 @@ import com.fiap.foodcore.application.usecase.input.UpdateUserInput;
 import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
 import com.fiap.foodcore.domain.pagination.DomainPage;
 import com.fiap.foodcore.domain.pagination.PageRequestDomain;
+import com.fiap.foodcore.domain.pagination.SortOrder;
 import com.fiap.foodcore.infrastructure.presenter.UserPresenter;
 import com.fiap.foodcore.infrastructure.web.controller.dto.*;
 import jakarta.validation.Valid;
@@ -68,8 +69,12 @@ public class UserControllerImpl implements UserController {
     public ResponseEntity<Page<UserResponseDTO>> listPaginatedUsers(Pageable pageable) {
 
         logger.info("Handling GET request to /usuarios");
+        List<SortOrder> sortOrders = pageable.getSort().stream()
+                .map(order -> new SortOrder(order.getProperty(), order.isAscending()))
+                .toList();
 
-        PageRequestDomain pr = new PageRequestDomain(pageable.getPageNumber(), pageable.getPageSize());
+
+        PageRequestDomain pr = new PageRequestDomain(pageable.getPageNumber(), pageable.getPageSize(), sortOrders);
 
         DomainPage<CreateUserOutput> outputs = listUsers.execute(pr);
         List<UserResponseDTO> dtos = UserPresenter.toDtoList(outputs.getItems());

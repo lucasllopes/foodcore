@@ -8,10 +8,7 @@ import com.fiap.foodcore.application.strategy.CreateUserStrategyFactory;
 import com.fiap.foodcore.application.usecase.*;
 import com.fiap.foodcore.application.usecase.interactor.restaurant.*;
 import com.fiap.foodcore.application.usecase.interactor.user.*;
-import com.fiap.foodcore.application.usecase.interactor.usertype.CreateUserTypeInteractor;
-import com.fiap.foodcore.application.usecase.interactor.usertype.FindUserTypeByIdInteractor;
-import com.fiap.foodcore.application.usecase.interactor.usertype.FindUserTypeByNameInteractor;
-import com.fiap.foodcore.application.usecase.interactor.usertype.UpdateUserTypeInteractor;
+import com.fiap.foodcore.application.usecase.interactor.usertype.*;
 import com.fiap.foodcore.infrastructure.gateways.BCryptPasswordEncryptionGateway;
 import com.fiap.foodcore.infrastructure.gateways.RestaurantRepositoryGateway;
 import com.fiap.foodcore.infrastructure.gateways.UserRepositoryGateway;
@@ -125,4 +122,10 @@ public class BeanConfig {
     public AssignUserTypeToUserUseCase assignUserTypeToUserUseCase(UserGateway userGateway, UserTypeGateway userTypeGateway) {
         return new AssignUserTypeToUserInteractor(userGateway, userTypeGateway);
     }
+
+    @Bean
+    public DeleteUserTypeUseCase deleteUserTypeUseCase(UserTypeGateway userTypeGateway) {
+        return new DeleteUserTypeInteractor(userTypeGateway);
+    }
+
 }

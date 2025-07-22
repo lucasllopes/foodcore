@@ -9,9 +9,13 @@ import java.util.stream.Collectors;
 public class DomainPage<T> {
 
     private final List<T> items;
+    private final int page;
+    private final int size;
     private final long totalElements;
 
-    public DomainPage(List<T> items, long totalElements) {
+    public DomainPage(List<T> items, int page, int size, long totalElements) {
+        this.page = page;
+        this.size = size;
         if (items == null) {
             throw new IllegalArgumentException("items must not be null");
         }
@@ -30,11 +34,19 @@ public class DomainPage<T> {
         return totalElements;
     }
 
+    public int getPage() {
+        return page;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
     public <R> DomainPage<R> map(Function<? super T, ? extends R> mapper) {
         List<R> mappedItems = items.stream()
                 .map(mapper)
                 .collect(Collectors.toList());
-        return new DomainPage<>(mappedItems, totalElements);
+        return new DomainPage<>(mappedItems, page, size, totalElements);
     }
 
 }

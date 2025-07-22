@@ -26,14 +26,16 @@ public class UserTypeController {
     private final UpdateUserTypeUseCase updateUserType;
     private final FindUserTypeByIdUseCase findUserTypeById;
     private final FindUserTypeByNameUseCase findUserTypeByNameUseCase;
+    private final DeleteUserTypeUseCase deleteUserType;
 
     public UserTypeController(CreateUserTypeUseCase createUserType, UpdateUserTypeUseCase updateUserType,
                               FindUserTypeByIdUseCase findUserTypeById,
-                              FindUserTypeByNameUseCase findUserTypeByName) {
+                              FindUserTypeByNameUseCase findUserTypeByName, DeleteUserTypeUseCase deleteUserType) {
         this.createUserType = createUserType;
         this.updateUserType = updateUserType;
         this.findUserTypeById = findUserTypeById;
         this.findUserTypeByNameUseCase = findUserTypeByName;
+        this.deleteUserType = deleteUserType;
     }
 
     @PostMapping
@@ -61,7 +63,7 @@ public class UserTypeController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UserTypeResponseDTO> findById(@PathVariable Long id) {
-        logger.info("Handling GET request to /usuarios/{ID}");
+        logger.info("Handling GET request to /{ID}");
 
         CreateUserTypeOutput output = findUserTypeById.execute(id);
         UserTypeResponseDTO dto = UserTypePresenter.toDto(output);
@@ -80,5 +82,12 @@ public class UserTypeController {
                 .toList();
 
         return ResponseEntity.ok(responseList);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        logger.info("Handling DELETE request to /tipos");
+        deleteUserType.execute(id);
+        return ResponseEntity.noContent().build();
     }
 }

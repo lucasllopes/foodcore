@@ -126,7 +126,6 @@ public class UserTypeControllerIntegrationTest {
 
     @Test
     void shouldUpdateUserTypeSuccessfully() {
-        // Arrange
         UserCreateRequestDTO owner = UserTestHelper.createValidGenericOwnerRequest();
         createUser(owner);
         String token = authenticateAndGetToken(owner);
@@ -146,18 +145,37 @@ public class UserTypeControllerIntegrationTest {
                         .jsonPath()
                         .getLong("id");
 
-        UserTypeUpdateRequestDTO updateDTO = new UserTypeUpdateRequestDTO("ADMIN");
 
         given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("Authorization", "Bearer " + token)
-                .body(updateDTO)
                 .when()
-                .put("/tipos/" + createdTypeId)
+                .delete("/tipos/{id}", createdTypeId)
                 .then()
-                .statusCode(HttpStatus.OK.value())
-                .body("id", equalTo(createdTypeId.intValue()))
-                .body("name", equalTo(updateDTO.name()));
+                .statusCode(HttpStatus.NO_CONTENT.value());
+    }
+
+    @Test
+    void shouldDeleteUserTypeSuccessfully() {
+
+        UserCreateRequestDTO owner = UserTestHelper.createValidGenericOwnerRequest();
+        createUser(owner);
+        String token = authenticateAndGetToken(owner);
+
+        UserTypeRequestDTO requestDTO = new UserTypeRequestDTO("GENERIC_TYPE");
+
+        given()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("Authorization", "Bearer " + token)
+                .body(requestDTO)
+                .when()
+                .post("/tipos")
+                .then()
+                .statusCode(HttpStatus.CREATED.value())
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body("$", hasKey("id"))
+                .body("$", hasKey("name"))
+                .body("name", equalTo(requestDTO.name()));
     }
 
     public void createUser(UserCreateRequestDTO dto) {

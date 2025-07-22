@@ -2,7 +2,10 @@ package com.fiap.foodcore.application.usecase.mapper;
 
 import com.fiap.foodcore.application.usecase.output.CreateUserTypeOutput;
 import com.fiap.foodcore.application.usecase.output.UpdateUserTypeOutput;
+import com.fiap.foodcore.domain.Address;
 import com.fiap.foodcore.domain.UserType;
+import com.fiap.foodcore.infrastructure.gateways.persistence.entity.AddressEntity;
+import com.fiap.foodcore.infrastructure.gateways.persistence.entity.UserTypeEntity;
 
 
 public class UserTypeMapper {
@@ -19,5 +22,15 @@ public class UserTypeMapper {
     public static UpdateUserTypeOutput fromUpdateDomain(UserType userType) {
         return new UpdateUserTypeOutput(userType.getId(), userType.getName(), userType.getLastModified()
         );
+    }
+
+    public static UserTypeEntity toEntity(UserType userType) {
+        if (userType == null) return null;
+
+        UserTypeEntity entity = new UserTypeEntity();
+        entity.setId(userType.getId());
+        entity.setName(userType.getName());
+        entity.setLastModified(userType.getLastModified());
+        return entity;
     }
 }

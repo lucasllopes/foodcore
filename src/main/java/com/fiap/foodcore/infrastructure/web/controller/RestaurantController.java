@@ -6,6 +6,7 @@ import com.fiap.foodcore.application.usecase.input.UpdateRestaurantInput;
 import com.fiap.foodcore.application.usecase.output.CreateRestaurantOutput;
 import com.fiap.foodcore.domain.pagination.DomainPage;
 import com.fiap.foodcore.domain.pagination.PageRequestDomain;
+import com.fiap.foodcore.domain.pagination.SortOrder;
 import com.fiap.foodcore.infrastructure.presenter.RestaurantPresenter;
 import com.fiap.foodcore.infrastructure.web.controller.dto.*;
 import jakarta.validation.Valid;
@@ -59,7 +60,11 @@ public class RestaurantController {
 
         logger.info("Handling GET request to /restaurantes");
 
-        PageRequestDomain pr = new PageRequestDomain(pageable.getPageNumber(), pageable.getPageSize());
+        List<SortOrder> sortOrders = pageable.getSort().stream()
+                .map(order -> new SortOrder(order.getProperty(), order.isAscending()))
+                .toList();
+
+        PageRequestDomain pr = new PageRequestDomain(pageable.getPageNumber(), pageable.getPageSize(), sortOrders);
 
         DomainPage<CreateRestaurantOutput> outputs = listRestaurantInteractor.execute(name, pr);
         List<RestaurantResponseDTO> dtos = RestaurantPresenter.toDtoList(outputs.getItems());
