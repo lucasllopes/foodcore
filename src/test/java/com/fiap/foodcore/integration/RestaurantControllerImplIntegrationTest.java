@@ -26,7 +26,7 @@ import static org.hamcrest.Matchers.hasKey;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase
-public class RestaurantControllerIntegrationTest {
+public class RestaurantControllerImplIntegrationTest {
 
     @Autowired
     private CreateUserUseCase createUserUseCase;
