@@ -4,6 +4,7 @@ import com.fiap.foodcore.application.usecase.menu.*;
 import com.fiap.foodcore.application.usecase.output.MenuCreateOutput;
 import com.fiap.foodcore.domain.pagination.DomainPage;
 import com.fiap.foodcore.domain.pagination.PageRequestDomain;
+import com.fiap.foodcore.domain.pagination.SortOrder;
 import com.fiap.foodcore.infrastructure.presenter.MenuPresenter;
 import com.fiap.foodcore.infrastructure.web.controller.dto.MenuCreateRequestDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.MenuCreateResponseDTO;
@@ -41,8 +42,11 @@ public class MenuController {
     @GetMapping
     public ResponseEntity<Page<MenuCreateResponseDTO>> listMenus(Pageable pageable) {
         logger.info("Handling GET request to /cardapios");
+        List<SortOrder> sortOrders = pageable.getSort().stream()
+                .map(order -> new SortOrder(order.getProperty(), order.isAscending()))
+                .toList();
 
-        PageRequestDomain pr = new PageRequestDomain(pageable.getPageNumber(), pageable.getPageSize());
+        PageRequestDomain pr = new PageRequestDomain(pageable.getPageNumber(), pageable.getPageSize(), sortOrders);
 
         DomainPage<MenuCreateOutput> outputs = listMenuInteractor.execute(pr);
         List<MenuCreateResponseDTO> dtos = MenuPresenter.toDtoList(outputs.getItems());

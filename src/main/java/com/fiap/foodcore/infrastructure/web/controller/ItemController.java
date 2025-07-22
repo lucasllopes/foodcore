@@ -4,6 +4,7 @@ import com.fiap.foodcore.application.usecase.item.*;
 import com.fiap.foodcore.application.usecase.output.ItemCreateOutput;
 import com.fiap.foodcore.domain.pagination.DomainPage;
 import com.fiap.foodcore.domain.pagination.PageRequestDomain;
+import com.fiap.foodcore.domain.pagination.SortOrder;
 import com.fiap.foodcore.infrastructure.presenter.ItemPresenter;
 import com.fiap.foodcore.infrastructure.web.controller.dto.ItemCreateRequestDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.ItemCreateResponseDTO;
@@ -41,8 +42,11 @@ public class ItemController {
     @GetMapping
     public ResponseEntity<Page<ItemCreateResponseDTO>> listItems(Pageable pageable) {
         logger.info("Handling GET request to /cardapios/items");
+        List<SortOrder> sortOrders = pageable.getSort().stream()
+                .map(order -> new SortOrder(order.getProperty(), order.isAscending()))
+                .toList();
 
-        PageRequestDomain pr = new PageRequestDomain(pageable.getPageNumber(), pageable.getPageSize());
+        PageRequestDomain pr = new PageRequestDomain(pageable.getPageNumber(), pageable.getPageSize(), sortOrders);
 
         DomainPage<ItemCreateOutput> outputs = listItemInteractor.execute(pr);
         List<ItemCreateResponseDTO> dtos = ItemPresenter.toDtoList(outputs.getItems());
