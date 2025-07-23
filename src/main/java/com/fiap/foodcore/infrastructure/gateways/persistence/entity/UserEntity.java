@@ -33,6 +33,6 @@ public class UserEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tipo_usuario_id")
-    private UserTypeEntity tipoUsuario;
+    private UserSubtypeEntity tipoUsuario;
 
 }

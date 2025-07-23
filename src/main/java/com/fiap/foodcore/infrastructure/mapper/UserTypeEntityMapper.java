@@ -1,23 +1,23 @@
 package com.fiap.foodcore.infrastructure.mapper;
 
-import com.fiap.foodcore.domain.UserType;
-import com.fiap.foodcore.infrastructure.gateways.persistence.entity.UserTypeEntity;
+import com.fiap.foodcore.domain.UserSubtype;
+import com.fiap.foodcore.infrastructure.gateways.persistence.entity.UserSubtypeEntity;
 
 public class UserTypeEntityMapper {
 
-    public static UserType toDomain(UserTypeEntity entity) {
+    public static UserSubtype toDomain(UserSubtypeEntity entity) {
         if (entity == null) return null;
 
-        UserType userType = UserType.reconstruct(entity.getId(),entity.getName(), entity.getLastModified());
+        UserSubtype userType = UserSubtype.reconstruct(entity.getId(),entity.getName(), entity.getLastModified());
 
         return userType;
     }
 
 
-    public static UserTypeEntity toEntity(UserType domain) {
+    public static UserSubtypeEntity toEntity(UserSubtype domain) {
         if (domain == null) return null;
 
-        UserTypeEntity entity = new UserTypeEntity();
+        UserSubtypeEntity entity = new UserSubtypeEntity();
         entity.setId(domain.getId());
         entity.setName(domain.getName());
         entity.setLastModified(domain.getLastModified());

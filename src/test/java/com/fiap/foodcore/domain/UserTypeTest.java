@@ -10,7 +10,7 @@ public class UserTypeTest {
 
     @Test
     void shouldCreateUserTypeWithNameOnly() {
-        UserType userType = UserType.create("owner");
+        UserSubtype userType = UserSubtype.create("owner");
 
         assertNotNull(userType);
         assertNull(userType.getId());
@@ -19,7 +19,7 @@ public class UserTypeTest {
 
     @Test
     void shouldReconstructUserTypeWithIdAndName() {
-        UserType userType = UserType.reconstruct(1L, "owner", LocalDateTime.now());
+        UserSubtype userType = UserSubtype.reconstruct(1L, "owner", LocalDateTime.now());
 
         assertNotNull(userType);
         assertEquals(1L, userType.getId());
@@ -28,7 +28,7 @@ public class UserTypeTest {
 
     @Test
     void shouldUpdateUserTypeName() {
-        UserType userType = UserType.create("OldName");
+        UserSubtype userType = UserSubtype.create("OldName");
         userType.update("NewName");
 
         assertEquals("NewName", userType.getName());
@@ -36,7 +36,7 @@ public class UserTypeTest {
 
     @Test
     void shouldUpdateLastModifiedOnUpdate() {
-        UserType userType = UserType.create("owner");
+        UserSubtype userType = UserSubtype.create("owner");
         userType.update("customer");
 
         assertNotNull(userType.getLastModified());

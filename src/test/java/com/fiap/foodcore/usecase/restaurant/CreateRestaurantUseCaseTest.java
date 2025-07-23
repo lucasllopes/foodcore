@@ -14,7 +14,7 @@ import com.fiap.foodcore.domain.Address;
 import com.fiap.foodcore.domain.Restaurant;
 import com.fiap.foodcore.domain.User;
 import com.fiap.foodcore.domain.UserTypeDomain;
-import com.fiap.foodcore.domain.exception.UserTypeNotOwnerException;
+import com.fiap.foodcore.domain.exception.UserSubtypeNotOwnerException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -72,7 +72,7 @@ class CreateRestaurantUseCaseTest {
     @Test
     public void shouldThrowUserTypeExceptionWhenOwnerIdIsClient() {
         when(userGateway.findById(OWNER_ID_CLIENTE)).thenReturn(Optional.of(getUserUser()));
-        UserTypeNotOwnerException exception = Assertions.assertThrows(UserTypeNotOwnerException.class, () ->
+        UserSubtypeNotOwnerException exception = Assertions.assertThrows(UserSubtypeNotOwnerException.class, () ->
                 createRestaurantUseCase.execute(getCreateRestaurantInput(OWNER_ID_CLIENTE))
         );
         Assertions.assertEquals("O código de usuário informado não é do tipo Dono.", exception.getMessage());

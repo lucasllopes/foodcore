@@ -18,11 +18,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 
 import static io.restassured.RestAssured.given;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase
+@ActiveProfiles("test")
 public class LoginControllerImplIntegrationTest {
 
     @Autowired
@@ -89,7 +91,6 @@ public class LoginControllerImplIntegrationTest {
                 .when()
                 .post("/login")
                 .then()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .statusCode(HttpStatus.UNAUTHORIZED.value());
     }
 

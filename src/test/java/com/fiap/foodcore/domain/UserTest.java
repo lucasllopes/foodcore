@@ -4,7 +4,6 @@ import com.fiap.foodcore.application.usecase.input.AddressUpdateInput;
 import com.fiap.foodcore.application.usecase.input.CreateAddressInput;
 import com.fiap.foodcore.application.usecase.input.CreateUserInput;
 import com.fiap.foodcore.application.usecase.input.UpdateUserInput;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -101,13 +100,13 @@ public class UserTest {
 
         assertNull(user.getTipo());
 
-        UserType userType = UserType.reconstruct(10L, "OWNER", LocalDateTime.now().minusDays(10));
+        UserSubtype userType = UserSubtype.reconstruct(10L, "OWNER", LocalDateTime.now().minusDays(10));
 
         // Act
         user.assignUserType(userType);
 
         // Assert
-        assertEquals(userType, user.getUserType());
+        assertEquals(userType, user.getUserSubtype());
         assertNotNull(user.getDataUltimaAlteracao());
         assertTrue(user.getDataUltimaAlteracao().isAfter(LocalDateTime.now().minusSeconds(5)));
     }

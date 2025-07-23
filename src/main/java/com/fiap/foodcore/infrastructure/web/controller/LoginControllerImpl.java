@@ -30,7 +30,7 @@ public class LoginControllerImpl implements LoginController {
         this.authenticationManager = authenticationManager;
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping
     public ResponseEntity<String> login(@RequestBody @Valid LoginRequestDTO request) {
 
         logger.info("Request to /login -> POST");

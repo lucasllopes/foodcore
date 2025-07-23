@@ -11,7 +11,7 @@ import com.fiap.foodcore.application.usecase.output.CreateRestaurantOutput;
 import com.fiap.foodcore.domain.Restaurant;
 import com.fiap.foodcore.domain.User;
 import com.fiap.foodcore.domain.UserTypeDomain;
-import com.fiap.foodcore.domain.exception.UserTypeNotOwnerException;
+import com.fiap.foodcore.domain.exception.UserSubtypeNotOwnerException;
 
 public class CreateRestaurantInteractor implements CreateRestaurantUseCase {
 
@@ -38,7 +38,7 @@ public class CreateRestaurantInteractor implements CreateRestaurantUseCase {
     private void validateOwner(Long ownerId) {
         User owner = this.userGateway.findById(ownerId).orElseThrow(() -> new DataNotFoundException("Usuário não encontrado"));
         if (!UserTypeDomain.isOwner(owner.getTipo())){
-            throw new UserTypeNotOwnerException("O código de usuário informado não é do tipo Dono.");
+            throw new UserSubtypeNotOwnerException("O código de usuário informado não é do tipo Dono.");
         }
     }
     private void validateRestaurant(Restaurant restaurant){

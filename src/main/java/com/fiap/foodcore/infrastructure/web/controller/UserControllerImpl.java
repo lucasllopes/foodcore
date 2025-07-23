@@ -1,7 +1,7 @@
 package com.fiap.foodcore.infrastructure.web.controller;
 
 import com.fiap.foodcore.application.usecase.*;
-import com.fiap.foodcore.application.usecase.input.AssignUserTypeToUserInput;
+import com.fiap.foodcore.application.usecase.input.AssignUserSubtypeToUserInput;
 import com.fiap.foodcore.application.usecase.input.CreateUserInput;
 import com.fiap.foodcore.application.usecase.input.UpdateUserInput;
 import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
@@ -140,7 +140,7 @@ public class UserControllerImpl implements UserController {
             @PathVariable Long id,
             @RequestBody @Valid AssignUserTypeToUserDTO dto) {
 
-        AssignUserTypeToUserInput input = UserPresenter.toAssignUserTypeToUserInput(dto);
+        AssignUserSubtypeToUserInput input = UserPresenter.toAssignUserTypeToUserInput(dto);
         CreateUserOutput output = assignUserTypeToUser.execute(id, input);
 
         UserResponseDTO response = UserPresenter.toDto(output);
