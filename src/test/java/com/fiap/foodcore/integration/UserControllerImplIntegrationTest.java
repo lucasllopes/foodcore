@@ -190,14 +190,13 @@ public class UserControllerImplIntegrationTest {
         given()
                 .header("Authorization", "Bearer " + token)
                 .when()
-                .get("/usuarios")
+                .get("/usuarios?page=0&size=50")
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("content", notNullValue())
                 .body("content.size()", greaterThan(0))
-                //.body("content.login", hasItems(customerResponse.login(), ownerResponse.login()))
-                .body("content.login", hasItem(ownerResponse.login()))
-                .body("content.nome", hasItem(ownerResponse.nome()))
+                .body("content.login", hasItems(customerResponse.login(), ownerResponse.login()))
+                .body("content.nome", hasItems(customerResponse.nome(), ownerResponse.nome()))
                 .body("totalElements", greaterThan(0));
 
     }
