@@ -16,6 +16,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.context.ActiveProfiles;
 
 import static com.fiap.foodcore.helper.UserTestHelper.authenticateAndGetToken;
 import static io.restassured.RestAssured.given;
@@ -23,6 +24,7 @@ import static org.hamcrest.Matchers.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase
+@ActiveProfiles("test")
 public class UserControllerImplIntegrationTest {
 
     @Autowired
@@ -185,18 +187,17 @@ public class UserControllerImplIntegrationTest {
 
         String token = authenticateAndGetToken(owner);
 
-        given()
-                //.contentType(MediaType.APPLICATION_JSON_VALUE)
+        String response = given()
                 .header("Authorization", "Bearer " + token)
                 .when()
-                .get("/usuarios")
+                .get("/usuarios?page=0&size=50")
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("content", notNullValue())
                 .body("content.size()", greaterThan(0))
                 .body("content.login", hasItems(customerResponse.login(), ownerResponse.login()))
                 .body("content.nome", hasItems(customerResponse.nome(), ownerResponse.nome()))
-                .body("totalElements", greaterThanOrEqualTo(2));
+                .body("totalElements", greaterThan(0)).extract().asPrettyString();
 
     }
 
@@ -287,16 +288,18 @@ public class UserControllerImplIntegrationTest {
     @Test
     void shouldAssignUserTypeToUserSuccessfully() {
 
-        UserCreateRequestDTO userDTO = UserTestHelper.createValidGenericOwnerRequest();
-        UserResponseDTO userResponse = createUser(userDTO);
+        UserCreateRequestDTO userCustomerDTO = UserTestHelper.createValidGenericCustomerRequest();
+        UserResponseDTO userCustomerResponse = createUser(userCustomerDTO);
+
+        UserCreateRequestDTO userOwnerDTO = UserTestHelper.createValidGenericOwnerRequest();
+        UserResponseDTO userOwnerResponse = createUser(userOwnerDTO);
 
         UserTypeRequestDTO userTypeRequestDTO = new UserTypeRequestDTO("USER TYPE TEST");
 
-        String adminToken = authenticateAndGetToken(userDTO);
+        String adminToken = authenticateAndGetToken(userOwnerDTO);
 
         Long createdTypeId =
                 given()
-                        .contentType(ContentType.JSON)
                         .header("Authorization", "Bearer " + adminToken)
                         .body(userTypeRequestDTO)
                         .when()
@@ -309,14 +312,13 @@ public class UserControllerImplIntegrationTest {
 
         // Act
         given()
-                .contentType(ContentType.JSON)
                 .header("Authorization", "Bearer " + adminToken)
                 .body(String.format("{\"idUserType\": %d}", createdTypeId))
                 .when()
-                .put("/usuarios/{id}/tipo", userResponse.id())
+                .put("/usuarios/{id}/tipo", userCustomerResponse.id())
                 .then()
                 .statusCode(HttpStatus.OK.value())
-                .body("id", equalTo(userResponse.id().intValue()))
+                .body("id", equalTo(userCustomerResponse.id().intValue()))
                 .body("tipoUsuario", notNullValue())
                 .body("tipoUsuario.id", equalTo(createdTypeId.intValue()))
                 .body("tipoUsuario.name", equalTo(userTypeRequestDTO.name()));

@@ -1,34 +1,40 @@
 package com.fiap.foodcore.application.usecase.interactor.user;
 
+import com.fiap.foodcore.application.exception.BusinessException;
 import com.fiap.foodcore.application.exception.DataNotFoundException;
 import com.fiap.foodcore.application.gateway.UserGateway;
-import com.fiap.foodcore.application.gateway.UserTypeGateway;
+import com.fiap.foodcore.application.gateway.UserSubtypeGateway;
 import com.fiap.foodcore.application.usecase.AssignUserTypeToUserUseCase;
-import com.fiap.foodcore.application.usecase.input.AssignUserTypeToUserInput;
+import com.fiap.foodcore.application.usecase.input.AssignUserSubtypeToUserInput;
 import com.fiap.foodcore.application.usecase.mapper.UserMapper;
 import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
 import com.fiap.foodcore.domain.User;
-import com.fiap.foodcore.domain.UserType;
+import com.fiap.foodcore.domain.UserSubtype;
+import com.fiap.foodcore.domain.UserTypeDomain;
 
 public class AssignUserTypeToUserInteractor implements AssignUserTypeToUserUseCase {
 
     private final UserGateway userGateway;
-    private final UserTypeGateway userTypeGateway;
+    private final UserSubtypeGateway userSubtypeGateway;
 
-    public AssignUserTypeToUserInteractor(UserGateway userGateway, UserTypeGateway userTypeGateway) {
+    public AssignUserTypeToUserInteractor(UserGateway userGateway, UserSubtypeGateway userSubtypeGateway) {
         this.userGateway = userGateway;
-        this.userTypeGateway = userTypeGateway;
+        this.userSubtypeGateway = userSubtypeGateway;
     }
 
     @Override
-    public CreateUserOutput execute(Long id, AssignUserTypeToUserInput input) {
+    public CreateUserOutput execute(Long id, AssignUserSubtypeToUserInput input) {
 
         User existingUser = userGateway.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Usuário não encontrado"));
 
-        UserType existingUserType = userTypeGateway.findById(input.id()).orElseThrow(() -> new DataNotFoundException("Tipo de usuário não encontrado"));
+        if(existingUser.getTipo().equals(UserTypeDomain.DONO)){
+            throw new BusinessException("Usuários com perfil 'Dono' não podem ter um subtipo atribuído.");
+        }
 
-        User domain = existingUser.assignUserType(existingUserType);
+        UserSubtype existingUserSubyype = userSubtypeGateway.findById(input.id()).orElseThrow(() -> new DataNotFoundException("Tipo de usuário não encontrado"));
+
+        User domain = existingUser.assignUserType(existingUserSubyype);
         User savedUser = userGateway.save(domain);
         return UserMapper.fromDomain(savedUser);
     }

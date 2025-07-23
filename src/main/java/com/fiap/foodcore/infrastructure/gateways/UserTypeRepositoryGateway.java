@@ -1,52 +1,51 @@
 package com.fiap.foodcore.infrastructure.gateways;
 
-import com.fiap.foodcore.application.gateway.UserTypeGateway;
-import com.fiap.foodcore.domain.UserType;
+import com.fiap.foodcore.application.gateway.UserSubtypeGateway;
+import com.fiap.foodcore.domain.UserSubtype;
 import com.fiap.foodcore.domain.pagination.DomainPage;
 import com.fiap.foodcore.domain.pagination.PageRequestDomain;
-import com.fiap.foodcore.infrastructure.gateways.persistence.UserTypeRepository;
-import com.fiap.foodcore.infrastructure.gateways.persistence.entity.UserTypeEntity;
-import com.fiap.foodcore.infrastructure.mapper.UserEntityMapper;
+import com.fiap.foodcore.infrastructure.gateways.persistence.UserSubtypeRepository;
+import com.fiap.foodcore.infrastructure.gateways.persistence.entity.UserSubtypeEntity;
 import com.fiap.foodcore.infrastructure.mapper.UserTypeEntityMapper;
 
 import java.util.List;
 import java.util.Optional;
 
-public class UserTypeRepositoryGateway implements UserTypeGateway {
+public class UserTypeRepositoryGateway implements UserSubtypeGateway {
 
-    private final UserTypeRepository userTypeRepository;
+    private final UserSubtypeRepository userSubtypeRepository;
 
-    public UserTypeRepositoryGateway(UserTypeRepository userTypeRepository) {
-        this.userTypeRepository = userTypeRepository;
+    public UserTypeRepositoryGateway(UserSubtypeRepository userSubtypeRepository) {
+        this.userSubtypeRepository = userSubtypeRepository;
     }
 
     @Override
-    public UserType save(UserType userType) {
-        UserTypeEntity entity = UserTypeEntityMapper.toEntity(userType);
-        UserTypeEntity userTypeCreated = userTypeRepository.save(entity);
+    public UserSubtype save(UserSubtype userType) {
+        UserSubtypeEntity entity = UserTypeEntityMapper.toEntity(userType);
+        UserSubtypeEntity userTypeCreated = userSubtypeRepository.save(entity);
         return UserTypeEntityMapper.toDomain(userTypeCreated);
     }
 
     @Override
-    public Optional<UserType> findById(Long id) {
-        return userTypeRepository.findById(id)
+    public Optional<UserSubtype> findById(Long id) {
+        return userSubtypeRepository.findById(id)
                 .map(UserTypeEntityMapper::toDomain);
     }
 
     @Override
-    public DomainPage<UserType> findAll(PageRequestDomain pageRequest) {
+    public DomainPage<UserSubtype> findAll(PageRequestDomain pageRequest) {
         return null;
     }
 
     @Override
-    public void delete(UserType user) {
-        UserTypeEntity entity = UserTypeEntityMapper.toEntity(user);
-        userTypeRepository.delete(entity);
+    public void delete(UserSubtype user) {
+        UserSubtypeEntity entity = UserTypeEntityMapper.toEntity(user);
+        userSubtypeRepository.delete(entity);
     }
 
     @Override
-    public List<UserType> findByNameIgnoreCase(String name) {
-        return userTypeRepository.findByNameIgnoreCase(name).stream()
+    public List<UserSubtype> findByNameIgnoreCase(String name) {
+        return userSubtypeRepository.findByNameIgnoreCase(name).stream()
                 .map(UserTypeEntityMapper::toDomain)
                 .toList();
     }

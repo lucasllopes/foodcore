@@ -5,19 +5,21 @@ import com.fiap.foodcore.application.strategy.CreateUserStrategyFactory;
 import com.fiap.foodcore.application.usecase.interactor.user.CreateUserInteractor;
 import com.fiap.foodcore.application.usecase.input.CreateUserInput;
 import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
-import com.fiap.foodcore.application.usecase.output.CreateUserTypeOutput;
+import com.fiap.foodcore.application.usecase.output.CreateUserSubtypeOutput;
 import com.fiap.foodcore.domain.UserTypeDomain;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+@ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
 public class CreateUserInteractorTest {
 
@@ -37,7 +39,7 @@ public class CreateUserInteractorTest {
     void deveCriarUsuarioDonoComSucesso() {
         // Arrange
         CreateUserInput input = new CreateUserInput("User Owner", "userowner@email.com", "userowner", "123", UserTypeDomain.DONO, List.of());
-        CreateUserTypeOutput expectedUserTypeOutput = new CreateUserTypeOutput(1L,"OWNER");
+        CreateUserSubtypeOutput expectedUserTypeOutput = new CreateUserSubtypeOutput(1L,"OWNER");
         CreateUserOutput expectedOutput = new CreateUserOutput(1L, "User Owner", "userowner@email.com", "userowner", UserTypeDomain.DONO, List.of(),expectedUserTypeOutput);
 
         when(strategyFactory.getStrategy(UserTypeDomain.DONO)).thenReturn(donoStrategy);
@@ -61,7 +63,7 @@ public class CreateUserInteractorTest {
     void deveCriarUsuarioClienteComSucesso() {
         // Arrange
         CreateUserInput input = new CreateUserInput("User Customer", "usercustomer@email.com", "usercustomer", "123", UserTypeDomain.CLIENTE, List.of());
-        CreateUserTypeOutput expectedUserTypeOutput = new CreateUserTypeOutput(1L,"OWNER");
+        CreateUserSubtypeOutput expectedUserTypeOutput = new CreateUserSubtypeOutput(1L,"OWNER");
         CreateUserOutput expectedOutput = new CreateUserOutput(1L, "User Customer", "user@email.com", "usercustomer", UserTypeDomain.CLIENTE, List.of(), expectedUserTypeOutput);
 
         when(strategyFactory.getStrategy(UserTypeDomain.CLIENTE)).thenReturn(clienteStrategy);

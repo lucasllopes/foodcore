@@ -48,8 +48,8 @@ public class UserEntityMapper {
             entity.setEnderecos(addressEntities);
         }
 
-        if(user.getUserType() != null){
-            entity.setTipoUsuario(UserTypeEntityMapper.toEntity(user.getUserType()));
+        if(user.getUserSubtype() != null){
+            entity.setTipoUsuario(UserTypeEntityMapper.toEntity(user.getUserSubtype()));
         }
 
         return entity;

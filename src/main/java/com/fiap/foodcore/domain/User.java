@@ -19,7 +19,7 @@ public class User {
     private LocalDateTime dataUltimaAlteracao;
     private UserTypeDomain tipo;
     private List<Address> address;
-    private UserType userType;
+    private UserSubtype userSubtype;
 
     private User() {
 
@@ -109,7 +109,7 @@ public class User {
             UserTypeDomain tipo,
             List<Address> enderecos,
             LocalDateTime dataUltimaAlteracao,
-            UserType userType
+            UserSubtype userType
     ) {
         User user = new User();
         user.id = id;
@@ -120,7 +120,7 @@ public class User {
         user.tipo = tipo;
         user.address = enderecos;
         user.dataUltimaAlteracao = dataUltimaAlteracao;
-        user.userType = userType;
+        user.userSubtype = userType;
         return user;
     }
 
@@ -138,8 +138,8 @@ public class User {
         return user;
     }
 
-    public User assignUserType(UserType existingUserType) {
-        this.userType = existingUserType;
+    public User assignUserType(UserSubtype existingUserType) {
+        this.userSubtype = existingUserType;
         this.dataUltimaAlteracao = LocalDateTime.now();
         return this;
     }

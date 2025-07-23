@@ -10,5 +10,5 @@ public record CreateUserOutput(Long id,
                                String login,
                                UserTypeDomain tipo,
                                List<AddressOutput> enderecos,
-                               CreateUserTypeOutput userTypeOutput) {
+                               CreateUserSubtypeOutput userTypeOutput) {
 }

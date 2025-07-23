@@ -3,12 +3,12 @@ package com.fiap.foodcore.infrastructure.configuration;
 import com.fiap.foodcore.application.gateway.PasswordEncryptionGateway;
 import com.fiap.foodcore.application.gateway.RestaurantGateway;
 import com.fiap.foodcore.application.gateway.UserGateway;
-import com.fiap.foodcore.application.gateway.UserTypeGateway;
+import com.fiap.foodcore.application.gateway.UserSubtypeGateway;
 import com.fiap.foodcore.application.strategy.CreateUserStrategyFactory;
 import com.fiap.foodcore.application.usecase.*;
 import com.fiap.foodcore.application.usecase.interactor.restaurant.*;
 import com.fiap.foodcore.application.usecase.interactor.user.*;
-import com.fiap.foodcore.application.usecase.interactor.usertype.*;
+import com.fiap.foodcore.application.usecase.interactor.usersubtype.*;
 import com.fiap.foodcore.application.usecase.restaurant.DeleteRestaurantUseCase;
 import com.fiap.foodcore.application.usecase.restaurant.FindRestaurantByIdUseCase;
 import com.fiap.foodcore.application.usecase.restaurant.ListRestaurantUseCase;
@@ -19,7 +19,7 @@ import com.fiap.foodcore.infrastructure.gateways.UserRepositoryGateway;
 import com.fiap.foodcore.infrastructure.gateways.UserTypeRepositoryGateway;
 import com.fiap.foodcore.infrastructure.gateways.persistence.RestaurantRepository;
 import com.fiap.foodcore.infrastructure.gateways.persistence.UserRepository;
-import com.fiap.foodcore.infrastructure.gateways.persistence.UserTypeRepository;
+import com.fiap.foodcore.infrastructure.gateways.persistence.UserSubtypeRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -98,38 +98,38 @@ public class BeanConfig {
     }
 
     @Bean
-    public UserTypeGateway userTypeGateway(UserTypeRepository userTypeRepository) {
-        return new UserTypeRepositoryGateway(userTypeRepository);
+    public UserSubtypeGateway userSubtypeGateway(UserSubtypeRepository userSubtypeRepository) {
+        return new UserTypeRepositoryGateway(userSubtypeRepository);
     }
 
     @Bean
-    public CreateUserTypeUseCase createUserTypeInteractor(UserTypeGateway userTypeGateway) {
-        return new CreateUserTypeInteractor(userTypeGateway);
+    public CreateUserSubtypeUseCase createUserTypeInteractor(UserSubtypeGateway userTypeGateway) {
+        return new CreateUserSubtypeInteractor(userTypeGateway);
     }
 
     @Bean
-    public UpdateUserTypeUseCase updateUserTypeInteractor(UserTypeGateway userTypeGateway) {
-        return new UpdateUserTypeInteractor(userTypeGateway);
+    public UpdateUserSubtypeUseCase updateUserTypeInteractor(UserSubtypeGateway userTypeGateway) {
+        return new UpdateUserSubtypeInteractor(userTypeGateway);
     }
 
     @Bean
-    public FindUserTypeByIdUseCase findUserTypeByIdInteractor(UserTypeGateway userTypeGateway) {
-        return new FindUserTypeByIdInteractor(userTypeGateway);
+    public FindUserSubtypeByIdUseCase findUserTypeByIdInteractor(UserSubtypeGateway userTypeGateway) {
+        return new FindUserSubtypeByIdInteractor(userTypeGateway);
     }
 
     @Bean
-    public FindUserTypeByNameUseCase findUserTypeByNameUseCase(UserTypeGateway userTypeGateway) {
-        return new FindUserTypeByNameInteractor(userTypeGateway);
+    public FindUserSubtypeByNameUseCase findUserTypeByNameUseCase(UserSubtypeGateway userTypeGateway) {
+        return new FindUserSubtypeByNameInteractor(userTypeGateway);
     }
 
     @Bean
-    public AssignUserTypeToUserUseCase assignUserTypeToUserUseCase(UserGateway userGateway, UserTypeGateway userTypeGateway) {
+    public AssignUserTypeToUserUseCase assignUserTypeToUserUseCase(UserGateway userGateway, UserSubtypeGateway userTypeGateway) {
         return new AssignUserTypeToUserInteractor(userGateway, userTypeGateway);
     }
 
     @Bean
-    public DeleteUserTypeUseCase deleteUserTypeUseCase(UserTypeGateway userTypeGateway) {
-        return new DeleteUserTypeInteractor(userTypeGateway);
+    public DeleteUserSubtypeUseCase deleteUserTypeUseCase(UserSubtypeGateway userTypeGateway) {
+        return new DeleteUserSubtypeInteractor(userTypeGateway);
     }
 
 }

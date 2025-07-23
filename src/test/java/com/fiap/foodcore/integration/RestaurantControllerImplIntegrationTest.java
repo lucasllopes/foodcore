@@ -17,6 +17,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.context.ActiveProfiles;
 
 import static com.fiap.foodcore.helper.RestaurantTestHelper.createValidRestarantRequest;
 import static com.fiap.foodcore.helper.UserTestHelper.authenticateAndGetToken;
@@ -26,6 +27,7 @@ import static org.hamcrest.Matchers.hasKey;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase
+@ActiveProfiles("test")
 public class RestaurantControllerImplIntegrationTest {
 
     @Autowired

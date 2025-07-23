@@ -1,6 +1,6 @@
 package com.fiap.foodcore.infrastructure.gateways.persistence.entity;
 
-import com.fiap.foodcore.domain.exception.UserTypeNotFoundException;
+import com.fiap.foodcore.domain.exception.UserSubtypeNotFoundException;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Arrays;
@@ -29,6 +29,6 @@ public enum UserType implements GrantedAuthority {
             }
         }
 
-        throw new UserTypeNotFoundException("Valores válidos: " + Arrays.toString(UserType.values()));
+        throw new UserSubtypeNotFoundException("Valores válidos: " + Arrays.toString(UserType.values()));
     }
 }

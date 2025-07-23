@@ -1,11 +1,12 @@
 package com.fiap.foodcore.infrastructure.web.controller.handler;
 
-import com.fiap.foodcore.domain.exception.UserTypeNotOwnerException;
+import com.fiap.foodcore.application.exception.BusinessException;
+import com.fiap.foodcore.domain.exception.UserSubtypeNotOwnerException;
 import com.fiap.foodcore.infrastructure.web.controller.dto.MessageErrorDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.ValidationErrorDTO;
 import com.fiap.foodcore.application.exception.DuplicatedDataException;
 import com.fiap.foodcore.application.exception.DataNotFoundException;
-import com.fiap.foodcore.domain.exception.UserTypeNotFoundException;
+import com.fiap.foodcore.domain.exception.UserSubtypeNotFoundException;
 import com.fiap.foodcore.application.exception.WrongPasswordException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -58,12 +59,17 @@ public class ExceptionHandlerController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageErrorDTO("Endpoint não encontrado"));
     }
 
-    @ExceptionHandler(UserTypeNotFoundException.class)
-    public ResponseEntity<MessageErrorDTO> handleUserTypeNotFound(UserTypeNotFoundException ex) {
+    @ExceptionHandler(UserSubtypeNotFoundException.class)
+    public ResponseEntity<MessageErrorDTO> handleUserTypeNotFound(UserSubtypeNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageErrorDTO("Tipo de usuário inválido. " + ex.getMessage()));
     }
-    @ExceptionHandler(UserTypeNotOwnerException.class)
-    public ResponseEntity<MessageErrorDTO> handleUserTypeNotOwner(UserTypeNotOwnerException ex) {
+    @ExceptionHandler(UserSubtypeNotOwnerException.class)
+    public ResponseEntity<MessageErrorDTO> handleUserTypeNotOwner(UserSubtypeNotOwnerException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageErrorDTO("O usuário informado não é do tipo Dono."));
+    }
+
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<MessageErrorDTO> handleBusiness(BusinessException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageErrorDTO(ex.getMessage()));
     }
 }
