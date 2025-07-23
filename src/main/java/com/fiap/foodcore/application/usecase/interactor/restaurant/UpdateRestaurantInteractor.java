@@ -19,10 +19,9 @@ public class UpdateRestaurantInteractor implements UpdateRestaurantUseCase {
 
     @Override
     public CreateRestaurantOutput execute(Long id, UpdateRestaurantInput input) {
-        var existing = this.restaurantGateway.findById(id).orElseThrow(() -> new DataNotFoundException("Restaurante não encontrado"));
+        var existing = this.restaurantGateway.findById(id).orElseThrow(() -> new DataNotFoundException("Restaurante não encontrado."));
         validateRestaurant(existing);
         var restaurant = RestaurantMapper.toDomain(existing, input);
-        validateRestaurant(restaurant);
         Restaurant savedRestaurant1 = restaurantGateway.save(restaurant);
         return RestaurantMapper.fromDomain(savedRestaurant1);
     }
