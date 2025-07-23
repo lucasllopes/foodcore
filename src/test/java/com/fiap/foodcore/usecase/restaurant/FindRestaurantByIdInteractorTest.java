@@ -43,7 +43,7 @@ public class FindRestaurantByIdInteractorTest {
     @Test
     void shouldReturnRestaurantWhenIdIsValid() {
 
-        Restaurant restaurant = getRestauranteExpected();
+        Restaurant restaurant = getRestaurantExpected();
         when(restaurantGateway.findById(VALID_RESTAURANT_ID)).thenReturn(Optional.of(restaurant));
 
         CreateRestaurantOutput restaurantOutput =  this.findRestaurantByIdUseCase.execute(VALID_RESTAURANT_ID);
@@ -61,7 +61,7 @@ public class FindRestaurantByIdInteractorTest {
         assertEquals("Restaurante não encontrado.", exception.getMessage());
         verify(restaurantGateway, times(1)).findById(INVALID_RESTAURANT_ID);
     }
-    private Restaurant getRestauranteExpected(){
+    private Restaurant getRestaurantExpected(){
         LocalTime openingHours = LocalTime.of(19,00);
         LocalTime closingHours = LocalTime.of(23,59);
         return Restaurant.create(1L, "Restaurante XPTO", getAddressExpected(), "Fast Food", openingHours, closingHours, OWNER_ID_DONO);
