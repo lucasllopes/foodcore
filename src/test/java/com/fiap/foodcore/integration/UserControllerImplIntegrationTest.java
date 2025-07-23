@@ -187,7 +187,7 @@ public class UserControllerImplIntegrationTest {
 
         String token = authenticateAndGetToken(owner);
 
-        given()
+        String response = given()
                 .header("Authorization", "Bearer " + token)
                 .when()
                 .get("/usuarios?page=0&size=50")
@@ -197,7 +197,13 @@ public class UserControllerImplIntegrationTest {
                 .body("content.size()", greaterThan(0))
                 .body("content.login", hasItems(customerResponse.login(), ownerResponse.login()))
                 .body("content.nome", hasItems(customerResponse.nome(), ownerResponse.nome()))
-                .body("totalElements", greaterThan(0));
+                .body("totalElements", greaterThan(0)).extract().asPrettyString();
+
+
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        System.out.println("RESPONSE" + response);
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+
 
     }
 

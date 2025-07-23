@@ -3,9 +3,11 @@ package com.fiap.foodcore.domain;
 import com.fiap.foodcore.application.usecase.input.AddressUpdateInput;
 import com.fiap.foodcore.application.usecase.input.CreateAddressInput;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ActiveProfiles("test")
 public class AddressTest {
 
     @Test

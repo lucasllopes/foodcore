@@ -2,12 +2,14 @@ package com.fiap.foodcore.domain;
 
 import com.fiap.foodcore.domain.pagination.PageRequestDomain;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@ActiveProfiles("test")
 public class PageRequestDomainTest {
 
     @Test

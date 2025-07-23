@@ -1,11 +1,13 @@
 package com.fiap.foodcore.domain;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ActiveProfiles("test")
 public class UserTypeTest {
 
     @Test
