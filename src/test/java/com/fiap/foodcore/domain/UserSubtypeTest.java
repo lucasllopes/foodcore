@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
-public class UserTypeTest {
+public class UserSubtypeTest {
 
     @Test
     void shouldCreateUserTypeWithNameOnly() {

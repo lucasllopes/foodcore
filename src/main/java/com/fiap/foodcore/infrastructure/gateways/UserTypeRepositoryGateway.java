@@ -37,10 +37,6 @@ public class UserTypeRepositoryGateway implements UserSubtypeGateway {
                 .map(UserSubtypeEntityMapper::toDomain);
     }
 
-    @Override
-    public DomainPage<UserSubtype> findAll(PageRequestDomain pageRequest) {
-        return null;
-    }
 
     @Override
     public void delete(UserSubtype user) {

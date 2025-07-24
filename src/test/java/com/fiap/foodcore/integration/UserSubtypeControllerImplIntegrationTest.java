@@ -24,8 +24,8 @@ import java.util.UUID;
 
 import static com.fiap.foodcore.helper.UserTestHelper.authenticateAndGetToken;
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasKey;
+import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.hasItems;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase
@@ -170,6 +170,40 @@ public class UserSubtypeControllerImplIntegrationTest {
                 .body("$", hasKey("id"))
                 .body("$", hasKey("name"))
                 .body("name", equalTo(requestDTO.name()));
+    }
+
+
+    @Test
+    void shouldListUserTypePaginatedSuccessfully() {
+
+        UserCreateRequestDTO owner = UserTestHelper.createValidGenericOwnerRequest();
+        createUser(owner);
+        String token = authenticateAndGetToken(owner);
+
+        UserTypeRequestDTO requestDTO = new UserTypeRequestDTO("Generic User" + UUID.randomUUID());
+
+        given()
+                .header("Authorization", "Bearer " + token)
+                .body(requestDTO)
+                .when()
+                .post("/tipos")
+                .then()
+                .statusCode(HttpStatus.CREATED.value())
+                .body("$", hasKey("id"))
+                .body("$", hasKey("name"))
+                .body("name", equalTo(requestDTO.name().toUpperCase()));
+
+
+        given()
+                .header("Authorization", "Bearer " + token)
+                .when()
+                .get("/tipos?page=0&size=50")
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .body("content", notNullValue())
+                .body("content.size()", greaterThan(0))
+                .body("content.name", hasItems(requestDTO.name().toUpperCase()))
+                .body("totalElements", greaterThanOrEqualTo(1));
     }
 
     public void createUser(UserCreateRequestDTO dto) {

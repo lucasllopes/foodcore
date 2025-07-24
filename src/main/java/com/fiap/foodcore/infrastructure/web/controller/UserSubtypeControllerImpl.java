@@ -109,7 +109,6 @@ public class UserSubtypeControllerImpl implements UserSubtypeController {
                 .map(order -> new SortOrder(order.getProperty(), order.isAscending()))
                 .toList();
 
-
         PageRequestDomain pr = new PageRequestDomain(pageable.getPageNumber(), pageable.getPageSize(), sortOrders);
 
         DomainPage<CreateUserSubtypeOutput> outputs = listUserSubtype.execute(pr);
