@@ -3,7 +3,7 @@ package com.fiap.foodcore.infrastructure.mapper;
 import com.fiap.foodcore.domain.UserSubtype;
 import com.fiap.foodcore.infrastructure.gateways.persistence.entity.UserSubtypeEntity;
 
-public class UserTypeEntityMapper {
+public class UserSubtypeEntityMapper {
 
     public static UserSubtype toDomain(UserSubtypeEntity entity) {
         if (entity == null) return null;

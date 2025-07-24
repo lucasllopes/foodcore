@@ -5,13 +5,21 @@ import com.fiap.foodcore.application.usecase.input.CreateUserSubtypeInput;
 import com.fiap.foodcore.application.usecase.input.UpdateUserSubtypeInput;
 import com.fiap.foodcore.application.usecase.output.CreateUserSubtypeOutput;
 import com.fiap.foodcore.application.usecase.output.UpdateUserSubtypeOutput;
+import com.fiap.foodcore.domain.pagination.DomainPage;
+import com.fiap.foodcore.domain.pagination.PageRequestDomain;
+import com.fiap.foodcore.domain.pagination.SortOrder;
+import com.fiap.foodcore.infrastructure.presenter.UserPresenter;
 import com.fiap.foodcore.infrastructure.presenter.UserSubtypePresenter;
 import com.fiap.foodcore.infrastructure.web.controller.dto.*;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,13 +35,16 @@ public class UserSubtypeControllerImpl implements UserSubtypeController {
     private final FindUserSubtypeByIdUseCase findUserSubtypeById;
     private final FindUserSubtypeByNameUseCase findUserSubtypeByNameUseCase;
     private final DeleteUserSubtypeUseCase deleteUserSubtype;
+    private final ListUserSubtypeUseCase listUserSubtype;
 
-    public UserSubtypeControllerImpl(CreateUserSubtypeUseCase createUserSubtype, UpdateUserSubtypeUseCase updateUserSubtype, FindUserSubtypeByIdUseCase findUserSubtypeById, FindUserSubtypeByNameUseCase findUserSubtypeByNameUseCase, DeleteUserSubtypeUseCase deleteUserSubtype) {
+
+    public UserSubtypeControllerImpl(CreateUserSubtypeUseCase createUserSubtype, UpdateUserSubtypeUseCase updateUserSubtype, FindUserSubtypeByIdUseCase findUserSubtypeById, FindUserSubtypeByNameUseCase findUserSubtypeByNameUseCase, DeleteUserSubtypeUseCase deleteUserSubtype, ListUserSubtypeUseCase listUserSubtype) {
         this.createUserSubtype = createUserSubtype;
         this.updateUserSubtype = updateUserSubtype;
         this.findUserSubtypeById = findUserSubtypeById;
         this.findUserSubtypeByNameUseCase = findUserSubtypeByNameUseCase;
         this.deleteUserSubtype = deleteUserSubtype;
+        this.listUserSubtype = listUserSubtype;
     }
 
 
@@ -88,5 +99,30 @@ public class UserSubtypeControllerImpl implements UserSubtypeController {
         logger.info("Handling DELETE request to /tipos");
         deleteUserSubtype.execute(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping
+    @PreAuthorize("hasRole('ROLE_DONO')")
+    public ResponseEntity<Page<UserTypeResponseDTO>> listUserSubtypePaginated(Pageable pageable){
+        logger.info("Handling GET request to /tipos");
+        List<SortOrder> sortOrders = pageable.getSort().stream()
+                .map(order -> new SortOrder(order.getProperty(), order.isAscending()))
+                .toList();
+
+
+        PageRequestDomain pr = new PageRequestDomain(pageable.getPageNumber(), pageable.getPageSize(), sortOrders);
+
+        DomainPage<CreateUserSubtypeOutput> outputs = listUserSubtype.execute(pr);
+        List<UserTypeResponseDTO> dtos = outputs.getItems()
+                .stream().map(UserSubtypePresenter::toDto)
+                .toList();
+
+        Page<UserTypeResponseDTO> paginatedUser = new PageImpl<>(
+                dtos,
+                pageable,
+                outputs.getTotalElements()
+        );
+
+        return ResponseEntity.ok(paginatedUser);
     }
 }

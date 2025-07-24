@@ -132,4 +132,9 @@ public class BeanConfig {
         return new DeleteUserSubtypeInteractor(userTypeGateway);
     }
 
+    @Bean
+    public ListUserSubtypeUseCase listUserSubtypeUseCase(UserSubtypeGateway userTypeGateway) {
+        return new ListUserSubtypeInteractor(userTypeGateway);
+    }
+
 }
