@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/tipos")
-public class UserSubtypeControllerImpl {
+public class UserSubtypeControllerImpl implements UserSubtypeController {
 
     private final static Logger logger = LoggerFactory.getLogger(UserSubtypeControllerImpl.class);
 

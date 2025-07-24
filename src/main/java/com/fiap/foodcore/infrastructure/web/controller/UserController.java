@@ -14,7 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
-@Tag(name = "1 - Usuário", description = "Endpoint para CRUD de usuário")
+@Tag(name = "Usuário", description = "Endpoint para CRUD de usuário")
 public interface UserController {
 
     @Operation(

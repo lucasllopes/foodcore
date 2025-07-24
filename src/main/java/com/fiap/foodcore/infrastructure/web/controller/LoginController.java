@@ -12,7 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 
-@Tag(name = "2 - Autenticação", description = "Endpoint para autenticação do usuário")
+@Tag(name = "Autenticação", description = "Endpoint para autenticação do usuário")
 public interface LoginController {
 
     @Operation(
