@@ -9,6 +9,9 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -444,4 +447,73 @@ public interface UserSubtypeController {
             )
     })
     ResponseEntity<Void> deleteUser(Long id);
+
+    @Operation(
+            description = "Ao passar as condições da paginação, verifica o tipo de usuário de quem " +
+                    "está fazendo a consulta, se for dono, " +
+                    "será listado os subtipos de usuário respeitando as condições informadas, caso contrário, " +
+                    "retorna uma mensagem de erro dizendo que ele não tem permissão.",
+            summary = "Retorna os subtipos de usuário de forma paginada"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    description = "Ok",
+                    responseCode = "200",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = UserTypeResponseDTO.class)
+                            )
+                    }
+            ),
+            @ApiResponse(
+                    description = "Unauthorized",
+                    responseCode = "401",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = MessageErrorDTO.class),
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Mensagem de erro para indicar que não está autenticado",
+                                                    summary = "Usuário não autenticado",
+                                                    description = "Mensagem de erro para indicar que não está autenticado",
+                                                    value = """
+                                                    {
+                                                        "status": 401,
+                                                        "error": "Unauthorized",
+                                                        "message": "Você precisa estar autenticado para acessar este recurso."
+                                                    }
+                                                    """
+                                            )
+                                    }
+                            )
+                    }
+            ),
+            @ApiResponse(
+                    description = "Forbidden",
+                    responseCode = "403",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = MessageErrorDTO.class),
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Mensagem de erro para consulta não permitida",
+                                                    summary = "Erro consulta não permitida",
+                                                    description = "Mensagem de erro para consulta não permitida",
+                                                    value = """
+                                                    {
+                                                        "status": 403,
+                                                        "error": "Forbidden",
+                                                        "message": "Você não tem permissão para acessar este recurso."
+                                                    }
+                                                    """
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    ResponseEntity<Page<UserTypeResponseDTO>> listUserSubtypePaginated(@ParameterObject Pageable pageable);
 }

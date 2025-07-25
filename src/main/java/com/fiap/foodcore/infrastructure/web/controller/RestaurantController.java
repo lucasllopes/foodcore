@@ -93,7 +93,8 @@ public interface RestaurantController {
             description = "Ao passar as condições da paginação, verifica o tipo de usuário de quem " +
                     "está fazendo a consulta, se for dono, " +
                     "será listado os restaurantes respeitando as condições informadas, caso contrário, " +
-                    "retorna uma mensagem de erro dizendo que ele não tem permissão.",
+                    "retorna uma mensagem de erro dizendo que ele não tem permissão. " +
+                    "Também existe a possibilidade de passar um nome de restaurante como filtro.",
             summary = "Retorna os restaurantes de forma paginada"
     )
     @ApiResponses(value = {
