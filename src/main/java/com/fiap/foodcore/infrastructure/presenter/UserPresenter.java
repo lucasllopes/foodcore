@@ -84,6 +84,6 @@ public class UserPresenter {
     }
 
     public static AssignUserSubtypeToUserInput toAssignUserTypeToUserInput(AssignUserTypeToUserDTO dto) {
-        return new AssignUserSubtypeToUserInput(dto.idUserType());
+        return new AssignUserSubtypeToUserInput(dto.idUserSubtype());
     }
 }

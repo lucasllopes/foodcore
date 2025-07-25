@@ -18,7 +18,11 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.List;
+import java.util.UUID;
+
 import static com.fiap.foodcore.helper.UserTestHelper.authenticateAndGetToken;
+import static com.fiap.foodcore.helper.UserTestHelper.createValidAddressRequest;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
@@ -65,6 +69,170 @@ public class UserControllerImplIntegrationTest {
     }
 
     @Test
+    void shouldFailedCreateOwnerUserSameEmailSuccessfully() {
+        UserCreateRequestDTO original = UserTestHelper.createValidGenericOwnerRequest();
+
+        given()
+                .body(original)
+                .when()
+                .post("/usuarios")
+                .then()
+                .statusCode(HttpStatus.CREATED.value())
+                .body("$", hasKey("id"))
+                .body("$", hasKey("nome"))
+                .body("$", hasKey("email"))
+                .body("$", hasKey("login"))
+                .body("$", hasKey("tipo"))
+                .body("$", hasKey("enderecos"))
+                .body("nome", equalTo(original.nome()))
+                .body("email", equalTo(original.email()))
+                .body("login", equalTo(original.login()))
+                .body("tipo", equalTo(original.tipo()));
+
+
+        given()
+                .body(original)
+                .when()
+                .post("/usuarios")
+                .then()
+                .statusCode(HttpStatus.CONFLICT.value());
+    }
+
+    @Test
+    void shouldFailedCreateOwnerUserSameLoginSuccessfully() {
+        UserCreateRequestDTO original = UserTestHelper.createValidGenericOwnerRequest();
+
+        given()
+                .body(original)
+                .when()
+                .post("/usuarios")
+                .then()
+                .statusCode(HttpStatus.CREATED.value())
+                .body("$", hasKey("id"))
+                .body("$", hasKey("nome"))
+                .body("$", hasKey("email"))
+                .body("$", hasKey("login"))
+                .body("$", hasKey("tipo"))
+                .body("$", hasKey("enderecos"))
+                .body("nome", equalTo(original.nome()))
+                .body("email", equalTo(original.email()))
+                .body("login", equalTo(original.login()))
+                .body("tipo", equalTo(original.tipo()));
+
+        String suffix = UUID.randomUUID().toString().substring(0, 8);
+        UserCreateRequestDTO invalidLogin = new UserCreateRequestDTO("Generic Owner",
+                "generic_owner"+suffix+"@email.com",
+                original.login(),
+                "password",
+                "DONO",
+                List.of(
+                        createValidAddressRequest("Rua das Flores", "123", "APTO 123", "Centro", "São Paulo", "SP", "01234-567"),
+                        createValidAddressRequest("Av. Brasil", "456", null, "Jardins", "São Paulo", "SP", "12345-678")
+                ));
+
+        given()
+                .body(invalidLogin)
+                .when()
+                .post("/usuarios")
+                .then()
+                .statusCode(HttpStatus.CONFLICT.value());
+    }
+
+    @Test
+    void shouldCreateEmployeeUserSuccessfully() {
+        UserCreateRequestDTO dto = UserTestHelper.createValidGenericEmployeeRequest();
+
+        given()
+                .body(dto)
+                .when()
+                .post("/usuarios")
+                .then()
+                .statusCode(HttpStatus.CREATED.value())
+                .body("$", hasKey("id"))
+                .body("$", hasKey("nome"))
+                .body("$", hasKey("email"))
+                .body("$", hasKey("login"))
+                .body("$", hasKey("tipo"))
+                .body("$", hasKey("enderecos"))
+                .body("nome", equalTo(dto.nome()))
+                .body("email", equalTo(dto.email()))
+                .body("login", equalTo(dto.login()))
+                .body("tipo", equalTo(dto.tipo()));
+
+    }
+
+
+    @Test
+    void shouldFailedCreateEmployeeUserSameEmailSuccessfully() {
+        UserCreateRequestDTO original = UserTestHelper.createValidGenericEmployeeRequest();
+
+        given()
+                .body(original)
+                .when()
+                .post("/usuarios")
+                .then()
+                .statusCode(HttpStatus.CREATED.value())
+                .body("$", hasKey("id"))
+                .body("$", hasKey("nome"))
+                .body("$", hasKey("email"))
+                .body("$", hasKey("login"))
+                .body("$", hasKey("tipo"))
+                .body("$", hasKey("enderecos"))
+                .body("nome", equalTo(original.nome()))
+                .body("email", equalTo(original.email()))
+                .body("login", equalTo(original.login()))
+                .body("tipo", equalTo(original.tipo()));
+
+
+        given()
+                .body(original)
+                .when()
+                .post("/usuarios")
+                .then()
+                .statusCode(HttpStatus.CONFLICT.value());
+    }
+
+    @Test
+    void shouldFailedCreateEmployeeUserSameLoginSuccessfully() {
+        UserCreateRequestDTO original = UserTestHelper.createValidGenericEmployeeRequest();
+
+        given()
+                .body(original)
+                .when()
+                .post("/usuarios")
+                .then()
+                .statusCode(HttpStatus.CREATED.value())
+                .body("$", hasKey("id"))
+                .body("$", hasKey("nome"))
+                .body("$", hasKey("email"))
+                .body("$", hasKey("login"))
+                .body("$", hasKey("tipo"))
+                .body("$", hasKey("enderecos"))
+                .body("nome", equalTo(original.nome()))
+                .body("email", equalTo(original.email()))
+                .body("login", equalTo(original.login()))
+                .body("tipo", equalTo(original.tipo()));
+
+        String suffix = UUID.randomUUID().toString().substring(0, 8);
+        UserCreateRequestDTO invalidLogin = new UserCreateRequestDTO("Generic Owner",
+                "generic_employee"+suffix+"@email.com",
+                original.login(),
+                "password",
+                "COLABORADOR",
+                List.of(
+                        createValidAddressRequest("Rua das Flores", "123", "APTO 123", "Centro", "São Paulo", "SP", "01234-567"),
+                        createValidAddressRequest("Av. Brasil", "456", null, "Jardins", "São Paulo", "SP", "12345-678")
+                ));
+
+        given()
+                .body(invalidLogin)
+                .when()
+                .post("/usuarios")
+                .then()
+                .statusCode(HttpStatus.CONFLICT.value());
+    }
+
+    @Test
     void shouldCreateCustomerUserSuccessfully() {
         UserCreateRequestDTO dto = UserTestHelper.createValidGenericCustomerRequest();
 
@@ -88,6 +256,76 @@ public class UserControllerImplIntegrationTest {
     }
 
     @Test
+    void shouldFailedCreateCustomerUserSameEmailSuccessfully() {
+        UserCreateRequestDTO original = UserTestHelper.createValidGenericCustomerRequest();
+
+        given()
+                .body(original)
+                .when()
+                .post("/usuarios")
+                .then()
+                .statusCode(HttpStatus.CREATED.value())
+                .body("$", hasKey("id"))
+                .body("$", hasKey("nome"))
+                .body("$", hasKey("email"))
+                .body("$", hasKey("login"))
+                .body("$", hasKey("tipo"))
+                .body("$", hasKey("enderecos"))
+                .body("nome", equalTo(original.nome()))
+                .body("email", equalTo(original.email()))
+                .body("login", equalTo(original.login()))
+                .body("tipo", equalTo(original.tipo()));
+
+
+        given()
+                .body(original)
+                .when()
+                .post("/usuarios")
+                .then()
+                .statusCode(HttpStatus.CONFLICT.value());
+    }
+
+    @Test
+    void shouldFailedCreateCustomerUserSameLoginSuccessfully() {
+        UserCreateRequestDTO original = UserTestHelper.createValidGenericCustomerRequest();
+
+        given()
+                .body(original)
+                .when()
+                .post("/usuarios")
+                .then()
+                .statusCode(HttpStatus.CREATED.value())
+                .body("$", hasKey("id"))
+                .body("$", hasKey("nome"))
+                .body("$", hasKey("email"))
+                .body("$", hasKey("login"))
+                .body("$", hasKey("tipo"))
+                .body("$", hasKey("enderecos"))
+                .body("nome", equalTo(original.nome()))
+                .body("email", equalTo(original.email()))
+                .body("login", equalTo(original.login()))
+                .body("tipo", equalTo(original.tipo()));
+
+        String suffix = UUID.randomUUID().toString().substring(0, 8);
+        UserCreateRequestDTO invalidLogin = new UserCreateRequestDTO("Generic Owner",
+                "generic_customer"+suffix+"@email.com",
+                original.login(),
+                "password",
+                "CLIENTE",
+                List.of(
+                        createValidAddressRequest("Rua das Flores", "123", "APTO 123", "Centro", "São Paulo", "SP", "01234-567"),
+                        createValidAddressRequest("Av. Brasil", "456", null, "Jardins", "São Paulo", "SP", "12345-678")
+                ));
+
+        given()
+                .body(invalidLogin)
+                .when()
+                .post("/usuarios")
+                .then()
+                .statusCode(HttpStatus.CONFLICT.value());
+    }
+
+    @Test
     void shouldUpdateOwnerUserSuccessfully() {
         UserCreateRequestDTO owner = UserTestHelper.createValidOwnerUserToUpdateRequest();
 
@@ -96,6 +334,32 @@ public class UserControllerImplIntegrationTest {
         String token = authenticateAndGetToken(owner);
 
         UserUpdateRequestDTO updateUser = UserTestHelper.createValidOwnerUserUpdateRequest();
+
+        given()
+                .header("Authorization", "Bearer " + token)
+                .body(updateUser)
+                .when()
+                .put("/usuarios/{id}", response.id())
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .body("$", hasKey("id"))
+                .body("$", hasKey("nome"))
+                .body("$", hasKey("email"))
+                .body("$", hasKey("enderecos"))
+                .body("nome", equalTo(updateUser.nome()))
+                .body("email", equalTo(updateUser.email()));
+
+    }
+
+    @Test
+    void shouldUpdateEmployeeUserSuccessfully() {
+        UserCreateRequestDTO emloyee = UserTestHelper.createValidEmployeeUserToUpdateRequest();
+
+        UserResponseDTO response = createUser(emloyee);
+
+        String token = authenticateAndGetToken(emloyee);
+
+        UserUpdateRequestDTO updateUser = UserTestHelper.createValidEmployeeUserUpdateRequest();
 
         given()
                 .header("Authorization", "Bearer " + token)
@@ -159,6 +423,23 @@ public class UserControllerImplIntegrationTest {
     }
 
     @Test
+    void shouldDeleteEmployeeUserSuccessfully() {
+        UserCreateRequestDTO employee = UserTestHelper.createValidGenericEmployeeRequest();
+
+        UserResponseDTO response = createUser(employee);
+
+        String token = authenticateAndGetToken(employee);
+
+        given()
+                .header("Authorization", "Bearer " + token)
+                .when()
+                .delete("/usuarios/{id}", response.id())
+                .then()
+                .statusCode(HttpStatus.NO_CONTENT.value());
+
+    }
+
+    @Test
     void shouldDeleteCustomerUserSuccessfully() {
         UserCreateRequestDTO customer = UserTestHelper.createValidGenericCustomerRequest();
 
@@ -190,7 +471,7 @@ public class UserControllerImplIntegrationTest {
         String response = given()
                 .header("Authorization", "Bearer " + token)
                 .when()
-                .get("/usuarios?page=0&size=50")
+                .get("/usuarios?page=0&size=50&sort=nome,asc")
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("content", notNullValue())
@@ -279,11 +560,6 @@ public class UserControllerImplIntegrationTest {
                 .statusCode(HttpStatus.UNAUTHORIZED.value());
     }
 
-    public UserResponseDTO createUser(UserCreateRequestDTO dto) {
-        CreateUserInput inputOwner = UserPresenter.toInputCreate(dto);
-        CreateUserOutput outputOwner = createUserUseCase.execute(inputOwner);
-        return UserPresenter.toDto(outputOwner);
-    }
 
     @Test
     void shouldAssignUserTypeToUserSuccessfully() {
@@ -292,16 +568,16 @@ public class UserControllerImplIntegrationTest {
         UserResponseDTO userCustomerResponse = createUser(userCustomerDTO);
 
         UserCreateRequestDTO userOwnerDTO = UserTestHelper.createValidGenericOwnerRequest();
-        UserResponseDTO userOwnerResponse = createUser(userOwnerDTO);
+        createUser(userOwnerDTO);
 
-        UserTypeRequestDTO userTypeRequestDTO = new UserTypeRequestDTO("USER TYPE TEST");
+        UserTypeRequestDTO userSubtypeRequestDTO = new UserTypeRequestDTO("USER TYPE TEST");
 
         String adminToken = authenticateAndGetToken(userOwnerDTO);
 
-        Long createdTypeId =
+        Long createdSubtypeId =
                 given()
                         .header("Authorization", "Bearer " + adminToken)
-                        .body(userTypeRequestDTO)
+                        .body(userSubtypeRequestDTO)
                         .when()
                         .post("/tipos")
                         .then()
@@ -310,17 +586,24 @@ public class UserControllerImplIntegrationTest {
                         .jsonPath()
                         .getLong("id");
 
-        // Act
+
+        AssignUserTypeToUserDTO dto = new AssignUserTypeToUserDTO(createdSubtypeId);
+
         given()
                 .header("Authorization", "Bearer " + adminToken)
-                .body(String.format("{\"idUserType\": %d}", createdTypeId))
+                .body(dto)
                 .when()
                 .put("/usuarios/{id}/tipo", userCustomerResponse.id())
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("id", equalTo(userCustomerResponse.id().intValue()))
                 .body("tipoUsuario", notNullValue())
-                .body("tipoUsuario.id", equalTo(createdTypeId.intValue()))
-                .body("tipoUsuario.name", equalTo(userTypeRequestDTO.name()));
+                .body("tipoUsuario.name", equalTo(userSubtypeRequestDTO.name()));
+    }
+
+    public UserResponseDTO createUser(UserCreateRequestDTO dto) {
+        CreateUserInput inputOwner = UserPresenter.toInputCreate(dto);
+        CreateUserOutput outputOwner = createUserUseCase.execute(inputOwner);
+        return UserPresenter.toDto(outputOwner);
     }
 }

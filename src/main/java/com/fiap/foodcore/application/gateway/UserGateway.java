@@ -9,7 +9,6 @@ import java.util.Optional;
 public interface UserGateway {
 
     Optional<User> findById(Long id);
-    DomainPage<User> findAll(PageRequestDomain pageRequest);
     DomainPage<User> findAllPage(PageRequestDomain pageRequest);
     Optional<User> findByEmail(String email);
     User save(User user);

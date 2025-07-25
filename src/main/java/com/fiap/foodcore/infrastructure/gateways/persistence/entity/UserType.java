@@ -7,6 +7,7 @@ import java.util.Arrays;
 
 public enum UserType implements GrantedAuthority {
     CLIENTE("Cliente"),
+    COLABORADOR("Colaborador"),
     DONO("Dono de Restaurante");
 
 

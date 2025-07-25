@@ -9,6 +9,7 @@ import com.fiap.foodcore.helper.UserTestHelper;
 import com.fiap.foodcore.infrastructure.presenter.UserPresenter;
 import com.fiap.foodcore.infrastructure.web.controller.dto.UserCreateRequestDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.UserTypeRequestDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.UserTypeUpdateRequestDTO;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
@@ -48,13 +49,13 @@ public class UserSubtypeControllerImplIntegrationTest {
     }
 
     @Test
-    void shouldCreateOwnerTypeSuccessfully() {
+    void shouldCreateUserSubtypeSuccessfully() {
 
         UserCreateRequestDTO owner = UserTestHelper.createValidGenericOwnerRequest();
         createUser(owner);
         String token = authenticateAndGetToken(owner);
 
-        UserTypeRequestDTO requestDTO = new UserTypeRequestDTO("Generic User" + UUID.randomUUID());
+        UserTypeRequestDTO requestDTO = new UserTypeRequestDTO("TESTE");
 
         given()
                 .header("Authorization", "Bearer " + token)
@@ -66,6 +67,35 @@ public class UserSubtypeControllerImplIntegrationTest {
                 .body("$", hasKey("id"))
                 .body("$", hasKey("name"))
                 .body("name", equalTo(requestDTO.name().toUpperCase()));
+    }
+
+    @Test
+    void shouldFailedCreateUserSubtypeSameNameSuccessfully() {
+
+        UserCreateRequestDTO owner = UserTestHelper.createValidGenericOwnerRequest();
+        createUser(owner);
+        String token = authenticateAndGetToken(owner);
+
+        UserTypeRequestDTO requestDTO = new UserTypeRequestDTO("TESTE DUPLICADO");
+
+        given()
+                .header("Authorization", "Bearer " + token)
+                .body(requestDTO)
+                .when()
+                .post("/tipos")
+                .then()
+                .statusCode(HttpStatus.CREATED.value())
+                .body("$", hasKey("id"))
+                .body("$", hasKey("name"))
+                .body("name", equalTo(requestDTO.name().toUpperCase()));
+
+        given()
+                .header("Authorization", "Bearer " + token)
+                .body(requestDTO)
+                .when()
+                .post("/tipos")
+                .then()
+                .statusCode(HttpStatus.CONFLICT.value());
     }
 
     @Test
@@ -142,13 +172,17 @@ public class UserSubtypeControllerImplIntegrationTest {
                         .jsonPath()
                         .getLong("id");
 
+        UserTypeUpdateRequestDTO updateDTO = new UserTypeUpdateRequestDTO("GERENTE ATUALIZADO");
 
         given()
                 .header("Authorization", "Bearer " + token)
+                .body(updateDTO)
                 .when()
-                .delete("/tipos/{id}", createdTypeId)
+                .put("/tipos/{id}", createdTypeId)
                 .then()
-                .statusCode(HttpStatus.NO_CONTENT.value());
+                .statusCode(HttpStatus.OK.value())
+                .body("id", equalTo(createdTypeId.intValue()))
+                .body("name", equalTo(updateDTO.name()));
     }
 
     @Test
@@ -197,7 +231,7 @@ public class UserSubtypeControllerImplIntegrationTest {
         given()
                 .header("Authorization", "Bearer " + token)
                 .when()
-                .get("/tipos?page=0&size=50")
+                .get("/tipos?page=0&size=50&sort=name,asc")
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("content", notNullValue())

@@ -63,6 +63,18 @@ public class UserTestHelper {
                 ));
     }
 
+    public static UserCreateRequestDTO createValidEmployeeUserToUpdateRequest(){
+        return new UserCreateRequestDTO("Employee Old",
+                "employee_old@email.com",
+                "employeeneedupdate",
+                "password",
+                "COLABORADOR",
+                List.of(
+                        createValidAddressRequest("Rua das Flores", "123", "APTO 123", "Centro", "São Paulo", "SP", "01234-567"),
+                        createValidAddressRequest("Av. Brasil", "456", null, "Jardins", "São Paulo", "SP", "12345-678")
+                ));
+    }
+
     public static UserCreateRequestDTO createValidOwnerUserToCreateRestaurantRequest() {
         return new UserCreateRequestDTO("Owner Old",
                 "owner_restaurant@email.com",
@@ -97,6 +109,15 @@ public class UserTestHelper {
                 ));
     }
 
+    public static UserUpdateRequestDTO createValidEmployeeUserUpdateRequest() {
+        return new UserUpdateRequestDTO("Employee Updated",
+                "employee_updated@email.com",
+                List.of(
+                        createValidAddressUpdateRequest("Rua das Flores Atualizada", "789", null, "Flamengo", "Rio de Janeiro", "RJ", "24216-902"),
+                        createValidAddressUpdateRequest("Av. Brasil Atualizada", "555", "354", "Botafogo", "Rio de Janeiro", "RJ", "45632-985")
+                ));
+    }
+
     public static UserUpdateRequestDTO createValidCustomerUserUpdateRequest() {
         return new UserUpdateRequestDTO("Customer Updated",
                 "customer_updated@email.com",
@@ -113,6 +134,19 @@ public class UserTestHelper {
                 "genericowner"+suffix,
                 "password",
                 "DONO",
+                List.of(
+                        createValidAddressRequest("Rua das Flores", "123", "APTO 123", "Centro", "São Paulo", "SP", "01234-567"),
+                        createValidAddressRequest("Av. Brasil", "456", null, "Jardins", "São Paulo", "SP", "12345-678")
+                ));
+    }
+
+    public static UserCreateRequestDTO createValidGenericEmployeeRequest() {
+        String suffix = UUID.randomUUID().toString().substring(0, 8);
+        return new UserCreateRequestDTO("Generic Owner",
+                "generic_employee"+suffix+"@email.com",
+                "genericemployee"+suffix,
+                "password",
+                "COLABORADOR",
                 List.of(
                         createValidAddressRequest("Rua das Flores", "123", "APTO 123", "Centro", "São Paulo", "SP", "01234-567"),
                         createValidAddressRequest("Av. Brasil", "456", null, "Jardins", "São Paulo", "SP", "12345-678")

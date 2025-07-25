@@ -30,17 +30,6 @@ public class UserRepositoryGateway implements UserGateway {
                 .map(UserEntityMapper::toDomain);
     }
 
-    @Override
-    public DomainPage<User> findAll(PageRequestDomain pageRequest) {
-        var springPage = userRepository.findAll(
-                org.springframework.data.domain.PageRequest
-                        .of(pageRequest.page(), pageRequest.size())
-        );
-        var items = springPage.getContent().stream()
-                .map(UserEntityMapper::toDomain)
-                .toList();
-        return new DomainPage<>(items, 0,springPage.getSize(),springPage.getTotalElements());
-    }
 
     @Override
     public DomainPage<User> findAllPage(PageRequestDomain pageRequest) {

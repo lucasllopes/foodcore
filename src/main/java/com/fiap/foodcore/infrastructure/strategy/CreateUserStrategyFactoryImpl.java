@@ -16,10 +16,12 @@ public class CreateUserStrategyFactoryImpl implements CreateUserStrategyFactory 
 
     public CreateUserStrategyFactoryImpl(
             @Qualifier("customer") CreateUserStrategy customer,
+            @Qualifier("employee") CreateUserStrategy employee,
             @Qualifier("owner") CreateUserStrategy owner
     ) {
         this.strategies = Map.of(
                 UserTypeDomain.CLIENTE, customer,
+                UserTypeDomain.COLABORADOR, employee,
                 UserTypeDomain.DONO, owner
         );
     }

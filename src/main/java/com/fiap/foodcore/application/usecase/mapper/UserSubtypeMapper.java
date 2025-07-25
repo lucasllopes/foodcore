@@ -22,13 +22,4 @@ public class UserSubtypeMapper {
         );
     }
 
-    public static UserSubtypeEntity toEntity(UserSubtype userType) {
-        if (userType == null) return null;
-
-        UserSubtypeEntity entity = new UserSubtypeEntity();
-        entity.setId(userType.getId());
-        entity.setName(userType.getName());
-        entity.setLastModified(userType.getLastModified());
-        return entity;
-    }
 }
