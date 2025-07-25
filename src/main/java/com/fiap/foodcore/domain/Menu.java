@@ -12,7 +12,7 @@ public class Menu {
     private final String name;
     private final String description;
     private final List<Item> items;
-    private final Long restaurantId;
+    private final Restaurant restaurantId;
 
     private Menu(Builder builder) {
         this.id = builder.id;
@@ -41,7 +41,7 @@ public class Menu {
         return items;
     }
 
-    public Long getRestaurantId() {
+    public Restaurant getRestaurantId() {
         return restaurantId;
     }
 
@@ -86,7 +86,7 @@ public class Menu {
         private String name;
         private String description;
         private List<Item> itemsList;
-        private Long restaurantId;
+        private Restaurant restaurantId;
 
         public Builder() {
         }
@@ -116,7 +116,7 @@ public class Menu {
             return new Menu(this);
         }
 
-        public Builder restaurantId(Long restaurantId) {
+        public Builder restaurantId(Restaurant restaurantId) {
             Objects.requireNonNull(name, "Restaurant id is required");
             this.restaurantId = restaurantId;
             return this;

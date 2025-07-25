@@ -22,7 +22,7 @@ public class CreateMenuInteractor {
 
     public MenuCreateOutput execute(CreateMenuInput createMenuInput) {
 
-        restaurantGateway.findById(createMenuInput.restaurantId())
+        var restaurante = restaurantGateway.findById(createMenuInput.restaurantId())
                 .orElseThrow(() -> new DataNotFoundException("Restaurant not found with ID: " + createMenuInput.restaurantId()));
 
         // Check for duplicate menu name
@@ -30,6 +30,7 @@ public class CreateMenuInteractor {
                 .ifPresent(menu -> {
                     throw new DuplicatedDataException("Menu with name '" + createMenuInput.nome() + "' already exists for restaurant ID: " + createMenuInput.restaurantId());
                 });
+
 
         Menu menu = new Menu.Builder()
                 .description(createMenuInput.descricao())
@@ -45,7 +46,7 @@ public class CreateMenuInteractor {
                                         .build()
                                 ).toList()
                 )
-                .restaurantId(createMenuInput.restaurantId())
+                .restaurantId(restaurante)
                 .build();
 
         menuRepositoryGateway.save(menu);
@@ -53,7 +54,7 @@ public class CreateMenuInteractor {
                 menu.getId(),
                 menu.getName(),
                 menu.getDescription(),
-                menu.getRestaurantId(),
+                menu.getRestaurantId().getId(),
                 menu.getItems().stream()
                         .map(item -> new ItemCreateOutput(
                                 item.getId(),

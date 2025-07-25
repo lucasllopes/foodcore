@@ -17,6 +17,7 @@ public class MenuMapper {
         entity.setId(menu.getId());
         entity.setName(menu.getName());
         entity.setDescription(menu.getDescription());
+        entity.setRestaurant(RestaurantEntityMapper.toEntity(menu.getRestaurantId()));
         entity.setItems(
                 menu.getItems() != null
                         ? menu.getItems().stream()
@@ -32,7 +33,9 @@ public class MenuMapper {
         Menu.Builder builder = new Menu.Builder()
                 .id(entity.getId())
                 .name(entity.getName())
-                .description(entity.getDescription());
+                .description(entity.getDescription())
+                .restaurantId(RestaurantEntityMapper.toDomain(entity.getRestaurant()));
+
 
         if (entity.getItems() != null) {
             List<Item> items = entity.getItems().stream()
@@ -50,7 +53,7 @@ public class MenuMapper {
                 menu.getId(),
                 menu.getName(),
                 menu.getDescription(),
-                menu.getRestaurantId(),
+                menu.getRestaurantId().getId(),
                 menu.getItems() != null
                         ? menu.getItems().stream()
                         .map(ItemMapper::fromDomain)

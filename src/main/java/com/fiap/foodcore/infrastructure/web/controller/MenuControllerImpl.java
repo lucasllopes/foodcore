@@ -9,6 +9,7 @@ import com.fiap.foodcore.infrastructure.presenter.MenuPresenter;
 import com.fiap.foodcore.infrastructure.web.controller.dto.MenuCreateRequestDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.MenuCreateResponseDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.MenuUpdateRequestDTO;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -71,7 +72,7 @@ public class MenuControllerImpl implements MenuController {
     }
 
     @PostMapping
-    public ResponseEntity<MenuCreateResponseDTO> createMenu(@RequestBody MenuCreateRequestDTO menuDto) {
+    public ResponseEntity<MenuCreateResponseDTO> createMenu(@Valid @RequestBody MenuCreateRequestDTO menuDto) {
         logger.info("Handling POST request to /cardapios");
 
         MenuCreateOutput output = createMenuInteractor.execute(MenuPresenter.fromCreateInputRequestDTO(menuDto));
