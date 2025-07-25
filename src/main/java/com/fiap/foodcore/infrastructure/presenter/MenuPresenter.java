@@ -55,6 +55,7 @@ public class MenuPresenter {
                 output.id(),
                 output.name(),
                 output.description(),
+                output.restaurantId(),
                 output.items().stream()
                         .map(item -> new ItemCreateResponseDTO(
                                 item.id(),

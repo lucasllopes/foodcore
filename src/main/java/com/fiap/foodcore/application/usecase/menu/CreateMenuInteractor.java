@@ -49,13 +49,13 @@ public class CreateMenuInteractor {
                 .restaurantId(restaurante)
                 .build();
 
-        menuRepositoryGateway.save(menu);
+        var saveMenu = menuRepositoryGateway.save(menu);
         return new MenuCreateOutput(
-                menu.getId(),
-                menu.getName(),
-                menu.getDescription(),
-                menu.getRestaurantId().getId(),
-                menu.getItems().stream()
+                saveMenu.getId(),
+                saveMenu.getName(),
+                saveMenu.getDescription(),
+                saveMenu.getRestaurantId().getId(),
+                saveMenu.getItems().stream()
                         .map(item -> new ItemCreateOutput(
                                 item.getId(),
                                 item.getName(),
