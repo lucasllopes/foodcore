@@ -1,0 +1,694 @@
+{
+	"info": {
+		"_postman_id": "961acb6e-4a91-41d4-8836-c6c046bcd6e9",
+		"name": "FOODCORE - CONTROLE DE USUARIO",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9099310"
+	},
+	"item": [
+		{
+			"name": "1 - GET USUARIO BY ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imp2aXRvciIsImV4cCI6MTc1Mjk4MDY1N30.T8ZJpFcUc2oRrboh5DxJ1_OtPwJTULy-HhBmxQrnR8s",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imluc2VydDQxIiwiZXhwIjoxNzQ3MjU2NDY1fQ.0otrrjz9lZkbZlHuoVJ7SBOb0TqcUiOcACohHBGXiA8",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/usuarios/6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2 - GET USUARIOS COM PAGINACAO",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6InRlc3RlMWluc2VydDEiLCJleHAiOjE3NTI5NjkxNTl9.z9dD5fRKGRfe5YwzPaOR_AR8V6F9zeUDSovt1_3h8uw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imp2aXRvciIsImV4cCI6MTc0NzI1NzkzM30.Ijk2gfN3GNgPvBkvuoNig3ZrmHCjWdFQjCcicW_4aZc",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/usuarios?page=0&sort=id,DESC&size=15",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "token",
+							"value": "",
+							"disabled": true
+						},
+						{
+							"key": "sort",
+							"value": "id,DESC"
+						},
+						{
+							"key": "size",
+							"value": "15"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3 - POST - CRIAR USUARIO",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imp2aXRvciIsImV4cCI6MTc0Nzc5Njc5OX0.9vxaTJd-0VHacrhYn2BnsYX06HytY6FsJdwF4ppyZdc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imluc2VydDM3IiwiZXhwIjoxNzQ3MTk3NDA3fQ.UPWoWRzJtf64GYiIM_elthik-g4f1FHyDIRxMd-TCm0",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"USUARIO DE TESTE1 - INSERT 1\",\r\n    \"email\": \"usuario1testeinsert1@email.com\",\r\n    \"login\": \"teste1insert1\",\r\n    \"senha\": \"123456\",\r\n    \"tipo\": \"DONO\",\r\n    \"enderecos\": [\r\n        {\r\n            \"logradouro\": \"Rua 1\",\r\n            \"numero\": \"123\",\r\n            \"complemento\": \"Apto 11\",\r\n            \"bairro\": \"Centro 11\",\r\n            \"cep\": \"01234-000 41\",\r\n            \"estado\": \"SP\",\r\n            \"cidade\": \"São Paulo\"\r\n        },\r\n        {\r\n            \"logradouro\": \"Rua 41-2\",\r\n            \"numero\": \"124\",\r\n            \"complemento\": \"Apto 41-2\",\r\n            \"bairro\": \"Centro 41-2\",\r\n            \"cep\": \"01234-000 41-2\",\r\n            \"estado\": \"SP\",\r\n            \"cidade\": \"São Paulo\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/usuarios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4 - PUT - ATUALIZAR USUARIO",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6ImNhcmxvcyIsImV4cCI6MTc1Mjk2OTUyMH0.QtIzg62UStLXxBLBkUM7g6GINZ3cx4bSdT3k18tW2yA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imluc2VydDQxIiwiZXhwIjoxNzQ3MjU2NDY1fQ.0otrrjz9lZkbZlHuoVJ7SBOb0TqcUiOcACohHBGXiA8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"TESTE INSERT 1 MUDOU PARA UPDATE 1\",\r\n    \"email\": \"testeinsertmudouaposupdate11@email.com\",\r\n    \"enderecos\": [\r\n        {\r\n            \"logradouro\": \"Rua Nova MUDOU\",\r\n            \"numero\": \"123 41 MUDOU\",\r\n            \"complemento\": \"Apto 41 MUDOU\",\r\n            \"bairro\": \"Centro 41 MUDOU\",\r\n            \"cep\": \"01234-000 41 MUDOU\",\r\n            \"estado\": \"SP\",\r\n            \"cidade\": \"São Paulo\"\r\n        },\r\n        {\r\n            \"logradouro\": \"Rua Nova 41-2 MUDOU\",\r\n            \"numero\": \"123 41-2 MUDOU\",\r\n            \"complemento\": \"Apto 41-2 MUDOU\",\r\n            \"bairro\": \"Centro 41-2 MUDOU\",\r\n            \"cep\": \"01234-000 41-2 MUDOU\",\r\n            \"estado\": \"SP\",\r\n            \"cidade\": \"São Paulo\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/usuarios/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5 - POST - VALIDAR LOGIN",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imluc2VydDIiLCJleHAiOjE3NDcxOTEyNjV9.i8UAedusiQs297bZoiDBDcIZCMKRDA4qpkJIsaACCA4",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"login\": \"jvitor\",\r\n    \"senha\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6 - DELETE - DELETAR USUARIO",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6InRlc3RlMTFpbnNlcnQxMSIsImV4cCI6MTc1Mjk3MDA3Nn0.61_QSts885PrXFB_rM1EReAdqHTGjrCBjp8yizQVPJM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imp2aXRvciIsImV4cCI6MTc0NzI1NzkzM30.Ijk2gfN3GNgPvBkvuoNig3ZrmHCjWdFQjCcicW_4aZc",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/usuarios/10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7 - PUT - ALTERAR SENHA",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6InRlc3RlMTFpbnNlcnQxMSIsImV4cCI6MTc1Mjk3MDA3Nn0.61_QSts885PrXFB_rM1EReAdqHTGjrCBjp8yizQVPJM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"senhaAtual\": \"123456\",\r\n    \"novaSenha\": \"123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/usuarios/11/senha",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"11",
+						"senha"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "8 - POST Criar tipo usuario",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imp2aXRvciIsImV4cCI6MTc1Mjk4MDY1N30.T8ZJpFcUc2oRrboh5DxJ1_OtPwJTULy-HhBmxQrnR8s",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"MECANICO\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/tipos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tipos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "9 - PUT Alterar tipo usuário",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6InRlc3RlMWluc2VydDEiLCJleHAiOjE3NTI4ODUxOTV9.f_omXBfntX2cojnWTCw0Sps4OoOToBb-JdwnyqyvsZw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"PILOTO\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/tipos/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tipos",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "10 - GET TIPO USUARIO BY ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6InRlc3RlMWluc2VydDEiLCJleHAiOjE3NTI4ODY1OTd9.RJKAGpZspcIPxmanIg9IPhBQXb0QQtyP_KGCNOurROc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imluc2VydDQxIiwiZXhwIjoxNzQ3MjU2NDY1fQ.0otrrjz9lZkbZlHuoVJ7SBOb0TqcUiOcACohHBGXiA8",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/tipos/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tipos",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "11 - GET TIPO USUARIO BY NOME",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6InRlc3RlMWluc2VydDEiLCJleHAiOjE3NTI4ODg0NjR9.NDSnha9y75GeTOEix_tIhrWK9zWf6-Z6fXv2UpYxvy4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imluc2VydDQxIiwiZXhwIjoxNzQ3MjU2NDY1fQ.0otrrjz9lZkbZlHuoVJ7SBOb0TqcUiOcACohHBGXiA8",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/tipos/name/PILOTO",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tipos",
+						"name",
+						"PILOTO"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "12 - POST - CRIAR RESTAURANTE",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imd1aWxoZXJtZSIsImV4cCI6MTc1Mjk1NjMwMX0.Tje0c7xqcFGD6HNPQdNdTeobcOu8N6bxaILZO2WvoNI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"Paradise\",\r\n    \"cuisineType\": \"FAST FOOD\",\r\n    \"endereco\": {\r\n        \"logradouro\": \"Rua Dos Lanches 3\",\r\n        \"numero\": \"12352\",\r\n        \"complemento\": \"Apto 1212\",\r\n        \"bairro\": \"Centro 1211\",\r\n        \"cep\": \"01234-000 241\",\r\n        \"estado\": \"GO\",\r\n        \"cidade\": \"Itumbiara\"\r\n    },\r\n    \"openingHours\": \"19:00\",\r\n    \"closingHours\": \"23:59\",\r\n    \"ownerId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/restaurantes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"restaurantes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "13 - GET - GET RESTAURANTE BY ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imd1aWxoZXJtZSIsImV4cCI6MTc1Mjk0NjM3Mn0.iw9kAvEA2_zl53stB-XIM6JZPH0ZwsVjUPEcfpJWRbc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/restaurantes/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"restaurantes",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "14 - DELETE - DELETAR RESTAURANTE",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imd1aWxoZXJtZSIsImV4cCI6MTc1MjUzODc5OH0.xc3KNzG_lNA5qY8Gtmxfz1w1SC4FKE8auz32ra2bvwA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/restaurantes/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"restaurantes",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "15 - GET - GET RESTAURANTE COM PAGINAÇÃO",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imd1aWxoZXJtZSIsImV4cCI6MTc1Mjk1NTAzNn0.dQRkBqy022Jmcxs2Q79Ick1JN-FjdWfS4HBnKpmyuGk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/restaurantes?page=0&size=10&sort=id,ASC&name=mac",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"restaurantes"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "10"
+						},
+						{
+							"key": "sort",
+							"value": "id,ASC"
+						},
+						{
+							"key": "name",
+							"value": "mac"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "16 - PUT - PUT RESTAURANTE",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imd1aWxoZXJtZSIsImV4cCI6MTc1MjUzNzg5N30.KgqOC7-Xqk7Zpmc2LXSDmKkAsna6HHL-nxphK4ZUqRg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"MacBurguer\",\r\n    \"cuisineType\": \"FAST FOOD\",\r\n    \"enderecos\": [\r\n        {\r\n            \"logradouro\": \"Rua Dos Lanches\",\r\n            \"numero\": \"1235\",\r\n            \"complemento\": \"Apto 121\",\r\n            \"bairro\": \"Centro 121\",\r\n            \"cep\": \"01234-000 21\",\r\n            \"estado\": \"GO\",\r\n            \"cidade\": \"Itumbiara\"\r\n        }\r\n    ],\r\n    \"openingHours\": \"19:00\",\r\n    \"closingHours\": \"00:30\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/restaurantes/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"restaurantes",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "17 - PUT - ATRIBUIR TIPO AO USUARIO",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imp2aXRvciIsImV4cCI6MTc1Mjk4MDY1N30.T8ZJpFcUc2oRrboh5DxJ1_OtPwJTULy-HhBmxQrnR8s",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imluc2VydDM3IiwiZXhwIjoxNzQ3MTk3NDA3fQ.UPWoWRzJtf64GYiIM_elthik-g4f1FHyDIRxMd-TCm0",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idUserType\": 3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/usuarios/6/tipo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"6",
+						"tipo"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

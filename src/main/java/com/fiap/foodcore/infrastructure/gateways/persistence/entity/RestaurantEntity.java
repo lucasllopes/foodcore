@@ -1,0 +1,37 @@
+package com.fiap.foodcore.infrastructure.gateways.persistence.entity;
+
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.time.LocalTime;
+import java.util.List;
+
+@Entity
+@Table(name = "restaurante")
+@Getter
+@Setter
+@NoArgsConstructor
+public class RestaurantEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id", nullable = false, unique = true)
+    private RestaurantAddressEntity address;
+    @Column(name = "cuisine_type")
+    private String cuisineType;
+    @Column(name = "opening_hours")
+    private LocalTime openingHours;
+    @Column(name = "closing_hours")
+    private LocalTime closingHours;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dono_id", nullable = false)
+    private UserEntity owner;
+
+}

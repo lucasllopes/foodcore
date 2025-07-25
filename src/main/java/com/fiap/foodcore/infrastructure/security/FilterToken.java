@@ -1,0 +1,70 @@
+package com.fiap.foodcore.infrastructure.security;
+
+import com.fiap.foodcore.domain.User;
+import com.fiap.foodcore.application.exception.TokenJwtException;
+import com.fiap.foodcore.infrastructure.gateways.persistence.entity.UserEntity;
+import com.fiap.foodcore.infrastructure.gateways.persistence.UserRepository;
+import com.fiap.foodcore.application.gateway.TokenGateway;
+import com.fiap.foodcore.infrastructure.mapper.UserEntityMapper;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import java.io.IOException;
+
+@Component
+public class FilterToken extends OncePerRequestFilter {
+
+    private final TokenGateway tokenGateway;
+    private final UserRepository userRepository;
+
+    private FilterToken(TokenGateway tokenGateway, UserRepository userRepository) {
+        this.tokenGateway = tokenGateway;
+        this.userRepository = userRepository;
+    }
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        String token = extractToken(request);
+
+        try{
+            if(token != null){
+                String login = tokenGateway.validateToken(token);
+
+                UserEntity userEntity = userRepository.findByLoginIgnoreCase(login)
+                        .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado."));
+
+                User user = UserEntityMapper.rebuildUserForTokenAuth(userEntity);
+
+                UserDetailsAdapter userDetailsAdapter = new UserDetailsAdapter(user);
+
+                Authentication authentication = new UsernamePasswordAuthenticationToken(userDetailsAdapter, null, userDetailsAdapter.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
+
+        } catch (TokenJwtException ex){
+            logger.warn("Invalid token");
+        }
+
+
+        filterChain.doFilter(request, response);
+    }
+
+
+    private String extractToken(HttpServletRequest request){
+        String tokenHeader = request.getHeader("Authorization");
+
+        if(tokenHeader != null){
+            tokenHeader = tokenHeader.replace("Bearer ", "");
+        }
+
+        return tokenHeader;
+    }
+}
