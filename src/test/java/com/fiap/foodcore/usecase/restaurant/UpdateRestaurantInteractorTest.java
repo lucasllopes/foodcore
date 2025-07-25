@@ -12,6 +12,7 @@ import com.fiap.foodcore.application.usecase.output.CreateRestaurantOutput;
 import com.fiap.foodcore.application.usecase.restaurant.UpdateRestaurantUseCase;
 import com.fiap.foodcore.domain.Address;
 import com.fiap.foodcore.domain.Restaurant;
+import com.fiap.foodcore.domain.builder.AddressBuilder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -43,7 +44,7 @@ public class UpdateRestaurantInteractorTest {
         updateRestaurantUseCase = updateRestaurantInteractor;
     }
     @Test
-    public void shouldThrow(){
+    public void shouldThrowDataNotFoundExceptionWhenRestaurantNotFound(){
         when(restaurantGateway.findById(ID_RESTAURANT_INVALID))
                 .thenReturn(Optional.empty());
         DataNotFoundException exception = Assertions.assertThrows(DataNotFoundException.class, () ->
@@ -52,7 +53,7 @@ public class UpdateRestaurantInteractorTest {
         Assertions.assertEquals("Restaurante não encontrado.", exception.getMessage());
     }
     @Test
-    public void shouldThrow2(){
+    public void shouldThrowDuplicatedDataExceptionWhenNameRestaurantIsDuplicated(){
         Restaurant restaurantExpected = getRestauranteExpected();
         when(restaurantGateway.findById(ID_RESTAURANT))
                 .thenReturn(Optional.of(restaurantExpected));
@@ -98,7 +99,15 @@ public class UpdateRestaurantInteractorTest {
         return Restaurant.create(1L, "Restaurante XPTO", getAddressExpected(), "Fast Food", openingHours, closingHours, OWNER_ID_DONO);
     }
     private Address getAddressExpected(){
-        return Address.addAddress(getCreateAddressInput());
+        CreateAddressInput input = getCreateAddressInput();
+        return AddressBuilder.getInstance().
+                withStreet(input.logradouro())
+                .withNumber(input.numero())
+                .withNeighborhood(input.bairro())
+                .withCity(input.cidade())
+                .withState(input.estado())
+                .withComplement(input.complemento())
+                .withZipCode(input.cep()).build();
     }
     private CreateAddressInput getCreateAddressInput(){
         return new CreateAddressInput("Rua A", "123", "", "Bairro", "Cidade", "12345-678", "SP");

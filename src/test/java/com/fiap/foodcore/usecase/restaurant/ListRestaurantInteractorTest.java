@@ -7,6 +7,7 @@ import com.fiap.foodcore.application.usecase.output.CreateRestaurantOutput;
 import com.fiap.foodcore.application.usecase.restaurant.ListRestaurantUseCase;
 import com.fiap.foodcore.domain.Address;
 import com.fiap.foodcore.domain.Restaurant;
+import com.fiap.foodcore.domain.builder.AddressBuilder;
 import com.fiap.foodcore.domain.pagination.DomainPage;
 import com.fiap.foodcore.domain.pagination.PageRequestDomain;
 import org.junit.jupiter.api.BeforeEach;
@@ -116,7 +117,15 @@ class ListRestaurantInteractorTest {
     }
 
     private Address getAddressExpected(){
-        return Address.addAddress(getCreateAddressInput());
+        CreateAddressInput input = getCreateAddressInput();
+        return AddressBuilder.getInstance().
+                withStreet(input.logradouro())
+                .withNumber(input.numero())
+                .withNeighborhood(input.bairro())
+                .withCity(input.cidade())
+                .withState(input.estado())
+                .withComplement(input.complemento())
+                .withZipCode(input.cep()).build();
     }
 
     private CreateAddressInput getCreateAddressInput() {

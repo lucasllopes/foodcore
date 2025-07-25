@@ -14,6 +14,7 @@ import com.fiap.foodcore.domain.Address;
 import com.fiap.foodcore.domain.Restaurant;
 import com.fiap.foodcore.domain.User;
 import com.fiap.foodcore.domain.UserTypeDomain;
+import com.fiap.foodcore.domain.builder.AddressBuilder;
 import com.fiap.foodcore.domain.exception.UserSubtypeNotOwnerException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -100,7 +101,15 @@ class CreateRestaurantUseCaseTest {
         return Restaurant.create(1L, "Restaurante XPTO", getAddressExpected(), "Fast Food", openingHours, closingHours, OWNER_ID_DONO);
     }
     private Address getAddressExpected(){
-        return Address.addAddress(getCreateAddressInput());
+        CreateAddressInput input = getCreateAddressInput();
+        return AddressBuilder.getInstance().
+                withStreet(input.logradouro())
+                .withNumber(input.numero())
+                .withNeighborhood(input.bairro())
+                .withCity(input.cidade())
+                .withState(input.estado())
+                .withComplement(input.complemento())
+                .withZipCode(input.cep()).build();
     }
     private CreateUserInput createUserInput(){
         return new CreateUserInput("Zequinha", "zequinha@gmail.com", "zequinha", "123", UserTypeDomain.DONO, List.of(getCreateAddressInput()));

@@ -8,6 +8,7 @@ import com.fiap.foodcore.application.usecase.output.CreateRestaurantOutput;
 import com.fiap.foodcore.application.usecase.restaurant.FindRestaurantByIdUseCase;
 import com.fiap.foodcore.domain.Address;
 import com.fiap.foodcore.domain.Restaurant;
+import com.fiap.foodcore.domain.builder.AddressBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -67,7 +68,15 @@ public class FindRestaurantByIdInteractorTest {
         return Restaurant.create(1L, "Restaurante XPTO", getAddressExpected(), "Fast Food", openingHours, closingHours, OWNER_ID_DONO);
     }
     private Address getAddressExpected(){
-        return Address.addAddress(getCreateAddressInput());
+        CreateAddressInput input = getCreateAddressInput();
+        return AddressBuilder.getInstance().
+                withStreet(input.logradouro())
+                .withNumber(input.numero())
+                .withNeighborhood(input.bairro())
+                .withCity(input.cidade())
+                .withState(input.estado())
+                .withComplement(input.complemento())
+                .withZipCode(input.cep()).build();
     }
     private CreateAddressInput getCreateAddressInput(){
         return new CreateAddressInput("Rua A", "123", "", "Bairro", "Cidade", "12345-678", "SP");

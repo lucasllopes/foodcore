@@ -1,7 +1,7 @@
 package com.fiap.foodcore.domain;
 
-import com.fiap.foodcore.application.usecase.input.CreateAddressInput;
-import com.fiap.foodcore.application.usecase.input.restaurant.CreateRestaurantInput;
+import com.fiap.foodcore.domain.builder.AddressBuilder;
+import com.fiap.foodcore.domain.builder.RestaurantBuilder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
@@ -13,7 +13,7 @@ class RestaurantTest {
 
     @Test
     public void shouldCreateRestaurant(){
-        Restaurant restaurantAtual = Restaurant.create(getCreateRestaurantInput());
+        Restaurant restaurantAtual = getCreateRestaurantInput();
 
         Assertions.assertEquals("Restaurante XPTO", restaurantAtual.getName());
         assertAddress(restaurantAtual.getAddress());
@@ -33,13 +33,25 @@ class RestaurantTest {
         Assertions.assertEquals("12345-678", address.getCep());
         Assertions.assertEquals("SP", address.getEstado());
     }
-    private CreateRestaurantInput getCreateRestaurantInput(){
+    private Restaurant getCreateRestaurantInput(){
         LocalTime openingHours = LocalTime.of(19,00);
         LocalTime closingHours = LocalTime.of(23,59);
-        CreateRestaurantInput createRestaurantInput = new CreateRestaurantInput("Restaurante XPTO", getCreateAddressInput(), "Fast Food", openingHours, closingHours, 2L);
-        return createRestaurantInput;
+        return RestaurantBuilder.getInstance().
+                withName("Restaurante XPTO")
+                .withAddress(getCreateAddressInput())
+                .withCuisineType("Fast Food")
+                .withOpeningHours(openingHours)
+                .withClosingHours(closingHours)
+                .withOwnerId(2L).build();
     }
-    private CreateAddressInput getCreateAddressInput(){
-        return new CreateAddressInput("Rua A", "123", "", "Bairro", "Cidade", "12345-678", "SP");
+    private Address getCreateAddressInput(){
+        return AddressBuilder.getInstance()
+                .withStreet("Rua A")
+                .withNumber("123")
+                .withNeighborhood("Bairro")
+                .withCity("Cidade")
+                .withState("SP")
+                .withComplement("")
+                .withZipCode("12345-678").build();
     }
 }

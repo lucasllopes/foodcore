@@ -18,20 +18,6 @@ public class Restaurant {
     private Long ownerId;
 
     private Restaurant(){
-
-    }
-
-    public static Restaurant create(CreateRestaurantInput input){
-        Restaurant restaurant = new Restaurant();
-        restaurant.name = input.name();
-        if (input.address() != null) {
-            restaurant.address = Address.addAddress(input.address());
-        }
-        restaurant.cuisineType = input.cuisineType();
-        restaurant.openingHours = input.openingHours();
-        restaurant.closingHours = input.closingHours();
-        restaurant.ownerId = input.ownerId();
-        return restaurant;
     }
 
     public static Restaurant create(
