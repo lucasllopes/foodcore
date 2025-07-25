@@ -80,7 +80,9 @@ CREATE TABLE IF NOT EXISTS item (
 CREATE TABLE IF NOT EXISTS menu (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
-    description VARCHAR(255)
+    description VARCHAR(255),
+    restaurant_id BIGINT NOT NULL,
+    CONSTRAINT fk_menu_restaurante FOREIGN KEY (restaurant_id) REFERENCES restaurante(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS menu_item (
@@ -90,3 +92,7 @@ CREATE TABLE IF NOT EXISTS menu_item (
     FOREIGN KEY (menu_id) REFERENCES menu(id) ON DELETE CASCADE,
     FOREIGN KEY (item_id) REFERENCES item(id) ON DELETE CASCADE
 );
+
+
+
+

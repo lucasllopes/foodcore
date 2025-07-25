@@ -12,6 +12,7 @@ public class Menu {
     private final String name;
     private final String description;
     private final List<Item> items;
+    private final Long restaurantId;
 
     private Menu(Builder builder) {
         this.id = builder.id;
@@ -20,9 +21,10 @@ public class Menu {
         this.items = builder.itemsList == null
                 ? Collections.emptyList()
                 : Collections.unmodifiableList(new ArrayList<>(builder.itemsList));
+        this.restaurantId = builder.restaurantId;
     }
 
-    // Getters
+
     public Long getId() {
         return id;
     }
@@ -39,13 +41,16 @@ public class Menu {
         return items;
     }
 
+    public Long getRestaurantId() {
+        return restaurantId;
+    }
+
 
     public Menu atualizarInformacoes(String novoNome, String novaDescricao, List<Item> novaListaItens) {
-        // Atualiza nome e descrição se fornecidos
+
         String nomeAtualizado = novoNome != null ? novoNome : this.name;
         String descricaoAtualizada = novaDescricao != null ? novaDescricao : this.description;
 
-        // Sincroniza itens: adiciona novos, remove ausentes e atualiza existentes
         List<Item> itensAtualizados = new ArrayList<>();
         for (Item novoItem : novaListaItens) {
             Item existente = this.items.stream()
@@ -53,7 +58,7 @@ public class Menu {
                     .findFirst()
                     .orElse(null);
             if (existente != null) {
-                // Cria um novo Item com os dados atualizados
+
                 Item itemAtualizado = new Item.Builder()
                         .id(existente.getId())
                         .name(novoItem.getName())
@@ -64,11 +69,9 @@ public class Menu {
                         .build();
                 itensAtualizados.add(itemAtualizado);
             } else {
-                itensAtualizados.add(novoItem); // Adiciona novo item
+                itensAtualizados.add(novoItem);
             }
         }
-        // Remove itens que não estão na nova lista
-        // (itensAtualizados já contém apenas os itens desejados)
 
         return new Menu.Builder()
                 .id(this.id)
@@ -78,13 +81,12 @@ public class Menu {
                 .build();
     }
 
-
-    // Builder
     public static class Builder {
         private Long id;
         private String name;
         private String description;
         private List<Item> itemsList;
+        private Long restaurantId;
 
         public Builder() {
         }
@@ -112,6 +114,12 @@ public class Menu {
         public Menu build() {
             Objects.requireNonNull(name, "Menu name is required");
             return new Menu(this);
+        }
+
+        public Builder restaurantId(Long restaurantId) {
+            Objects.requireNonNull(name, "Restaurant id is required");
+            this.restaurantId = restaurantId;
+            return this;
         }
     }
 }
