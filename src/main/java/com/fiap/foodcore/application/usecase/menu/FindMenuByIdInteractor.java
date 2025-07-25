@@ -20,6 +20,7 @@ public class FindMenuByIdInteractor {
                 menu.getId(),
                 menu.getName(),
                 menu.getDescription(),
+                menu.getRestaurantId(),
                 menu.getItems().stream()
                         .map(item -> new ItemCreateOutput(
                                 item.getId(),

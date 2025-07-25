@@ -74,6 +74,12 @@ public class MenuRepositoryGateway implements MenuGateway {
                 .map(MenuMapper::toDomain);
     }
 
+    @Override
+    public Optional<Menu> findByNameAndRestaurantId(String name, Long restaurantId) {
+        return menuRepository.findByNameAndRestaurantId(name, restaurantId)
+                .map(MenuMapper::toDomain);
+    }
+
     private Sort toSpringSort(List<SortOrder> orders) {
         return Sort.by(
                 orders.stream().map(

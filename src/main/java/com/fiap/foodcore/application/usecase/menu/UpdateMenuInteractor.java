@@ -37,6 +37,7 @@ public class UpdateMenuInteractor {
                 savedMenu.getId(),
                 savedMenu.getName(),
                 savedMenu.getDescription(),
+                savedMenu.getRestaurantId(),
                 savedMenu.getItems().stream()
                         .map(MenuItemMapper::toOutput).toList());
     }

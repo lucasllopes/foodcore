@@ -50,6 +50,7 @@ public class MenuMapper {
                 menu.getId(),
                 menu.getName(),
                 menu.getDescription(),
+                menu.getRestaurantId(),
                 menu.getItems() != null
                         ? menu.getItems().stream()
                         .map(ItemMapper::fromDomain)

@@ -6,5 +6,6 @@ public record MenuCreateOutput(
         Long id,
         String name,
         String description,
+        Long restaurantId,
         List<ItemCreateOutput> items) {
 }
