@@ -51,7 +51,7 @@ public class RestaurantRepositoryGateway implements RestaurantGateway {
     @Override
     public DomainPage<Restaurant> findAllByName(String name, PageRequestDomain pageRequest) {
         Pageable pageable = PageRequest.of(pageRequest.page(), pageRequest.size(), toSpringSort(pageRequest.sortOrders()));
-        Page<RestaurantEntity> paginaSpring = restaurantRepository.findAll(pageable);
+        Page<RestaurantEntity> paginaSpring = restaurantRepository.findByNameContainingIgnoreCase(name, pageable);
 
         var items = paginaSpring.getContent().stream()
                 .map(RestaurantEntityMapper::toDomain)
