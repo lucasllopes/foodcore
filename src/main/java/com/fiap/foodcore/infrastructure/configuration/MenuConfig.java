@@ -1,6 +1,7 @@
 package com.fiap.foodcore.infrastructure.configuration;
 
 import com.fiap.foodcore.application.gateway.MenuGateway;
+import com.fiap.foodcore.application.gateway.RestaurantGateway;
 import com.fiap.foodcore.application.usecase.menu.*;
 import com.fiap.foodcore.infrastructure.gateways.MenuRepositoryGateway;
 import com.fiap.foodcore.infrastructure.gateways.persistence.ItemRepository;
@@ -22,8 +23,9 @@ public class MenuConfig {
     }
 
     @Bean
-    public CreateMenuInteractor createMenuInteractor(MenuRepositoryGateway menuRepositoryGateway) {
-        return new CreateMenuInteractor(menuRepositoryGateway);
+    public CreateMenuInteractor createMenuInteractor(MenuRepositoryGateway menuRepositoryGateway,
+                                                    RestaurantGateway restaurantGateway) {
+        return new CreateMenuInteractor(menuRepositoryGateway, restaurantGateway);
     }
 
     @Bean

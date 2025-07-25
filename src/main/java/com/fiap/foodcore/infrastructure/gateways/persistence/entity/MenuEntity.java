@@ -22,6 +22,10 @@ public class MenuEntity {
 
     private String description;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "restaurant_id", nullable = false)
+    private RestaurantEntity restaurant;
+
     @ManyToMany
     @JoinTable(
             name = "menu_item",

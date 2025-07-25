@@ -17,6 +17,7 @@ public class MenuPresenter {
                 null, // id normalmente gerado pelo sistema
                 dto.name(),
                 dto.description(),
+                dto.restaurantId(),
                 dto.items().stream().map(
                         item -> new ItemCreateOutput(
                                 null, // id normalmente gerado pelo sistema
@@ -36,6 +37,7 @@ public class MenuPresenter {
         return new MenuCreateRequestDTO(
                 output.name(),
                 output.description(),
+                output.restaurantId(),
                 output.items().stream().map(item -> new ItemCreateRequestDTO(
                         item.name(),
                         item.description(),
@@ -53,6 +55,7 @@ public class MenuPresenter {
                 output.id(),
                 output.name(),
                 output.description(),
+                output.restaurantId(),
                 output.items().stream()
                         .map(item -> new ItemCreateResponseDTO(
                                 item.id(),
@@ -77,6 +80,7 @@ public class MenuPresenter {
         return new CreateMenuInput(
                 dto.name(),
                 dto.description(),
+                dto.restaurantId(),
                 dto.items().stream()
                         .map(item -> new CreateItemInput(
                                 item.name(),
@@ -95,6 +99,7 @@ public class MenuPresenter {
         return new CreateMenuInput(
                 dto.name(),
                 dto.description(),
+                dto.restaurantId(),
                 dto.items().stream()
                         .map(item -> new CreateItemInput(
                                 item.name(),

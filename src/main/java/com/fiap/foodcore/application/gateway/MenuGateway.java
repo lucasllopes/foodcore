@@ -17,4 +17,6 @@ public interface MenuGateway {
     void delete(Menu menu);
 
     Optional<Menu> findByName(String name);
+
+    Optional<Menu> findByNameAndRestaurantId(String name, Long restaurantId);
 }
