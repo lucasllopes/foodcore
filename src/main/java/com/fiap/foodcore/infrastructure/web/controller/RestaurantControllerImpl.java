@@ -19,6 +19,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -81,6 +82,7 @@ public class RestaurantControllerImpl implements RestaurantController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_DONO')")
     public ResponseEntity<RestaurantResponseDTO> createRestaurant(@Valid @RequestBody RestaurantCreateRequestDTO dto) {
         logger.info("Handling POST request to /restaurantes");
 
@@ -91,6 +93,7 @@ public class RestaurantControllerImpl implements RestaurantController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
     @PutMapping("/{id}")
+    @PreAuthorize("#hasRole('ROLE_DONO')")
     public ResponseEntity<RestaurantResponseDTO> updateRestaurant(@PathVariable Long id, @Valid @RequestBody RestaurantUpdateRequestDTO dto) {
         logger.info("Handling PUT request to /restaurantes");
 
@@ -103,6 +106,7 @@ public class RestaurantControllerImpl implements RestaurantController {
     }
 
     @DeleteMapping(path = "/{id}")
+    @PreAuthorize("hasRole('ROLE_DONO')")
     public ResponseEntity<Void> deleteRestaurant(@PathVariable Long id) {
         logger.info("Handling DELETE request to /restaurantes");
         deleteRestaurantInteractor.execute(id);
