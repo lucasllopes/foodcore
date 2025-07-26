@@ -136,9 +136,9 @@ public class UserControllerImpl implements UserController {
 
     @PutMapping("/{id}/tipo")
     @PreAuthorize("hasRole('ROLE_DONO')")
-    public ResponseEntity<UserResponseDTO> assignUserType(
+    public ResponseEntity<UserResponseDTO> assignUserSubtype(
             @PathVariable Long id,
-            @RequestBody @Valid AssignUserTypeToUserDTO dto) {
+            @RequestBody @Valid AssignUserSubtypeToUserDTO dto) {
 
         AssignUserSubtypeToUserInput input = UserPresenter.toAssignUserTypeToUserInput(dto);
         CreateUserOutput output = assignUserTypeToUser.execute(id, input);

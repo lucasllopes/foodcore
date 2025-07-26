@@ -1,4 +1,4 @@
 package com.fiap.foodcore.infrastructure.web.controller.dto;
 
-public record UserTypeResponseDTO(Long id, String name) {
+public record UserSubtypeResponseDTO(Long id, String name) {
 }

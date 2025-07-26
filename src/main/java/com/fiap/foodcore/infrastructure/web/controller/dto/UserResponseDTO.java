@@ -14,5 +14,5 @@ public record UserResponseDTO(
         UserTypeDomain tipo,
         List<AddressResponseDTO> enderecos,
         @JsonInclude(JsonInclude.Include.NON_NULL)
-        UserTypeResponseDTO tipoUsuario
+        UserSubtypeResponseDTO tipoUsuario
 ) {}

@@ -8,7 +8,6 @@ import com.fiap.foodcore.application.usecase.output.UpdateUserSubtypeOutput;
 import com.fiap.foodcore.domain.pagination.DomainPage;
 import com.fiap.foodcore.domain.pagination.PageRequestDomain;
 import com.fiap.foodcore.domain.pagination.SortOrder;
-import com.fiap.foodcore.infrastructure.presenter.UserPresenter;
 import com.fiap.foodcore.infrastructure.presenter.UserSubtypePresenter;
 import com.fiap.foodcore.infrastructure.web.controller.dto.*;
 import jakarta.validation.Valid;
@@ -49,45 +48,45 @@ public class UserSubtypeControllerImpl implements UserSubtypeController {
 
 
     @PostMapping
-    public ResponseEntity<UserTypeResponseDTO> createUserType(@Valid @RequestBody UserTypeRequestDTO dto) {
+    public ResponseEntity<UserSubtypeResponseDTO> createUserSubtype(@Valid @RequestBody UserSubtypeRequestDTO dto) {
         logger.info("Handling POST request to /tipos");
 
         CreateUserSubtypeInput input = UserSubtypePresenter.toInputCreate(dto);
         CreateUserSubtypeOutput output = createUserSubtype.execute(input);
 
-        UserTypeResponseDTO response = UserSubtypePresenter.toDto(output);
+        UserSubtypeResponseDTO response = UserSubtypePresenter.toDto(output);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UpdateUserTypeResponseDTO> updateUser(@PathVariable Long id, @Valid @RequestBody UserTypeUpdateRequestDTO dto) {
+    public ResponseEntity<UpdateUserSubtypeResponseDTO> updateUserSubtype(@PathVariable Long id, @Valid @RequestBody UserSubtypeUpdateRequestDTO dto) {
         logger.info("Handling PUT request to /tipos");
 
         UpdateUserSubtypeInput input = UserSubtypePresenter.toInputUpdate(dto);
         UpdateUserSubtypeOutput output = updateUserSubtype.execute(id, input);
 
-        UpdateUserTypeResponseDTO response = UserSubtypePresenter.toUpdateDto(output);
+        UpdateUserSubtypeResponseDTO response = UserSubtypePresenter.toUpdateDto(output);
 
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserTypeResponseDTO> findById(@PathVariable Long id) {
+    public ResponseEntity<UserSubtypeResponseDTO> findById(@PathVariable Long id) {
         logger.info("Handling GET request to /{ID}");
 
         CreateUserSubtypeOutput output = findUserSubtypeById.execute(id);
-        UserTypeResponseDTO dto = UserSubtypePresenter.toDto(output);
+        UserSubtypeResponseDTO dto = UserSubtypePresenter.toDto(output);
 
         return ResponseEntity.ok(dto);
     }
 
     @GetMapping("/name/{name}")
-    public ResponseEntity<List<UserTypeResponseDTO>> findByName(@PathVariable String name) {
+    public ResponseEntity<List<UserSubtypeResponseDTO>> findByName(@PathVariable String name) {
         logger.info("Handling GET request to /tipos/name/{}", name);
 
         List<CreateUserSubtypeOutput> outputList = findUserSubtypeByNameUseCase.execute(name);
 
-        List<UserTypeResponseDTO> responseList = outputList.stream()
+        List<UserSubtypeResponseDTO> responseList = outputList.stream()
                 .map(UserSubtypePresenter::toDto)
                 .toList();
 
@@ -95,7 +94,7 @@ public class UserSubtypeControllerImpl implements UserSubtypeController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteUserSubtype(@PathVariable Long id) {
         logger.info("Handling DELETE request to /tipos");
         deleteUserSubtype.execute(id);
         return ResponseEntity.noContent().build();
@@ -103,7 +102,7 @@ public class UserSubtypeControllerImpl implements UserSubtypeController {
 
     @GetMapping
     @PreAuthorize("hasRole('ROLE_DONO')")
-    public ResponseEntity<Page<UserTypeResponseDTO>> listUserSubtypePaginated(Pageable pageable){
+    public ResponseEntity<Page<UserSubtypeResponseDTO>> listUserSubtypePaginated(Pageable pageable){
         logger.info("Handling GET request to /tipos");
         List<SortOrder> sortOrders = pageable.getSort().stream()
                 .map(order -> new SortOrder(order.getProperty(), order.isAscending()))
@@ -112,11 +111,11 @@ public class UserSubtypeControllerImpl implements UserSubtypeController {
         PageRequestDomain pr = new PageRequestDomain(pageable.getPageNumber(), pageable.getPageSize(), sortOrders);
 
         DomainPage<CreateUserSubtypeOutput> outputs = listUserSubtype.execute(pr);
-        List<UserTypeResponseDTO> dtos = outputs.getItems()
+        List<UserSubtypeResponseDTO> dtos = outputs.getItems()
                 .stream().map(UserSubtypePresenter::toDto)
                 .toList();
 
-        Page<UserTypeResponseDTO> paginatedUser = new PageImpl<>(
+        Page<UserSubtypeResponseDTO> paginatedUser = new PageImpl<>(
                 dtos,
                 pageable,
                 outputs.getTotalElements()

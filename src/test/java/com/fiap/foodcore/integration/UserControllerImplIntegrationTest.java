@@ -69,7 +69,7 @@ public class UserControllerImplIntegrationTest {
     }
 
     @Test
-    void shouldFailedCreateOwnerUserSameEmailSuccessfully() {
+    void shouldFailCreateOwnerUserSameEmail() {
         UserCreateRequestDTO original = UserTestHelper.createValidGenericOwnerRequest();
 
         given()
@@ -99,7 +99,7 @@ public class UserControllerImplIntegrationTest {
     }
 
     @Test
-    void shouldFailedCreateOwnerUserSameLoginSuccessfully() {
+    void shouldFailCreateOwnerUserSameLogin() {
         UserCreateRequestDTO original = UserTestHelper.createValidGenericOwnerRequest();
 
         given()
@@ -163,7 +163,7 @@ public class UserControllerImplIntegrationTest {
 
 
     @Test
-    void shouldFailedCreateEmployeeUserSameEmailSuccessfully() {
+    void shouldFailCreateEmployeeUserSameEmail() {
         UserCreateRequestDTO original = UserTestHelper.createValidGenericEmployeeRequest();
 
         given()
@@ -193,7 +193,7 @@ public class UserControllerImplIntegrationTest {
     }
 
     @Test
-    void shouldFailedCreateEmployeeUserSameLoginSuccessfully() {
+    void shouldFailCreateEmployeeUserSameLogin() {
         UserCreateRequestDTO original = UserTestHelper.createValidGenericEmployeeRequest();
 
         given()
@@ -256,7 +256,7 @@ public class UserControllerImplIntegrationTest {
     }
 
     @Test
-    void shouldFailedCreateCustomerUserSameEmailSuccessfully() {
+    void shouldFailCreateCustomerUserSameEmail() {
         UserCreateRequestDTO original = UserTestHelper.createValidGenericCustomerRequest();
 
         given()
@@ -286,8 +286,8 @@ public class UserControllerImplIntegrationTest {
     }
 
     @Test
-    void shouldFailedCreateCustomerUserSameLoginSuccessfully() {
-        UserCreateRequestDTO original = UserTestHelper.createValidGenericCustomerRequest();
+    void shouldFailCreateCustomerUserSameLogin() {
+        UserCreateRequestDTO original = UserTestHelper.createValidGenericOwnerRequest();
 
         given()
                 .body(original)
@@ -468,7 +468,7 @@ public class UserControllerImplIntegrationTest {
 
         String token = authenticateAndGetToken(owner);
 
-        String response = given()
+        given()
                 .header("Authorization", "Bearer " + token)
                 .when()
                 .get("/usuarios?page=0&size=50&sort=nome,asc")
@@ -478,7 +478,7 @@ public class UserControllerImplIntegrationTest {
                 .body("content.size()", greaterThan(0))
                 .body("content.login", hasItems(customerResponse.login(), ownerResponse.login()))
                 .body("content.nome", hasItems(customerResponse.nome(), ownerResponse.nome()))
-                .body("totalElements", greaterThan(0)).extract().asPrettyString();
+                .body("totalElements", greaterThan(0));
 
     }
 
@@ -562,7 +562,7 @@ public class UserControllerImplIntegrationTest {
 
 
     @Test
-    void shouldAssignUserTypeToUserSuccessfully() {
+    void shouldAssignUserSubtypeToUserSuccessfully() {
 
         UserCreateRequestDTO userCustomerDTO = UserTestHelper.createValidGenericCustomerRequest();
         UserResponseDTO userCustomerResponse = createUser(userCustomerDTO);
@@ -570,7 +570,7 @@ public class UserControllerImplIntegrationTest {
         UserCreateRequestDTO userOwnerDTO = UserTestHelper.createValidGenericOwnerRequest();
         createUser(userOwnerDTO);
 
-        UserTypeRequestDTO userSubtypeRequestDTO = new UserTypeRequestDTO("USER TYPE TEST");
+        UserSubtypeRequestDTO userSubtypeRequestDTO = new UserSubtypeRequestDTO("USER TYPE TEST");
 
         String adminToken = authenticateAndGetToken(userOwnerDTO);
 
@@ -587,7 +587,7 @@ public class UserControllerImplIntegrationTest {
                         .getLong("id");
 
 
-        AssignUserTypeToUserDTO dto = new AssignUserTypeToUserDTO(createdSubtypeId);
+        AssignUserSubtypeToUserDTO dto = new AssignUserSubtypeToUserDTO(createdSubtypeId);
 
         given()
                 .header("Authorization", "Bearer " + adminToken)
@@ -599,6 +599,41 @@ public class UserControllerImplIntegrationTest {
                 .body("id", equalTo(userCustomerResponse.id().intValue()))
                 .body("tipoUsuario", notNullValue())
                 .body("tipoUsuario.name", equalTo(userSubtypeRequestDTO.name()));
+    }
+
+
+    @Test
+    void shouldFailAssignUserSubtypeToOwnerUser() {
+
+        UserCreateRequestDTO userOwnerDTO = UserTestHelper.createValidGenericOwnerRequest();
+        UserResponseDTO response = createUser(userOwnerDTO);
+
+        UserSubtypeRequestDTO userSubtypeRequestDTO = new UserSubtypeRequestDTO("USER OWNER");
+
+        String adminToken = authenticateAndGetToken(userOwnerDTO);
+
+        Long createdSubtypeId =
+                given()
+                        .header("Authorization", "Bearer " + adminToken)
+                        .body(userSubtypeRequestDTO)
+                        .when()
+                        .post("/tipos")
+                        .then()
+                        .statusCode(HttpStatus.CREATED.value())
+                        .extract()
+                        .jsonPath()
+                        .getLong("id");
+
+
+        AssignUserSubtypeToUserDTO dto = new AssignUserSubtypeToUserDTO(createdSubtypeId);
+
+        given()
+                .header("Authorization", "Bearer " + adminToken)
+                .body(dto)
+                .when()
+                .put("/usuarios/{id}/tipo", response.id())
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
     }
 
     public UserResponseDTO createUser(UserCreateRequestDTO dto) {

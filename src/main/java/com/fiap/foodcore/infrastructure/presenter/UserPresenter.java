@@ -29,7 +29,7 @@ public class UserPresenter {
                         )
                 ).collect(Collectors.toList()),
                 output.userTypeOutput() != null
-                        ? new UserTypeResponseDTO(output.userTypeOutput().id(),output.userTypeOutput().name())
+                        ? new UserSubtypeResponseDTO(output.userTypeOutput().id(),output.userTypeOutput().name())
                         : null
         );
     }
@@ -83,7 +83,7 @@ public class UserPresenter {
         return new ChangePasswordInput(dto.senhaAtual(), dto.novaSenha());
     }
 
-    public static AssignUserSubtypeToUserInput toAssignUserTypeToUserInput(AssignUserTypeToUserDTO dto) {
+    public static AssignUserSubtypeToUserInput toAssignUserTypeToUserInput(AssignUserSubtypeToUserDTO dto) {
         return new AssignUserSubtypeToUserInput(dto.idUserSubtype());
     }
 }

@@ -8,23 +8,23 @@ import com.fiap.foodcore.infrastructure.web.controller.dto.*;
 
 public class UserSubtypePresenter {
 
-    public static CreateUserSubtypeInput toInputCreate(UserTypeRequestDTO dto) {
+    public static CreateUserSubtypeInput toInputCreate(UserSubtypeRequestDTO dto) {
         return new CreateUserSubtypeInput(dto.name());
     }
 
-    public static UserTypeResponseDTO toDto(CreateUserSubtypeOutput output) {
+    public static UserSubtypeResponseDTO toDto(CreateUserSubtypeOutput output) {
 
-        return new UserTypeResponseDTO(
+        return new UserSubtypeResponseDTO(
                 output.id(),
                 output.name().toUpperCase());
     }
 
-    public static UpdateUserSubtypeInput toInputUpdate(UserTypeUpdateRequestDTO dto) {
+    public static UpdateUserSubtypeInput toInputUpdate(UserSubtypeUpdateRequestDTO dto) {
         UpdateUserSubtypeInput updateUserInput = new UpdateUserSubtypeInput(dto.name().toUpperCase());
         return updateUserInput;
     }
 
-    public static UpdateUserTypeResponseDTO toUpdateDto(UpdateUserSubtypeOutput output) {
-        return new UpdateUserTypeResponseDTO(output.id(), output.name().toUpperCase(), output.lastModified());
+    public static UpdateUserSubtypeResponseDTO toUpdateDto(UpdateUserSubtypeOutput output) {
+        return new UpdateUserSubtypeResponseDTO(output.id(), output.name().toUpperCase(), output.lastModified());
     }
 }

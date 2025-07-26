@@ -2,5 +2,5 @@ package com.fiap.foodcore.infrastructure.web.controller.dto;
 
 import jakarta.validation.constraints.NotNull;
 
-public record AssignUserTypeToUserDTO(@NotNull Long idUserSubtype) {
+public record AssignUserSubtypeToUserDTO(@NotNull Long idUserSubtype) {
 }

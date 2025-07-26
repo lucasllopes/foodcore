@@ -8,8 +8,8 @@ import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
 import com.fiap.foodcore.helper.UserTestHelper;
 import com.fiap.foodcore.infrastructure.presenter.UserPresenter;
 import com.fiap.foodcore.infrastructure.web.controller.dto.UserCreateRequestDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.UserTypeRequestDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.UserTypeUpdateRequestDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.UserSubtypeRequestDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.UserSubtypeUpdateRequestDTO;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
@@ -55,7 +55,7 @@ public class UserSubtypeControllerImplIntegrationTest {
         createUser(owner);
         String token = authenticateAndGetToken(owner);
 
-        UserTypeRequestDTO requestDTO = new UserTypeRequestDTO("TESTE");
+        UserSubtypeRequestDTO requestDTO = new UserSubtypeRequestDTO("TESTE");
 
         given()
                 .header("Authorization", "Bearer " + token)
@@ -70,13 +70,13 @@ public class UserSubtypeControllerImplIntegrationTest {
     }
 
     @Test
-    void shouldFailedCreateUserSubtypeSameNameSuccessfully() {
+    void shouldFailCreateUserSubtypeSameName() {
 
         UserCreateRequestDTO owner = UserTestHelper.createValidGenericOwnerRequest();
         createUser(owner);
         String token = authenticateAndGetToken(owner);
 
-        UserTypeRequestDTO requestDTO = new UserTypeRequestDTO("TESTE DUPLICADO");
+        UserSubtypeRequestDTO requestDTO = new UserSubtypeRequestDTO("TESTE DUPLICADO");
 
         given()
                 .header("Authorization", "Bearer " + token)
@@ -99,12 +99,12 @@ public class UserSubtypeControllerImplIntegrationTest {
     }
 
     @Test
-    void shouldGetUserTypeByIdSuccessfully() {
+    void shouldGetUserSubtypeByIdSuccessfully() {
         UserCreateRequestDTO owner = UserTestHelper.createValidGenericOwnerRequest();
         createUser(owner);
         String token = UserTestHelper.authenticateAndGetToken(owner);
 
-        UserTypeRequestDTO requestDTO = new UserTypeRequestDTO("OWNER");
+        UserSubtypeRequestDTO requestDTO = new UserSubtypeRequestDTO("OWNER");
 
         var createdTypeId =
                 given()
@@ -128,12 +128,12 @@ public class UserSubtypeControllerImplIntegrationTest {
     }
 
     @Test
-    void shouldGetUserTypeByNameSuccessfully() {
+    void shouldGetUserSubtypeByNameSuccessfully() {
         UserCreateRequestDTO owner = UserTestHelper.createValidGenericOwnerRequest();
         createUser(owner);
         String token = authenticateAndGetToken(owner);
 
-        UserTypeRequestDTO requestDTO = new UserTypeRequestDTO("GENERIC TYPE");
+        UserSubtypeRequestDTO requestDTO = new UserSubtypeRequestDTO("GENERIC TYPE");
 
         given()
                 .header("Authorization", "Bearer " + token)
@@ -153,12 +153,12 @@ public class UserSubtypeControllerImplIntegrationTest {
     }
 
     @Test
-    void shouldUpdateUserTypeSuccessfully() {
+    void shouldUpdateUserSubtypeSuccessfully() {
         UserCreateRequestDTO owner = UserTestHelper.createValidGenericOwnerRequest();
         createUser(owner);
         String token = authenticateAndGetToken(owner);
 
-        UserTypeRequestDTO createDTO = new UserTypeRequestDTO("GERENTE");
+        UserSubtypeRequestDTO createDTO = new UserSubtypeRequestDTO("GERENTE");
 
         Long createdTypeId =
                 given()
@@ -172,7 +172,7 @@ public class UserSubtypeControllerImplIntegrationTest {
                         .jsonPath()
                         .getLong("id");
 
-        UserTypeUpdateRequestDTO updateDTO = new UserTypeUpdateRequestDTO("GERENTE ATUALIZADO");
+        UserSubtypeUpdateRequestDTO updateDTO = new UserSubtypeUpdateRequestDTO("GERENTE ATUALIZADO");
 
         given()
                 .header("Authorization", "Bearer " + token)
@@ -186,13 +186,41 @@ public class UserSubtypeControllerImplIntegrationTest {
     }
 
     @Test
-    void shouldDeleteUserTypeSuccessfully() {
+    void shouldDeleteUserSubtypeSuccessfully() {
 
         UserCreateRequestDTO owner = UserTestHelper.createValidGenericOwnerRequest();
         createUser(owner);
         String token = authenticateAndGetToken(owner);
 
-        UserTypeRequestDTO requestDTO = new UserTypeRequestDTO("GENERIC_TYPE");
+        UserSubtypeRequestDTO requestDTO = new UserSubtypeRequestDTO("GENERIC_TYPE");
+
+        Long createdSubtypeId = given()
+                .header("Authorization", "Bearer " + token)
+                .body(requestDTO)
+                .when()
+                .post("/tipos")
+                .then()
+                .statusCode(HttpStatus.CREATED.value())
+                .extract()
+                .jsonPath()
+                .getLong("id");
+
+        given()
+                .header("Authorization", "Bearer " + token)
+                .when()
+                .delete("/tipos/{id}", createdSubtypeId)
+                .then()
+                .statusCode(HttpStatus.NO_CONTENT.value());
+    }
+
+    @Test
+    void shouldFailDeleteUserSubtypeNotFoundId() {
+
+        UserCreateRequestDTO owner = UserTestHelper.createValidGenericOwnerRequest();
+        createUser(owner);
+        String token = authenticateAndGetToken(owner);
+
+        UserSubtypeRequestDTO requestDTO = new UserSubtypeRequestDTO("GENERIC_TYPE_FAIL");
 
         given()
                 .header("Authorization", "Bearer " + token)
@@ -201,20 +229,27 @@ public class UserSubtypeControllerImplIntegrationTest {
                 .post("/tipos")
                 .then()
                 .statusCode(HttpStatus.CREATED.value())
-                .body("$", hasKey("id"))
-                .body("$", hasKey("name"))
-                .body("name", equalTo(requestDTO.name()));
+                .extract()
+                .jsonPath()
+                .getLong("id");
+
+        given()
+                .header("Authorization", "Bearer " + token)
+                .when()
+                .delete("/tipos/{id}", 99999999)
+                .then()
+                .statusCode(HttpStatus.NOT_FOUND.value());
     }
 
 
     @Test
-    void shouldListUserTypePaginatedSuccessfully() {
+    void shouldListUserSubtypePaginatedSuccessfully() {
 
         UserCreateRequestDTO owner = UserTestHelper.createValidGenericOwnerRequest();
         createUser(owner);
         String token = authenticateAndGetToken(owner);
 
-        UserTypeRequestDTO requestDTO = new UserTypeRequestDTO("Generic User" + UUID.randomUUID());
+        UserSubtypeRequestDTO requestDTO = new UserSubtypeRequestDTO("Generic User" + UUID.randomUUID());
 
         given()
                 .header("Authorization", "Bearer " + token)

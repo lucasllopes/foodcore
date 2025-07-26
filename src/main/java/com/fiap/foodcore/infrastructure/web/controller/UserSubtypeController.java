@@ -30,7 +30,7 @@ public interface UserSubtypeController {
                     required = true,
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = UserTypeRequestDTO.class),
+                            schema = @Schema(implementation = UserSubtypeRequestDTO.class),
                             examples = {
                                     @ExampleObject(
                                             name = "Exemplo de dados do subtipo de usuário que será inserido",
@@ -53,7 +53,7 @@ public interface UserSubtypeController {
                     content = {
                             @Content(
                                     mediaType = "application/json",
-                                    schema = @Schema(implementation = UserTypeResponseDTO.class)
+                                    schema = @Schema(implementation = UserSubtypeResponseDTO.class)
                             )
                     }
             ),
@@ -130,7 +130,7 @@ public interface UserSubtypeController {
                     }
             )
     })
-    ResponseEntity<UserTypeResponseDTO> createUserType(UserTypeRequestDTO dto);
+    ResponseEntity<UserSubtypeResponseDTO> createUserSubtype(UserSubtypeRequestDTO dto);
 
     @Operation(
             description = "Ao passar um id de um subtipo de usuário existente e um json com os dados de um subtipo de usuário no corpo da requisição, " +
@@ -143,7 +143,7 @@ public interface UserSubtypeController {
                     required = true,
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = UserTypeRequestDTO.class),
+                            schema = @Schema(implementation = UserSubtypeRequestDTO.class),
                             examples = {
                                     @ExampleObject(
                                             name = "Exemplo de dados do subtipo de usuário que será inserido",
@@ -166,7 +166,7 @@ public interface UserSubtypeController {
                     content = {
                             @Content(
                                     mediaType = "application/json",
-                                    schema = @Schema(implementation = UpdateUserTypeResponseDTO.class)
+                                    schema = @Schema(implementation = UpdateUserSubtypeResponseDTO.class)
                             )
                     }
             ),
@@ -244,7 +244,7 @@ public interface UserSubtypeController {
 //                    }
 //            )
     })
-    ResponseEntity<UpdateUserTypeResponseDTO> updateUser(Long id, UserTypeUpdateRequestDTO dto);
+    ResponseEntity<UpdateUserSubtypeResponseDTO> updateUserSubtype(Long id, UserSubtypeUpdateRequestDTO dto);
 
     @Operation(
             description = "Ao passar um id de um subtipo de usuário como parâmetro, " +
@@ -260,7 +260,7 @@ public interface UserSubtypeController {
                     content = {
                             @Content(
                                     mediaType = "application/json",
-                                    schema = @Schema(implementation = UserTypeResponseDTO.class)
+                                    schema = @Schema(implementation = UserSubtypeResponseDTO.class)
                             )
                     }
             ),
@@ -311,7 +311,7 @@ public interface UserSubtypeController {
                     }
             )
     })
-    ResponseEntity<UserTypeResponseDTO> findById(Long id);
+    ResponseEntity<UserSubtypeResponseDTO> findById(Long id);
 
     @Operation(
             description = "Ao passar um nome de um subtipo de usuário como parâmetro, " +
@@ -327,7 +327,7 @@ public interface UserSubtypeController {
                     content = {
                             @Content(
                                     mediaType = "application/json",
-                                    schema = @Schema(implementation = UserTypeResponseDTO.class)
+                                    schema = @Schema(implementation = UserSubtypeResponseDTO.class)
                             )
                     }
             ),
@@ -378,7 +378,7 @@ public interface UserSubtypeController {
                     }
             )
     })
-    ResponseEntity<List<UserTypeResponseDTO>> findByName(String name);
+    ResponseEntity<List<UserSubtypeResponseDTO>> findByName(String name);
 
     @Operation(
             description = "Ao passar um id de um subtipo de usuário como parâmetro, " +
@@ -446,7 +446,7 @@ public interface UserSubtypeController {
                     }
             )
     })
-    ResponseEntity<Void> deleteUser(Long id);
+    ResponseEntity<Void> deleteUserSubtype(Long id);
 
     @Operation(
             description = "Ao passar as condições da paginação, verifica o tipo de usuário de quem " +
@@ -462,7 +462,7 @@ public interface UserSubtypeController {
                     content = {
                             @Content(
                                     mediaType = "application/json",
-                                    schema = @Schema(implementation = UserTypeResponseDTO.class)
+                                    schema = @Schema(implementation = UserSubtypeResponseDTO.class)
                             )
                     }
             ),
@@ -515,5 +515,5 @@ public interface UserSubtypeController {
                     }
             )
     })
-    ResponseEntity<Page<UserTypeResponseDTO>> listUserSubtypePaginated(@ParameterObject Pageable pageable);
+    ResponseEntity<Page<UserSubtypeResponseDTO>> listUserSubtypePaginated(@ParameterObject Pageable pageable);
 }

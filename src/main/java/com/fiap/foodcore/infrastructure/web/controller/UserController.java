@@ -548,7 +548,7 @@ public interface UserController {
                     required = true,
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = AssignUserTypeToUserDTO.class),
+                            schema = @Schema(implementation = AssignUserSubtypeToUserDTO.class),
                             examples = {
                                     @ExampleObject(
                                             name = "Exemplo de json com o id do tipo de usuário " +
@@ -558,7 +558,7 @@ public interface UserController {
                                                     "que será atribuido ao usuário",
                                             value = """
                                                     {
-                                                         "idUserType": 3
+                                                         "idUserSubtype": 3
                                                     }
                                                     """
                                     )
@@ -626,5 +626,5 @@ public interface UserController {
                     }
             )
     })
-    ResponseEntity<UserResponseDTO> assignUserType(Long id, AssignUserTypeToUserDTO dto);
+    ResponseEntity<UserResponseDTO> assignUserSubtype(Long id, AssignUserSubtypeToUserDTO dto);
 }
