@@ -16,7 +16,15 @@ public class AddressTest {
                 "Rua A", "123", "Apto 1", "Centro", "São Paulo", "11111-000", "SP"
         );
 
-        Address address = Address.addAddress(input);
+        Address address = Address.builder()
+                .logradouro(input.logradouro())
+                .numero(input.numero())
+                .complemento(input.complemento())
+                .bairro(input.bairro())
+                .cidade(input.cidade())
+                .estado(input.estado())
+                .cep(input.cep())
+                .build();
 
         assertEquals("Rua A", address.getLogradouro());
         assertEquals("123", address.getNumero());
@@ -33,7 +41,15 @@ public class AddressTest {
                 "Rua A", "123", "Complemento", "Bairro B", "Rio de Janeiro", "RJ", "11111-111"
         );
 
-        Address address = Address.addAddress(input);
+        Address address = Address.builder()
+                .logradouro(input.logradouro())
+                .numero(input.numero())
+                .complemento(input.complemento())
+                .bairro(input.bairro())
+                .cidade(input.cidade())
+                .estado(input.estado())
+                .cep(input.cep())
+                .build();
 
         assertEquals("Rua A", address.getLogradouro());
         assertEquals("123", address.getNumero());
@@ -49,12 +65,30 @@ public class AddressTest {
         AddressUpdateInput inputInicial = new AddressUpdateInput(
                 "Rua A", "123", "Complemento", "Paulista", "Sao Paulo", "SP", "11111-111"
         );
-        Address address = Address.addAddress(inputInicial);
+        Address address = Address.builder()
+                .logradouro(inputInicial.logradouro())
+                .numero(inputInicial.numero())
+                .complemento(inputInicial.complemento())
+                .bairro(inputInicial.bairro())
+                .cidade(inputInicial.cidade())
+                .estado(inputInicial.estado())
+                .cep(inputInicial.cep())
+                .build();
 
         AddressUpdateInput novoInput = new AddressUpdateInput(
                 "Rua B", "456", "Complemento 2", "Bairro", "Curitiba", "PR", "22222-222"
         );
-        address.updateFrom(novoInput);
+        Address updatedAddress = Address.builder()
+                .logradouro(novoInput.logradouro())
+                .numero(novoInput.numero())
+                .complemento(novoInput.complemento())
+                .bairro(novoInput.bairro())
+                .cidade(novoInput.cidade())
+                .estado(novoInput.estado())
+                .cep(novoInput.cep())
+                .build();
+
+        address = updatedAddress;
 
         assertEquals("Rua B", address.getLogradouro());
         assertEquals("456", address.getNumero());

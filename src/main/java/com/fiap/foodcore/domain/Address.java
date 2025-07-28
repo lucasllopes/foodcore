@@ -5,6 +5,7 @@ import com.fiap.foodcore.application.usecase.input.CreateAddressInput;
 import lombok.Builder;
 import lombok.Getter;
 
+
 @Getter
 public class Address {
 
@@ -18,44 +19,75 @@ public class Address {
     private String cep;
 
     private Address() {
-
     }
 
-    public static Address addAddress(CreateAddressInput input) {
-        Address e = new Address();
-
-        e.logradouro = input.logradouro();
-        e.numero = input.numero();
-        e.complemento = input.complemento();
-        e.bairro = input.bairro();
-        e.cidade = input.cidade();
-        e.estado = input.estado();
-        e.cep = input.cep();
-        return e;
+    // Método para criar um builder
+    public static Builder builder() {
+        return new Builder();
     }
 
-    public static Address addAddress(AddressUpdateInput input) {
-        Address e = new Address();
-        e.logradouro = input.logradouro();
-        e.numero = input.numero();
-        e.complemento = input.complemento();
-        e.bairro = input.bairro();
-        e.cidade = input.cidade();
-        e.estado = input.estado();
-        e.cep = input.cep();
-        return e;
+    // Método para atualizar propriedades
+    public void update(String logradouro, String numero, String complemento,
+                       String bairro, String cidade, String estado, String cep) {
+        this.logradouro = logradouro;
+        this.numero = numero;
+        this.complemento = complemento;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.estado = estado;
+        this.cep = cep;
     }
 
-    public void updateFrom(AddressUpdateInput input) {
-        this.logradouro = input.logradouro();
-        this.numero = input.numero();
-        this.complemento = input.complemento();
-        this.bairro = input.bairro();
-        this.cidade = input.cidade();
-        this.estado = input.estado();
-        this.cep = input.cep();
+    // Classe Builder interna
+    public static class Builder {
+        private final Address instance = new Address();
+
+        public Builder id(Long id) {
+            instance.id = id;
+            return this;
+        }
+
+        public Builder logradouro(String logradouro) {
+            instance.logradouro = logradouro;
+            return this;
+        }
+
+        public Builder numero(String numero) {
+            instance.numero = numero;
+            return this;
+        }
+
+        public Builder complemento(String complemento) {
+            instance.complemento = complemento;
+            return this;
+        }
+
+        public Builder bairro(String bairro) {
+            instance.bairro = bairro;
+            return this;
+        }
+
+        public Builder cidade(String cidade) {
+            instance.cidade = cidade;
+            return this;
+        }
+
+        public Builder estado(String estado) {
+            instance.estado = estado;
+            return this;
+        }
+
+        public Builder cep(String cep) {
+            instance.cep = cep;
+            return this;
+        }
+
+        public Address build() {
+            return instance;
+        }
     }
 
+    // Método auxiliar para compatibilidade com código existente
     public static Address rebuildAddress(Long id,
                                          String logradouro,
                                          String numero,
@@ -64,16 +96,15 @@ public class Address {
                                          String cidade,
                                          String estado,
                                          String cep) {
-
-        Address e = new Address();
-        e.id = id;
-        e.logradouro = logradouro;
-        e.numero = numero;
-        e.complemento = complemento;
-        e.bairro = bairro;
-        e.cidade = cidade;
-        e.estado = estado;
-        e.cep = cep;
-        return e;
+        return Address.builder()
+                .id(id)
+                .logradouro(logradouro)
+                .numero(numero)
+                .complemento(complemento)
+                .bairro(bairro)
+                .cidade(cidade)
+                .estado(estado)
+                .cep(cep)
+                .build();
     }
 }

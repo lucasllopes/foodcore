@@ -22,60 +22,110 @@ public class User {
     private UserSubtype userSubtype;
 
     private User() {
-
     }
 
-    public static User create(String senhaCodificada, UserTypeDomain tipo, CreateUserInput createUserInput) {
-        User user = new User();
-        user.nome = createUserInput.nome();
-        user.email = createUserInput.email();
-        user.login = createUserInput.login();
-        user.senha = senhaCodificada;
-        user.tipo = tipo;
-
-        if (!createUserInput.enderecos().isEmpty()) {
-
-            user.address = createUserInput.enderecos()
-                    .stream()
-                    .map(Address::addAddress)
-                    .toList();
-        }
-
-        user.dataUltimaAlteracao = LocalDateTime.now();
-        return user;
-    }
-
-
+    // Método para alterar senha
     public void changePassword(String novaSenha) {
         this.senha = novaSenha;
         this.dataUltimaAlteracao = LocalDateTime.now();
     }
 
-    public void updateInformation(UpdateUserInput input) {
-        this.nome = input.nome();
-        this.email = input.email();
+    // Método para atualizar informações do usuário
+    public void updateInformation(String nome, String email, List<Address> enderecos) {
+        this.nome = nome;
+        this.email = email;
 
-        if (input.enderecos() != null) {
+        if (enderecos != null) {
             if (this.address == null) {
                 this.address = new ArrayList<>();
             }
 
-            List<Address> updatedAddresses = new ArrayList<>();
-
-            for (int i = 0; i < input.enderecos().size(); i++) {
-                if (i < this.address.size()) {
-                    Address existingAddress = this.address.get(i);
-                    existingAddress.updateFrom(input.enderecos().get(i));
-                    updatedAddresses.add(existingAddress);
-                } else {
-                    updatedAddresses.add(Address.addAddress(input.enderecos().get(i)));
-                }
-            }
-
-            this.address = updatedAddresses;
+            this.address = new ArrayList<>(enderecos);
         }
 
         this.dataUltimaAlteracao = LocalDateTime.now();
+    }
+
+    // Método para atribuir subtipo ao usuário
+    public User assignUserType(UserSubtype existingUserType) {
+        this.userSubtype = existingUserType;
+        this.dataUltimaAlteracao = LocalDateTime.now();
+        return this;
+    }
+
+    // Método para criar um builder
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    // Classe Builder interna
+    public static class Builder {
+        private final User instance = new User();
+
+        public Builder id(Long id) {
+            instance.id = id;
+            return this;
+        }
+
+        public Builder nome(String nome) {
+            instance.nome = nome;
+            return this;
+        }
+
+        public Builder email(String email) {
+            instance.email = email;
+            return this;
+        }
+
+        public Builder login(String login) {
+            instance.login = login;
+            return this;
+        }
+
+        public Builder senha(String senha) {
+            instance.senha = senha;
+            return this;
+        }
+
+        public Builder dataUltimaAlteracao(LocalDateTime dataUltimaAlteracao) {
+            instance.dataUltimaAlteracao = dataUltimaAlteracao;
+            return this;
+        }
+
+        public Builder tipo(UserTypeDomain tipo) {
+            instance.tipo = tipo;
+            return this;
+        }
+
+        public Builder address(List<Address> address) {
+            instance.address = address;
+            return this;
+        }
+
+        public Builder userSubtype(UserSubtype userSubtype) {
+            instance.userSubtype = userSubtype;
+            return this;
+        }
+
+        public User build() {
+            if (instance.dataUltimaAlteracao == null) {
+                instance.dataUltimaAlteracao = LocalDateTime.now();
+            }
+            return instance;
+        }
+    }
+
+    // Métodos estáticos de utilidade para facilitar a migração do código existente
+
+    public static User create(String senhaCodificada, UserTypeDomain tipo, String nome, String email, String login, List<Address> enderecos) {
+        return User.builder()
+                .nome(nome)
+                .email(email)
+                .login(login)
+                .senha(senhaCodificada)
+                .tipo(tipo)
+                .address(enderecos)
+                .build();
     }
 
     public static User rebuildUser(
@@ -88,16 +138,16 @@ public class User {
             List<Address> enderecos,
             LocalDateTime dataUltimaAlteracao
     ) {
-        User user = new User();
-        user.id = id;
-        user.nome = nome;
-        user.email = email;
-        user.login = login;
-        user.senha = senha;
-        user.tipo = tipo;
-        user.address = enderecos;
-        user.dataUltimaAlteracao = dataUltimaAlteracao;
-        return user;
+        return User.builder()
+                .id(id)
+                .nome(nome)
+                .email(email)
+                .login(login)
+                .senha(senha)
+                .tipo(tipo)
+                .address(enderecos)
+                .dataUltimaAlteracao(dataUltimaAlteracao)
+                .build();
     }
 
     public static User rebuildUserWithType(
@@ -111,17 +161,17 @@ public class User {
             LocalDateTime dataUltimaAlteracao,
             UserSubtype userType
     ) {
-        User user = new User();
-        user.id = id;
-        user.nome = nome;
-        user.email = email;
-        user.login = login;
-        user.senha = senha;
-        user.tipo = tipo;
-        user.address = enderecos;
-        user.dataUltimaAlteracao = dataUltimaAlteracao;
-        user.userSubtype = userType;
-        return user;
+        return User.builder()
+                .id(id)
+                .nome(nome)
+                .email(email)
+                .login(login)
+                .senha(senha)
+                .tipo(tipo)
+                .address(enderecos)
+                .dataUltimaAlteracao(dataUltimaAlteracao)
+                .userSubtype(userType)
+                .build();
     }
 
     public static User rebuildForAuthentication(
@@ -130,18 +180,12 @@ public class User {
             String senha,
             UserTypeDomain tipo
     ) {
-        User user = new User();
-        user.id = id;
-        user.login = login;
-        user.senha = senha;
-        user.tipo = tipo;
-        return user;
-    }
-
-    public User assignUserType(UserSubtype existingUserType) {
-        this.userSubtype = existingUserType;
-        this.dataUltimaAlteracao = LocalDateTime.now();
-        return this;
+        return User.builder()
+                .id(id)
+                .login(login)
+                .senha(senha)
+                .tipo(tipo)
+                .build();
     }
 }
 

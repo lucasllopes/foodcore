@@ -44,6 +44,14 @@ public class Restaurant {
         this.cuisineType = input.cuisineType();
         this.openingHours = input.openingHours();
         this.closingHours = input.closingHours();
-        this.address = Address.addAddress(input.enderecos());
+        this.address = Address.builder()
+                .logradouro(input.enderecos().logradouro())
+                .numero(input.enderecos().numero())
+                .complemento(input.enderecos().complemento())
+                .bairro(input.enderecos().bairro())
+                .cidade(input.enderecos().cidade())
+                .estado(input.enderecos().estado())
+                .cep(input.enderecos().cep())
+                .build();
     }
 }

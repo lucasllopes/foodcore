@@ -5,6 +5,7 @@ import com.fiap.foodcore.application.usecase.input.UpdateUserInput;
 import com.fiap.foodcore.application.usecase.output.AddressOutput;
 import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
 import com.fiap.foodcore.application.usecase.output.CreateUserSubtypeOutput;
+import com.fiap.foodcore.domain.Address;
 import com.fiap.foodcore.domain.UserTypeDomain;
 import com.fiap.foodcore.domain.User;
 
@@ -13,11 +14,42 @@ import java.util.stream.Collectors;
 public class UserMapper {
 
     public static User toDomain(CreateUserInput input, String encodedPassword, UserTypeDomain tipo) {
-        return User.create(encodedPassword, tipo, input);
+        return User.builder()
+                .nome(input.nome())
+                .email(input.email())
+                .login(input.login())
+                .senha(encodedPassword)
+                .tipo(tipo)
+                .address(input.enderecos().stream()
+                        .map(enderecoInput -> Address.builder()
+                                .logradouro(enderecoInput.logradouro())
+                                .numero(enderecoInput.numero())
+                                .complemento(enderecoInput.complemento())
+                                .bairro(enderecoInput.bairro())
+                                .cidade(enderecoInput.cidade())
+                                .estado(enderecoInput.estado())
+                                .cep(enderecoInput.cep())
+                                .build())
+                        .collect(Collectors.toList()))
+                .build();
     }
 
     public static User toDomain(User existing, UpdateUserInput input) {
-        existing.updateInformation(input);
+        existing.updateInformation(
+                input.nome(),
+                input.email(),
+                input.enderecos().stream()
+                        .map(enderecoInput -> Address.builder()
+                                .logradouro(enderecoInput.logradouro())
+                                .numero(enderecoInput.numero())
+                                .complemento(enderecoInput.complemento())
+                                .bairro(enderecoInput.bairro())
+                                .cidade(enderecoInput.cidade())
+                                .estado(enderecoInput.estado())
+                                .cep(enderecoInput.cep())
+                                .build())
+                        .collect(Collectors.toList())
+        );
         return existing;
     }
 

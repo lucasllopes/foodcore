@@ -28,6 +28,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -90,10 +91,46 @@ class CreateRestaurantUseCaseTest {
         Assertions.assertEquals("Já existe um restaurante cadastrado com este nome.", exception.getMessage());
     }
     private User getUserDono(){
-        return User.create("123", UserTypeDomain.DONO, createUserInput());
+        CreateUserInput input = createUserInput();
+        return User.builder()
+                .nome(input.nome())
+                .email(input.email())
+                .login(input.login())
+                .senha("123")
+                .tipo(UserTypeDomain.DONO)
+                .address(input.enderecos().stream()
+                        .map(endereco -> Address.builder()
+                                .logradouro(endereco.logradouro())
+                                .numero(endereco.numero())
+                                .complemento(endereco.complemento())
+                                .bairro(endereco.bairro())
+                                .cidade(endereco.cidade())
+                                .estado(endereco.estado())
+                                .cep(endereco.cep())
+                                .build())
+                        .collect(Collectors.toList()))
+                .build();
     }
     private User getUserUser(){
-        return User.create("123", UserTypeDomain.CLIENTE, createUserInput());
+        CreateUserInput input = createUserInput();
+        return User.builder()
+                .nome(input.nome())
+                .email(input.email())
+                .login(input.login())
+                .senha("123")
+                .tipo(UserTypeDomain.CLIENTE)
+                .address(input.enderecos().stream()
+                        .map(endereco -> Address.builder()
+                                .logradouro(endereco.logradouro())
+                                .numero(endereco.numero())
+                                .complemento(endereco.complemento())
+                                .bairro(endereco.bairro())
+                                .cidade(endereco.cidade())
+                                .estado(endereco.estado())
+                                .cep(endereco.cep())
+                                .build())
+                        .collect(Collectors.toList()))
+                .build();
     }
     private Restaurant getRestauranteExpected(){
         LocalTime openingHours = LocalTime.of(19,00);

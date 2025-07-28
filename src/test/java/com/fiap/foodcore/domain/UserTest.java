@@ -10,6 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,7 +25,24 @@ public class UserTest {
         CreateUserInput input = new CreateUserInput("User", "user@email.com", "loginuser", "123AAA666", UserTypeDomain.CLIENTE, List.of(addressInput));
         String userPassEncoded = "userpassencoded";
 
-        User user = User.create(userPassEncoded, UserTypeDomain.CLIENTE, input);
+        User user = User.builder()
+                .nome(input.nome())
+                .email(input.email())
+                .login(input.login())
+                .senha(userPassEncoded)
+                .tipo(UserTypeDomain.CLIENTE)
+                .address(input.enderecos().stream()
+                        .map(endereco -> Address.builder()
+                                .logradouro(endereco.logradouro())
+                                .numero(endereco.numero())
+                                .complemento(endereco.complemento())
+                                .bairro(endereco.bairro())
+                                .cidade(endereco.cidade())
+                                .estado(endereco.estado())
+                                .cep(endereco.cep())
+                                .build())
+                        .collect(Collectors.toList()))
+                .build();
 
         assertEquals("User", user.getNome());
         assertEquals("user@email.com", user.getEmail());
@@ -53,7 +71,21 @@ public class UserTest {
 
         User user = User.rebuildUser(1L, "user", "user@email.com", "user", "password", UserTypeDomain.CLIENTE, List.of(), LocalDateTime.now());
 
-        user.updateInformation(input);
+        user.updateInformation(
+                input.nome(),
+                input.email(),
+                input.enderecos().stream()
+                        .map(endereco -> Address.builder()
+                                .logradouro(endereco.logradouro())
+                                .numero(endereco.numero())
+                                .complemento(endereco.complemento())
+                                .bairro(endereco.bairro())
+                                .cidade(endereco.cidade())
+                                .estado(endereco.estado())
+                                .cep(endereco.cep())
+                                .build())
+                        .collect(Collectors.toList())
+        );
 
         assertEquals("new user", user.getNome());
         assertEquals("new@email.com", user.getEmail());
