@@ -65,7 +65,15 @@ public class FindRestaurantByIdInteractorTest {
     private Restaurant getRestaurantExpected(){
         LocalTime openingHours = LocalTime.of(19,00);
         LocalTime closingHours = LocalTime.of(23,59);
-        return Restaurant.create(1L, "Restaurante XPTO", getAddressExpected(), "Fast Food", openingHours, closingHours, OWNER_ID_DONO);
+        return Restaurant.builder()
+                .id(1L)
+                .name("Restaurante XPTO")
+                .address(getAddressExpected())
+                .cuisineType("Fast Food")
+                .openingHours(openingHours)
+                .closingHours(closingHours)
+                .ownerId(OWNER_ID_DONO)
+                .build();
     }
     private Address getAddressExpected(){
         CreateAddressInput input = getCreateAddressInput();

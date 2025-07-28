@@ -21,12 +21,12 @@ public class Address {
     private Address() {
     }
 
-    // Método para criar um builder
+
     public static Builder builder() {
         return new Builder();
     }
 
-    // Método para atualizar propriedades
+
     public void update(String logradouro, String numero, String complemento,
                        String bairro, String cidade, String estado, String cep) {
         this.logradouro = logradouro;
@@ -38,7 +38,7 @@ public class Address {
         this.cep = cep;
     }
 
-    // Classe Builder interna
+
     public static class Builder {
         private final Address instance = new Address();
 
@@ -87,7 +87,7 @@ public class Address {
         }
     }
 
-    // Método auxiliar para compatibilidade com código existente
+
     public static Address rebuildAddress(Long id,
                                          String logradouro,
                                          String numero,

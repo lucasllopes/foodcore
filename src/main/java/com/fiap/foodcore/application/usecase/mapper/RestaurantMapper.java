@@ -36,7 +36,26 @@ public class RestaurantMapper {
 
     }
     public static Restaurant toDomain(Restaurant restaurant, UpdateRestaurantInput input) {
-        restaurant.updateInformation(input);
+        Address address = input.enderecos() != null ?
+                Address.builder()
+                        .logradouro(input.enderecos().logradouro())
+                        .numero(input.enderecos().numero())
+                        .complemento(input.enderecos().complemento())
+                        .bairro(input.enderecos().bairro())
+                        .cidade(input.enderecos().cidade())
+                        .estado(input.enderecos().estado())
+                        .cep(input.enderecos().cep())
+                        .build() :
+                restaurant.getAddress();
+
+        restaurant.updateInformation(
+                input.nome(),
+                input.cuisineType(),
+                input.openingHours(),
+                input.closingHours(),
+                address
+        );
+
         return restaurant;
     }
 

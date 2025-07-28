@@ -59,15 +59,15 @@ public class AddressBuilder {
     }
 
     public Address build() {
-        return Address.rebuildAddress(
-                id,
-                street,
-                number,
-                complement,
-                neighborhood,
-                city,
-                state,
-                zipCode
-        );
+        return Address.builder()
+                .id(id)
+                .logradouro(street)
+                .numero(number)
+                .complemento(complement)
+                .bairro(neighborhood)
+                .cidade(city)
+                .estado(state)
+                .cep(zipCode)
+                .build();
     }
 }

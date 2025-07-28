@@ -54,14 +54,14 @@ public class RestaurantBuilder {
     }
 
     public Restaurant build() {
-        return Restaurant.create(
-                id,
-                name,
-                address,
-                cuisineType,
-                openingHours,
-                closingHours,
-                ownerId
-        );
+        return Restaurant.builder()
+                .id(id)
+                .name(name)
+                .address(address)
+                .cuisineType(cuisineType)
+                .openingHours(openingHours)
+                .closingHours(closingHours)
+                .ownerId(ownerId)
+                .build();
     }
 }

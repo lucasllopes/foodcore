@@ -11,17 +11,16 @@ public class RestaurantEntityMapper {
     public static Restaurant toDomain(RestaurantEntity entity) {
         if (entity == null) return null;
 
-        Restaurant restaurant = Restaurant.create(
-                entity.getId(),
-                entity.getName(),
-                RestaurantAddressEntityMapper.toDomain(entity.getAddress()),
-                entity.getCuisineType(),
-                entity.getOpeningHours(),
-                entity.getClosingHours(),
-                entity.getOwner().getId()
-        );
+        return  Restaurant.builder()
+                .id(entity.getId())
+                .name(entity.getName())
+                .address(RestaurantAddressEntityMapper.toDomain(entity.getAddress()))
+                .cuisineType(entity.getCuisineType())
+                .openingHours(entity.getOpeningHours())
+                .closingHours(entity.getClosingHours())
+                .ownerId(entity.getOwner().getId())
+                .build();
 
-        return restaurant;
     }
 
     public static RestaurantEntity toEntity(Restaurant domain) {
