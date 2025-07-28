@@ -540,21 +540,21 @@ public interface UserController {
     @Operation(
             description = "Ao passar um id de um usuário como parâmetro e um json que contém o id do tipo de usuário, " +
                     "verifica o tipo de usuário de quem está tentando atualizar, se for dono, " +
-                    "permite a atualização do tipo de usuário especificado, caso contrário, " +
+                    "permite a atualização do subtipo de usuário especificado, caso contrário, " +
                     "retorna uma mensagem de erro dizendo que ele não tem permissão.",
-            summary = "Atualiza o tipo de usuário do usuário especificado",
+            summary = "Atualiza o subtipo de usuário do usuário especificado",
             requestBody = @RequestBody(
-                    description = "JSON com o Id do tipo de usuário",
+                    description = "JSON com o Id do subtipo de usuário",
                     required = true,
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = AssignUserSubtypeToUserDTO.class),
                             examples = {
                                     @ExampleObject(
-                                            name = "Exemplo de json com o id do tipo de usuário " +
+                                            name = "Exemplo de json com o id do subtipo de usuário " +
                                                     "que será atribuido ao usuário",
-                                            summary = "Id do tipo de usuário",
-                                            description = "Exemplo de json com o id do tipo de usuário " +
+                                            summary = "Id do subtipo de usuário",
+                                            description = "Exemplo de json com o id do subtipo de usuário " +
                                                     "que será atribuido ao usuário",
                                             value = """
                                                     {
