@@ -47,8 +47,8 @@ public class User {
     }
 
     // Método para atribuir subtipo ao usuário
-    public User assignUserType(UserSubtype existingUserType) {
-        this.userSubtype = existingUserType;
+    public User assignUserSubtype(UserSubtype existingUserSubtype) {
+        this.userSubtype = existingUserSubtype;
         this.dataUltimaAlteracao = LocalDateTime.now();
         return this;
     }

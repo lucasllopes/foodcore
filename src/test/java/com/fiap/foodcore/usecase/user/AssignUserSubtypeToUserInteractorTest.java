@@ -4,7 +4,7 @@ import com.fiap.foodcore.application.exception.DataNotFoundException;
 import com.fiap.foodcore.application.gateway.UserGateway;
 import com.fiap.foodcore.application.gateway.UserSubtypeGateway;
 import com.fiap.foodcore.application.usecase.input.AssignUserSubtypeToUserInput;
-import com.fiap.foodcore.application.usecase.interactor.user.AssignUserTypeToUserInteractor;
+import com.fiap.foodcore.application.usecase.interactor.user.AssignUserSubtypeToUserInteractor;
 import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
 import com.fiap.foodcore.domain.User;
 import com.fiap.foodcore.domain.UserSubtype;
@@ -36,7 +36,7 @@ public class AssignUserSubtypeToUserInteractorTest {
     private UserSubtypeGateway userSubtypeGateway;
 
     @InjectMocks
-    private AssignUserTypeToUserInteractor interactor;
+    private AssignUserSubtypeToUserInteractor interactor;
 
     @Test
     void shouldAssignUserTypeSuccessfully() {
@@ -50,7 +50,7 @@ public class AssignUserSubtypeToUserInteractorTest {
 
         UserSubtype userType = UserSubtype.reconstruct(userTypeId, "CUSTOMER", LocalDateTime.now());
 
-        User updatedUser = existingUser.assignUserType(userType);
+        User updatedUser = existingUser.assignUserSubtype(userType);
 
         when(userGateway.findById(userId)).thenReturn(Optional.of(existingUser));
         when(userSubtypeGateway.findById(userTypeId)).thenReturn(Optional.of(userType));

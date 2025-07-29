@@ -35,7 +35,7 @@ public class UserControllerImpl implements UserController {
     private final UpdateUserUseCase updateUser;
     private final ChangePasswordUseCase changePassword;
     private final DeleteUserUseCase deleteUser;
-    private final AssignUserTypeToUserUseCase assignUserTypeToUser;
+    private final AssignUserSubtypeToUserUseCase assignUserSubtypeToUser;
 
     public UserControllerImpl(FindUserByIdUseCase findById,
                               ListUserUseCase listUsers,
@@ -43,14 +43,14 @@ public class UserControllerImpl implements UserController {
                               UpdateUserUseCase updateUser,
                               ChangePasswordUseCase changePassword,
                               DeleteUserUseCase deleteUser,
-                              AssignUserTypeToUserUseCase assignUserTypeToUser) {
+                              AssignUserSubtypeToUserUseCase assignUserSubtypeToUser) {
         this.findById = findById;
         this.listUsers = listUsers;
         this.createUser = createUser;
         this.updateUser = updateUser;
         this.changePassword = changePassword;
         this.deleteUser = deleteUser;
-        this.assignUserTypeToUser = assignUserTypeToUser;
+        this.assignUserSubtypeToUser = assignUserSubtypeToUser;
     }
 
     @GetMapping("/{id}")
@@ -141,7 +141,7 @@ public class UserControllerImpl implements UserController {
             @RequestBody @Valid AssignUserSubtypeToUserDTO dto) {
 
         AssignUserSubtypeToUserInput input = UserPresenter.toAssignUserTypeToUserInput(dto);
-        CreateUserOutput output = assignUserTypeToUser.execute(id, input);
+        CreateUserOutput output = assignUserSubtypeToUser.execute(id, input);
 
         UserResponseDTO response = UserPresenter.toDto(output);
         return ResponseEntity.status(HttpStatus.OK).body(response);

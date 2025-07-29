@@ -19,7 +19,7 @@ public class UpdateUserSubtypeInteractor implements UpdateUserSubtypeUseCase {
     @Override
     public UpdateUserSubtypeOutput execute(Long id, UpdateUserSubtypeInput input) {
         var existing = gateway.findById(id)
-                .orElseThrow(() -> new DataNotFoundException("Tipo de usuário não encontrado"));
+                .orElseThrow(() -> new DataNotFoundException("Subtipo de usuário não encontrado"));
 
         var existingUserTypes = gateway.findByNameIgnoreCase(input.name());
 

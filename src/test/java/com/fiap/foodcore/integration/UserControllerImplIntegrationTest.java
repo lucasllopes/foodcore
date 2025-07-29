@@ -597,8 +597,8 @@ public class UserControllerImplIntegrationTest {
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("id", equalTo(userCustomerResponse.id().intValue()))
-                .body("tipoUsuario", notNullValue())
-                .body("tipoUsuario.name", equalTo(userSubtypeRequestDTO.name()));
+                .body("subtipoUsuario", notNullValue())
+                .body("subtipoUsuario.name", equalTo(userSubtypeRequestDTO.name()));
     }
 
 

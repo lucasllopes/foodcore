@@ -18,6 +18,6 @@ public class FindUserSubtypeByIdInteractor implements FindUserSubtypeByIdUseCase
     public CreateUserSubtypeOutput execute(Long id) {
         return gateway.findById(id)
                 .map(UserSubtypeMapper::fromDomain)
-                .orElseThrow(() -> new DataNotFoundException("Tipo de usuário não encontrado"));
+                .orElseThrow(() -> new DataNotFoundException("Subtipo de usuário não encontrado"));
     }
 }

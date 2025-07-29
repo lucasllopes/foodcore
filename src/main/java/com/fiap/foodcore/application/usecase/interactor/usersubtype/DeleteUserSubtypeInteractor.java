@@ -15,7 +15,7 @@ public class DeleteUserSubtypeInteractor implements DeleteUserSubtypeUseCase {
     @Override
     public void execute(Long id) {
         var user = gateway.findById(id)
-                .orElseThrow(() -> new DataNotFoundException("Tipo de usuário não encontrado"));
+                .orElseThrow(() -> new DataNotFoundException("Subtipo de usuário não encontrado"));
         gateway.delete(user);
     }
 }

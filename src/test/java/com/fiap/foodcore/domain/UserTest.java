@@ -137,7 +137,7 @@ public class UserTest {
         UserSubtype userType = UserSubtype.reconstruct(10L, "OWNER", LocalDateTime.now().minusDays(10));
 
         // Act
-        user.assignUserType(userType);
+        user.assignUserSubtype(userType);
 
         // Assert
         assertEquals(userType, user.getUserSubtype());
