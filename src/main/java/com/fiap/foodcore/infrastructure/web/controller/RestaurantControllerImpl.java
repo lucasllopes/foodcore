@@ -93,7 +93,7 @@ public class RestaurantControllerImpl implements RestaurantController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
     @PutMapping("/{id}")
-    @PreAuthorize("#hasRole('ROLE_DONO')")
+    @PreAuthorize("hasRole('ROLE_DONO')")
     public ResponseEntity<RestaurantResponseDTO> updateRestaurant(@PathVariable Long id, @Valid @RequestBody RestaurantUpdateRequestDTO dto) {
         logger.info("Handling PUT request to /restaurantes");
 
