@@ -38,8 +38,8 @@ public class ItemMapper {
                 item.getName(),
                 item.getDescription(),
                 item.getPrice(),
-                item.getPhoto(),
-                item.getAvailability()
+                item.getAvailability(),
+                item.getPhoto()
         );
     }
 
