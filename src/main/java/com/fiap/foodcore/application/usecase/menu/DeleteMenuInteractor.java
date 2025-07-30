@@ -1,5 +1,6 @@
 package com.fiap.foodcore.application.usecase.menu;
 
+import com.fiap.foodcore.application.exception.DataNotFoundException;
 import com.fiap.foodcore.application.gateway.MenuGateway;
 import com.fiap.foodcore.infrastructure.gateways.persistence.MenuRepository;
 
@@ -12,7 +13,7 @@ public class DeleteMenuInteractor {
 
     public void execute(Long id) {
        var menu = menuGateway.findById(id)
-                .orElseThrow(() -> new RuntimeException("Menu não encontrado"));
+                .orElseThrow(() -> new DataNotFoundException("Menu não encontrado"));
         menuGateway.delete(menu);
     }
 }

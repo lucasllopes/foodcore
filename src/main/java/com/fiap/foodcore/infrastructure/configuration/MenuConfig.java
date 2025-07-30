@@ -34,8 +34,8 @@ public class MenuConfig {
     }
 
     @Bean
-    public UpdateMenuInteractor updateMenuInteractor(MenuGateway menuGateway) {
-        return new UpdateMenuInteractor(menuGateway);
+    public UpdateMenuInteractor updateMenuInteractor(MenuGateway menuGateway, RestaurantGateway restaurantGateway) {
+        return new UpdateMenuInteractor(menuGateway, restaurantGateway);
     }
 
     @Bean

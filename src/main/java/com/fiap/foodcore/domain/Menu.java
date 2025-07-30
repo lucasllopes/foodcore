@@ -1,6 +1,8 @@
 package com.fiap.foodcore.domain;
 
 
+import com.fiap.foodcore.infrastructure.mapper.RestaurantAddressEntityMapper;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -46,7 +48,7 @@ public class Menu {
     }
 
 
-    public Menu atualizarInformacoes(String novoNome, String novaDescricao, List<Item> novaListaItens) {
+    public Menu atualizarInformacoes(String novoNome, String novaDescricao, Long restaurantId, List<Item> novaListaItens) {
 
         String nomeAtualizado = novoNome != null ? novoNome : this.name;
         String descricaoAtualizada = novaDescricao != null ? novaDescricao : this.description;
@@ -77,6 +79,9 @@ public class Menu {
                 .id(this.id)
                 .name(nomeAtualizado)
                 .description(descricaoAtualizada)
+                .restaurantId(Restaurant.builder()
+                                .id(restaurantId)
+                                .build())
                 .itemsList(itensAtualizados)
                 .build();
     }

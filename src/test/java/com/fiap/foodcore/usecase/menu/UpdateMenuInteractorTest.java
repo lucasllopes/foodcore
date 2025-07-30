@@ -3,6 +3,7 @@ package com.fiap.foodcore.usecase.menu;
 import com.fiap.foodcore.application.exception.DataNotFoundException;
 import com.fiap.foodcore.application.exception.DuplicatedDataException;
 import com.fiap.foodcore.application.gateway.MenuGateway;
+import com.fiap.foodcore.application.gateway.RestaurantGateway;
 import com.fiap.foodcore.application.usecase.menu.UpdateMenuInteractor;
 import com.fiap.foodcore.application.usecase.output.ItemCreateOutput;
 import com.fiap.foodcore.domain.Item;
@@ -31,12 +32,15 @@ class UpdateMenuInteractorTest {
 
     @Mock
     private MenuGateway menuGateway;
+    @Mock
+    private RestaurantGateway restaurantGateway;
 
     private UpdateMenuInteractor updateMenuInteractor;
 
+
     @BeforeEach
     void setUp() {
-        updateMenuInteractor = new UpdateMenuInteractor(menuGateway);
+        updateMenuInteractor = new UpdateMenuInteractor(menuGateway, restaurantGateway);
     }
 
     @Test
@@ -73,7 +77,7 @@ class UpdateMenuInteractorTest {
         // Configurar comportamento do gateway
         when(menuGateway.findById(menuId)).thenReturn(Optional.of(originalMenu));
         when(menuGateway.findByName(updatedMenuName)).thenReturn(Optional.empty());
-        when(originalMenu.atualizarInformacoes(eq(updatedMenuName), eq(updatedDescription), any())).thenReturn(updatedMenu);
+        when(originalMenu.atualizarInformacoes(eq(updatedMenuName), eq(updatedDescription), eq(restaurantId), any())).thenReturn(updatedMenu);
         when(menuGateway.save(updatedMenu)).thenReturn(updatedMenu);
 
         // Configurar DTO
@@ -106,7 +110,7 @@ class UpdateMenuInteractorTest {
         // Verify
         verify(menuGateway).findById(menuId);
         verify(menuGateway).findByName(updatedMenuName);
-        verify(originalMenu).atualizarInformacoes(eq(updatedMenuName), eq(updatedDescription), any());
+        verify(originalMenu).atualizarInformacoes(eq(updatedMenuName), eq(updatedDescription), eq(restaurantId), any());
         verify(menuGateway).save(updatedMenu);
     }
 
@@ -180,7 +184,7 @@ class UpdateMenuInteractorTest {
 
         when(menuGateway.findById(menuId)).thenReturn(Optional.of(originalMenu));
         when(menuGateway.findByName(menuName)).thenReturn(Optional.of(originalMenu));
-        when(originalMenu.atualizarInformacoes(eq(menuName), eq(updatedDescription), any())).thenReturn(updatedMenu);
+        when(originalMenu.atualizarInformacoes(eq(menuName), eq(updatedDescription), eq(restaurantId), any())).thenReturn(updatedMenu);
         when(menuGateway.save(updatedMenu)).thenReturn(updatedMenu);
 
         var menuUpdateDTO = new MenuUpdateRequestDTO(
@@ -201,7 +205,7 @@ class UpdateMenuInteractorTest {
         // Verify
         verify(menuGateway).findById(menuId);
         verify(menuGateway).findByName(menuName);
-        verify(originalMenu).atualizarInformacoes(eq(menuName), eq(updatedDescription), any());
+        verify(originalMenu).atualizarInformacoes(eq(menuName), eq(updatedDescription), eq(restaurantId), any());
         verify(menuGateway).save(updatedMenu);
     }
 }
