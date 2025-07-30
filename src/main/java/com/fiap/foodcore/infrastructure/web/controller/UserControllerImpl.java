@@ -134,7 +134,7 @@ public class UserControllerImpl implements UserController {
         return ResponseEntity.ok("Senha atualizada com sucesso.");
     }
 
-    @PutMapping("/{id}/tipo")
+    @PutMapping("/{id}/subtipo")
     @PreAuthorize("hasRole('ROLE_DONO')")
     public ResponseEntity<UserResponseDTO> assignUserSubtype(
             @PathVariable Long id,

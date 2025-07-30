@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "961acb6e-4a91-41d4-8836-c6c046bcd6e9",
+		"_postman_id": "ffb860a1-7d69-4d7e-907a-458e315ebeb7",
 		"name": "FOODCORE - CONTROLE DE USUARIO",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "9099310"
+		"_exporter_id": "13612493",
+		"_collection_link": "https://orange-escape-481905.postman.co/workspace/Foodcore~17d8b918-8b4a-4d71-a5ab-b3b9683df360/collection/13612493-ffb860a1-7d69-4d7e-907a-458e315ebeb7?action=share&source=collection_link&creator=13612493"
 	},
 	"item": [
 		{
@@ -53,7 +54,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6InRlc3RlMWluc2VydDEiLCJleHAiOjE3NTI5NjkxNTl9.z9dD5fRKGRfe5YwzPaOR_AR8V6F9zeUDSovt1_3h8uw",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imp2aXRvciIsImV4cCI6MTc1MzgzMzQwN30.XE9cyqOBmwjQKC4vbzsvr1s_y6Abcmj7ArqzgEpjgk0",
 							"type": "string"
 						}
 					]
@@ -109,7 +110,7 @@
 			"response": []
 		},
 		{
-			"name": "3 - POST - CRIAR USUARIO",
+			"name": "3 - POST CRIAR USUARIO",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -154,7 +155,7 @@
 			"response": []
 		},
 		{
-			"name": "4 - PUT - ATUALIZAR USUARIO",
+			"name": "4 - PUT ATUALIZAR USUARIO",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -199,7 +200,7 @@
 			"response": []
 		},
 		{
-			"name": "5 - POST - VALIDAR LOGIN",
+			"name": "5 - POST VALIDAR LOGIN",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -212,7 +213,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"login\": \"jvitor\",\r\n    \"senha\": \"123456\"\r\n}",
+					"raw": "{\r\n    \"login\": \"teste1insert1\",\r\n    \"senha\": \"123456\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -234,7 +235,7 @@
 			"response": []
 		},
 		{
-			"name": "6 - DELETE - DELETAR USUARIO",
+			"name": "6 - DELETE USUARIO",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -270,7 +271,7 @@
 			"response": []
 		},
 		{
-			"name": "7 - PUT - ALTERAR SENHA",
+			"name": "7 - PUT ALTERAR SENHA",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -310,14 +311,14 @@
 			"response": []
 		},
 		{
-			"name": "8 - POST Criar tipo usuario",
+			"name": "8 - POST CRIAR SUBTIPO USUARIO",
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imp2aXRvciIsImV4cCI6MTc1Mjk4MDY1N30.T8ZJpFcUc2oRrboh5DxJ1_OtPwJTULy-HhBmxQrnR8s",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imp2aXRvciIsImV4cCI6MTc1MzgzMzkyMn0.ZOCJR5sdCCP5OyrhpAOmwDNDFiyvWo0Sa8oatK6-n-M",
 							"type": "string"
 						}
 					]
@@ -326,7 +327,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\":\"MECANICO\"\r\n}",
+					"raw": "{\r\n    \"name\":\"GARÇOM\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -334,7 +335,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/tipos",
+					"raw": "http://localhost:8080/subtipos",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -348,7 +349,7 @@
 			"response": []
 		},
 		{
-			"name": "9 - PUT Alterar tipo usuário",
+			"name": "9 - PUT ALTERAR SUBTIPO USUARIO",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -372,7 +373,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/tipos/2",
+					"raw": "http://localhost:8080/subtipos/2",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -387,7 +388,7 @@
 			"response": []
 		},
 		{
-			"name": "10 - GET TIPO USUARIO BY ID",
+			"name": "10 - GET SUBTIPO USUARIO BY ID",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -408,7 +409,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/tipos/2",
+					"raw": "http://localhost:8080/subtipos/2",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -423,7 +424,7 @@
 			"response": []
 		},
 		{
-			"name": "11 - GET TIPO USUARIO BY NOME",
+			"name": "11 - GET SUBTIPO USUARIO BY NOME",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -444,7 +445,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/tipos/name/PILOTO",
+					"raw": "http://localhost:8080/subtipos/name/PILOTO",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -460,14 +461,144 @@
 			"response": []
 		},
 		{
-			"name": "12 - POST - CRIAR RESTAURANTE",
+			"name": "12 - GET SUBTIPO USUARIO PAGINADO",
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imd1aWxoZXJtZSIsImV4cCI6MTc1Mjk1NjMwMX0.Tje0c7xqcFGD6HNPQdNdTeobcOu8N6bxaILZO2WvoNI",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imp2aXRvciIsImV4cCI6MTc1MzgzMzkyMn0.ZOCJR5sdCCP5OyrhpAOmwDNDFiyvWo0Sa8oatK6-n-M",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imluc2VydDQxIiwiZXhwIjoxNzQ3MjU2NDY1fQ.0otrrjz9lZkbZlHuoVJ7SBOb0TqcUiOcACohHBGXiA8",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/subtipos?page=0&size=15&sort=name,desc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tipos"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "15"
+						},
+						{
+							"key": "sort",
+							"value": "name,desc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "13 - DELETE SUBTIPO USUARIO",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6InRlc3RlIiwiZXhwIjoxNzUyOTU3MzE3fQ.tP6sNYD9wIImiYFJMkRqd_qVyRzQdM92n_ePCkvTWso",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"MECANICO\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/subtipos/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tipos",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "14 - PUT ATRIBUIR SUBTIPO AO USUARIO",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imp2aXRvciIsImV4cCI6MTc1MzgzMzkyMn0.ZOCJR5sdCCP5OyrhpAOmwDNDFiyvWo0Sa8oatK6-n-M",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imluc2VydDM3IiwiZXhwIjoxNzQ3MTk3NDA3fQ.UPWoWRzJtf64GYiIM_elthik-g4f1FHyDIRxMd-TCm0",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idUserSubtype\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/usuarios/2/subtipo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"2",
+						"tipo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "15 - POST CRIAR RESTAURANTE",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imp2aXRvciIsImV4cCI6MTc1MzgzMzQwN30.XE9cyqOBmwjQKC4vbzsvr1s_y6Abcmj7ArqzgEpjgk0",
 							"type": "string"
 						}
 					]
@@ -476,7 +607,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"nome\": \"Paradise\",\r\n    \"cuisineType\": \"FAST FOOD\",\r\n    \"endereco\": {\r\n        \"logradouro\": \"Rua Dos Lanches 3\",\r\n        \"numero\": \"12352\",\r\n        \"complemento\": \"Apto 1212\",\r\n        \"bairro\": \"Centro 1211\",\r\n        \"cep\": \"01234-000 241\",\r\n        \"estado\": \"GO\",\r\n        \"cidade\": \"Itumbiara\"\r\n    },\r\n    \"openingHours\": \"19:00\",\r\n    \"closingHours\": \"23:59\",\r\n    \"ownerId\": 1\r\n}",
+					"raw": "{\r\n    \"nome\": \"Paradise\",\r\n    \"cuisineType\": \"FAST FOOD\",\r\n    \"endereco\": {\r\n        \"logradouro\": \"Rua Dos Lanches 3\",\r\n        \"numero\": \"12352\",\r\n        \"complemento\": \"Apto 1212\",\r\n        \"bairro\": \"Centro 1211\",\r\n        \"cep\": \"01234-000 241\",\r\n        \"estado\": \"GO\",\r\n        \"cidade\": \"Itumbiara\"\r\n    },\r\n    \"openingHours\": \"19:00\",\r\n    \"closingHours\": \"23:59\",\r\n    \"ownerId\": 4\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -498,7 +629,7 @@
 			"response": []
 		},
 		{
-			"name": "13 - GET - GET RESTAURANTE BY ID",
+			"name": "16 - GET RESTAURANTE BY ID",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -528,7 +659,7 @@
 			"response": []
 		},
 		{
-			"name": "14 - DELETE - DELETAR RESTAURANTE",
+			"name": "17 - DELETE RESTAURANTE",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -558,14 +689,14 @@
 			"response": []
 		},
 		{
-			"name": "15 - GET - GET RESTAURANTE COM PAGINAÇÃO",
+			"name": "18 - GET RESTAURANTE COM PAGINAÇÃO",
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imd1aWxoZXJtZSIsImV4cCI6MTc1Mjk1NTAzNn0.dQRkBqy022Jmcxs2Q79Ick1JN-FjdWfS4HBnKpmyuGk",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imp2aXRvciIsImV4cCI6MTc1MzgzMzQwN30.XE9cyqOBmwjQKC4vbzsvr1s_y6Abcmj7ArqzgEpjgk0",
 							"type": "string"
 						}
 					]
@@ -573,7 +704,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/restaurantes?page=0&size=10&sort=id,ASC&name=mac",
+					"raw": "http://localhost:8080/restaurantes?page=0&size=10&sort=id,ASC",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -594,10 +725,6 @@
 						{
 							"key": "sort",
 							"value": "id,ASC"
-						},
-						{
-							"key": "name",
-							"value": "mac"
 						}
 					]
 				}
@@ -605,14 +732,14 @@
 			"response": []
 		},
 		{
-			"name": "16 - PUT - PUT RESTAURANTE",
+			"name": "19 - PUT RESTAURANTE",
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imd1aWxoZXJtZSIsImV4cCI6MTc1MjUzNzg5N30.KgqOC7-Xqk7Zpmc2LXSDmKkAsna6HHL-nxphK4ZUqRg",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imp2aXRvciIsImV4cCI6MTc1MzgzMzQwN30.XE9cyqOBmwjQKC4vbzsvr1s_y6Abcmj7ArqzgEpjgk0",
 							"type": "string"
 						}
 					]
@@ -621,7 +748,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"MacBurguer\",\r\n    \"cuisineType\": \"FAST FOOD\",\r\n    \"enderecos\": [\r\n        {\r\n            \"logradouro\": \"Rua Dos Lanches\",\r\n            \"numero\": \"1235\",\r\n            \"complemento\": \"Apto 121\",\r\n            \"bairro\": \"Centro 121\",\r\n            \"cep\": \"01234-000 21\",\r\n            \"estado\": \"GO\",\r\n            \"cidade\": \"Itumbiara\"\r\n        }\r\n    ],\r\n    \"openingHours\": \"19:00\",\r\n    \"closingHours\": \"00:30\"\r\n}",
+					"raw": "{\r\n    \"name\": \"MacBurguer\",\r\n    \"cuisineType\": \"FAST FOOD\",\r\n    \"endereco\": {\r\n        \"logradouro\": \"Rua Dos Lanches\",\r\n        \"numero\": \"1235\",\r\n        \"complemento\": \"Apto 121\",\r\n        \"bairro\": \"Centro 121\",\r\n        \"cep\": \"01234-000 21\",\r\n        \"estado\": \"GO\",\r\n        \"cidade\": \"Itumbiara\"\r\n    },\r\n    \"openingHours\": \"19:00\",\r\n    \"closingHours\": \"00:30\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -629,7 +756,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/restaurantes/2",
+					"raw": "http://localhost:8080/restaurantes/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -637,54 +764,7 @@
 					"port": "8080",
 					"path": [
 						"restaurantes",
-						"2"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "17 - PUT - ATRIBUIR TIPO AO USUARIO",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imp2aXRvciIsImV4cCI6MTc1Mjk4MDY1N30.T8ZJpFcUc2oRrboh5DxJ1_OtPwJTULy-HhBmxQrnR8s",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imluc2VydDM3IiwiZXhwIjoxNzQ3MTk3NDA3fQ.UPWoWRzJtf64GYiIM_elthik-g4f1FHyDIRxMd-TCm0",
-						"type": "text",
-						"disabled": true
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"idUserType\": 3\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/usuarios/6/tipo",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"usuarios",
-						"6",
-						"tipo"
+						"1"
 					]
 				}
 			},
