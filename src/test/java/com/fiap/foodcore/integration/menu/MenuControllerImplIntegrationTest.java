@@ -299,7 +299,25 @@ public class MenuControllerImplIntegrationTest {
     @Test
     void shouldDeleteMenuSuccessfully() {
         // Primeiro criar um restaurante
-        RestaurantCreateRequestDTO restaurantRequest = RestaurantTestHelper.createValidRestarantRequest(ownerUser.id());
+        // Criar um restaurante com um nome único
+        String uniqueRestaurantName = "Restaurante Teste " + System.currentTimeMillis();
+        Long ownerId = 1l;
+        RestaurantCreateRequestDTO restaurantRequest = new RestaurantCreateRequestDTO(
+                uniqueRestaurantName,
+                "Descrição Restaurante",
+                new AddressCreateRequestDTO(
+                        "Rua Teste",
+                        "123",
+                        null, // Complemento opcional
+                        "Bairro Teste",
+                        "Cidade Teste",
+                        "Estado Teste",
+                        "12345-678"
+                ),
+                java.time.LocalTime.of(8, 0), // Horário de abertura
+                java.time.LocalTime.of(18, 0), // Horário de fechamento
+                ownerId
+        );
 
         // Criar o restaurante e obter o ID dele
         Integer restaurantId = given()
