@@ -80,6 +80,9 @@ class UpdateMenuInteractorTest {
         when(originalMenu.atualizarInformacoes(eq(updatedMenuName), eq(updatedDescription), eq(restaurantId), any())).thenReturn(updatedMenu);
         when(menuGateway.save(updatedMenu)).thenReturn(updatedMenu);
 
+        // Configurar comportamento do RestaurantGateway
+        when(restaurantGateway.findById(restaurantId)).thenReturn(Optional.of(savedRestaurant));
+
         // Configurar DTO
         var itemUpdateDTO = new ItemUpdateRequestDTO(
                 1L,
@@ -186,6 +189,9 @@ class UpdateMenuInteractorTest {
         when(menuGateway.findByName(menuName)).thenReturn(Optional.of(originalMenu));
         when(originalMenu.atualizarInformacoes(eq(menuName), eq(updatedDescription), eq(restaurantId), any())).thenReturn(updatedMenu);
         when(menuGateway.save(updatedMenu)).thenReturn(updatedMenu);
+
+        // Configurar comportamento do RestaurantGateway
+        when(restaurantGateway.findById(restaurantId)).thenReturn(Optional.of(restaurant));
 
         var menuUpdateDTO = new MenuUpdateRequestDTO(
                 menuName,
