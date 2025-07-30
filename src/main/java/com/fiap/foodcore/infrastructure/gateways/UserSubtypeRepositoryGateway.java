@@ -16,11 +16,11 @@ import org.springframework.data.domain.Sort;
 import java.util.List;
 import java.util.Optional;
 
-public class UserTypeRepositoryGateway implements UserSubtypeGateway {
+public class UserSubtypeRepositoryGateway implements UserSubtypeGateway {
 
     private final UserSubtypeRepository userSubtypeRepository;
 
-    public UserTypeRepositoryGateway(UserSubtypeRepository userSubtypeRepository) {
+    public UserSubtypeRepositoryGateway(UserSubtypeRepository userSubtypeRepository) {
         this.userSubtypeRepository = userSubtypeRepository;
     }
 

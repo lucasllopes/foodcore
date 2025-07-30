@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/tipos")
+@RequestMapping("/subtipos")
 public class UserSubtypeControllerImpl implements UserSubtypeController {
 
     private final static Logger logger = LoggerFactory.getLogger(UserSubtypeControllerImpl.class);
@@ -49,7 +49,7 @@ public class UserSubtypeControllerImpl implements UserSubtypeController {
 
     @PostMapping
     public ResponseEntity<UserSubtypeResponseDTO> createUserSubtype(@Valid @RequestBody UserSubtypeRequestDTO dto) {
-        logger.info("Handling POST request to /tipos");
+        logger.info("Handling POST request to /subtipos");
 
         CreateUserSubtypeInput input = UserSubtypePresenter.toInputCreate(dto);
         CreateUserSubtypeOutput output = createUserSubtype.execute(input);
@@ -60,7 +60,7 @@ public class UserSubtypeControllerImpl implements UserSubtypeController {
 
     @PutMapping("/{id}")
     public ResponseEntity<UpdateUserSubtypeResponseDTO> updateUserSubtype(@PathVariable Long id, @Valid @RequestBody UserSubtypeUpdateRequestDTO dto) {
-        logger.info("Handling PUT request to /tipos");
+        logger.info("Handling PUT request to /subtipos");
 
         UpdateUserSubtypeInput input = UserSubtypePresenter.toInputUpdate(dto);
         UpdateUserSubtypeOutput output = updateUserSubtype.execute(id, input);
@@ -82,7 +82,7 @@ public class UserSubtypeControllerImpl implements UserSubtypeController {
 
     @GetMapping("/name/{name}")
     public ResponseEntity<List<UserSubtypeResponseDTO>> findByName(@PathVariable String name) {
-        logger.info("Handling GET request to /tipos/name/{}", name);
+        logger.info("Handling GET request to /subtipos/name/{}", name);
 
         List<CreateUserSubtypeOutput> outputList = findUserSubtypeByNameUseCase.execute(name);
 
@@ -95,7 +95,7 @@ public class UserSubtypeControllerImpl implements UserSubtypeController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUserSubtype(@PathVariable Long id) {
-        logger.info("Handling DELETE request to /tipos");
+        logger.info("Handling DELETE request to /subtipos");
         deleteUserSubtype.execute(id);
         return ResponseEntity.noContent().build();
     }
@@ -103,7 +103,7 @@ public class UserSubtypeControllerImpl implements UserSubtypeController {
     @GetMapping
     @PreAuthorize("hasRole('ROLE_DONO')")
     public ResponseEntity<Page<UserSubtypeResponseDTO>> listUserSubtypePaginated(Pageable pageable){
-        logger.info("Handling GET request to /tipos");
+        logger.info("Handling GET request to /subtipos");
         List<SortOrder> sortOrders = pageable.getSort().stream()
                 .map(order -> new SortOrder(order.getProperty(), order.isAscending()))
                 .toList();

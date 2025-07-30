@@ -579,7 +579,7 @@ public class UserControllerImplIntegrationTest {
                         .header("Authorization", "Bearer " + adminToken)
                         .body(userSubtypeRequestDTO)
                         .when()
-                        .post("/tipos")
+                        .post("/subtipos")
                         .then()
                         .statusCode(HttpStatus.CREATED.value())
                         .extract()
@@ -593,12 +593,12 @@ public class UserControllerImplIntegrationTest {
                 .header("Authorization", "Bearer " + adminToken)
                 .body(dto)
                 .when()
-                .put("/usuarios/{id}/tipo", userCustomerResponse.id())
+                .put("/usuarios/{id}/subtipo", userCustomerResponse.id())
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("id", equalTo(userCustomerResponse.id().intValue()))
-                .body("tipoUsuario", notNullValue())
-                .body("tipoUsuario.name", equalTo(userSubtypeRequestDTO.name()));
+                .body("subtipoUsuario", notNullValue())
+                .body("subtipoUsuario.name", equalTo(userSubtypeRequestDTO.name()));
     }
 
 
@@ -617,7 +617,7 @@ public class UserControllerImplIntegrationTest {
                         .header("Authorization", "Bearer " + adminToken)
                         .body(userSubtypeRequestDTO)
                         .when()
-                        .post("/tipos")
+                        .post("/subtipos")
                         .then()
                         .statusCode(HttpStatus.CREATED.value())
                         .extract()
@@ -631,7 +631,7 @@ public class UserControllerImplIntegrationTest {
                 .header("Authorization", "Bearer " + adminToken)
                 .body(dto)
                 .when()
-                .put("/usuarios/{id}/tipo", response.id())
+                .put("/usuarios/{id}/subtipo", response.id())
                 .then()
                 .statusCode(HttpStatus.BAD_REQUEST.value());
     }

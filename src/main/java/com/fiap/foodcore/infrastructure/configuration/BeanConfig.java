@@ -16,7 +16,7 @@ import com.fiap.foodcore.application.usecase.restaurant.UpdateRestaurantUseCase;
 import com.fiap.foodcore.infrastructure.gateways.BCryptPasswordEncryptionGateway;
 import com.fiap.foodcore.infrastructure.gateways.RestaurantRepositoryGateway;
 import com.fiap.foodcore.infrastructure.gateways.UserRepositoryGateway;
-import com.fiap.foodcore.infrastructure.gateways.UserTypeRepositoryGateway;
+import com.fiap.foodcore.infrastructure.gateways.UserSubtypeRepositoryGateway;
 import com.fiap.foodcore.infrastructure.gateways.persistence.RestaurantRepository;
 import com.fiap.foodcore.infrastructure.gateways.persistence.UserRepository;
 import com.fiap.foodcore.infrastructure.gateways.persistence.UserSubtypeRepository;
@@ -99,7 +99,7 @@ public class BeanConfig {
 
     @Bean
     public UserSubtypeGateway userSubtypeGateway(UserSubtypeRepository userSubtypeRepository) {
-        return new UserTypeRepositoryGateway(userSubtypeRepository);
+        return new UserSubtypeRepositoryGateway(userSubtypeRepository);
     }
 
     @Bean
@@ -123,8 +123,8 @@ public class BeanConfig {
     }
 
     @Bean
-    public AssignUserTypeToUserUseCase assignUserTypeToUserUseCase(UserGateway userGateway, UserSubtypeGateway userTypeGateway) {
-        return new AssignUserTypeToUserInteractor(userGateway, userTypeGateway);
+    public AssignUserSubtypeToUserUseCase assignUserTypeToUserUseCase(UserGateway userGateway, UserSubtypeGateway userTypeGateway) {
+        return new AssignUserSubtypeToUserInteractor(userGateway, userTypeGateway);
     }
 
     @Bean
