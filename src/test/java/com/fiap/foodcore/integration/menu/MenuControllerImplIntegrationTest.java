@@ -4,7 +4,6 @@ package com.fiap.foodcore.integration.menu;
 import com.fiap.foodcore.application.usecase.CreateUserUseCase;
 import com.fiap.foodcore.application.usecase.input.CreateUserInput;
 import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
-import com.fiap.foodcore.helper.RestaurantTestHelper;
 import com.fiap.foodcore.helper.UserTestHelper;
 import com.fiap.foodcore.infrastructure.presenter.UserPresenter;
 import com.fiap.foodcore.infrastructure.web.controller.dto.*;
@@ -25,9 +24,9 @@ import java.util.Collections;
 import java.util.List;
 
 import static com.fiap.foodcore.helper.UserTestHelper.authenticateAndGetToken;
-import static com.fiap.foodcore.helper.UserTestHelper.createValidOwnerUserToCreateRestaurantRequest;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase
@@ -62,7 +61,6 @@ public class MenuControllerImplIntegrationTest {
         CreateUserOutput outputOwner = createUserUseCase.execute(inputOwner);
         return UserPresenter.toDto(outputOwner);
     }
-
 
 
     @Test
@@ -213,7 +211,7 @@ public class MenuControllerImplIntegrationTest {
                 .path("id");
 
         // Garantir que o restaurante foi criado corretamente
-        org.junit.jupiter.api.Assertions.assertNotNull(restaurantId, "O ID do restaurante não deveria ser nulo");
+        assertNotNull(restaurantId, "O ID do restaurante não deveria ser nulo");
         Long restaurantIdLong = restaurantId.longValue();
 
         // 3. Criar item para o menu
@@ -245,7 +243,7 @@ public class MenuControllerImplIntegrationTest {
                 .path("id");
 
         // Garantir que o menu foi criado corretamente
-        org.junit.jupiter.api.Assertions.assertNotNull(menuId, "O ID do menu não deveria ser nulo");
+        assertNotNull(menuId, "O ID do menu não deveria ser nulo");
 
         // 6. Obter o ID do item existente e dados atuais do menu
         var menuResponse = given()
@@ -330,7 +328,7 @@ public class MenuControllerImplIntegrationTest {
                 .extract()
                 .path("id");
 
-        org.junit.jupiter.api.Assertions.assertNotNull(restaurantId, "O ID do restaurante não deveria ser nulo");
+        assertNotNull(restaurantId, "O ID do restaurante não deveria ser nulo");
 
         // Agora criar um item para o menu
         ItemCreateRequestDTO item = new ItemCreateRequestDTO(
@@ -363,7 +361,7 @@ public class MenuControllerImplIntegrationTest {
         Long id = idAsInteger != null ? idAsInteger.longValue() : null;
 
         // Garantindo que o ID não é nulo antes de fazer a requisição DELETE
-        org.junit.jupiter.api.Assertions.assertNotNull(id, "O ID do menu não deveria ser nulo");
+        assertNotNull(id, "O ID do menu não deveria ser nulo");
 
         // Exclui o menu usando o ID
         given()
@@ -391,5 +389,139 @@ public class MenuControllerImplIntegrationTest {
                 .then()
                 .statusCode(HttpStatus.NOT_FOUND.value());
     }
-    
+
+    @Test
+    void  shouldCreateMenuSuccessfully(){
+        // 1. Primeiro criar um restaurante com nome único
+        String uniqueRestaurantName = "Restaurante Teste " + System.currentTimeMillis();
+        AddressCreateRequestDTO endereco = new AddressCreateRequestDTO(
+                "Rua Teste, 123", // logradouro
+                "123",            // numero
+                null,              // complemento (opcional)
+                "Centro",         // bairro
+                "Cidade Teste",   // cidade
+                "00000-000",      // cep
+                "Estado Teste"    // estado
+        );
+        RestaurantCreateRequestDTO restaurantRequest = new RestaurantCreateRequestDTO(
+                uniqueRestaurantName,
+                "Brasileira",
+                endereco,
+                java.time.LocalTime.of(9, 0),
+                java.time.LocalTime.of(18, 0),
+                ownerUser.id()
+        );
+
+        // 2. Criar o restaurante e obter o ID dele
+        Integer restaurantId = given()
+                .header("Authorization", "Bearer " + authToken)
+                .body(restaurantRequest)
+                .when()
+                .post("/restaurantes")
+                .then()
+                .statusCode(HttpStatus.CREATED.value())
+                .extract()
+                .path("id");
+
+        // Garantir que o restaurante foi criado corretamente
+        assertNotNull(restaurantId, "O ID do restaurante não deveria ser nulo");
+        Long restaurantIdLong = restaurantId.longValue();
+
+        // 3. Criar item para o menu
+        ItemCreateRequestDTO item = new ItemCreateRequestDTO(
+                "Item Teste",
+                "Descrição Item",
+                new BigDecimal("10.0"),
+                "Disponível",
+                "/imagens/item-teste.jpg"
+        );
+
+        // 4. Criar menu para o restaurante criado
+        MenuCreateRequestDTO request = new MenuCreateRequestDTO(
+                "Menu Teste",
+                "Descrição Teste",
+                restaurantId.longValue(),
+                List.of(item)
+        );
+
+        given()
+            .header("Authorization", "Bearer " + authToken)
+            .body(request)
+            .when()
+            .post("/cardapios")
+            .then()
+            .statusCode(HttpStatus.CREATED.value())
+            .body("name", equalTo("Menu Teste"))
+            .body("description", equalTo("Descrição Teste"))
+            .body("restaurantId", equalTo(restaurantIdLong.intValue()));
+    }
+
+    @Test
+    void shouldFindMenuById(){
+        // 1. Primeiro criar um restaurante com nome único
+        String uniqueRestaurantName = "Restaurante Teste " + System.currentTimeMillis();
+        AddressCreateRequestDTO endereco = new AddressCreateRequestDTO(
+                "Rua Teste, 123", // logradouro
+                "123",            // numero
+                null,              // complemento (opcional)
+                "Centro",         // bairro
+                "Cidade Teste",   // cidade
+                "00000-000",      // cep
+                "Estado Teste"    // estado
+        );
+        RestaurantCreateRequestDTO restaurantRequest = new RestaurantCreateRequestDTO(
+                uniqueRestaurantName,
+                "Brasileira",
+                endereco,
+                java.time.LocalTime.of(9, 0),
+                java.time.LocalTime.of(18, 0),
+                ownerUser.id()
+        );
+
+        // 2. Criar o restaurante e obter o ID dele
+        Integer restaurantId = given()
+                .header("Authorization", "Bearer " + authToken)
+                .body(restaurantRequest)
+                .when()
+                .post("/restaurantes")
+                .then()
+                .statusCode(HttpStatus.CREATED.value())
+                .extract()
+                .path("id");
+
+        // Garantir que o restaurante foi criado corretamente
+        assertNotNull(restaurantId, "O ID do restaurante não deveria ser nulo");
+        Long restaurantIdLong = restaurantId.longValue();
+
+        // 3. Criar item para o menu
+        ItemCreateRequestDTO item = new ItemCreateRequestDTO(
+                "Item Teste",
+                "Descrição Item",
+                new BigDecimal("10.0"),
+                "Disponível",
+                "/imagens/item-teste.jpg"
+        );
+
+        // 4. Criar menu para o restaurante criado
+        MenuCreateRequestDTO request = new MenuCreateRequestDTO(
+                "Menu Teste",
+                "Descrição Teste",
+                restaurantId.longValue(),
+                List.of(item)
+        );
+
+        Integer menuId = given()
+            .header("Authorization", "Bearer " + authToken)
+            .body(request)
+            .when()
+            .post("/cardapios")
+            .then()
+            .statusCode(HttpStatus.CREATED.value())
+            .extract()
+            .path("id");
+
+        assertNotNull(menuId, "O ID do menu não deveria ser nulo");
+
+    }
+
 }
