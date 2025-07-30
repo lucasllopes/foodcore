@@ -296,28 +296,26 @@ public class MenuControllerImplIntegrationTest {
 
     @Test
     void shouldDeleteMenuSuccessfully() {
-        // Primeiro criar um restaurante
-        // Criar um restaurante com um nome único
+        // Criar um restaurante com nome único
         String uniqueRestaurantName = "Restaurante Teste " + System.currentTimeMillis();
-        Long ownerId = 1l;
         RestaurantCreateRequestDTO restaurantRequest = new RestaurantCreateRequestDTO(
                 uniqueRestaurantName,
                 "Descrição Restaurante",
                 new AddressCreateRequestDTO(
                         "Rua Teste",
                         "123",
-                        null, // Complemento opcional
+                        null,
                         "Bairro Teste",
                         "Cidade Teste",
-                        "Estado Teste",
-                        "12345-678"
+                        "12345-678",
+                        "Estado Teste"
                 ),
-                java.time.LocalTime.of(8, 0), // Horário de abertura
-                java.time.LocalTime.of(18, 0), // Horário de fechamento
-                ownerId
+                java.time.LocalTime.of(8, 0),
+                java.time.LocalTime.of(18, 0),
+                ownerUser.id() // Usando o ID dinâmico do usuário proprietário
         );
 
-        // Criar o restaurante e obter o ID dele
+        // Criar o restaurante
         Integer restaurantId = given()
                 .header("Authorization", "Bearer " + authToken)
                 .body(restaurantRequest)
@@ -330,7 +328,7 @@ public class MenuControllerImplIntegrationTest {
 
         assertNotNull(restaurantId, "O ID do restaurante não deveria ser nulo");
 
-        // Agora criar um item para o menu
+        // Criar item para o menu
         ItemCreateRequestDTO item = new ItemCreateRequestDTO(
                 "Item Delete",
                 "Desc",
@@ -339,16 +337,16 @@ public class MenuControllerImplIntegrationTest {
                 "/caminho/foto.jpg"
         );
 
-        // Criar um menu para o restaurante criado
+        // Criar menu para o restaurante criado
         MenuCreateRequestDTO createRequest = new MenuCreateRequestDTO(
                 "Menu Delete",
                 "Desc",
-                restaurantId.longValue(), // Usar o ID do restaurante criado
+                restaurantId.longValue(),
                 List.of(item)
         );
 
-        // Cria o menu e extrai o ID como Integer
-        Integer idAsInteger = given()
+        // Obter ID do menu criado (corrigindo inconsistência de tipos)
+        Integer menuId = given()
                 .header("Authorization", "Bearer " + authToken)
                 .body(createRequest)
                 .post("/cardapios")
@@ -357,25 +355,21 @@ public class MenuControllerImplIntegrationTest {
                 .extract()
                 .path("id");
 
-        // Converte o Integer para Long
-        Long id = idAsInteger != null ? idAsInteger.longValue() : null;
+        assertNotNull(menuId, "O ID do menu não deveria ser nulo");
 
-        // Garantindo que o ID não é nulo antes de fazer a requisição DELETE
-        assertNotNull(id, "O ID do menu não deveria ser nulo");
-
-        // Exclui o menu usando o ID
+        // Excluir o menu
         given()
                 .header("Authorization", "Bearer " + authToken)
                 .when()
-                .delete("/cardapios/{id}", id)
+                .delete("/cardapios/{id}", menuId)
                 .then()
                 .statusCode(HttpStatus.NO_CONTENT.value());
 
-        // Verifica que não existe mais
+        // Verificar exclusão
         given()
                 .header("Authorization", "Bearer " + authToken)
                 .when()
-                .get("/cardapios/{id}", id)
+                .get("/cardapios/{id}", menuId)
                 .then()
                 .statusCode(HttpStatus.NOT_FOUND.value());
     }

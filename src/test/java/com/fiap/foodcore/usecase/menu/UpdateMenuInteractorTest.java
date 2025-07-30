@@ -1,12 +1,9 @@
 package com.fiap.foodcore.usecase.menu;
 
-import com.fiap.foodcore.application.exception.DataNotFoundException;
 import com.fiap.foodcore.application.exception.DuplicatedDataException;
 import com.fiap.foodcore.application.gateway.MenuGateway;
 import com.fiap.foodcore.application.gateway.RestaurantGateway;
 import com.fiap.foodcore.application.usecase.menu.UpdateMenuInteractor;
-import com.fiap.foodcore.application.usecase.output.ItemCreateOutput;
-import com.fiap.foodcore.domain.Item;
 import com.fiap.foodcore.domain.Menu;
 import com.fiap.foodcore.domain.Restaurant;
 import com.fiap.foodcore.infrastructure.web.controller.dto.ItemUpdateRequestDTO;
