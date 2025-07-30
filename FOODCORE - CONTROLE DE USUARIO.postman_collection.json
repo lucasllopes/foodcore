@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "d7a76ccd-0e48-47a1-8c47-13163c3bd87d",
+		"_postman_id": "6eda6486-13da-4b69-8252-7f10e133c82e",
 		"name": "FOODCORE - CONTROLE DE USUARIO",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "44286552",
-		"_collection_link": "https://carlospaulino-4598971.postman.co/workspace/Carlos-Paulino's-Workspace~37df3764-cc2b-40dc-8e1e-38e630fed7e9/collection/44286552-d7a76ccd-0e48-47a1-8c47-13163c3bd87d?action=share&source=collection_link&creator=44286552"
+		"_exporter_id": "13612493",
+		"_collection_link": "https://orange-escape-481905.postman.co/workspace/Foodcore~17d8b918-8b4a-4d71-a5ab-b3b9683df360/collection/13612493-6eda6486-13da-4b69-8252-7f10e133c82e?action=share&source=collection_link&creator=13612493"
 	},
 	"item": [
 		{
@@ -335,14 +335,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/tipos",
+					"raw": "http://localhost:8080/subtipos",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"tipos"
+						"subtipos"
 					]
 				}
 			},
@@ -373,14 +373,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/tipos/2",
+					"raw": "http://localhost:8080/subtipos/2",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"tipos",
+						"subtipos",
 						"2"
 					]
 				}
@@ -409,14 +409,14 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/tipos/2",
+					"raw": "http://localhost:8080/subtipos/2",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"tipos",
+						"subtipos",
 						"2"
 					]
 				}
@@ -445,14 +445,14 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/tipos/name/PILOTO",
+					"raw": "http://localhost:8080/subtipos/name/PILOTO",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"tipos",
+						"subtipos",
 						"name",
 						"PILOTO"
 					]
@@ -482,14 +482,14 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/tipos?page=0&size=15&sort=name,desc",
+					"raw": "http://localhost:8080/subtipos?page=0&size=15&sort=name,desc",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"tipos"
+						"subtipos"
 					],
 					"query": [
 						{
@@ -529,14 +529,14 @@
 					"raw": "{\r\n    \"name\":\"MECANICO\"\r\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/tipos/1",
+					"raw": "http://localhost:8080/subtipos/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"tipos",
+						"subtipos",
 						"1"
 					]
 				}
@@ -575,7 +575,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/usuarios/2/tipo",
+					"raw": "http://localhost:8080/usuarios/2/subtipo",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -584,7 +584,7 @@
 					"path": [
 						"usuarios",
 						"2",
-						"tipo"
+						"subtipo"
 					]
 				}
 			},
