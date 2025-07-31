@@ -121,7 +121,7 @@ public class SecurityConfig {
                                 "RM361913 - Lucas Lopes Da Silva"
                         )
                         .version("v1")
-                        .license(new License().name("Github - Foodcore").url("https://github.com/lucasllopes/foodcore")))
+                        .license(new License().name("Github - Foodcore | Fase 2").url("https://github.com/lucasllopes/foodcore/tree/main_fase2")))
                 .addSecurityItem(new SecurityRequirement().addList(schemeName))
                 .components(new io.swagger.v3.oas.models.Components()
                         .addSecuritySchemes(schemeName,
