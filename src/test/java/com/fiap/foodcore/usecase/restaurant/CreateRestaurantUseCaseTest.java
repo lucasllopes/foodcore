@@ -79,7 +79,7 @@ class CreateRestaurantUseCaseTest {
         UserSubtypeNotOwnerException exception = Assertions.assertThrows(UserSubtypeNotOwnerException.class, () ->
                 createRestaurantUseCase.execute(getCreateRestaurantInput(OWNER_ID_CLIENTE))
         );
-        Assertions.assertEquals("O código de usuário informado não é do tipo Dono.", exception.getMessage());
+        Assertions.assertEquals("O código de usuário informado não é do tipo DONO.", exception.getMessage());
     }
     @Test
     public void shouldThrowUserTypeExceptionWhenRestaurantExisting() {

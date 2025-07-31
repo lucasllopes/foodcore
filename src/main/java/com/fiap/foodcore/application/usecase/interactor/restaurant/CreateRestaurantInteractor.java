@@ -38,7 +38,7 @@ public class CreateRestaurantInteractor implements CreateRestaurantUseCase {
     private void validateOwner(Long ownerId) {
         User owner = this.userGateway.findById(ownerId).orElseThrow(() -> new DataNotFoundException("Usuário não encontrado"));
         if (!UserTypeDomain.isOwner(owner.getTipo())){
-            throw new UserSubtypeNotOwnerException("O código de usuário informado não é do tipo Dono.");
+            throw new UserSubtypeNotOwnerException("O código de usuário informado não é do tipo DONO.");
         }
     }
     private void validateRestaurant(Restaurant restaurant){

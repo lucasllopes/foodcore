@@ -65,7 +65,7 @@ public class ExceptionHandlerController {
     }
     @ExceptionHandler(UserSubtypeNotOwnerException.class)
     public ResponseEntity<MessageErrorDTO> handleUserTypeNotOwner(UserSubtypeNotOwnerException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageErrorDTO("O usuário informado não é do tipo Dono."));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageErrorDTO(ex.getMessage()));
     }
 
     @ExceptionHandler(BusinessException.class)
