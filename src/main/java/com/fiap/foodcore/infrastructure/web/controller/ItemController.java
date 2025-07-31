@@ -177,7 +177,7 @@ public interface ItemController {
 
     @Operation(
             description = "Ao passar um id de um item como parâmetro e um json dos dados atualizados no corpo da requisição, " +
-                    "verifica se está tentando atualizar o próprio restaurante, caso seja, " +
+                    "verifica se está tentando atualizar o próprio item, caso seja, " +
                     "permite a atualização dos dados, caso contrário, " +
                     "retorna uma mensagem de erro dizendo que ele não tem permissão.",
             summary = "Atualiza o item do id especificado",
@@ -191,7 +191,7 @@ public interface ItemController {
                                     @ExampleObject(
                                             name = "Exemplo de dados atualizados do item anteriormente inserido",
                                             summary = "Dados atualizados do item",
-                                            description = "Exemplo de dados atualizados do restaurante anteriormente inserido",
+                                            description = "Exemplo de dados atualizados do item anteriormente inserido",
                                             value = """
                                                     {
                                                         "id": 1,
