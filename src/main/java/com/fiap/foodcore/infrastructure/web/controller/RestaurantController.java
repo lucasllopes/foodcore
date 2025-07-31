@@ -1,9 +1,6 @@
 package com.fiap.foodcore.infrastructure.web.controller;
 
 import com.fiap.foodcore.infrastructure.web.controller.dto.MessageErrorDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.UserCreateRequestDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.UserResponseDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.UserUpdateRequestDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.restaurant.RestaurantCreateRequestDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.restaurant.RestaurantResponseDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.restaurant.RestaurantUpdateRequestDTO;
@@ -170,7 +167,7 @@ public interface RestaurantController {
                     required = true,
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = RestaurantResponseDTO.class),
+                            schema = @Schema(implementation = RestaurantCreateRequestDTO.class),
                             examples = {
                                     @ExampleObject(
                                             name = "Exemplo de dados do restaurante que será inserido",
