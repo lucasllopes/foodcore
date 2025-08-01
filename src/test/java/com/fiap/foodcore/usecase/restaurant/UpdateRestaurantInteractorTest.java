@@ -48,7 +48,7 @@ public class UpdateRestaurantInteractorTest {
         when(restaurantGateway.findById(ID_RESTAURANT_INVALID))
                 .thenReturn(Optional.empty());
         DataNotFoundException exception = Assertions.assertThrows(DataNotFoundException.class, () ->
-                this.updateRestaurantUseCase.execute(ID_RESTAURANT_INVALID, getUpdateRestaurantInput())
+                this.updateRestaurantUseCase.execute(ID_RESTAURANT_INVALID, getUpdateRestaurantInput(), OWNER_ID_DONO)
         );
         Assertions.assertEquals("Restaurante não encontrado.", exception.getMessage());
     }
@@ -60,7 +60,7 @@ public class UpdateRestaurantInteractorTest {
         when(restaurantGateway.findByName("Restaurante XPTO"))
                 .thenReturn(Optional.of(restaurantExpected));
         DuplicatedDataException exception = Assertions.assertThrows(DuplicatedDataException.class, () ->
-                this.updateRestaurantUseCase.execute(ID_RESTAURANT, getUpdateRestaurantInput())
+                this.updateRestaurantUseCase.execute(ID_RESTAURANT, getUpdateRestaurantInput(), OWNER_ID_DONO)
         );
         Assertions.assertEquals("Já existe um restaurante cadastrado com este nome.", exception.getMessage());
     }
@@ -74,7 +74,7 @@ public class UpdateRestaurantInteractorTest {
         when(restaurantGateway.save(restaurantExpected))
                 .thenReturn(restaurantExpected);
 
-        CreateRestaurantOutput createRestaurantOutputAtual = this.updateRestaurantUseCase.execute(ID_RESTAURANT, getUpdateRestaurantInput());
+        CreateRestaurantOutput createRestaurantOutputAtual = this.updateRestaurantUseCase.execute(ID_RESTAURANT, getUpdateRestaurantInput(), OWNER_ID_DONO);
 
         assertEquals(restaurantExpected.getId(), createRestaurantOutputAtual.id());
         assertEquals(restaurantExpected.getName(), createRestaurantOutputAtual.nome());

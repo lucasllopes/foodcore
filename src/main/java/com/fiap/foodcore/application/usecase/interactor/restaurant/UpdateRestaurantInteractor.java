@@ -1,5 +1,6 @@
 package com.fiap.foodcore.application.usecase.interactor.restaurant;
 
+import com.fiap.foodcore.application.exception.BusinessException;
 import com.fiap.foodcore.application.exception.DataNotFoundException;
 import com.fiap.foodcore.application.exception.DuplicatedDataException;
 import com.fiap.foodcore.application.gateway.RestaurantGateway;
@@ -18,8 +19,13 @@ public class UpdateRestaurantInteractor implements UpdateRestaurantUseCase {
     }
 
     @Override
-    public CreateRestaurantOutput execute(Long id, UpdateRestaurantInput input) {
+    public CreateRestaurantOutput execute(Long id, UpdateRestaurantInput input, Long currentUserId) {
         var existing = this.restaurantGateway.findById(id).orElseThrow(() -> new DataNotFoundException("Restaurante não encontrado."));
+
+        if(!existing.getOwnerId().equals(currentUserId)){
+            throw new BusinessException("Apenas o proprietário do restaurante tem permissão para realizar essa atualização.");
+        }
+
         validateRestaurant(input.nome());
         var restaurant = RestaurantMapper.toDomain(existing, input);
         Restaurant savedRestaurant1 = restaurantGateway.save(restaurant);

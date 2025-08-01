@@ -4,5 +4,5 @@ import com.fiap.foodcore.application.usecase.input.restaurant.UpdateRestaurantIn
 import com.fiap.foodcore.application.usecase.output.CreateRestaurantOutput;
 
 public interface UpdateRestaurantUseCase {
-    CreateRestaurantOutput execute(Long id, UpdateRestaurantInput input);
+    CreateRestaurantOutput execute(Long id, UpdateRestaurantInput input, Long currentUserId);
 }

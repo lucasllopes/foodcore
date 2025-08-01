@@ -17,6 +17,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
+import java.security.Principal;
+
 @Tag(name = "Restaurante", description = "Endpoint para CRUD de restaurante")
 public interface RestaurantController {
 
@@ -311,7 +313,7 @@ public interface RestaurantController {
                     }
             )
     })
-    ResponseEntity<RestaurantResponseDTO> updateRestaurant(Long id, RestaurantUpdateRequestDTO dto);
+    ResponseEntity<RestaurantResponseDTO> updateRestaurant(Long id, RestaurantUpdateRequestDTO dto, Principal principal);
 
     @Operation(
             description = "Ao passar um id de um restaurante como parâmetro, " +
