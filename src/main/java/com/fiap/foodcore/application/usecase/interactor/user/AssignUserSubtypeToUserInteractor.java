@@ -29,7 +29,7 @@ public class AssignUserSubtypeToUserInteractor implements AssignUserSubtypeToUse
                 .orElseThrow(() -> new DataNotFoundException("Usuário não encontrado"));
 
         if(existingUser.getTipo().equals(UserTypeDomain.DONO)){
-            throw new BusinessException("Usuários com perfil 'Dono' não podem ter um subtipo atribuído.");
+            throw new BusinessException("Usuários com tipo 'Dono' não podem ter um subtipo atribuído.");
         }
 
         UserSubtype existingUserSubtype = userSubtypeGateway.findById(input.id()).orElseThrow(() -> new DataNotFoundException("Subtipo de usuário não encontrado"));
