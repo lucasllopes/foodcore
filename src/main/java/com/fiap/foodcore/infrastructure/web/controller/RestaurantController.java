@@ -58,41 +58,71 @@ public interface RestaurantController {
                                     }
                             )
                     }
-            ),
-            @ApiResponse(
-                    description = "Forbidden",
-                    responseCode = "403",
-                    content = {
-                            @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = MessageErrorDTO.class),
-                                    examples = {
-                                            @ExampleObject(
-                                                    name = "Mensagem de erro para consulta não permitida",
-                                                    summary = "Erro consulta não permitida",
-                                                    description = "Mensagem de erro para consulta não permitida",
-                                                    value = """
-                                                    {
-                                                        "status": 403,
-                                                        "error": "Forbidden",
-                                                        "message": "Você não tem permissão para acessar este recurso."
-                                                    }
-                                                    """
-                                            )
-                                    }
-                            )
-                    }
             )
     })
     ResponseEntity<RestaurantResponseDTO> findRestaurantById(Long id);
 
     @Operation(
-            description = "Ao passar as condições da paginação, verifica o tipo de usuário de quem " +
-                    "está fazendo a consulta, se for dono, " +
-                    "será listado os restaurantes respeitando as condições informadas, caso contrário, " +
-                    "retorna uma mensagem de erro dizendo que ele não tem permissão. " +
+            description = "Ao passar as condições da paginação, " +
+                    "será listado os restaurantes respeitando as condições informadas. " +
                     "Também existe a possibilidade de passar um nome de restaurante como filtro.",
             summary = "Retorna os restaurantes de forma paginada"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    description = "Ok",
+                    responseCode = "200",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = RestaurantResponseDTO.class)
+                            )
+                    }
+            )
+    })
+    ResponseEntity<Page<RestaurantResponseDTO>> listPaginatedRestaurants(String name, @ParameterObject Pageable pageable);
+
+    @Operation(
+            description = "Ao passar um json com os dados de um restaurante no corpo da requisição, " +
+                    "verifica se o tipo do usuário que está criando um restaurante, é do tipo DONO, caso não seja, " +
+                    "devolve uma mensagem de erro dizendo que o mesmo não tem permissão para isso, mas caso seja, " +
+                    "valida os dados fornecidos, caso estejam corretos, retorna os " +
+                    "dados do restaurante com um id (indicando que ele foi inserido no banco), caso contrário, " +
+                    "devolve uma mensagem de erro indicando o porque a inserção não ocorreu.",
+            summary = "Cria um restaurante com os dados fornecidos",
+            requestBody = @RequestBody(
+                    description = "Dados do restaurante",
+                    required = true,
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = RestaurantCreateRequestDTO.class),
+                            examples = {
+                                    @ExampleObject(
+                                            name = "Exemplo de dados do restaurante que será inserido",
+                                            summary = "Dados do restaurante",
+                                            description = "Exemplo de dados do restaurante que será inserido",
+                                            value = """
+                                                    {
+                                                          "nome": "Paradise",
+                                                          "cuisineType": "FAST FOOD",
+                                                          "endereco": {
+                                                              "logradouro": "Rua Dos Lanches 3",
+                                                              "numero": "12352",
+                                                              "complemento": "Apto 1212",
+                                                              "bairro": "Centro 1211",
+                                                              "cep": "01234-000 241",
+                                                              "estado": "GO",
+                                                              "cidade": "Itumbiara"
+                                                          },
+                                                          "openingHours": "19:00",
+                                                          "closingHours": "23:59",
+                                                          "ownerId": 6
+                                                     }
+                                                    """
+                                    )
+                            }
+                    )
+            )
     )
     @ApiResponses(value = {
             @ApiResponse(
@@ -152,78 +182,24 @@ public interface RestaurantController {
                                     }
                             )
                     }
-            )
-    })
-    ResponseEntity<Page<RestaurantResponseDTO>> listPaginatedRestaurants(String name, @ParameterObject Pageable pageable);
-
-    @Operation(
-            description = "Ao passar um json com os dados de um restaurante no corpo da requisição, " +
-                    "valida os dados fornecidos, caso estejam corretos, retorna os " +
-                    "dados do restaurante com um id (indicando que ele foi inserido no banco), caso contrário, " +
-                    "devolve uma mensagem de erro indicando o porque a inserção não ocorreu.",
-            summary = "Cria um restaurante com os dados fornecidos",
-            requestBody = @RequestBody(
-                    description = "Dados do restaurante",
-                    required = true,
-                    content = @Content(
-                            mediaType = "application/json",
-                            schema = @Schema(implementation = RestaurantCreateRequestDTO.class),
-                            examples = {
-                                    @ExampleObject(
-                                            name = "Exemplo de dados do restaurante que será inserido",
-                                            summary = "Dados do restaurante",
-                                            description = "Exemplo de dados do restaurante que será inserido",
-                                            value = """
-                                                    {
-                                                          "nome": "Paradise",
-                                                          "cuisineType": "FAST FOOD",
-                                                          "endereco": {
-                                                              "logradouro": "Rua Dos Lanches 3",
-                                                              "numero": "12352",
-                                                              "complemento": "Apto 1212",
-                                                              "bairro": "Centro 1211",
-                                                              "cep": "01234-000 241",
-                                                              "estado": "GO",
-                                                              "cidade": "Itumbiara"
-                                                          },
-                                                          "openingHours": "19:00",
-                                                          "closingHours": "23:59",
-                                                          "ownerId": 6
-                                                     }
-                                                    """
-                                    )
-                            }
-                    )
-            )
-    )
-    @ApiResponses(value = {
-            @ApiResponse(
-                    description = "Ok",
-                    responseCode = "200",
-                    content = {
-                            @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = RestaurantResponseDTO.class)
-                            )
-                    }
             ),
             @ApiResponse(
-                    description = "Conflict",
-                    responseCode = "409",
+                    description = "Bad Request",
+                    responseCode = "400",
                     content = {
                             @Content(
                                     mediaType = "application/json",
                                     schema = @Schema(implementation = MessageErrorDTO.class),
                                     examples = {
                                             @ExampleObject(
-                                                    name = "Mensagem de erro para indicar que já " +
-                                                            "existe o tipo de usuário do dono não é DONO",
+                                                    name = "Mensagem de erro para indicar que " +
+                                                            "o tipo de usuário informado no ownerId não é DONO",
                                                     summary = "Tipo de usuário do dono do restaurante não é DONO",
-                                                    description = "Mensagem de erro para indicar que já " +
-                                                            "existe o tipo de usuário do dono não é DONO",
+                                                    description = "Mensagem de erro para indicar que " +
+                                                            "o tipo de usuário informado no ownerId não é DONO",
                                                     value = """
                                                     {
-                                                        "mensagem": "O usuário informado não é do tipo Dono."
+                                                        "mensagem": "O código de usuário informado não é do tipo DONO."
                                                     }
                                                     """
                                             )
