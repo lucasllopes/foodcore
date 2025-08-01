@@ -19,7 +19,7 @@ public interface UserController {
 
     @Operation(
             description = "Ao passar um id de um usuário como parâmetro, verifica o tipo de usuário de " +
-                    "quem está realizando a consulta, se for dono, " +
+                    "quem está realizando a consulta, se for DONO, " +
                     "ele pode consultar por qualquer usuário, caso contrário, " +
                     "ele poderá apenas pesquisar por ele mesmo.",
             summary = "Retorna o usuário do id específico"
@@ -58,6 +58,30 @@ public interface UserController {
                     }
             ),
             @ApiResponse(
+                    description = "Unauthorized",
+                    responseCode = "401",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = MessageErrorDTO.class),
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Mensagem de erro para indicar que não está autenticado",
+                                                    summary = "Usuário não autenticado",
+                                                    description = "Mensagem de erro para indicar que não está autenticado",
+                                                    value = """
+                                                    {
+                                                        "status": 401,
+                                                        "error": "Unauthorized",
+                                                        "message": "Você precisa estar autenticado para acessar este recurso."
+                                                    }
+                                                    """
+                                            )
+                                    }
+                            )
+                    }
+            ),
+            @ApiResponse(
                     description = "Forbidden",
                     responseCode = "403",
                     content = {
@@ -86,7 +110,7 @@ public interface UserController {
 
     @Operation(
             description = "Ao passar as condições da paginação, verifica o tipo de usuário de quem " +
-                    "está fazendo a consulta, se for dono, " +
+                    "está fazendo a consulta, se for DONO, " +
                     "será listado os usuários respeitando as condições informadas, caso contrário, " +
                     "retorna uma mensagem de erro dizendo que ele não tem permissão.",
             summary = "Retorna os usuários de forma paginada"
@@ -226,12 +250,36 @@ public interface UserController {
                                             @ExampleObject(
                                                     name = "Mensagem de erro para indicar que já " +
                                                             "existe um usuário com esse email",
-                                                    summary = "Email já em uso",
+                                                    summary = "Email já está em uso",
                                                     description = "Mensagem de erro para indicar que já " +
                                                             "existe um usuário com esse email",
                                                     value = """
                                                     {
                                                         "mensagem": "Email já está em uso."
+                                                    }
+                                                    """
+                                            )
+                                    }
+                            )
+                    }
+            ),
+            @ApiResponse(
+                    description = "Conflict",
+                    responseCode = "409",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = MessageErrorDTO.class),
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Mensagem de erro para indicar que já " +
+                                                            "existe um usuário com esse login",
+                                                    summary = "Login já está em uso",
+                                                    description = "Mensagem de erro para indicar que já " +
+                                                            "existe um usuário com esse login",
+                                                    value = """
+                                                    {
+                                                        "mensagem": "Login já está em uso."
                                                     }
                                                     """
                                             )
@@ -342,6 +390,30 @@ public interface UserController {
                                                         "status": 403,
                                                         "error": "Forbidden",
                                                         "message": "Você não tem permissão para acessar este recurso."
+                                                    }
+                                                    """
+                                            )
+                                    }
+                            )
+                    }
+            ),
+            @ApiResponse(
+                    description = "Conflict",
+                    responseCode = "409",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = MessageErrorDTO.class),
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Mensagem de erro para indicar que já " +
+                                                            "existe um usuário com esse email",
+                                                    summary = "Email já está em uso",
+                                                    description = "Mensagem de erro para indicar que já " +
+                                                            "existe um usuário com esse email",
+                                                    value = """
+                                                    {
+                                                        "mensagem": "Email já está em uso."
                                                     }
                                                     """
                                             )
@@ -538,11 +610,14 @@ public interface UserController {
     ResponseEntity<String> changePassword(Long id, ChangePasswordRequestDTO dto);
 
     @Operation(
-            description = "Ao passar um id de um usuário como parâmetro e um json que contém o id do tipo de usuário, " +
-                    "verifica o tipo de usuário de quem está tentando atualizar, se for dono, " +
-                    "permite a atualização do subtipo de usuário especificado, caso contrário, " +
-                    "retorna uma mensagem de erro dizendo que ele não tem permissão.",
-            summary = "Atualiza o subtipo de usuário do usuário especificado",
+            description = "Ao passar um id de um usuário como parâmetro e um json que contém o id do subtipo de usuário, " +
+                    "verifica o tipo de usuário de quem está tentando atualizar, se for DONO, " +
+                    "também verifica se o tipo do usuário do id especificado é DONO, caso seja, não permite a " +
+                    "atribuição de um subtipo, pois o usuário com tipo DONO, não pode ter um subtipo atribuído, " +
+                    "caso o usuário do id especificado não seja do tipo DONO, permite a atribuição do subtipo de usuário " +
+                    "pro usuário do id especificado, caso quem esteja tentando atualizar, não seja DONO, retorna uma " +
+                    "mensagem de erro dizendo que ele não tem permissão.",
+            summary = "Atribui o subtipo de usuário do usuário especificado",
             requestBody = @RequestBody(
                     description = "JSON com o Id do subtipo de usuário",
                     required = true,
@@ -574,6 +649,30 @@ public interface UserController {
                             @Content(
                                     mediaType = "application/json",
                                     schema = @Schema(implementation = UserResponseDTO.class)
+                            )
+                    }
+            ),
+            @ApiResponse(
+                    description = "Bad Request",
+                    responseCode = "400",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = MessageErrorDTO.class),
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Mensagem de erro para indicar que usuários com o tipo DONO, " +
+                                                            "não podem um subtipo atribuído",
+                                                    summary = "Usuários tipo DONO não podem ser subtipos atribuídos",
+                                                    description = "Mensagem de erro para indicar que usuários com o tipo DONO, " +
+                                                            "não podem um subtipo atribuído",
+                                                    value = """
+                                                    {
+                                                        "mensagem": "Usuários com tipo 'Dono' não podem ter um subtipo atribuído."
+                                                    }
+                                                    """
+                                            )
+                                    }
                             )
                     }
             ),
