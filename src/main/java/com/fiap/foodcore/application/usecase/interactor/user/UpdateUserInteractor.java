@@ -23,7 +23,7 @@ public class UpdateUserInteractor implements UpdateUserUseCase {
 
         userGateway.findByEmail(input.email())
                 .filter(u -> !u.getId().equals(id))
-                .ifPresent(u -> { throw new DuplicatedDataException("Email já em uso"); });
+                .ifPresent(u -> { throw new DuplicatedDataException("Email já está em uso"); });
 
         var domain = UserMapper.toDomain(existing, input);
         var saved = userGateway.save(domain);
