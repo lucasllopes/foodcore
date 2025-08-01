@@ -240,6 +240,30 @@ public interface UserController {
                     }
             ),
             @ApiResponse(
+                    description = "Bad Request",
+                    responseCode = "400",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = MessageErrorDTO.class),
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Mensagem de erro para indicar que o tipo de usuário " +
+                                                            "fornecido não é válido",
+                                                    summary = "Tipo de usuário informado não é válido",
+                                                    description = "Mensagem de erro para indicar que o tipo de usuário " +
+                                                            "fornecido não é válido",
+                                                    value = """
+                                                    {
+                                                        "mensagem": "Valor inválido para tipo de usuário. Valores válidos: [CLIENTE, COLABORADOR, DONO]"
+                                                    }
+                                                    """
+                                            )
+                                    }
+                            )
+                    }
+            ),
+            @ApiResponse(
                     description = "Conflict",
                     responseCode = "409",
                     content = {

@@ -25,4 +25,4 @@ http://localhost:8080/swagger-ui/index.html#/
 
 A maioria dos endpoints exige autenticação. Para isso, utilize o endpoint de login informando o usuário e a senha de um usuário existente.
 
-Para habilitar o degub remoto no intellij ir em edit configurations -> clicar no "+" -> Remote JVM Debug -> Host: localhost Porta: 5005 -> clicar em "Apply" -> Rodar normalmente
+Para habilitar o debug remoto no intellij ir em edit configurations -> clicar no "+" -> Remote JVM Debug -> Host: localhost Porta: 5005 -> clicar em "Apply" -> Rodar normalmente
