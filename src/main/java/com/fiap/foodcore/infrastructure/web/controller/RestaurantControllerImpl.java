@@ -113,9 +113,13 @@ public class RestaurantControllerImpl implements RestaurantController {
     }
 
     @DeleteMapping(path = "/{id}")
-    @PreAuthorize("#id == principal.id")
-    public ResponseEntity<Void> deleteRestaurant(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteRestaurant(@PathVariable Long id, Principal principal) {
         logger.info("Handling DELETE request to /restaurantes");
+
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println(principal.toString());
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++");
+
         deleteRestaurantInteractor.execute(id);
         return ResponseEntity.noContent().build();
     }

@@ -138,6 +138,30 @@ public interface RestaurantController {
                     }
             ),
             @ApiResponse(
+                    description = "Bad Request",
+                    responseCode = "400",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = MessageErrorDTO.class),
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Mensagem de erro para indicar que " +
+                                                            "o tipo de usuário informado no ownerId não é DONO",
+                                                    summary = "Tipo de usuário do dono do restaurante não é DONO",
+                                                    description = "Mensagem de erro para indicar que " +
+                                                            "o tipo de usuário informado no ownerId não é DONO",
+                                                    value = """
+                                                    {
+                                                        "mensagem": "O código de usuário informado não é do tipo DONO."
+                                                    }
+                                                    """
+                                            )
+                                    }
+                            )
+                    }
+            ),
+            @ApiResponse(
                     description = "Unauthorized",
                     responseCode = "401",
                     content = {
@@ -184,39 +208,15 @@ public interface RestaurantController {
                                     }
                             )
                     }
-            ),
-            @ApiResponse(
-                    description = "Bad Request",
-                    responseCode = "400",
-                    content = {
-                            @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = MessageErrorDTO.class),
-                                    examples = {
-                                            @ExampleObject(
-                                                    name = "Mensagem de erro para indicar que " +
-                                                            "o tipo de usuário informado no ownerId não é DONO",
-                                                    summary = "Tipo de usuário do dono do restaurante não é DONO",
-                                                    description = "Mensagem de erro para indicar que " +
-                                                            "o tipo de usuário informado no ownerId não é DONO",
-                                                    value = """
-                                                    {
-                                                        "mensagem": "O código de usuário informado não é do tipo DONO."
-                                                    }
-                                                    """
-                                            )
-                                    }
-                            )
-                    }
             )
     })
     ResponseEntity<RestaurantResponseDTO> createRestaurant(RestaurantCreateRequestDTO dto);
 
     @Operation(
             description = "Ao passar um id de um restaurante como parâmetro e um json dos dados atualizados no corpo da requisição, " +
-                    "verifica se está tentando atualizar o próprio restaurante, caso seja, " +
+                    "verifica se quem está tentando atualizar o restaurante, é o próprio dono do restaurante, caso seja, " +
                     "permite a atualização dos dados, caso contrário, " +
-                    "retorna uma mensagem de erro dizendo que ele não tem permissão.",
+                    "retorna uma mensagem de erro dizendo que apenas o dono do restaurante pode atualizar.",
             summary = "Atualiza o restaurante do id especificado",
             requestBody = @RequestBody(
                     description = "Dados atualizados do restaurante",
@@ -231,21 +231,19 @@ public interface RestaurantController {
                                             description = "Exemplo de dados atualizados do restaurante anteriormente inserido",
                                             value = """
                                                     {
-                                                         "name": "MacBurguer",
-                                                         "cuisineType": "FAST FOOD",
-                                                         "enderecos": [
-                                                             {
-                                                                 "logradouro": "Rua Dos Lanches",
-                                                                 "numero": "1235",
-                                                                 "complemento": "Apto 121",
-                                                                 "bairro": "Centro 121",
-                                                                 "cep": "01234-000 21",
-                                                                 "estado": "GO",
-                                                                 "cidade": "Itumbiara"
-                                                             }
-                                                         ],
-                                                         "openingHours": "19:00",
-                                                         "closingHours": "00:30"
+                                                        "name": "MacBurguer",
+                                                        "cuisineType": "FAST FOOD",
+                                                        "endereco": {
+                                                            "logradouro": "Rua Dos Lanches",
+                                                            "numero": "1235",
+                                                            "complemento": "Apto 121",
+                                                            "bairro": "Centro 121",
+                                                            "cep": "01234-000 21",
+                                                            "estado": "GO",
+                                                            "cidade": "Itumbiara"
+                                                        },
+                                                        "openingHours": "19:00",
+                                                        "closingHours": "00:30"
                                                     }
                                                     """
                                     )
@@ -265,6 +263,32 @@ public interface RestaurantController {
                     }
             ),
             @ApiResponse(
+                    description = "Bad Request",
+                    responseCode = "400",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = MessageErrorDTO.class),
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Mensagem de erro para indicar que apenas " +
+                                                            "o dono do restaurante tem permissão " +
+                                                            "para realizar a atualização",
+                                                    summary = "Usuário atual não é o proprietário do restaurante",
+                                                    description = "Mensagem de erro para indicar que apenas " +
+                                                            "o dono do restaurante tem permissão " +
+                                                            "para realizar a atualização",
+                                                    value = """
+                                                    {
+                                                        "mensagem": "Apenas o proprietário do restaurante tem permissão para realizar essa atualização."
+                                                    }
+                                                    """
+                                            )
+                                    }
+                            )
+                    }
+            ),
+            @ApiResponse(
                     description = "Unauthorized",
                     responseCode = "401",
                     content = {
@@ -311,15 +335,61 @@ public interface RestaurantController {
                                     }
                             )
                     }
+            ),
+            @ApiResponse(
+                    description = "Not Found",
+                    responseCode = "404",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = MessageErrorDTO.class),
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Mensagem de erro para restaurante não encontrado",
+                                                    summary = "Restaurante não encontrado",
+                                                    description = "Mensagem de erro para restaurante não encontrado",
+                                                    value = """
+                                                    {
+                                                        "mensagem": "Restaurante não encontrado."
+                                                    }
+                                                    """
+                                            )
+                                    }
+                            )
+                    }
+            ),
+            @ApiResponse(
+                    description = "Conflict",
+                    responseCode = "409",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = MessageErrorDTO.class),
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Mensagem de erro para indicar que já " +
+                                                            "existe um restaurante com esse nome",
+                                                    summary = "Já existe um restaurante cadastrado com este nome.",
+                                                    description = "Mensagem de erro para indicar que já " +
+                                                            "existe um restaurante com esse nome",
+                                                    value = """
+                                                    {
+                                                        "mensagem": "Já existe um restaurante cadastrado com este nome."
+                                                    }
+                                                    """
+                                            )
+                                    }
+                            )
+                    }
             )
     })
     ResponseEntity<RestaurantResponseDTO> updateRestaurant(Long id, RestaurantUpdateRequestDTO dto, Principal principal);
 
     @Operation(
             description = "Ao passar um id de um restaurante como parâmetro, " +
-                    "verifica se está tentando excluir o próprio restaurante, caso seja, " +
+                    "verifica se quem está tentando excluir o restaurante, é o próprio dono do restaurante, caso seja, " +
                     "permite a exclusão dos dados, caso contrário, " +
-                    "retorna uma mensagem de erro dizendo que ele não tem permissão.",
+                    "retorna uma mensagem de erro dizendo que apenas o dono do restaurante pode excluir.",
             summary = "Exclui o restaurante do id especificado"
     )
     @ApiResponses(value = {
@@ -333,6 +403,32 @@ public interface RestaurantController {
                     }
             ),
             @ApiResponse(
+                    description = "Bad Request",
+                    responseCode = "400",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = MessageErrorDTO.class),
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Mensagem de erro para indicar que apenas " +
+                                                            "o dono do restaurante tem permissão " +
+                                                            "para realizar a exclusão",
+                                                    summary = "Usuário atual não é o proprietário do restaurante",
+                                                    description = "Mensagem de erro para indicar que apenas " +
+                                                            "o dono do restaurante tem permissão " +
+                                                            "para realizar a exclusão",
+                                                    value = """
+                                                    {
+                                                        "mensagem": "Apenas o proprietário do restaurante tem permissão para realizar essa exclusão."
+                                                    }
+                                                    """
+                                            )
+                                    }
+                            )
+                    }
+            ),
+            @ApiResponse(
                     description = "Unauthorized",
                     responseCode = "401",
                     content = {
@@ -379,7 +475,29 @@ public interface RestaurantController {
                                     }
                             )
                     }
+            ),
+            @ApiResponse(
+                    description = "Not Found",
+                    responseCode = "404",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = MessageErrorDTO.class),
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Mensagem de erro para restaurante não encontrado",
+                                                    summary = "Restaurante não encontrado",
+                                                    description = "Mensagem de erro para restaurante não encontrado",
+                                                    value = """
+                                                    {
+                                                        "mensagem": "Restaurante não encontrado."
+                                                    }
+                                                    """
+                                            )
+                                    }
+                            )
+                    }
             )
     })
-    ResponseEntity<Void> deleteRestaurant(Long id);
+    ResponseEntity<Void> deleteRestaurant(Long id, Principal principal);
 }
