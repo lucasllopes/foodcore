@@ -20,7 +20,7 @@ public class CreateUserSubtypeInteractor implements CreateUserSubtypeUseCase {
         var existingUserTypes = gateway.findByNameIgnoreCase(input.name());
 
         if (!existingUserTypes.isEmpty()) {
-            throw new DuplicatedDataException("Esse tipo de usuário já está cadastrado");
+            throw new DuplicatedDataException("Esse subtipo de usuário já está cadastrado");
         }
 
         var userType = UserSubtypeMapper.toDomain(input.name());

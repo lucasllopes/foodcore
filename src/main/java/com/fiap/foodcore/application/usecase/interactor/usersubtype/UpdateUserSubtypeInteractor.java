@@ -27,7 +27,7 @@ public class UpdateUserSubtypeInteractor implements UpdateUserSubtypeUseCase {
                 .anyMatch(u -> !u.getId().equals(id));
 
         if (existsDuplicate) {
-            throw new DuplicatedDataException("Esse tipo de usuário já está cadastrado");
+            throw new DuplicatedDataException("Esse subtipo de usuário já está cadastrado");
         }
 
         existing.update(input.name());
