@@ -15,5 +15,6 @@ public interface ItemGateway {
     void delete(Item item);
     Optional<Item> findByName(String name);
     List<Item> findItemsByMenuId(Long menuId);
+    Optional<Item> findByNameIgnoreCase(String name);
 
 }

@@ -22,7 +22,7 @@ public class ItemSecurity {
         List<Menu> menus = menuGateway.findMenusByItemId(itemId);
 
         if (menus.isEmpty()) {
-            return true; // Item não vinculado a nenhum menu/restaurante
+            return true;
         }
 
         if (authentication == null || !authentication.isAuthenticated()) {

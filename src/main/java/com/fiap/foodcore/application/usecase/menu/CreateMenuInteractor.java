@@ -26,8 +26,6 @@ public class CreateMenuInteractor {
 
     public MenuCreateOutput execute(CreateMenuInput createMenuInput) {
 
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        Long userId = ((UserDetailsAdapter) authentication.getPrincipal()).getId();
 
         var restaurante = validaSeExisteRestaurante(createMenuInput);
 

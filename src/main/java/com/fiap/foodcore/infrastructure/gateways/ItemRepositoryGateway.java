@@ -79,6 +79,12 @@ public class ItemRepositoryGateway implements ItemGateway {
                 .toList();
     }
 
+    @Override
+    public Optional<Item> findByNameIgnoreCase(String name) {
+        return itemRepository.findByNameIgnoreCase(name).stream()
+                .map(ItemMapper::toDomain).findFirst();
+    }
+
     private Sort toSpringSort(List<SortOrder> orders) {
         return Sort.by(
                 orders.stream().map(
