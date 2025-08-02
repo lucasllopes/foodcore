@@ -8,6 +8,7 @@ import com.fiap.foodcore.domain.pagination.DomainPage;
 import com.fiap.foodcore.domain.pagination.PageRequestDomain;
 import com.fiap.foodcore.domain.pagination.SortOrder;
 import com.fiap.foodcore.infrastructure.presenter.RestaurantPresenter;
+import com.fiap.foodcore.infrastructure.security.UserDetailsAdapter;
 import com.fiap.foodcore.infrastructure.web.controller.dto.restaurant.RestaurantCreateRequestDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.restaurant.RestaurantResponseDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.restaurant.RestaurantUpdateRequestDTO;
@@ -20,8 +21,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -92,23 +95,25 @@ public class RestaurantControllerImpl implements RestaurantController {
         RestaurantResponseDTO response = RestaurantPresenter.toDto(output);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+    @PreAuthorize("@restaurantSecurity.isOwner(#id, authentication)")
     @PutMapping("/{id}")
-    @PreAuthorize("#id == principal.id")
     public ResponseEntity<RestaurantResponseDTO> updateRestaurant(@PathVariable Long id, @Valid @RequestBody RestaurantUpdateRequestDTO dto) {
         logger.info("Handling PUT request to /restaurantes");
 
         UpdateRestaurantInput input = RestaurantPresenter.toInputUpdate(dto);
-        CreateRestaurantOutput output = updateRestaurantInteractor.execute(id, input);
+        CreateRestaurantOutput output =
+                updateRestaurantInteractor.execute(id, input);
 
         RestaurantResponseDTO response = RestaurantPresenter.toDto(output);
 
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("@restaurantSecurity.isOwner(#id, authentication)")
     @DeleteMapping(path = "/{id}")
-    @PreAuthorize("#id == principal.id")
     public ResponseEntity<Void> deleteRestaurant(@PathVariable Long id) {
         logger.info("Handling DELETE request to /restaurantes");
+
         deleteRestaurantInteractor.execute(id);
         return ResponseEntity.noContent().build();
     }

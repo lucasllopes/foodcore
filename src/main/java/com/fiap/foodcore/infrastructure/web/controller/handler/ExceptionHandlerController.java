@@ -61,7 +61,7 @@ public class ExceptionHandlerController {
 
     @ExceptionHandler(UserSubtypeNotFoundException.class)
     public ResponseEntity<MessageErrorDTO> handleUserTypeNotFound(UserSubtypeNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageErrorDTO("Tipo de usuário inválido. " + ex.getMessage()));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageErrorDTO(ex.getMessage()));
     }
     @ExceptionHandler(UserSubtypeNotOwnerException.class)
     public ResponseEntity<MessageErrorDTO> handleUserTypeNotOwner(UserSubtypeNotOwnerException ex) {

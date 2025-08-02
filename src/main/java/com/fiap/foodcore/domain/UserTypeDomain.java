@@ -13,7 +13,8 @@ public enum UserTypeDomain {
         return Arrays.stream(UserTypeDomain.values())
                 .filter(t -> t.name().equalsIgnoreCase(value))
                 .findFirst()
-                .orElseThrow(() -> new UserSubtypeNotFoundException("Valor inválido para tipo de usuário"));
+                .orElseThrow(() -> new UserSubtypeNotFoundException("Valor inválido " +
+                        "para tipo de usuário. Valores válidos: " + Arrays.toString(UserTypeDomain.values())));
     }
 
     public static boolean isOwner(UserTypeDomain userTypeDomain){
