@@ -8,7 +8,11 @@ import com.fiap.foodcore.application.usecase.output.ItemCreateOutput;
 import com.fiap.foodcore.application.usecase.output.MenuCreateOutput;
 import com.fiap.foodcore.domain.Item;
 import com.fiap.foodcore.domain.Menu;
+import com.fiap.foodcore.domain.Restaurant;
 import com.fiap.foodcore.infrastructure.gateways.MenuRepositoryGateway;
+import com.fiap.foodcore.infrastructure.security.UserDetailsAdapter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 public class CreateMenuInteractor {
 
@@ -22,15 +26,12 @@ public class CreateMenuInteractor {
 
     public MenuCreateOutput execute(CreateMenuInput createMenuInput) {
 
-        var restaurante = restaurantGateway.findById(createMenuInput.restaurantId())
-                .orElseThrow(() -> new DataNotFoundException("Restaurante não encontrado com ID: " + createMenuInput.restaurantId()));
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        Long userId = ((UserDetailsAdapter) authentication.getPrincipal()).getId();
 
-        // Check for duplicate menu name
-        menuRepositoryGateway.findByNameAndRestaurantId(createMenuInput.nome(), createMenuInput.restaurantId())
-                .ifPresent(menu -> {
-                    throw new DuplicatedDataException("Cardápio com o nome '" + createMenuInput.nome() + "' ja existe para o restaurante com ID: " + createMenuInput.restaurantId());
-                });
+        var restaurante = validaSeExisteRestaurante(createMenuInput);
 
+        validaSeNomeDuplicado(createMenuInput);
 
         Menu menu = new Menu.Builder()
                 .description(createMenuInput.descricao())
@@ -65,6 +66,19 @@ public class CreateMenuInteractor {
                                 item.getPhoto()
                         )).toList()
         );
+    }
+
+    private void validaSeNomeDuplicado(CreateMenuInput createMenuInput) {
+        menuRepositoryGateway.findByNameAndRestaurantId(createMenuInput.nome(), createMenuInput.restaurantId())
+                .ifPresent(menu -> {
+                    throw new DuplicatedDataException("Cardápio com o nome '" + createMenuInput.nome() + "' ja existe para o restaurante com ID: " + createMenuInput.restaurantId());
+                });
+    }
+
+    private Restaurant validaSeExisteRestaurante(CreateMenuInput createMenuInput) {
+        var restaurante = restaurantGateway.findById(createMenuInput.restaurantId())
+                .orElseThrow(() -> new DataNotFoundException("Restaurante não encontrado com ID: " + createMenuInput.restaurantId()));
+        return restaurante;
     }
 
 }

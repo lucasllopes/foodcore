@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -71,6 +72,7 @@ public class ItemControllerImpl implements ItemController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_DONO')")
     public ResponseEntity<ItemCreateResponseDTO> createItem(@RequestBody ItemCreateRequestDTO itemDto) {
         logger.info("Handling POST request to /cardapios/items");
 
@@ -82,7 +84,7 @@ public class ItemControllerImpl implements ItemController {
         return ResponseEntity.ok(responseDto);
     }
 
-
+    @PreAuthorize("@restaurantSecurity.isOwner(#id, authentication)")
     @PutMapping("/{id}")
     public ResponseEntity<ItemCreateResponseDTO> updateItem(@PathVariable Long id, @RequestBody ItemUpdateRequestDTO itemDto) {
         logger.info("Handling PUT request to /cardapios/items/{}", id);
@@ -93,6 +95,7 @@ public class ItemControllerImpl implements ItemController {
         return ResponseEntity.ok(responseDto);
     }
 
+    @PreAuthorize("@restaurantSecurity.isOwner(#id, authentication)")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteItem(@PathVariable Long id) {
         logger.info("Handling DELETE request to /cardapios/items/{}", id);

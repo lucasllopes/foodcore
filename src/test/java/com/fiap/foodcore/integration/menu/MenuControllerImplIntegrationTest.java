@@ -384,6 +384,46 @@ public class MenuControllerImplIntegrationTest {
                 .statusCode(HttpStatus.NOT_FOUND.value());
     }
 
+//    @Test
+//    void shouldReturnNotFoundWhenDeletingNonexistentMenu() {
+//        // Cria restaurante para garantir contexto de segurança
+//        String uniqueRestaurantName = "Restaurante Teste " + System.currentTimeMillis();
+//        RestaurantCreateRequestDTO restaurantRequest = new RestaurantCreateRequestDTO(
+//                uniqueRestaurantName,
+//                "Descrição Restaurante",
+//                new AddressCreateRequestDTO(
+//                        "Rua Teste",
+//                        "123",
+//                        null,
+//                        "Bairro Teste",
+//                        "Cidade Teste",
+//                        "12345-678",
+//                        "Estado Teste"
+//                ),
+//                java.time.LocalTime.of(8, 0),
+//                java.time.LocalTime.of(18, 0),
+//                ownerUser.id()
+//        );
+//
+//        Integer restaurantId = given()
+//                .header("Authorization", "Bearer " + authToken)
+//                .body(restaurantRequest)
+//                .when()
+//                .post("/restaurantes")
+//                .then()
+//                .statusCode(HttpStatus.CREATED.value())
+//                .extract()
+//                .path("id");
+//
+//        // Tenta deletar menu inexistente
+//        given()
+//                .header("Authorization", "Bearer " + authToken)
+//                .when()
+//                .delete("/cardapios/{id}", 99999)
+//                .then()
+//                .statusCode(HttpStatus.NOT_FOUND.value());
+//    }
+
     @Test
     void  shouldCreateMenuSuccessfully(){
         // 1. Primeiro criar um restaurante com nome único

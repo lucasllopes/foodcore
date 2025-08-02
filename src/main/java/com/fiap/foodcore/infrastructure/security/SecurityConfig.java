@@ -60,6 +60,11 @@ public class SecurityConfig {
                     req.requestMatchers(HttpMethod.POST, "/restaurantes/*");
                     req.requestMatchers(HttpMethod.PUT, "/restaurantes/*");
                     req.requestMatchers(HttpMethod.DELETE, "/restaurantes/*");
+                    req.requestMatchers(HttpMethod.GET, "/cardapios").permitAll();
+                    req.requestMatchers(HttpMethod.GET, "/cardapios/*").permitAll();
+                    req.requestMatchers(HttpMethod.POST, "/cardapios").authenticated();
+                    req.requestMatchers(HttpMethod.PUT, "/cardapios/*").authenticated();
+                    req.requestMatchers(HttpMethod.DELETE, "/cardapios/*").authenticated();
                     req.anyRequest().authenticated();
                 })
                 .exceptionHandling(ex -> ex

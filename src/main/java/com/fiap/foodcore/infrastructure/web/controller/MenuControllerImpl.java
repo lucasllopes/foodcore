@@ -16,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -72,6 +73,7 @@ public class MenuControllerImpl implements MenuController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_DONO')")
     public ResponseEntity<MenuResponseDTO> createMenu(@Valid @RequestBody MenuCreateRequestDTO menuDto) {
         logger.info("Handling POST request to /cardapios");
 
@@ -81,6 +83,7 @@ public class MenuControllerImpl implements MenuController {
         return ResponseEntity.status(201).body(dto);
     }
 
+    @PreAuthorize("@menuSecurity.isOwner(#id, authentication)")
     @PutMapping("/{id}")
     public ResponseEntity<MenuResponseDTO> updateMenu(@PathVariable Long id, @RequestBody MenuUpdateRequestDTO menuDto) {
         logger.info("Handling PUT request to /cardapios/{}", id);
@@ -91,6 +94,7 @@ public class MenuControllerImpl implements MenuController {
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("@menuSecurity.isOwner(#id, authentication)")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMenu(@PathVariable Long id) {
         logger.info("Handling DELETE request to /cardapios/{}", id);
