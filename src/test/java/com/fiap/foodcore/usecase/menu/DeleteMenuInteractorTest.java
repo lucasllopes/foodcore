@@ -52,7 +52,7 @@ class DeleteMenuInteractorTest {
                 () -> deleteMenuInteractor.execute(menuId)
         );
 
-        assertEquals("Menu não encontrado", exception.getMessage());
+        assertEquals("Cardápio não encontrado", exception.getMessage());
 
         verify(menuGateway).findById(menuId);
         verify(menuGateway, never()).delete(any(Menu.class));

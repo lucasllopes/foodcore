@@ -135,7 +135,7 @@ class CreateMenuInteractorTest {
                 () -> createMenuInteractor.execute(createMenuInput)
         );
 
-        assertEquals("Restaurant not found with ID: " + restaurantId, exception.getMessage());
+        assertEquals("Restaurante não encontrado com ID: " + restaurantId, exception.getMessage());
 
         verify(restaurantGateway).findById(restaurantId);
         verify(menuRepositoryGateway, never()).findByNameAndRestaurantId(anyString(), any(Long.class));
@@ -170,7 +170,7 @@ class CreateMenuInteractorTest {
                 () -> createMenuInteractor.execute(createMenuInput)
         );
 
-        assertEquals("Menu with name '" + menuName + "' already exists for restaurant ID: " + restaurantId,
+        assertEquals("Cardápio com o nome '" + menuName + "' ja existe para o restaurante com ID: " + restaurantId,
                 exception.getMessage());
 
         verify(restaurantGateway).findById(restaurantId);

@@ -14,7 +14,7 @@ public class FindMenuByIdInteractor {
 
     public MenuCreateOutput execute(Long id) {
         var menu = menuGateway.findById(id)
-                .orElseThrow(() -> new DataNotFoundException("Menu não encontrado"));
+                .orElseThrow(() -> new DataNotFoundException("Cardápio não encontrado"));
 
         return new MenuCreateOutput(
                 menu.getId(),

@@ -13,7 +13,7 @@ public record MenuCreateRequestDTO (
         @NotBlank(message = "Descrição é obrigatória.")
         String description,
 
-        @NotNull(message = "O restaurantId é obrigatório")
+        @NotNull(message = "O código do restaurante (restaurantId) é obrigatório")
         Long restaurantId,
 
         @NotNull(message = "Necessário informar um endereço.")
