@@ -21,16 +21,16 @@ public class UpdateMenuInteractor {
 
     public MenuCreateOutput execute(Long id, MenuUpdateRequestDTO menuUpdateRequestDTO) {
         var existingMenu = menuGateway.findById(id)
-                .orElseThrow(() -> new DataNotFoundException("Menu not found"));
+                .orElseThrow(() -> new DataNotFoundException("Cardápio não encontrado com ID: "+ id));
 
         // Check for duplicate name
         menuGateway.findByName(menuUpdateRequestDTO.name())
                 .filter(menu -> !menu.getId().equals(id))
-                .ifPresent(menu -> { throw new DuplicatedDataException("Menu name already in use"); });
+                .ifPresent(menu -> { throw new DuplicatedDataException("Nome de Cardápio já utilizado"); });
 
         // Validate restaurant existence
         restaurantGateway.findById(menuUpdateRequestDTO.restaurantId())
-                .orElseThrow(() -> new DataNotFoundException("Restaurant not found with ID: " + menuUpdateRequestDTO.restaurantId()));
+                .orElseThrow(() -> new DataNotFoundException("Restaurante não encontrado com  ID: " + menuUpdateRequestDTO.restaurantId()));
 
 
         Menu menuToUpdate = existingMenu.atualizarInformacoes(

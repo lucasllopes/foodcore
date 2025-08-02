@@ -146,7 +146,7 @@ class UpdateMenuInteractorTest {
                 () -> updateMenuInteractor.execute(menuId, menuUpdateDTO)
         );
 
-        assertEquals("Menu name already in use", exception.getMessage());
+        assertEquals("Nome de Cardápio já utilizado", exception.getMessage());
 
         // Verify
         verify(menuGateway).findById(menuId);

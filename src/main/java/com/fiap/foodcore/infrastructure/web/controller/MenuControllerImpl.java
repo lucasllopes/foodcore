@@ -7,7 +7,7 @@ import com.fiap.foodcore.domain.pagination.PageRequestDomain;
 import com.fiap.foodcore.domain.pagination.SortOrder;
 import com.fiap.foodcore.infrastructure.presenter.MenuPresenter;
 import com.fiap.foodcore.infrastructure.web.controller.dto.MenuCreateRequestDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.MenuCreateResponseDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.MenuResponseDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.MenuUpdateRequestDTO;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -41,7 +41,7 @@ public class MenuControllerImpl implements MenuController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<MenuCreateResponseDTO>> listMenus(Pageable pageable) {
+    public ResponseEntity<Page<MenuResponseDTO>> listMenus(Pageable pageable) {
         logger.info("Handling GET request to /cardapios");
         List<SortOrder> sortOrders = pageable.getSort().stream()
                 .map(order -> new SortOrder(order.getProperty(), order.isAscending()))
@@ -50,9 +50,9 @@ public class MenuControllerImpl implements MenuController {
         PageRequestDomain pr = new PageRequestDomain(pageable.getPageNumber(), pageable.getPageSize(), sortOrders);
 
         DomainPage<MenuCreateOutput> outputs = listMenuInteractor.execute(pr);
-        List<MenuCreateResponseDTO> dtos = MenuPresenter.toDtoList(outputs.getItems());
+        List<MenuResponseDTO> dtos = MenuPresenter.toDtoList(outputs.getItems());
 
-        Page<MenuCreateResponseDTO> paginatedUser = new PageImpl<>(
+        Page<MenuResponseDTO> paginatedUser = new PageImpl<>(
                 dtos,
                 pageable,
                 outputs.getTotalElements()
@@ -62,37 +62,37 @@ public class MenuControllerImpl implements MenuController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MenuCreateResponseDTO> findMenuById(@PathVariable Long id) {
+    public ResponseEntity<MenuResponseDTO> findMenuById(@PathVariable Long id) {
         logger.info("Handling GET request to /cardapios with id={}", id);
 
         MenuCreateOutput output = findMenuByIdInteractor.execute(id);
-        MenuCreateResponseDTO dto = MenuPresenter.toResponseDTO(output);
+        MenuResponseDTO dto = MenuPresenter.toResponseDTO(output);
 
         return ResponseEntity.ok(dto);
     }
 
     @PostMapping
-    public ResponseEntity<MenuCreateResponseDTO> createMenu(@Valid @RequestBody MenuCreateRequestDTO menuDto) {
+    public ResponseEntity<MenuResponseDTO> createMenu(@Valid @RequestBody MenuCreateRequestDTO menuDto) {
         logger.info("Handling POST request to /cardapios");
 
         MenuCreateOutput output = createMenuInteractor.execute(MenuPresenter.fromCreateInputRequestDTO(menuDto));
-        MenuCreateResponseDTO dto = MenuPresenter.toResponseDTO(output);
+        MenuResponseDTO dto = MenuPresenter.toResponseDTO(output);
 
         return ResponseEntity.status(201).body(dto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MenuCreateResponseDTO> updateMenu(@PathVariable Long id, @RequestBody MenuUpdateRequestDTO menuDto) {
+    public ResponseEntity<MenuResponseDTO> updateMenu(@PathVariable Long id, @RequestBody MenuUpdateRequestDTO menuDto) {
         logger.info("Handling PUT request to /cardapios/{}", id);
         MenuCreateOutput output = updateMenuInteractor.execute(id, menuDto);
 
-        MenuCreateResponseDTO response = MenuPresenter.toResponseDTO(output);
+        MenuResponseDTO response = MenuPresenter.toResponseDTO(output);
 
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<MenuCreateResponseDTO> deleteMenu(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteMenu(@PathVariable Long id) {
         logger.info("Handling DELETE request to /cardapios/{}", id);
         deleteMenuInteractor.execute(id);
         return ResponseEntity.noContent().build();

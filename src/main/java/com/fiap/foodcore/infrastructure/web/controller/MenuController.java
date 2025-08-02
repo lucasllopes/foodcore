@@ -1,7 +1,7 @@
 package com.fiap.foodcore.infrastructure.web.controller;
 
 import com.fiap.foodcore.infrastructure.web.controller.dto.MenuCreateRequestDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.MenuCreateResponseDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.MenuResponseDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.MenuUpdateRequestDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.MessageErrorDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.restaurant.RestaurantResponseDTO;
@@ -33,12 +33,12 @@ public interface MenuController {
                     content = {
                             @Content(
                                     mediaType = "application/json",
-                                    schema = @Schema(implementation = MenuCreateResponseDTO.class)
+                                    schema = @Schema(implementation = MenuResponseDTO.class)
                             )
                     }
             )
     })
-    ResponseEntity<Page<MenuCreateResponseDTO>> listMenus(@ParameterObject Pageable pageable);
+    ResponseEntity<Page<MenuResponseDTO>> listMenus(@ParameterObject Pageable pageable);
 
     @Operation(
             description = "Ao passar um id de um cardápio como parâmetro, verifica se o mesmo existe, caso exista, " +
@@ -53,7 +53,7 @@ public interface MenuController {
                     content = {
                             @Content(
                                     mediaType = "application/json",
-                                    schema = @Schema(implementation = MenuCreateResponseDTO.class)
+                                    schema = @Schema(implementation = MenuResponseDTO.class)
                             )
                     }
             ),
@@ -80,7 +80,7 @@ public interface MenuController {
                     }
             )
     })
-    ResponseEntity<MenuCreateResponseDTO> findMenuById(Long id);
+    ResponseEntity<MenuResponseDTO> findMenuById(Long id);
 
     @Operation(
             description = "Ao passar um json com os dados de um cardápio no corpo da requisição, " +
@@ -134,7 +134,7 @@ public interface MenuController {
                     content = {
                             @Content(
                                     mediaType = "application/json",
-                                    schema = @Schema(implementation = MenuCreateResponseDTO.class)
+                                    schema = @Schema(implementation = MenuResponseDTO.class)
                             )
                     }
             ),
@@ -189,7 +189,7 @@ public interface MenuController {
                     }
             )
     })
-    ResponseEntity<MenuCreateResponseDTO> createMenu(MenuCreateRequestDTO menuDto);
+    ResponseEntity<MenuResponseDTO> createMenu(MenuCreateRequestDTO menuDto);
 
     @Operation(
             description = "Ao passar um id de um cardápio como parâmetro e um json dos dados atualizados no corpo da requisição, " +
@@ -291,7 +291,7 @@ public interface MenuController {
                     }
             )
     })
-    ResponseEntity<MenuCreateResponseDTO> updateMenu(Long id, MenuUpdateRequestDTO menuDto);
+    ResponseEntity<MenuResponseDTO> updateMenu(Long id, MenuUpdateRequestDTO menuDto);
 
     @Operation(
             description = "Ao passar um id de um cardápio como parâmetro, " +
@@ -359,5 +359,5 @@ public interface MenuController {
                     }
             )
     })
-    ResponseEntity<MenuCreateResponseDTO> deleteMenu(Long id);
+    ResponseEntity<Void> deleteMenu(Long id);
 }

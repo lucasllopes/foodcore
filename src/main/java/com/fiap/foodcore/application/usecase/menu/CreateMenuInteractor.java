@@ -23,12 +23,12 @@ public class CreateMenuInteractor {
     public MenuCreateOutput execute(CreateMenuInput createMenuInput) {
 
         var restaurante = restaurantGateway.findById(createMenuInput.restaurantId())
-                .orElseThrow(() -> new DataNotFoundException("Restaurant not found with ID: " + createMenuInput.restaurantId()));
+                .orElseThrow(() -> new DataNotFoundException("Restaurante não encontrado com ID: " + createMenuInput.restaurantId()));
 
         // Check for duplicate menu name
         menuRepositoryGateway.findByNameAndRestaurantId(createMenuInput.nome(), createMenuInput.restaurantId())
                 .ifPresent(menu -> {
-                    throw new DuplicatedDataException("Menu with name '" + createMenuInput.nome() + "' already exists for restaurant ID: " + createMenuInput.restaurantId());
+                    throw new DuplicatedDataException("Cardápio com o nome '" + createMenuInput.nome() + "' ja existe para o restaurante com ID: " + createMenuInput.restaurantId());
                 });
 
 

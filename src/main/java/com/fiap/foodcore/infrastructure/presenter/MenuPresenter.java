@@ -49,9 +49,9 @@ public class MenuPresenter {
     }
 
 
-    public static MenuCreateResponseDTO toResponseDTO(MenuCreateOutput output) {
+    public static MenuResponseDTO toResponseDTO(MenuCreateOutput output) {
         if (output == null) return null;
-        return new MenuCreateResponseDTO(
+        return new MenuResponseDTO(
                 output.id(),
                 output.name(),
                 output.description(),
@@ -68,7 +68,7 @@ public class MenuPresenter {
         );
     }
 
-    public static List<MenuCreateResponseDTO> toDtoList(List<MenuCreateOutput> outputs) {
+    public static List<MenuResponseDTO> toDtoList(List<MenuCreateOutput> outputs) {
         if (outputs == null) return null;
         return outputs.stream()
                 .map(MenuPresenter::toResponseDTO)

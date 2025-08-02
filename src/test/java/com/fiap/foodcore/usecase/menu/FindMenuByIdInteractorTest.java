@@ -97,7 +97,7 @@ class FindMenuByIdInteractorTest {
                 () -> findMenuByIdInteractor.execute(menuId)
         );
 
-        assertEquals("Menu não encontrado", exception.getMessage());
+        assertEquals("Cardápio não encontrado", exception.getMessage());
 
         verify(menuGateway).findById(menuId);
     }
