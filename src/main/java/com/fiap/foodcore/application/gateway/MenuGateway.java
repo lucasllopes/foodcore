@@ -4,6 +4,7 @@ import com.fiap.foodcore.domain.Menu;
 import com.fiap.foodcore.domain.pagination.DomainPage;
 import com.fiap.foodcore.domain.pagination.PageRequestDomain;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface MenuGateway {
@@ -19,4 +20,6 @@ public interface MenuGateway {
     Optional<Menu> findByName(String name);
 
     Optional<Menu> findByNameAndRestaurantId(String name, Long restaurantId);
+
+    List<Menu> findMenusByItemId(Long itemId);
 }

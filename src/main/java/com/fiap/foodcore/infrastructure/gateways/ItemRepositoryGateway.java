@@ -71,6 +71,14 @@ public class ItemRepositoryGateway implements ItemGateway {
                 .map(ItemMapper::toDomain);
     }
 
+    @Override
+    public List<Item> findItemsByMenuId(Long menuId) {
+        return itemRepository.findByMenus_Id(menuId)
+                .stream()
+                .map(ItemMapper::toDomain)
+                .toList();
+    }
+
     private Sort toSpringSort(List<SortOrder> orders) {
         return Sort.by(
                 orders.stream().map(
