@@ -105,21 +105,21 @@ public interface RestaurantController {
                                             description = "Exemplo de dados do restaurante que será inserido",
                                             value = """
                                                     {
-                                                          "nome": "Paradise",
-                                                          "cuisineType": "FAST FOOD",
-                                                          "endereco": {
-                                                              "logradouro": "Rua Dos Lanches 3",
-                                                              "numero": "12352",
-                                                              "complemento": "Apto 1212",
-                                                              "bairro": "Centro 1211",
-                                                              "cep": "01234-000 241",
-                                                              "estado": "GO",
-                                                              "cidade": "Itumbiara"
-                                                          },
-                                                          "openingHours": "19:00",
-                                                          "closingHours": "23:59",
-                                                          "ownerId": 6
-                                                     }
+                                                        "nome": "Paradise",
+                                                        "cuisineType": "FAST FOOD",
+                                                        "endereco": {
+                                                            "logradouro": "Rua Dos Lanches 3",
+                                                            "numero": "12352",
+                                                            "complemento": "Apto 1212",
+                                                            "bairro": "Centro 1211",
+                                                            "cep": "01234-000 241",
+                                                            "estado": "GO",
+                                                            "cidade": "Itumbiara"
+                                                        },
+                                                        "openingHours": "19:00",
+                                                        "closingHours": "23:59",
+                                                        "ownerId": 4
+                                                    }
                                                     """
                                     )
                             }
