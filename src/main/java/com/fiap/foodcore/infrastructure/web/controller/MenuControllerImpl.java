@@ -73,7 +73,7 @@ public class MenuControllerImpl implements MenuController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ROLE_DONO')")
+    @PreAuthorize("hasRole('ROLE_DONO') and @menuSecurity.isOwner(#menuDto.restaurantId, authentication)")
     public ResponseEntity<MenuResponseDTO> createMenu(@Valid @RequestBody MenuCreateRequestDTO menuDto) {
         logger.info("Handling POST request to /cardapios");
 

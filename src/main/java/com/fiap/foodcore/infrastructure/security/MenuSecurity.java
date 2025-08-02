@@ -33,7 +33,7 @@ public class MenuSecurity {
                 .orElse(false);
 
         if (!isOwner) {
-            throw new AccessDeniedException("Você só pode atualizar/deletar menus que pertencem ao seu restaurante.");
+            throw new AccessDeniedException("Você só pode criar, atualizar ou deletar menus para seu restaurante.");
         }
 
         return true;

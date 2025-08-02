@@ -84,7 +84,7 @@ public class ItemControllerImpl implements ItemController {
         return ResponseEntity.ok(responseDto);
     }
 
-    @PreAuthorize("@restaurantSecurity.isOwner(#id, authentication)")
+    @PreAuthorize("@itemSecurity.isOwner(#id, authentication)")
     @PutMapping("/{id}")
     public ResponseEntity<ItemCreateResponseDTO> updateItem(@PathVariable Long id, @RequestBody ItemUpdateRequestDTO itemDto) {
         logger.info("Handling PUT request to /cardapios/items/{}", id);
@@ -95,7 +95,7 @@ public class ItemControllerImpl implements ItemController {
         return ResponseEntity.ok(responseDto);
     }
 
-    @PreAuthorize("@restaurantSecurity.isOwner(#id, authentication)")
+    @PreAuthorize("@itemSecurity.isOwner(#id, authentication)")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteItem(@PathVariable Long id) {
         logger.info("Handling DELETE request to /cardapios/items/{}", id);
@@ -103,8 +103,5 @@ public class ItemControllerImpl implements ItemController {
         deleteItemInteractor.execute(id);
         return ResponseEntity.noContent().build();
     }
-
-
-
 
 }

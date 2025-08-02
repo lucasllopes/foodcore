@@ -65,6 +65,11 @@ public class SecurityConfig {
                     req.requestMatchers(HttpMethod.POST, "/cardapios").authenticated();
                     req.requestMatchers(HttpMethod.PUT, "/cardapios/*").authenticated();
                     req.requestMatchers(HttpMethod.DELETE, "/cardapios/*").authenticated();
+                    req.requestMatchers(HttpMethod.GET, "/cardapios/items").permitAll();
+                    req.requestMatchers(HttpMethod.GET, "/cardapios/items/*").permitAll();
+                    req.requestMatchers(HttpMethod.POST, "/cardapios/items").authenticated();
+                    req.requestMatchers(HttpMethod.PUT, "/cardapios/items/*").authenticated();
+                    req.requestMatchers(HttpMethod.DELETE, "/cardapios/items/*").authenticated();
                     req.anyRequest().authenticated();
                 })
                 .exceptionHandling(ex -> ex
