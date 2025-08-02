@@ -38,7 +38,7 @@ public interface UserSubtypeController {
                                             description = "Exemplo de dados do subtipo de usuário que será inserido",
                                             value = """
                                                     {
-                                                          "name":"MECANICO"
+                                                        "name":"GARÇOM"
                                                     }
                                                     """
                                     )
@@ -121,7 +121,7 @@ public interface UserSubtypeController {
                                                             "existe um subtipo de usuário com esse nome",
                                                     value = """
                                                     {
-                                                         "mensagem": "Esse tipo de usuário já está cadastrado"
+                                                         "mensagem": "Esse subtipo de usuário já está cadastrado"
                                                     }
                                                     """
                                             )
@@ -151,7 +151,7 @@ public interface UserSubtypeController {
                                             description = "Exemplo de dados do subtipo de usuário que será inserido",
                                             value = """
                                                     {
-                                                          "name":"PILOTO"
+                                                        "name":"PILOTO"
                                                     }
                                                     """
                                     )
@@ -217,32 +217,53 @@ public interface UserSubtypeController {
                                     }
                             )
                     }
+            ),
+            @ApiResponse(
+                    description = "Not Found",
+                    responseCode = "404",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = MessageErrorDTO.class),
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Mensagem de erro para subtipo de usuário não encontrado",
+                                                    summary = "Subtipo de usuário não encontrado",
+                                                    description = "Mensagem de erro para subtipo de usuário não encontrado",
+                                                    value = """
+                                                    {
+                                                        "mensagem": "Subtipo de usuário não encontrado"
+                                                    }
+                                                    """
+                                            )
+                                    }
+                            )
+                    }
+            ),
+            @ApiResponse(
+                    description = "Conflict",
+                    responseCode = "409",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = MessageErrorDTO.class),
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Mensagem de erro para indicar que já " +
+                                                            "existe um subtipo de usuário com esse nome",
+                                                    summary = "Nome de subtipo já em uso",
+                                                    description = "Mensagem de erro para indicar que já " +
+                                                            "existe um subtipo de usuário com esse nome",
+                                                    value = """
+                                                    {
+                                                         "mensagem": "Esse subtipo de usuário já está cadastrado"
+                                                    }
+                                                    """
+                                            )
+                                    }
+                            )
+                    }
             )
-//            ,
-//            @ApiResponse(
-//                    description = "Conflict",
-//                    responseCode = "409",
-//                    content = {
-//                            @Content(
-//                                    mediaType = "application/json",
-//                                    schema = @Schema(implementation = MessageErrorDTO.class),
-//                                    examples = {
-//                                            @ExampleObject(
-//                                                    name = "Mensagem de erro para indicar que já " +
-//                                                            "existe um subtipo de usuário com esse nome",
-//                                                    summary = "Nome de subtipo já em uso",
-//                                                    description = "Mensagem de erro para indicar que já " +
-//                                                            "existe um subtipo de usuário com esse nome",
-//                                                    value = """
-//                                                    {
-//                                                         "mensagem": "Esse tipo de usuário já está cadastrado"
-//                                                    }
-//                                                    """
-//                                            )
-//                                    }
-//                            )
-//                    }
-//            )
     })
     ResponseEntity<UpdateUserSubtypeResponseDTO> updateUserSubtype(Long id, UserSubtypeUpdateRequestDTO dto);
 
@@ -265,20 +286,22 @@ public interface UserSubtypeController {
                     }
             ),
             @ApiResponse(
-                    description = "Not Found",
-                    responseCode = "404",
+                    description = "Unauthorized",
+                    responseCode = "401",
                     content = {
                             @Content(
                                     mediaType = "application/json",
                                     schema = @Schema(implementation = MessageErrorDTO.class),
                                     examples = {
                                             @ExampleObject(
-                                                    name = "Mensagem de erro para subtipo de usuário não encontrado",
-                                                    summary = "Subtipo de usuário não encontrado",
-                                                    description = "Mensagem de erro para subtipo de usuário não encontrado",
+                                                    name = "Mensagem de erro para indicar que não está autenticado",
+                                                    summary = "Usuário não autenticado",
+                                                    description = "Mensagem de erro para indicar que não está autenticado",
                                                     value = """
                                                     {
-                                                        "mensagem": "Tipo de usuário não encontrado"
+                                                        "status": 401,
+                                                        "error": "Unauthorized",
+                                                        "message": "Você precisa estar autenticado para acessar este recurso."
                                                     }
                                                     """
                                             )
@@ -303,6 +326,28 @@ public interface UserSubtypeController {
                                                         "status": 403,
                                                         "error": "Forbidden",
                                                         "message": "Você não tem permissão para acessar este recurso."
+                                                    }
+                                                    """
+                                            )
+                                    }
+                            )
+                    }
+            ),
+            @ApiResponse(
+                    description = "Not Found",
+                    responseCode = "404",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = MessageErrorDTO.class),
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Mensagem de erro para subtipo de usuário não encontrado",
+                                                    summary = "Subtipo de usuário não encontrado",
+                                                    description = "Mensagem de erro para subtipo de usuário não encontrado",
+                                                    value = """
+                                                    {
+                                                        "mensagem": "Subtipo de usuário não encontrado"
                                                     }
                                                     """
                                             )
@@ -332,20 +377,22 @@ public interface UserSubtypeController {
                     }
             ),
             @ApiResponse(
-                    description = "Not Found",
-                    responseCode = "404",
+                    description = "Unauthorized",
+                    responseCode = "401",
                     content = {
                             @Content(
                                     mediaType = "application/json",
                                     schema = @Schema(implementation = MessageErrorDTO.class),
                                     examples = {
                                             @ExampleObject(
-                                                    name = "Mensagem de erro para subtipo de usuário não encontrado",
-                                                    summary = "Subtipo de usuário não encontrado",
-                                                    description = "Mensagem de erro para subtipo de usuário não encontrado",
+                                                    name = "Mensagem de erro para indicar que não está autenticado",
+                                                    summary = "Usuário não autenticado",
+                                                    description = "Mensagem de erro para indicar que não está autenticado",
                                                     value = """
                                                     {
-                                                        "mensagem": "Subtipo de usuário não encontrado"
+                                                        "status": 401,
+                                                        "error": "Unauthorized",
+                                                        "message": "Você precisa estar autenticado para acessar este recurso."
                                                     }
                                                     """
                                             )
@@ -370,6 +417,28 @@ public interface UserSubtypeController {
                                                         "status": 403,
                                                         "error": "Forbidden",
                                                         "message": "Você não tem permissão para acessar este recurso."
+                                                    }
+                                                    """
+                                            )
+                                    }
+                            )
+                    }
+            ),
+            @ApiResponse(
+                    description = "Not Found",
+                    responseCode = "404",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = MessageErrorDTO.class),
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Mensagem de erro para subtipo de usuário não encontrado",
+                                                    summary = "Subtipo de usuário não encontrado",
+                                                    description = "Mensagem de erro para subtipo de usuário não encontrado",
+                                                    value = """
+                                                    {
+                                                        "mensagem": "Subtipo de usuário não encontrado"
                                                     }
                                                     """
                                             )
@@ -438,6 +507,28 @@ public interface UserSubtypeController {
                                                         "status": 403,
                                                         "error": "Forbidden",
                                                         "message": "Você não tem permissão para acessar este recurso."
+                                                    }
+                                                    """
+                                            )
+                                    }
+                            )
+                    }
+            ),
+            @ApiResponse(
+                    description = "Not Found",
+                    responseCode = "404",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = MessageErrorDTO.class),
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Mensagem de erro para subtipo de usuário não encontrado",
+                                                    summary = "Subtipo de usuário não encontrado",
+                                                    description = "Mensagem de erro para subtipo de usuário não encontrado",
+                                                    value = """
+                                                    {
+                                                        "mensagem": "Subtipo de usuário não encontrado"
                                                     }
                                                     """
                                             )
