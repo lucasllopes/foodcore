@@ -280,7 +280,7 @@ public interface RestaurantController {
                                                             "para realizar a atualização",
                                                     value = """
                                                     {
-                                                        "mensagem": "Apenas o proprietário do restaurante tem permissão para realizar essa atualização."
+                                                        "mensagem": "Você só pode atualizar/deletar restaurantes que pertencem a você."
                                                     }
                                                     """
                                             )
@@ -383,7 +383,7 @@ public interface RestaurantController {
                     }
             )
     })
-    ResponseEntity<RestaurantResponseDTO> updateRestaurant(Long id, RestaurantUpdateRequestDTO dto, Principal principal);
+    ResponseEntity<RestaurantResponseDTO> updateRestaurant(Long id, RestaurantUpdateRequestDTO dto);
 
     @Operation(
             description = "Ao passar um id de um restaurante como parâmetro, " +
@@ -420,7 +420,7 @@ public interface RestaurantController {
                                                             "para realizar a exclusão",
                                                     value = """
                                                     {
-                                                        "mensagem": "Apenas o proprietário do restaurante tem permissão para realizar essa exclusão."
+                                                        "mensagem": "Você só pode atualizar/deletar restaurantes que pertencem a você."
                                                     }
                                                     """
                                             )
@@ -499,5 +499,5 @@ public interface RestaurantController {
                     }
             )
     })
-    ResponseEntity<Void> deleteRestaurant(Long id, Principal principal);
+    ResponseEntity<Void> deleteRestaurant(Long id);
 }

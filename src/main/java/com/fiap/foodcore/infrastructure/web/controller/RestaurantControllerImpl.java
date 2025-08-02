@@ -95,30 +95,24 @@ public class RestaurantControllerImpl implements RestaurantController {
         RestaurantResponseDTO response = RestaurantPresenter.toDto(output);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+    @PreAuthorize("@restaurantSecurity.isOwner(#id, authentication)")
     @PutMapping("/{id}")
-    public ResponseEntity<RestaurantResponseDTO> updateRestaurant(@PathVariable Long id, @Valid @RequestBody RestaurantUpdateRequestDTO dto, Principal principal) {
+    public ResponseEntity<RestaurantResponseDTO> updateRestaurant(@PathVariable Long id, @Valid @RequestBody RestaurantUpdateRequestDTO dto) {
         logger.info("Handling PUT request to /restaurantes");
-
-        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++");
-        System.out.println(principal.toString());
-        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++");
 
         UpdateRestaurantInput input = RestaurantPresenter.toInputUpdate(dto);
         CreateRestaurantOutput output =
-                updateRestaurantInteractor.execute(id, input, ((UserDetailsAdapter) ((UsernamePasswordAuthenticationToken) principal).getPrincipal()).getId());
+                updateRestaurantInteractor.execute(id, input);
 
         RestaurantResponseDTO response = RestaurantPresenter.toDto(output);
 
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("@restaurantSecurity.isOwner(#id, authentication)")
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<Void> deleteRestaurant(@PathVariable Long id, Principal principal) {
+    public ResponseEntity<Void> deleteRestaurant(@PathVariable Long id) {
         logger.info("Handling DELETE request to /restaurantes");
-
-        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++");
-        System.out.println(principal.toString());
-        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++");
 
         deleteRestaurantInteractor.execute(id);
         return ResponseEntity.noContent().build();

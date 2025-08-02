@@ -21,10 +21,14 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
         AuthErrorResponseDTO responseBody = new AuthErrorResponseDTO(
             HttpServletResponse.SC_FORBIDDEN,
             "Forbidden",
-            "Você não tem permissão para acessar este recurso."
+                getErrorMessage(accessDeniedException)
         );
 
         ObjectMapper mapper = new ObjectMapper();
         response.getWriter().write(mapper.writeValueAsString(responseBody));
+    }
+    private String getErrorMessage(AccessDeniedException accessDeniedException) {
+        String errorMessage = accessDeniedException.getMessage();
+        return errorMessage.equals("Access Denied") ? "Você não tem permissão para acessar este recurso." : accessDeniedException.getMessage();
     }
 }
