@@ -17,6 +17,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
@@ -59,9 +60,11 @@ public class ItemControllerImplIntegrationTest {
 
     @Test
     void shouldCreateItemSuccessfully() {
+        String uniqueName = "Item Teste " + System.currentTimeMillis();
+
         ItemCreateRequestDTO itemRequest = new ItemCreateRequestDTO(
                 null,
-                "Item Teste",
+                uniqueName,
                 "Descrição Item",
                 new BigDecimal("10.0"),
                 "Disponível",
@@ -75,7 +78,7 @@ public class ItemControllerImplIntegrationTest {
                 .post("/cardapios/items")
                 .then()
                 .statusCode(HttpStatus.OK.value())
-                .body("name", equalTo("Item Teste"))
+                .body("name", equalTo(uniqueName))
                 .body("description", equalTo("Descrição Item"));
     }
 
@@ -168,9 +171,12 @@ public class ItemControllerImplIntegrationTest {
 
     @Test
     void shouldUpdateItemSuccessfully() {
+        // Usando timestamp para garantir nomes únicos
+        String uniqueId = String.valueOf(System.currentTimeMillis());
+
         ItemCreateRequestDTO itemRequest = new ItemCreateRequestDTO(
                 null,
-                "Item Original",
+                "Item Original " + uniqueId,
                 "Desc",
                 new BigDecimal("12.0"),
                 "Disponível",
@@ -188,9 +194,16 @@ public class ItemControllerImplIntegrationTest {
 
         assertNotNull(itemId);
 
+        // Pequena pausa para garantir timestamps diferentes
+        try {
+            Thread.sleep(10);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
         ItemUpdateRequestDTO updateRequest = new ItemUpdateRequestDTO(
                 itemId.longValue(),
-                "Item Atualizado",
+                "Item Atualizado " + uniqueId,
                 "Nova descrição",
                 new BigDecimal("18.0"),
                 "Indisponível",
@@ -204,7 +217,7 @@ public class ItemControllerImplIntegrationTest {
                 .put("/cardapios/items/{id}", itemId)
                 .then()
                 .statusCode(HttpStatus.OK.value())
-                .body("name", equalTo("Item Atualizado"))
+                .body("name", equalTo("Item Atualizado " + uniqueId))
                 .body("availability", equalTo("Indisponível"));
     }
 
