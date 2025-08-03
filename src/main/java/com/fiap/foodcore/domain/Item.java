@@ -11,6 +11,7 @@ public class Item {
     private final BigDecimal price;
     private final String availability;
     private final String photo;
+    private final Long ownerId;
 
     private Item(Builder builder) {
         this.id = builder.id;
@@ -19,6 +20,7 @@ public class Item {
         this.price = builder.price;
         this.availability = builder.availability;
         this.photo = builder.photo;
+        this.ownerId = builder.ownerId;
     }
 
     // Getters
@@ -28,6 +30,7 @@ public class Item {
     public BigDecimal getPrice() { return price; }
     public String getAvailability() { return availability; }
     public String getPhoto() { return photo; }
+    public Long getOwnerId() { return ownerId; }
 
     public Item atualizarInformacoes(String novoNome, String novaDescricao, BigDecimal novoPreco, String novaDisponibilidade, String novaFoto) {
         return new Builder()
@@ -37,6 +40,7 @@ public class Item {
                 .price(novoPreco != null ? novoPreco : this.price)
                 .availability(novaDisponibilidade != null ? novaDisponibilidade : this.availability)
                 .photo(novaFoto != null ? novaFoto : this.photo)
+                .ownerId(this.ownerId) //
                 .build();
     }
 
@@ -48,6 +52,7 @@ public class Item {
         private BigDecimal price;
         private String availability;
         private String photo;
+        private Long ownerId;
 
         public Builder() {}
 
@@ -75,9 +80,13 @@ public class Item {
             this.photo = photo;
             return this;
         }
+        public Builder ownerId(Long ownerId) {
+            this.ownerId = ownerId;
+            return this;
+        }
         public Item build() {
-            Objects.requireNonNull(name, "Item name is required");
-            Objects.requireNonNull(price, "Item price is required");
+            Objects.requireNonNull(name, "O nome do item é obrigatório.");
+            Objects.requireNonNull(price, "O preço do item é obrigatório.");
             return new Item(this);
         }
     }

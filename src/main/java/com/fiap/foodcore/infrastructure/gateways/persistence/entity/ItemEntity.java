@@ -32,4 +32,8 @@ public class ItemEntity {
     @ManyToMany(mappedBy = "items")
     private List<MenuEntity> menus;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dono_id", nullable = false)
+    private UserEntity owner;
+
 }
