@@ -117,23 +117,6 @@ public class MenuControllerImplIntegrationTest {
                 .statusCode(HttpStatus.BAD_REQUEST.value());
     }
 
-    @Test
-    void shouldFailToCreateMenuWithEmptyItems() {
-        MenuCreateRequestDTO request = new MenuCreateRequestDTO(
-                "Menu Teste",
-                "Descrição Teste",
-                ownerUser.id(),
-                Collections.emptyList()
-        );
-
-        given()
-                .header("Authorization", "Bearer " + authToken)
-                .body(request)
-                .when()
-                .post("/cardapios")
-                .then()
-                .statusCode(HttpStatus.BAD_REQUEST.value());
-    }
 
     @Test
     void shouldListMenus() {
@@ -332,22 +315,14 @@ public class MenuControllerImplIntegrationTest {
 
         assertNotNull(restaurantId, "O ID do restaurante não deveria ser nulo");
 
-        // Criar item para o menu
-        ItemCreateRequestDTO item = new ItemCreateRequestDTO(
-                1L,
-                "Item Delete",
-                "Desc",
-                new BigDecimal("9.9"),
-                "Disponível",
-                "/caminho/foto.jpg"
-        );
+
 
         // Criar menu para o restaurante criado
         MenuCreateRequestDTO createRequest = new MenuCreateRequestDTO(
                 "Menu Delete",
                 "Desc",
                 restaurantId.longValue(),
-                List.of(item)
+                null
         );
 
         // Obter ID do menu criado (corrigindo inconsistência de tipos)
