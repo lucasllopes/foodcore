@@ -4,6 +4,7 @@ import com.fiap.foodcore.application.gateway.MenuGateway;
 import com.fiap.foodcore.domain.Menu;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -19,20 +20,24 @@ public class ItemSecurity {
     }
 
     public boolean isOwner(Long itemId, Authentication authentication) {
-        List<Menu> menus = menuGateway.findMenusByItemId(itemId);
-
-        if (menus.isEmpty()) {
-            return true;
-        }
-
         if (authentication == null || !authentication.isAuthenticated()) {
             return false;
         }
 
-        Long ownerId = menus.getFirst().getRestaurantId().getOwnerId();
-        Long userId = ((UserDetailsAdapter) authentication.getPrincipal()).getId();
+        UserDetailsAdapter userDetails = (UserDetailsAdapter) authentication.getPrincipal();
+        Long userId = userDetails.getId();
 
-        if (!ownerId.equals(userId)) {
+        List<Menu> menus = menuGateway.findMenusByItemId(itemId);
+
+        if (menus.isEmpty()) {
+            throw new AccessDeniedException("Item não encontrado ou não associado a nenhum restaurante.");
+        }
+
+        boolean isOwner = menuGateway.findById(menus.getFirst().getId())
+                .map(menu -> menu.getRestaurantId().getOwnerId().equals(userId))
+                .orElse(false);
+
+        if (!isOwner) {
             throw new AccessDeniedException("Você só pode editar/excluir itens do seu restaurante.");
         }
 
