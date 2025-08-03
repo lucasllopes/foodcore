@@ -283,4 +283,23 @@ public class ItemControllerImplIntegrationTest {
                 .statusCode(HttpStatus.FORBIDDEN.value());
     }
 
+    @Test
+    void shouldReturnUnauthorizedWhenCreateItemWithoutAuthentication() {
+        ItemCreateRequestDTO itemRequest = new ItemCreateRequestDTO(
+                null,
+                "Item Test Unauthorized",
+                "Descrição Item",
+                new BigDecimal("10.0"),
+                "Disponível",
+                "/imagens/item-teste.jpg"
+        );
+
+        given()
+                .body(itemRequest)
+                .when()
+                .post("/cardapios/items")
+                .then()
+                .statusCode(HttpStatus.UNAUTHORIZED.value());
+    }
+
 }
