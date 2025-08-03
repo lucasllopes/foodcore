@@ -64,9 +64,10 @@ public class UserTestHelper {
     }
 
     public static UserCreateRequestDTO createValidGenericClientRequest() {
-        return new UserCreateRequestDTO("Owner Old",
-                "owner_old@email.com",
-                "ownerneedupdate",
+        String sufixNome = UUID.randomUUID().toString().substring(0, 8);
+        return new UserCreateRequestDTO("Owner " +sufixNome + " Old",
+                "owner_"+ sufixNome+"old@email.com",
+                "owner" + sufixNome + "needupdate",
                 "password",
                 "CLIENTE",
                 List.of(
