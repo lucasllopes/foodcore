@@ -2,7 +2,7 @@ package com.fiap.foodcore.application.usecase.mapper;
 
 import com.fiap.foodcore.application.usecase.output.ItemCreateOutput;
 import com.fiap.foodcore.domain.Item;
-import com.fiap.foodcore.infrastructure.web.controller.dto.ItemUpdateRequestDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.item.ItemUpdateRequestDTO;
 
 
 public class MenuItemMapper {

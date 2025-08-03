@@ -1,4 +1,6 @@
-package com.fiap.foodcore.infrastructure.web.controller.dto;
+package com.fiap.foodcore.infrastructure.web.controller.dto.menu;
+
+import com.fiap.foodcore.infrastructure.web.controller.dto.item.ItemCreateResponseDTO;
 
 import java.util.List;
 

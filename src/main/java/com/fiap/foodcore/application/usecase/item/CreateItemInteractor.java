@@ -30,15 +30,15 @@ public class CreateItemInteractor {
                 .photo(createItemInput.photo())
                 .build();
 
-        itemGateway.save(item);
+        var savedItem = itemGateway.save(item);
 
         return new ItemCreateOutput(
-                item.getId(),
-                item.getName(),
-                item.getDescription(),
-                item.getPrice(),
-                item.getAvailability(),
-                item.getPhoto()
+                savedItem.getId(),
+                savedItem.getName(),
+                savedItem.getDescription(),
+                savedItem.getPrice(),
+                savedItem.getAvailability(),
+                savedItem.getPhoto()
         );
     }
 

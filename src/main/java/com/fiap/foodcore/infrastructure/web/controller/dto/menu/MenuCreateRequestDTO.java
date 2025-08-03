@@ -1,16 +1,15 @@
-package com.fiap.foodcore.infrastructure.web.controller.dto;
+package com.fiap.foodcore.infrastructure.web.controller.dto.menu;
 
+import com.fiap.foodcore.infrastructure.web.controller.dto.item.ItemCreateRequestDTO;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
-public record MenuUpdateRequestDTO(
+public record MenuCreateRequestDTO (
         @NotBlank(message = "Nome é obrigatório.")
         String name,
-
         @NotBlank(message = "Descrição é obrigatória.")
         String description,
 
@@ -18,6 +17,4 @@ public record MenuUpdateRequestDTO(
         Long restaurantId,
 
         @Valid
-        List<ItemUpdateRequestDTO> items
-) {
-}
+        List<ItemCreateRequestDTO> items) {}

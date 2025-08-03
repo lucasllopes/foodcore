@@ -1,4 +1,4 @@
-package com.fiap.foodcore.infrastructure.web.controller.dto;
+package com.fiap.foodcore.infrastructure.web.controller.dto.item;
 
 import java.math.BigDecimal;
 

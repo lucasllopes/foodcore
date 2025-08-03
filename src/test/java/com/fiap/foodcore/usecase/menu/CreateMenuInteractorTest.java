@@ -77,6 +77,7 @@ class CreateMenuInteractorTest {
         when(menuRepositoryGateway.save(any(Menu.class))).thenReturn(savedMenu);
 
         var itemInput = new CreateItemInput(
+                null,
                 "Item Name",
                 "Item Description",
                 BigDecimal.valueOf(10.0),

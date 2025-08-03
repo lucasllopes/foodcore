@@ -1,4 +1,4 @@
-package com.fiap.foodcore.infrastructure.web.controller.dto;
+package com.fiap.foodcore.infrastructure.web.controller.dto.item;
 
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
@@ -6,12 +6,14 @@ import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 
-public record ItemCreateRequestDTO(
+public record ItemUpdateRequestDTO(
+
         @NotNull(message = "ID é obrigatório.")
         Long id,
 
         @NotBlank(message = "Nome é obrigatório.")
         String name,
+
         @NotBlank(message = "Descrição é obrigatório.")
         String description,
 

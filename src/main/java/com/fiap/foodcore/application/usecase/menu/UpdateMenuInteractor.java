@@ -8,7 +8,7 @@ import com.fiap.foodcore.application.usecase.mapper.MenuItemMapper;
 import com.fiap.foodcore.application.usecase.output.MenuCreateOutput;
 import com.fiap.foodcore.domain.Item;
 import com.fiap.foodcore.domain.Menu;
-import com.fiap.foodcore.infrastructure.web.controller.dto.MenuUpdateRequestDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.menu.MenuUpdateRequestDTO;
 
 import java.util.List;
 

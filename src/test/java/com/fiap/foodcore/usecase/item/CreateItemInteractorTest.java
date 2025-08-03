@@ -45,6 +45,7 @@ class CreateItemInteractorTest {
         Long itemId = 1L;
 
         var createItemInput = new CreateItemInput(
+                null,
                 name,
                 description,
                 price,
@@ -106,6 +107,7 @@ class CreateItemInteractorTest {
         Long itemId = 2L;
 
         var createItemInput = new CreateItemInput(
+                null,
                 name,
                 description,
                 price,
@@ -157,6 +159,7 @@ class CreateItemInteractorTest {
         Long itemId = 3L;
 
         var createItemInput = new CreateItemInput(
+                null,
                 name,
                 description,
                 price,
@@ -208,6 +211,7 @@ class CreateItemInteractorTest {
         Long itemId = 4L;
 
         var createItemInput = new CreateItemInput(
+                null,
                 name,
                 description,
                 price,

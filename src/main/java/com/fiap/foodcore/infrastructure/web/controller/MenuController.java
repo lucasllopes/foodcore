@@ -1,8 +1,8 @@
 package com.fiap.foodcore.infrastructure.web.controller;
 
-import com.fiap.foodcore.infrastructure.web.controller.dto.MenuCreateRequestDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.MenuResponseDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.MenuUpdateRequestDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.menu.MenuCreateRequestDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.menu.MenuResponseDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.menu.MenuUpdateRequestDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.MessageErrorDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.restaurant.RestaurantResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;

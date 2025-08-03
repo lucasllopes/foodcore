@@ -4,7 +4,11 @@ import com.fiap.foodcore.application.usecase.input.CreateMenuInput;
 import com.fiap.foodcore.application.usecase.input.CreateItemInput;
 import com.fiap.foodcore.application.usecase.output.ItemCreateOutput;
 import com.fiap.foodcore.application.usecase.output.MenuCreateOutput;
-import com.fiap.foodcore.infrastructure.web.controller.dto.*;
+import com.fiap.foodcore.infrastructure.web.controller.dto.item.ItemCreateRequestDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.item.ItemCreateResponseDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.menu.MenuCreateRequestDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.menu.MenuResponseDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.menu.MenuUpdateRequestDTO;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -86,6 +90,7 @@ public class MenuPresenter {
                 dto.items() == null ? List.of() :
                         dto.items().stream()
                                 .map(item -> new CreateItemInput(
+                                        item.id(),
                                         item.name(),
                                         item.description(),
                                         item.price(),
@@ -105,6 +110,7 @@ public class MenuPresenter {
                 dto.restaurantId(),
                 dto.items().stream()
                         .map(item -> new CreateItemInput(
+                                item.id(),
                                 item.name(),
                                 item.description(),
                                 item.price(),

@@ -7,6 +7,10 @@ import com.fiap.foodcore.application.usecase.output.CreateUserOutput;
 import com.fiap.foodcore.helper.UserTestHelper;
 import com.fiap.foodcore.infrastructure.presenter.UserPresenter;
 import com.fiap.foodcore.infrastructure.web.controller.dto.*;
+import com.fiap.foodcore.infrastructure.web.controller.dto.item.ItemCreateRequestDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.item.ItemUpdateRequestDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.menu.MenuCreateRequestDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.menu.MenuUpdateRequestDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.restaurant.RestaurantCreateRequestDTO;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -20,7 +24,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
-import java.util.Collections;
 import java.util.List;
 
 import static com.fiap.foodcore.helper.UserTestHelper.authenticateAndGetToken;

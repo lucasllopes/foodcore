@@ -3,9 +3,9 @@ package com.fiap.foodcore.infrastructure.presenter;
 import com.fiap.foodcore.application.usecase.input.CreateItemInput;
 import com.fiap.foodcore.application.usecase.input.UpdateItemInput;
 import com.fiap.foodcore.application.usecase.output.ItemCreateOutput;
-import com.fiap.foodcore.infrastructure.web.controller.dto.ItemCreateRequestDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.ItemCreateResponseDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.ItemUpdateRequestDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.item.ItemCreateRequestDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.item.ItemCreateResponseDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.item.ItemUpdateRequestDTO;
 
 import java.util.List;
 
@@ -48,6 +48,7 @@ public class ItemPresenter {
 
     public static CreateItemInput toInput(ItemCreateRequestDTO dto) {
         return new CreateItemInput(
+                dto.id(),
                 dto.name(),
                 dto.description(),
                 dto.price(),
