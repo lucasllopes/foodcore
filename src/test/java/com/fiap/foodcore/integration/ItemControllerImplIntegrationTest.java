@@ -346,4 +346,24 @@ public class ItemControllerImplIntegrationTest {
                 .body("totalElements", greaterThanOrEqualTo(5));
     }
 
+    @Test
+    void shouldReturnNotFoundWhenUpdatingNonExistentItem() {
+        ItemUpdateRequestDTO updateRequest = new ItemUpdateRequestDTO(
+                9999L,
+                "Item Inexistente",
+                "Descrição",
+                new BigDecimal("10.0"),
+                "Disponível",
+                "/foto.jpg"
+        );
+
+        given()
+                .header("Authorization", "Bearer " + authToken)
+                .body(updateRequest)
+                .when()
+                .put("/cardapios/items/9999")
+                .then()
+                .statusCode(HttpStatus.NOT_FOUND.value());
+    }
+
 }
