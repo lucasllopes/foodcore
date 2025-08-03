@@ -36,6 +36,7 @@ class FindItemByIdInteractorTest {
     void shouldReturnItemWhenFound() {
         // Arrange
         Long id = 1L;
+        Long ownerId = 10L;
         Item item = mock(Item.class);
         when(item.getId()).thenReturn(id);
         when(item.getName()).thenReturn("Nome");
@@ -43,6 +44,7 @@ class FindItemByIdInteractorTest {
         when(item.getPrice()).thenReturn(new BigDecimal("10.00"));
         when(item.getAvailability()).thenReturn("LOCAL");
         when(item.getPhoto()).thenReturn("foto.jpg");
+        when(item.getOwnerId()).thenReturn(ownerId); // Adicionando mock para ownerId
         when(itemGateway.findById(id)).thenReturn(Optional.of(item));
 
         // Act
@@ -56,6 +58,7 @@ class FindItemByIdInteractorTest {
         assertEquals(new BigDecimal("10.00"), output.price());
         assertEquals("LOCAL", output.availability());
         assertEquals("foto.jpg", output.photo());
+        assertEquals(ownerId, output.ownerId()); // Verificando ownerId no resultado
         verify(itemGateway).findById(id);
     }
 

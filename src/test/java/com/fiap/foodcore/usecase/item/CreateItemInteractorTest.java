@@ -1,9 +1,12 @@
 package com.fiap.foodcore.usecase.item;
 
+import com.fiap.foodcore.application.gateway.UserGateway;
 import com.fiap.foodcore.application.usecase.input.CreateItemInput;
 import com.fiap.foodcore.application.usecase.item.CreateItemInteractor;
 import com.fiap.foodcore.domain.Item;
+import com.fiap.foodcore.domain.User;
 import com.fiap.foodcore.infrastructure.gateways.ItemRepositoryGateway;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,12 +16,12 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class CreateItemInteractorTest {
@@ -26,11 +29,14 @@ class CreateItemInteractorTest {
     @Mock
     private ItemRepositoryGateway itemRepositoryGateway;
 
+    @Mock
+    private UserGateway userGateway;
+
     private CreateItemInteractor createItemInteractor;
 
     @BeforeEach
     void setUp() {
-        createItemInteractor = new CreateItemInteractor(itemRepositoryGateway);
+        createItemInteractor = new CreateItemInteractor(itemRepositoryGateway, userGateway);
     }
 
     @Test
@@ -43,6 +49,13 @@ class CreateItemInteractorTest {
         String availability = "LOCAL";
         String photo = "url_da_foto.jpg";
         Long itemId = 1L;
+        Long ownerId = 1L;
+
+        // Configurar mock do UserGateway para retornar um usuário válido
+        when(userGateway.findById(ownerId)).thenReturn(Optional.of(mock(User.class)));
+
+        // Verificar que não há item com o mesmo nome
+        when(itemRepositoryGateway.findByName(name)).thenReturn(Optional.empty());
 
         var createItemInput = new CreateItemInput(
                 null,
@@ -50,7 +63,8 @@ class CreateItemInteractorTest {
                 description,
                 price,
                 availability,
-                photo
+                photo,
+                ownerId
         );
 
         var item = new Item.Builder()
@@ -59,12 +73,12 @@ class CreateItemInteractorTest {
                 .price(price)
                 .availability(availability)
                 .photo(photo)
+                .ownerId(ownerId)  // Agora incluímos o ownerId
                 .build();
 
         // Simular o ID sendo definido após o save
         setItemId(item, itemId);
 
-        //when(itemRepositoryGateway.save(any(Item.class))).thenReturn(item);
         when(itemRepositoryGateway.save(any(Item.class))).thenAnswer(invocation -> {
             Item savedItem = invocation.getArgument(0);
             setItemId(savedItem, itemId);
@@ -82,8 +96,12 @@ class CreateItemInteractorTest {
         assertEquals(price, result.price());
         assertEquals(availability, result.availability());
         assertEquals(photo, result.photo());
+        assertEquals(ownerId, result.ownerId());
 
         // Verify
+        verify(userGateway).findById(ownerId);
+        verify(itemRepositoryGateway).findByName(name);
+
         ArgumentCaptor<Item> itemCaptor = ArgumentCaptor.forClass(Item.class);
         verify(itemRepositoryGateway).save(itemCaptor.capture());
 
@@ -93,6 +111,38 @@ class CreateItemInteractorTest {
         assertEquals(price, savedItem.getPrice());
         assertEquals(availability, savedItem.getAvailability());
         assertEquals(photo, savedItem.getPhoto());
+        assertEquals(ownerId, savedItem.getOwnerId());
+    }
+
+    @Test
+    @DisplayName("Deve lançar exceção quando o proprietário não existe")
+    void shouldThrowExceptionWhenOwnerNotExists() {
+        // Arrange
+        String name = "Item de Teste";
+        String description = "Descrição do Item";
+        BigDecimal price = new BigDecimal("25.50");
+        String availability = "LOCAL";
+        String photo = "url_da_foto.jpg";
+        Long ownerId = 999L;
+
+        when(userGateway.findById(ownerId)).thenReturn(Optional.empty());
+        when(itemRepositoryGateway.findByName(name)).thenReturn(Optional.empty());
+
+        var createItemInput = new CreateItemInput(
+                null,
+                name,
+                description,
+                price,
+                availability,
+                photo,
+                ownerId
+        );
+
+        // Act & Assert
+        assertThrows(EntityNotFoundException.class, () -> createItemInteractor.execute(createItemInput));
+        verify(userGateway).findById(ownerId);
+        verify(itemRepositoryGateway).findByName(name);
+        verify(itemRepositoryGateway, never()).save(any(Item.class));
     }
 
     @Test
@@ -105,6 +155,11 @@ class CreateItemInteractorTest {
         String availability = "LOCAL";
         String photo = null;
         Long itemId = 2L;
+        Long ownerId = 2L;
+
+        // Configurar mock do UserGateway para retornar um usuário válido
+        when(userGateway.findById(ownerId)).thenReturn(Optional.of(mock(User.class)));
+        when(itemRepositoryGateway.findByName(name)).thenReturn(Optional.empty());
 
         var createItemInput = new CreateItemInput(
                 null,
@@ -112,7 +167,8 @@ class CreateItemInteractorTest {
                 description,
                 price,
                 availability,
-                photo
+                photo,
+                ownerId
         );
 
         var item = new Item.Builder()
@@ -121,6 +177,7 @@ class CreateItemInteractorTest {
                 .price(price)
                 .availability(availability)
                 .photo(photo)
+                .ownerId(ownerId)
                 .build();
 
         // Simular o ID sendo definido após o save
@@ -143,7 +200,9 @@ class CreateItemInteractorTest {
         assertEquals(price, result.price());
         assertEquals(availability, result.availability());
         assertEquals(null, result.photo());
+        assertEquals(ownerId, result.ownerId());
 
+        verify(userGateway).findById(ownerId);
         verify(itemRepositoryGateway).save(any(Item.class));
     }
 
@@ -157,6 +216,11 @@ class CreateItemInteractorTest {
         String availability = "DELIVERY";
         String photo = "url_foto_delivery.jpg";
         Long itemId = 3L;
+        Long ownerId = 3L;
+
+        // Configurar mock do UserGateway para retornar um usuário válido
+        when(userGateway.findById(ownerId)).thenReturn(Optional.of(mock(User.class)));
+        when(itemRepositoryGateway.findByName(name)).thenReturn(Optional.empty());
 
         var createItemInput = new CreateItemInput(
                 null,
@@ -164,7 +228,8 @@ class CreateItemInteractorTest {
                 description,
                 price,
                 availability,
-                photo
+                photo,
+                ownerId
         );
 
         var item = new Item.Builder()
@@ -173,6 +238,7 @@ class CreateItemInteractorTest {
                 .price(price)
                 .availability(availability)
                 .photo(photo)
+                .ownerId(ownerId)
                 .build();
 
         // Simular o ID sendo definido após o save
@@ -195,7 +261,9 @@ class CreateItemInteractorTest {
         assertEquals(price, result.price());
         assertEquals(availability, result.availability());
         assertEquals(photo, result.photo());
+        assertEquals(ownerId, result.ownerId());
 
+        verify(userGateway).findById(ownerId);
         verify(itemRepositoryGateway).save(any(Item.class));
     }
 
@@ -209,6 +277,11 @@ class CreateItemInteractorTest {
         String availability = "LOCAL_AND_DELIVERY";
         String photo = "url_foto.jpg";
         Long itemId = 4L;
+        Long ownerId = 4L;
+
+        // Configurar mock do UserGateway para retornar um usuário válido
+        when(userGateway.findById(ownerId)).thenReturn(Optional.of(mock(User.class)));
+        when(itemRepositoryGateway.findByName(name)).thenReturn(Optional.empty());
 
         var createItemInput = new CreateItemInput(
                 null,
@@ -216,7 +289,8 @@ class CreateItemInteractorTest {
                 description,
                 price,
                 availability,
-                photo
+                photo,
+                ownerId
         );
 
         var item = new Item.Builder()
@@ -225,6 +299,7 @@ class CreateItemInteractorTest {
                 .price(price)
                 .availability(availability)
                 .photo(photo)
+                .ownerId(ownerId)
                 .build();
 
         // Simular o ID sendo definido após o save
@@ -247,8 +322,40 @@ class CreateItemInteractorTest {
         assertEquals(price, result.price());
         assertEquals(availability, result.availability());
         assertEquals(photo, result.photo());
+        assertEquals(ownerId, result.ownerId());
 
+        verify(userGateway).findById(ownerId);
         verify(itemRepositoryGateway).save(any(Item.class));
+    }
+
+    @Test
+    @DisplayName("Deve lançar exceção quando o ownerId for nulo")
+    void shouldThrowExceptionWhenOwnerIdIsNull() {
+        // Arrange
+        String name = "Item de Teste";
+        String description = "Descrição do Item";
+        BigDecimal price = new BigDecimal("25.50");
+        String availability = "LOCAL";
+        String photo = "url_da_foto.jpg";
+        Long ownerId = null;
+
+        when(itemRepositoryGateway.findByName(name)).thenReturn(Optional.empty());
+
+        var createItemInput = new CreateItemInput(
+                null,
+                name,
+                description,
+                price,
+                availability,
+                photo,
+                ownerId
+        );
+
+        // Act & Assert
+        assertThrows(IllegalArgumentException.class, () -> createItemInteractor.execute(createItemInput));
+        verify(itemRepositoryGateway).findByName(name);
+        verify(userGateway, never()).findById(anyLong());
+        verify(itemRepositoryGateway, never()).save(any(Item.class));
     }
 
     /**

@@ -38,7 +38,8 @@ class UpdateItemInteractorTest {
     @DisplayName("Deve atualizar item com sucesso")
     void deveAtualizarItemComSucesso() {
         Long id = 1L;
-        UpdateItemInput input = new UpdateItemInput(1L,"Novo", "Desc", new BigDecimal("10.00"), "LOCAL", "foto.jpg");
+        Long ownerId = 1L;
+        UpdateItemInput input = new UpdateItemInput(1L,"Novo", "Desc", new BigDecimal("10.00"), "LOCAL", "foto.jpg", ownerId);
         Item existente = mock(Item.class);
         Item atualizado = mock(Item.class);
         Item salvo = mock(Item.class);
@@ -79,7 +80,8 @@ class UpdateItemInteractorTest {
     @DisplayName("Deve lançar exceção se item não encontrado")
     void deveLancarExcecaoSeItemNaoEncontrado() {
         Long id = 2L;
-        UpdateItemInput input = new UpdateItemInput(1L,"Nome", "Desc", new BigDecimal("5.00"), "DELIVERY", "foto2.jpg");
+        Long ownerId = 2L;
+        UpdateItemInput input = new UpdateItemInput(1L,"Nome", "Desc", new BigDecimal("5.00"), "DELIVERY", "foto2.jpg", ownerId);
         when(itemGateway.findById(id)).thenReturn(Optional.empty());
 
         DataNotFoundException ex = assertThrows(DataNotFoundException.class, () -> interactor.execute(id, input));
@@ -94,7 +96,8 @@ class UpdateItemInteractorTest {
     @DisplayName("Deve lançar exceção se nome já em uso por outro item")
     void deveLancarExcecaoSeNomeDuplicado() {
         Long id = 3L;
-        UpdateItemInput input = new UpdateItemInput(1L, "Duplicado", "Desc", new BigDecimal("7.00"), "LOCAL", "foto3.jpg");
+        Long ownerId = 3L;
+        UpdateItemInput input = new UpdateItemInput(1L, "Duplicado", "Desc", new BigDecimal("7.00"), "LOCAL", "foto3.jpg", ownerId);
         Item existente = mock(Item.class);
         Item outro = mock(Item.class);
 
@@ -114,7 +117,8 @@ class UpdateItemInteractorTest {
     @DisplayName("Deve permitir atualizar se nome for do próprio item")
     void devePermitirAtualizarSeNomeDoProprioItem() {
         Long id = 4L;
-        UpdateItemInput input = new UpdateItemInput(1L, "MesmoNome", "Desc", new BigDecimal("12.00"), "DELIVERY", "foto4.jpg");
+        Long ownerId = 4L;
+        UpdateItemInput input = new UpdateItemInput(1L, "MesmoNome", "Desc", new BigDecimal("12.00"), "DELIVERY", "foto4.jpg", ownerId);
         Item existente = mock(Item.class);
 
         when(itemGateway.findById(id)).thenReturn(Optional.of(existente));

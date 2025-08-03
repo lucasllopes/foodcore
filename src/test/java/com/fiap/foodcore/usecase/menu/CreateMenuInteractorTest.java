@@ -82,7 +82,8 @@ class CreateMenuInteractorTest {
                 "Item Description",
                 BigDecimal.valueOf(10.0),
                 "LOCAL",
-                "photo-url"
+                "photo-url",
+                1L
         );
 
         var createMenuInput = new CreateMenuInput(

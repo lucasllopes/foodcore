@@ -87,7 +87,8 @@ class UpdateMenuInteractorTest {
                 "Descrição do Item Atualizado",
                 BigDecimal.valueOf(15.0),
                 "LOCAL",
-                "photo-url-updated"
+                "photo-url-updated",
+                1L
         );
 
         var menuUpdateDTO = new MenuUpdateRequestDTO(
