@@ -48,6 +48,7 @@ public class UserSubtypeControllerImpl implements UserSubtypeController {
 
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_DONO')")
     public ResponseEntity<UserSubtypeResponseDTO> createUserSubtype(@Valid @RequestBody UserSubtypeRequestDTO dto) {
         logger.info("Handling POST request to /subtipos");
 
@@ -59,6 +60,7 @@ public class UserSubtypeControllerImpl implements UserSubtypeController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_DONO')")
     public ResponseEntity<UpdateUserSubtypeResponseDTO> updateUserSubtype(@PathVariable Long id, @Valid @RequestBody UserSubtypeUpdateRequestDTO dto) {
         logger.info("Handling PUT request to /subtipos");
 
@@ -94,6 +96,7 @@ public class UserSubtypeControllerImpl implements UserSubtypeController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_DONO')")
     public ResponseEntity<Void> deleteUserSubtype(@PathVariable Long id) {
         logger.info("Handling DELETE request to /subtipos");
         deleteUserSubtype.execute(id);
@@ -101,7 +104,6 @@ public class UserSubtypeControllerImpl implements UserSubtypeController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ROLE_DONO')")
     public ResponseEntity<Page<UserSubtypeResponseDTO>> listUserSubtypePaginated(Pageable pageable){
         logger.info("Handling GET request to /subtipos");
         List<SortOrder> sortOrders = pageable.getSort().stream()
