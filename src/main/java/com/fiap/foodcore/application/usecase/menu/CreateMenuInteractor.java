@@ -14,6 +14,8 @@ import com.fiap.foodcore.infrastructure.security.UserDetailsAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.util.List;
+
 public class CreateMenuInteractor {
 
     private final MenuRepositoryGateway menuRepositoryGateway;
@@ -35,15 +37,16 @@ public class CreateMenuInteractor {
                 .description(createMenuInput.descricao())
                 .name(createMenuInput.nome())
                 .itemsList(
-                        createMenuInput.items().stream()
-                                .map(item -> new Item.Builder()
-                                        .name(item.name())
-                                        .description(item.description())
-                                        .price(item.price())
-                                        .availability(item.availability())
-                                        .photo(item.photo())
-                                        .build()
-                                ).toList()
+                        createMenuInput.items() == null ? List.of() :
+                                createMenuInput.items().stream()
+                                        .map(item -> new Item.Builder()
+                                                .name(item.name())
+                                                .description(item.description())
+                                                .price(item.price())
+                                                .availability(item.availability())
+                                                .photo(item.photo())
+                                                .build()
+                                        ).toList()
                 )
                 .restaurantId(restaurante)
                 .build();
@@ -54,15 +57,16 @@ public class CreateMenuInteractor {
                 saveMenu.getName(),
                 saveMenu.getDescription(),
                 saveMenu.getRestaurantId().getId(),
-                saveMenu.getItems().stream()
-                        .map(item -> new ItemCreateOutput(
-                                item.getId(),
-                                item.getName(),
-                                item.getDescription(),
-                                item.getPrice(),
-                                item.getAvailability(),
-                                item.getPhoto()
-                        )).toList()
+                saveMenu.getItems() == null ? List.of() :
+                        saveMenu.getItems().stream()
+                                .map(item -> new ItemCreateOutput(
+                                        item.getId(),
+                                        item.getName(),
+                                        item.getDescription(),
+                                        item.getPrice(),
+                                        item.getAvailability(),
+                                        item.getPhoto()
+                                )).toList()
         );
     }
 

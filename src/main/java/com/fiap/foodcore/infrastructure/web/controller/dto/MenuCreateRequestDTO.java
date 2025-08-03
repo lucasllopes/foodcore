@@ -16,7 +16,5 @@ public record MenuCreateRequestDTO (
         @NotNull(message = "O código do restaurante (restaurantId) é obrigatório")
         Long restaurantId,
 
-        @NotNull(message = "Necessário informar um endereço.")
-        @NotEmpty(message = "A lista de endereços não pode estar vazia.")
         @Valid
         List<ItemCreateRequestDTO> items) {}
