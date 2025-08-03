@@ -257,4 +257,30 @@ public class ItemControllerImplIntegrationTest {
                 .then()
                 .statusCode(HttpStatus.NOT_FOUND.value());
     }
+
+    @Test
+    void shouldReturnForbiddenWhenUserIsNotOwner() {
+        // Criando um usuário cliente sem permissão ROLE_DONO
+        UserCreateRequestDTO client = UserTestHelper.createValidGenericClientRequest();
+        createUser(UserPresenter.toInputCreate(client));
+        String clientToken = authenticateAndGetToken(client);
+
+        ItemCreateRequestDTO itemRequest = new ItemCreateRequestDTO(
+                null,
+                "Item Cliente " + System.currentTimeMillis(),
+                "Desc",
+                new BigDecimal("15.0"),
+                "Disponível",
+                "/foto.jpg"
+        );
+
+        given()
+                .header("Authorization", "Bearer " + clientToken)
+                .body(itemRequest)
+                .when()
+                .post("/cardapios/items")
+                .then()
+                .statusCode(HttpStatus.FORBIDDEN.value());
+    }
+
 }
