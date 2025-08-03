@@ -16,5 +16,8 @@ public interface ItemGateway {
     Optional<Item> findByName(String name);
     List<Item> findItemsByMenuId(Long menuId);
     Optional<Item> findByNameIgnoreCase(String name);
+    List<Item> findByOwnerId(Long ownerId);
+    Optional<Item> findByIdAndOwnerId(Long id, Long ownerId);
+    boolean existsByIdAndOwnerId(Long id, Long ownerId);
 
 }

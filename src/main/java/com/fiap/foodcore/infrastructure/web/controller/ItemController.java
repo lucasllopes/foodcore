@@ -17,6 +17,7 @@ import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 
 @Tag(name = "Itens do cardápio", description = "Endpoint para CRUD de itens do cardápio")
 public interface ItemController {
@@ -174,7 +175,7 @@ public interface ItemController {
 //                    }
 //            )
     })
-    ResponseEntity<ItemCreateResponseDTO> createItem(ItemCreateRequestDTO itemDto);
+    ResponseEntity<ItemCreateResponseDTO> createItem(ItemCreateRequestDTO itemDto, Authentication authentication);
 
     @Operation(
             description = "Ao passar um id de um item como parâmetro e um json dos dados atualizados no corpo da requisição, " +

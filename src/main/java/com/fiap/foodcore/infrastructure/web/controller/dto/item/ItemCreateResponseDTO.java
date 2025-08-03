@@ -13,6 +13,8 @@ public record ItemCreateResponseDTO(
 
         String availability,
 
-        String photo
+        String photo,
+
+        Long ownerId
 ) {
 }

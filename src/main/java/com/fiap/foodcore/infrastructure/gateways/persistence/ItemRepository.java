@@ -10,4 +10,9 @@ public interface ItemRepository extends JpaRepository<ItemEntity, Long> {
     Optional<ItemEntity> findByName(String name);
     List<ItemEntity> findByMenus_Id(Long menuId);
     List<ItemEntity> findByNameIgnoreCase(String name);
+
+    List<ItemEntity> findByOwnerId(Long ownerId);
+    Optional<ItemEntity> findByIdAndOwnerId(Long id, Long ownerId);
+    boolean existsByIdAndOwnerId(Long id, Long ownerId);
+
 }

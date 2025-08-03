@@ -4,6 +4,7 @@ import com.fiap.foodcore.application.usecase.input.UpdateItemInput;
 import com.fiap.foodcore.application.usecase.output.ItemCreateOutput;
 import com.fiap.foodcore.domain.Item;
 import com.fiap.foodcore.infrastructure.gateways.persistence.entity.ItemEntity;
+import com.fiap.foodcore.infrastructure.gateways.persistence.entity.UserEntity;
 
 public class ItemMapper {
 
@@ -16,6 +17,11 @@ public class ItemMapper {
         entity.setPrice(item.getPrice());
         entity.setAvailability(item.getAvailability());
         entity.setPhoto(item.getPhoto());
+
+        UserEntity owner = new UserEntity();
+        owner.setId(item.getOwnerId());
+
+        entity.setOwner(owner);
         return entity;
     }
 
@@ -28,6 +34,7 @@ public class ItemMapper {
                 .price(entity.getPrice())
                 .availability(entity.getAvailability())
                 .photo(entity.getPhoto())
+                .ownerId(entity.getOwner() != null ? entity.getOwner().getId() : null)
                 .build();
     }
 
@@ -39,7 +46,8 @@ public class ItemMapper {
                 item.getDescription(),
                 item.getPrice(),
                 item.getAvailability(),
-                item.getPhoto()
+                item.getPhoto(),
+                item.getOwnerId()
         );
     }
 
@@ -51,6 +59,7 @@ public class ItemMapper {
                 .price(input.price())
                 .availability(input.availability())
                 .photo(input.photo())
+                .ownerId(input.ownerId())
                 .build();
     }
 

@@ -75,8 +75,8 @@ CREATE TABLE IF NOT EXISTS item (
     price NUMERIC(12,2) NOT NULL,
     availability VARCHAR(50),
     photo VARCHAR(255),
-    dono_id BIGINT NOT NULL
-    CONSTRAINT fk_restaurante_dono FOREIGN KEY (dono_id) REFERENCES usuario(id) ON DELETE CASCADE,
+    dono_id BIGINT NOT NULL,
+    CONSTRAINT fk_restaurante_dono FOREIGN KEY (dono_id) REFERENCES usuario(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS menu (

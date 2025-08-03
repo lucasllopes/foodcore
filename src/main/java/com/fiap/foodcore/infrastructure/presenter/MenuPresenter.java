@@ -1,11 +1,11 @@
 package com.fiap.foodcore.infrastructure.presenter;
 
-import com.fiap.foodcore.application.usecase.input.CreateMenuInput;
 import com.fiap.foodcore.application.usecase.input.CreateItemInput;
+import com.fiap.foodcore.application.usecase.input.CreateMenuInput;
 import com.fiap.foodcore.application.usecase.output.ItemCreateOutput;
 import com.fiap.foodcore.application.usecase.output.MenuCreateOutput;
-import com.fiap.foodcore.infrastructure.web.controller.dto.item.ItemCreateRequestDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.item.ItemCreateResponseDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.item.ItemMenuAssignDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.menu.MenuCreateRequestDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.menu.MenuResponseDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.menu.MenuUpdateRequestDTO;
@@ -29,7 +29,8 @@ public class MenuPresenter {
                                 item.description(),
                                 item.price(),
                                 item.availability(),
-                                item.photo()
+                                item.photo(),
+                                item.ownerId()
                         )
                 ).collect(Collectors.toList()
                 )
@@ -43,13 +44,14 @@ public class MenuPresenter {
                 output.description(),
                 output.restaurantId(),
                 output.items() == null ? List.of() :
-                        output.items().stream().map(item -> new ItemCreateRequestDTO(
+                        output.items().stream().map(item -> new ItemMenuAssignDTO(
                                 item.id(),
                                 item.name(),
                                 item.description(),
                                 item.price(),
                                 item.availability(),
-                                item.photo()
+                                item.photo(),
+                                item.ownerId()
                         )).collect(Collectors.toList())
         );
     }
@@ -69,7 +71,8 @@ public class MenuPresenter {
                                         item.description(),
                                         item.price(),
                                         item.availability(),
-                                        item.photo()
+                                        item.photo(),
+                                        item.ownerId()
                                 )).collect(Collectors.toList())
         );
     }
@@ -95,11 +98,11 @@ public class MenuPresenter {
                                         item.description(),
                                         item.price(),
                                         item.availability(),
-                                        item.photo()
+                                        item.photo(),
+                                        item.ownerId()
                                 )).collect(Collectors.toList())
         );
     }
-
 
 
     public static CreateMenuInput fromUpdateInputRequestDTO(MenuUpdateRequestDTO dto) {
@@ -115,7 +118,8 @@ public class MenuPresenter {
                                 item.description(),
                                 item.price(),
                                 item.availability(),
-                                item.photo()
+                                item.photo(),
+                                item.ownerId()
                         )).collect(Collectors.toList())
         );
     }

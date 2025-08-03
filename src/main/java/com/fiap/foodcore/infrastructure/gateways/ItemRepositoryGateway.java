@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class ItemRepositoryGateway implements ItemGateway {
 
@@ -82,6 +83,25 @@ public class ItemRepositoryGateway implements ItemGateway {
     public Optional<Item> findByNameIgnoreCase(String name) {
         return itemRepository.findByNameIgnoreCase(name).stream()
                 .map(ItemMapper::toDomain).findFirst();
+    }
+
+    @Override
+    public List<Item> findByOwnerId(Long ownerId) {
+        return itemRepository.findByOwnerId(ownerId)
+                .stream()
+                .map(ItemMapper::toDomain)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<Item> findByIdAndOwnerId(Long id, Long ownerId) {
+        return itemRepository.findByIdAndOwnerId(id, ownerId)
+                .map(ItemMapper::toDomain);
+    }
+
+    @Override
+    public boolean existsByIdAndOwnerId(Long id, Long ownerId) {
+        return itemRepository.existsByIdAndOwnerId(id, ownerId);
     }
 
     private Sort toSpringSort(List<SortOrder> orders) {

@@ -6,9 +6,11 @@ import com.fiap.foodcore.domain.pagination.DomainPage;
 import com.fiap.foodcore.domain.pagination.PageRequestDomain;
 import com.fiap.foodcore.domain.pagination.SortOrder;
 import com.fiap.foodcore.infrastructure.presenter.ItemPresenter;
+import com.fiap.foodcore.infrastructure.security.UserDetailsAdapter;
 import com.fiap.foodcore.infrastructure.web.controller.dto.item.ItemCreateRequestDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.item.ItemCreateResponseDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.item.ItemUpdateRequestDTO;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -16,6 +18,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -71,13 +74,19 @@ public class ItemControllerImpl implements ItemController {
         return ResponseEntity.ok(dto);
     }
 
+
     @PostMapping
     @PreAuthorize("hasRole('ROLE_DONO')")
-    public ResponseEntity<ItemCreateResponseDTO> createItem(@RequestBody ItemCreateRequestDTO itemDto) {
+    public ResponseEntity<ItemCreateResponseDTO> createItem(@Valid @RequestBody ItemCreateRequestDTO itemDto, Authentication authentication) {
         logger.info("Handling POST request to /cardapios/items");
 
+        var userDetails = (UserDetailsAdapter) authentication.getPrincipal();
+        Long userId = userDetails.getId();
+
+        logger.info("ID do usuário autenticado: " + userId);
+
         ItemCreateOutput output = createItemInteractor.execute(
-                ItemPresenter.toInput(itemDto)
+                ItemPresenter.toInput(itemDto, userId)
         );
         ItemCreateResponseDTO responseDto = ItemPresenter.toDto(output);
 

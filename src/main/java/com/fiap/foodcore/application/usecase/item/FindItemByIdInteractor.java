@@ -21,7 +21,8 @@ public class FindItemByIdInteractor {
                 item.getDescription(),
                 item.getPrice(),
                 item.getAvailability(),
-                item.getPhoto()
+                item.getPhoto(),
+                item.getOwnerId()
         );
     }
 }

@@ -1,44 +1,45 @@
 package com.fiap.foodcore.infrastructure.security;
 
-import com.fiap.foodcore.application.gateway.MenuGateway;
-import com.fiap.foodcore.domain.Menu;
+import com.fiap.foodcore.application.gateway.ItemGateway;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 
 
 @Component("itemSecurity")
 public class ItemSecurity {
 
-    private final MenuGateway menuGateway;
+    private final ItemGateway itemGateway;
 
-    public ItemSecurity(MenuGateway menuGateway) {
-        this.menuGateway = menuGateway;
+    public ItemSecurity(ItemGateway itemGateway) {
+        this.itemGateway = itemGateway;
     }
 
     public boolean isOwner(Long itemId, Authentication authentication) {
-        if (authentication == null || !authentication.isAuthenticated()) {
-            return false;
+        // Caso 1: Usuário não autenticado
+        if (authentication == null) {
+            throw new AuthenticationCredentialsNotFoundException("Autenticação necessária para acessar o item #" + itemId);
+        }
+
+        if (!authentication.isAuthenticated()) {
+            throw new AuthenticationCredentialsNotFoundException("Credenciais inválidas para acessar o item #" + itemId);
         }
 
         UserDetailsAdapter userDetails = (UserDetailsAdapter) authentication.getPrincipal();
         Long userId = userDetails.getId();
 
-        List<Menu> menus = menuGateway.findMenusByItemId(itemId);
-
-        if (menus.isEmpty()) {
-            throw new AccessDeniedException("Item não encontrado ou não associado a nenhum restaurante.");
+        // Caso 2: Item não existe
+        boolean itemExists = itemGateway.findById(itemId).isPresent();
+        if (!itemExists) {
+            throw new AccessDeniedException("Item #" + itemId + " não foi encontrado no sistema.");
         }
 
-        boolean isOwner = menuGateway.findById(menus.getFirst().getId())
-                .map(menu -> menu.getRestaurantId().getOwnerId().equals(userId))
-                .orElse(false);
-
+        // Caso 3: Usuário não é proprietário
+        boolean isOwner = itemGateway.existsByIdAndOwnerId(itemId, userId);
         if (!isOwner) {
-            throw new AccessDeniedException("Você só pode editar/excluir itens do seu restaurante.");
+            throw new AccessDeniedException("Acesso negado ao item #" + itemId + ". Apenas o proprietário pode editar ou excluir este item.");
         }
 
         return true;

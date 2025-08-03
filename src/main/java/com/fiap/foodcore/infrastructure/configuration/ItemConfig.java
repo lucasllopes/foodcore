@@ -2,6 +2,7 @@ package com.fiap.foodcore.infrastructure.configuration;
 
 import com.fiap.foodcore.application.gateway.ItemGateway;
 import com.fiap.foodcore.application.gateway.MenuGateway;
+import com.fiap.foodcore.application.gateway.UserGateway;
 import com.fiap.foodcore.application.usecase.item.*;
 import com.fiap.foodcore.infrastructure.gateways.ItemRepositoryGateway;
 import com.fiap.foodcore.infrastructure.gateways.persistence.ItemRepository;
@@ -22,8 +23,8 @@ public class ItemConfig {
     }
 
     @Bean
-    CreateItemInteractor createItemInteractor(ItemRepositoryGateway itemRepositoryGateway) {
-        return new CreateItemInteractor(itemRepositoryGateway);
+    CreateItemInteractor createItemInteractor(ItemRepositoryGateway itemRepositoryGateway, UserGateway userGateway) {
+        return new CreateItemInteractor(itemRepositoryGateway, userGateway);
     }
 
     @Bean

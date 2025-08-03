@@ -1,6 +1,7 @@
 package com.fiap.foodcore.infrastructure.web.controller.dto.menu;
 
 import com.fiap.foodcore.infrastructure.web.controller.dto.item.ItemCreateRequestDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.item.ItemMenuAssignDTO;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -17,4 +18,4 @@ public record MenuCreateRequestDTO (
         Long restaurantId,
 
         @Valid
-        List<ItemCreateRequestDTO> items) {}
+        List<ItemMenuAssignDTO> items) {}
