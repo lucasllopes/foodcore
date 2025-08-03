@@ -38,17 +38,17 @@ public class MenuPresenter {
                 output.name(),
                 output.description(),
                 output.restaurantId(),
-                output.items().stream().map(item -> new ItemCreateRequestDTO(
-                        item.id(),
-                        item.name(),
-                        item.description(),
-                        item.price(),
-                        item.availability(),
-                        item.photo()
-                )).collect(Collectors.toList())
+                output.items() == null ? List.of() :
+                        output.items().stream().map(item -> new ItemCreateRequestDTO(
+                                item.id(),
+                                item.name(),
+                                item.description(),
+                                item.price(),
+                                item.availability(),
+                                item.photo()
+                        )).collect(Collectors.toList())
         );
     }
-
 
     public static MenuResponseDTO toResponseDTO(MenuCreateOutput output) {
         if (output == null) return null;
@@ -57,15 +57,16 @@ public class MenuPresenter {
                 output.name(),
                 output.description(),
                 output.restaurantId(),
-                output.items().stream()
-                        .map(item -> new ItemCreateResponseDTO(
-                                item.id(),
-                                item.name(),
-                                item.description(),
-                                item.price(),
-                                item.availability(),
-                                item.photo()
-                        )).collect(Collectors.toList())
+                output.items() == null ? List.of() :
+                        output.items().stream()
+                                .map(item -> new ItemCreateResponseDTO(
+                                        item.id(),
+                                        item.name(),
+                                        item.description(),
+                                        item.price(),
+                                        item.availability(),
+                                        item.photo()
+                                )).collect(Collectors.toList())
         );
     }
 
@@ -82,14 +83,15 @@ public class MenuPresenter {
                 dto.name(),
                 dto.description(),
                 dto.restaurantId(),
-                dto.items().stream()
-                        .map(item -> new CreateItemInput(
-                                item.name(),
-                                item.description(),
-                                item.price(),
-                                item.availability(),
-                                item.photo()
-                        )).collect(Collectors.toList())
+                dto.items() == null ? List.of() :
+                        dto.items().stream()
+                                .map(item -> new CreateItemInput(
+                                        item.name(),
+                                        item.description(),
+                                        item.price(),
+                                        item.availability(),
+                                        item.photo()
+                                )).collect(Collectors.toList())
         );
     }
 
