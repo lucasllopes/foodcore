@@ -312,4 +312,38 @@ public class ItemControllerImplIntegrationTest {
                 .statusCode(HttpStatus.NOT_FOUND.value());
     }
 
+    @Test
+    void shouldListItemsWithPaginationAndSorting() {
+        // Criar múltiplos itens
+        for (int i = 1; i <= 5; i++) {
+            ItemCreateRequestDTO item = new ItemCreateRequestDTO(
+                    null,
+                    "Item Paginado " + i,
+                    "Desc " + i,
+                    new BigDecimal("10.0").add(new BigDecimal(i)),
+                    "Disponível",
+                    "/foto" + i + ".jpg"
+            );
+
+            given()
+                    .header("Authorization", "Bearer " + authToken)
+                    .body(item)
+                    .post("/cardapios/items");
+        }
+
+        // Testar paginação (página 0, tamanho 2, ordenado por nome)
+        given()
+                .header("Authorization", "Bearer " + authToken)
+                .param("page", 0)
+                .param("size", 2)
+                .param("sort", "name,asc")
+                .when()
+                .get("/cardapios/items")
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .body("content.size()", equalTo(2))
+                .body("totalPages", greaterThanOrEqualTo(3))
+                .body("totalElements", greaterThanOrEqualTo(5));
+    }
+
 }
