@@ -85,7 +85,7 @@ public class MenuControllerImpl implements MenuController {
 
     @PreAuthorize("@menuSecurity.isOwner(#id, authentication)")
     @PutMapping("/{id}")
-    public ResponseEntity<MenuResponseDTO> updateMenu(@PathVariable Long id, @RequestBody MenuUpdateRequestDTO menuDto) {
+    public ResponseEntity<MenuResponseDTO> updateMenu(@PathVariable Long id,@Valid @RequestBody MenuUpdateRequestDTO menuDto) {
         logger.info("Handling PUT request to /cardapios/{}", id);
         MenuCreateOutput output = updateMenuInteractor.execute(id, menuDto);
 

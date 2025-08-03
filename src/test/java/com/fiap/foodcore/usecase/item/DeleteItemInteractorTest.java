@@ -43,7 +43,7 @@ class DeleteItemInteractorTest {
 
         // Assert
         verify(itemGateway).findById(itemId);
-        verify(itemGateway).delete(item);
+        verify(itemGateway).delete(item.getId());
     }
 
     @Test

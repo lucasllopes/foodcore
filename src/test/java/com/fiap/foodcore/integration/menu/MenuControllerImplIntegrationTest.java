@@ -66,6 +66,7 @@ public class MenuControllerImplIntegrationTest {
     @Test
     void shouldFailToCreateMenuWithoutDescription() {
         ItemCreateRequestDTO item = new ItemCreateRequestDTO(
+                1L,
                 "Item Teste",
                 "Descrição Item",
                 new BigDecimal("10.0"),
@@ -92,6 +93,7 @@ public class MenuControllerImplIntegrationTest {
     @Test
     void shouldFailToCreateMenuWithoutRestaurantId() {
         ItemCreateRequestDTO item = new ItemCreateRequestDTO(
+                1L,
                 "Item Teste",
                 "Descrição Item",
                 new BigDecimal("10.0"),
@@ -137,6 +139,7 @@ public class MenuControllerImplIntegrationTest {
     void shouldListMenus() {
         // Cria um menu para garantir que a lista não estará vazia
         ItemCreateRequestDTO item = new ItemCreateRequestDTO(
+                1L,
                 "Item List",
                 "Desc",
                 new BigDecimal("15.0"),
@@ -216,6 +219,7 @@ public class MenuControllerImplIntegrationTest {
 
         // 3. Criar item para o menu
         ItemCreateRequestDTO item = new ItemCreateRequestDTO(
+                1L,
                 "Item Original",
                 "Descrição original",
                 new BigDecimal("15.99"),
@@ -330,6 +334,7 @@ public class MenuControllerImplIntegrationTest {
 
         // Criar item para o menu
         ItemCreateRequestDTO item = new ItemCreateRequestDTO(
+                1L,
                 "Item Delete",
                 "Desc",
                 new BigDecimal("9.9"),
@@ -463,6 +468,7 @@ public class MenuControllerImplIntegrationTest {
 
         // 3. Criar item para o menu
         ItemCreateRequestDTO item = new ItemCreateRequestDTO(
+                1L,
                 "Item Teste",
                 "Descrição Item",
                 new BigDecimal("10.0"),
@@ -529,6 +535,7 @@ public class MenuControllerImplIntegrationTest {
 
         // 3. Criar item para o menu
         ItemCreateRequestDTO item = new ItemCreateRequestDTO(
+                1L,
                 "Item Teste",
                 "Descrição Item",
                 new BigDecimal("10.0"),
