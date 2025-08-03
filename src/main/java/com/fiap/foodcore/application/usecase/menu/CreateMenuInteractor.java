@@ -10,9 +10,6 @@ import com.fiap.foodcore.domain.Item;
 import com.fiap.foodcore.domain.Menu;
 import com.fiap.foodcore.domain.Restaurant;
 import com.fiap.foodcore.infrastructure.gateways.MenuRepositoryGateway;
-import com.fiap.foodcore.infrastructure.security.UserDetailsAdapter;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.List;
 
