@@ -1,5 +1,6 @@
 package com.fiap.foodcore.infrastructure.configuration;
 
+import com.fiap.foodcore.application.gateway.ItemGateway;
 import com.fiap.foodcore.application.gateway.MenuGateway;
 import com.fiap.foodcore.application.gateway.RestaurantGateway;
 import com.fiap.foodcore.application.usecase.menu.*;
@@ -39,8 +40,8 @@ public class MenuConfig {
     }
 
     @Bean
-    public DeleteMenuInteractor deleteMenuInteractor(MenuGateway menuGateway) {
-        return new DeleteMenuInteractor(menuGateway);
+    public DeleteMenuInteractor deleteMenuInteractor(MenuGateway menuGateway, ItemGateway itemGateway) {
+        return new DeleteMenuInteractor(menuGateway, itemGateway);
     }
 
     @Bean

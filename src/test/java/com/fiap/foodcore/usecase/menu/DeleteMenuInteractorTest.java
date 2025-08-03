@@ -1,5 +1,6 @@
 package com.fiap.foodcore.usecase.menu;
 
+import com.fiap.foodcore.application.gateway.ItemGateway;
 import com.fiap.foodcore.application.gateway.MenuGateway;
 import com.fiap.foodcore.application.usecase.menu.DeleteMenuInteractor;
 import com.fiap.foodcore.domain.Menu;
@@ -20,12 +21,14 @@ class DeleteMenuInteractorTest {
 
     @Mock
     private MenuGateway menuGateway;
+    @Mock
+    private ItemGateway itemGateway; // Assuming you have an ItemGateway for the test
 
     private DeleteMenuInteractor deleteMenuInteractor;
 
     @BeforeEach
     void setUp() {
-        deleteMenuInteractor = new DeleteMenuInteractor(menuGateway);
+        deleteMenuInteractor = new DeleteMenuInteractor(menuGateway, itemGateway);
     }
 
     @Test
