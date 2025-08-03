@@ -1,6 +1,7 @@
 package com.fiap.foodcore.usecase.item;
 
 import com.fiap.foodcore.application.gateway.ItemGateway;
+import com.fiap.foodcore.application.gateway.MenuGateway;
 import com.fiap.foodcore.application.usecase.item.DeleteItemInteractor;
 import com.fiap.foodcore.domain.Item;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,11 +24,14 @@ class DeleteItemInteractorTest {
     @Mock
     private ItemGateway itemGateway;
 
+    @Mock
+    private MenuGateway menuGateway; // Assuming you have a MenuGateway for the test
+
     private DeleteItemInteractor deleteItemInteractor;
 
     @BeforeEach
     void setUp() {
-        deleteItemInteractor = new DeleteItemInteractor(itemGateway);
+        deleteItemInteractor = new DeleteItemInteractor(itemGateway, menuGateway);
     }
 
     @Test
