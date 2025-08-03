@@ -302,4 +302,14 @@ public class ItemControllerImplIntegrationTest {
                 .statusCode(HttpStatus.UNAUTHORIZED.value());
     }
 
+    @Test
+    void shouldReturnNotFoundWhenItemDoesNotExist() {
+        given()
+                .header("Authorization", "Bearer " + authToken)
+                .when()
+                .get("/cardapios/items/9999")
+                .then()
+                .statusCode(HttpStatus.NOT_FOUND.value());
+    }
+
 }
