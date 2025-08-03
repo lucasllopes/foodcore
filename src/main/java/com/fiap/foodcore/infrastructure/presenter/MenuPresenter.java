@@ -39,6 +39,7 @@ public class MenuPresenter {
                 output.description(),
                 output.restaurantId(),
                 output.items().stream().map(item -> new ItemCreateRequestDTO(
+                        item.id(),
                         item.name(),
                         item.description(),
                         item.price(),

@@ -1,6 +1,7 @@
 package com.fiap.foodcore.infrastructure.configuration;
 
 import com.fiap.foodcore.application.gateway.ItemGateway;
+import com.fiap.foodcore.application.gateway.MenuGateway;
 import com.fiap.foodcore.application.usecase.item.*;
 import com.fiap.foodcore.infrastructure.gateways.ItemRepositoryGateway;
 import com.fiap.foodcore.infrastructure.gateways.persistence.ItemRepository;
@@ -26,8 +27,8 @@ public class ItemConfig {
     }
 
     @Bean
-    DeleteItemInteractor deleteItemInteractor(ItemGateway  itemGateway) {
-        return new DeleteItemInteractor(itemGateway);
+    DeleteItemInteractor deleteItemInteractor(ItemGateway  itemGateway, MenuGateway menuGateway) {
+        return new DeleteItemInteractor(itemGateway, menuGateway);
     }
 
     @Bean

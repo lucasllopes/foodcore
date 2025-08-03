@@ -60,9 +60,8 @@ public class ItemRepositoryGateway implements ItemGateway {
     }
 
     @Override
-    public void delete(Item item) {
-        var entity = ItemMapper.toEntity(item);
-        itemRepository.delete(entity);
+    public void delete(Long id) {
+        itemRepository.deleteById(id);
     }
 
     @Override

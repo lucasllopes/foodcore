@@ -12,7 +12,7 @@ public interface ItemGateway {
     DomainPage<Item> findAll(PageRequestDomain pageRequest);
     Optional<Item> findById(Long id);
     Item save(Item item);
-    void delete(Item item);
+    void delete(Long id);
     Optional<Item> findByName(String name);
     List<Item> findItemsByMenuId(Long menuId);
     Optional<Item> findByNameIgnoreCase(String name);
