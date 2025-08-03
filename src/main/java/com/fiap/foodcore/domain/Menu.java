@@ -49,29 +49,29 @@ public class Menu {
 
 
     public Menu atualizarInformacoes(String novoNome, String novaDescricao, Long restaurantId, List<Item> novaListaItens) {
-
         String nomeAtualizado = novoNome != null ? novoNome : this.name;
         String descricaoAtualizada = novaDescricao != null ? novaDescricao : this.description;
 
         List<Item> itensAtualizados = new ArrayList<>();
-        for (Item novoItem : novaListaItens) {
-            Item existente = this.items.stream()
-                    .filter(i -> i.getId().equals(novoItem.getId()))
-                    .findFirst()
-                    .orElse(null);
-            if (existente != null) {
-
-                Item itemAtualizado = new Item.Builder()
-                        .id(existente.getId())
-                        .name(novoItem.getName())
-                        .description(novoItem.getDescription())
-                        .price(novoItem.getPrice())
-                        .availability(novoItem.getAvailability())
-                        .photo(novoItem.getPhoto())
-                        .build();
-                itensAtualizados.add(itemAtualizado);
-            } else {
-                itensAtualizados.add(novoItem);
+        if (novaListaItens != null) {
+            for (Item novoItem : novaListaItens) {
+                Item existente = this.items.stream()
+                        .filter(i -> i.getId().equals(novoItem.getId()))
+                        .findFirst()
+                        .orElse(null);
+                if (existente != null) {
+                    Item itemAtualizado = new Item.Builder()
+                            .id(existente.getId())
+                            .name(novoItem.getName())
+                            .description(novoItem.getDescription())
+                            .price(novoItem.getPrice())
+                            .availability(novoItem.getAvailability())
+                            .photo(novoItem.getPhoto())
+                            .build();
+                    itensAtualizados.add(itemAtualizado);
+                } else {
+                    itensAtualizados.add(novoItem);
+                }
             }
         }
 
@@ -80,8 +80,8 @@ public class Menu {
                 .name(nomeAtualizado)
                 .description(descricaoAtualizada)
                 .restaurantId(Restaurant.builder()
-                                .id(restaurantId)
-                                .build())
+                        .id(restaurantId)
+                        .build())
                 .itemsList(itensAtualizados)
                 .build();
     }

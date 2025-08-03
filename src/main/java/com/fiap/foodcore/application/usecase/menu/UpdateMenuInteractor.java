@@ -6,8 +6,11 @@ import com.fiap.foodcore.application.gateway.MenuGateway;
 import com.fiap.foodcore.application.gateway.RestaurantGateway;
 import com.fiap.foodcore.application.usecase.mapper.MenuItemMapper;
 import com.fiap.foodcore.application.usecase.output.MenuCreateOutput;
+import com.fiap.foodcore.domain.Item;
 import com.fiap.foodcore.domain.Menu;
 import com.fiap.foodcore.infrastructure.web.controller.dto.MenuUpdateRequestDTO;
+
+import java.util.List;
 
 public class UpdateMenuInteractor {
 
@@ -23,23 +26,23 @@ public class UpdateMenuInteractor {
         var existingMenu = menuGateway.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Cardápio não encontrado com ID: "+ id));
 
-        // Check for duplicate name
         menuGateway.findByName(menuUpdateRequestDTO.name())
                 .filter(menu -> !menu.getId().equals(id))
                 .ifPresent(menu -> { throw new DuplicatedDataException("Nome de Cardápio já utilizado"); });
 
-        // Validate restaurant existence
         restaurantGateway.findById(menuUpdateRequestDTO.restaurantId())
                 .orElseThrow(() -> new DataNotFoundException("Restaurante não encontrado com  ID: " + menuUpdateRequestDTO.restaurantId()));
 
+        List<Item> itensAtualizados = menuUpdateRequestDTO.items() == null ?
+                java.util.Collections.emptyList() :
+                menuUpdateRequestDTO.items().stream().map(MenuItemMapper::fromDto).toList();
 
         Menu menuToUpdate = existingMenu.atualizarInformacoes(
                 menuUpdateRequestDTO.name(),
                 menuUpdateRequestDTO.description(),
                 menuUpdateRequestDTO.restaurantId(),
-                menuUpdateRequestDTO.items().stream().map(MenuItemMapper::fromDto).toList());
+                itensAtualizados);
 
-        // Save the updated menu
         Menu savedMenu = menuGateway.save(menuToUpdate);
 
         return new MenuCreateOutput(
@@ -47,8 +50,8 @@ public class UpdateMenuInteractor {
                 savedMenu.getName(),
                 savedMenu.getDescription(),
                 savedMenu.getRestaurantId().getId(),
-                savedMenu.getItems().stream()
-                        .map(MenuItemMapper::toOutput).toList());
+                savedMenu.getItems() == null ? java.util.Collections.emptyList() :
+                        savedMenu.getItems().stream().map(MenuItemMapper::toOutput).toList());
     }
 
 }
