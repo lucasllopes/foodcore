@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 public record ItemUpdateRequestDTO(
+        @NotNull(message = "ID é obrigatório.")
         Long id,
 
         @NotBlank(message = "Nome é obrigatório.")

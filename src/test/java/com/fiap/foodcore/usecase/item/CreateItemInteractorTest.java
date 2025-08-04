@@ -50,6 +50,7 @@ class CreateItemInteractorTest {
         String photo = "url_da_foto.jpg";
         Long itemId = 1L;
         Long ownerId = 1L;
+        User ownerUser = mock(User.class);
 
         // Configurar mock do UserGateway para retornar um usuário válido
         when(userGateway.findById(ownerId)).thenReturn(Optional.of(mock(User.class)));
@@ -73,7 +74,7 @@ class CreateItemInteractorTest {
                 .price(price)
                 .availability(availability)
                 .photo(photo)
-                .ownerId(ownerId)  // Agora incluímos o ownerId
+                .ownerId(ownerUser)  // Agora incluímos o ownerId
                 .build();
 
         // Simular o ID sendo definido após o save
@@ -156,6 +157,7 @@ class CreateItemInteractorTest {
         String photo = null;
         Long itemId = 2L;
         Long ownerId = 2L;
+        User ownerUser = mock(User.class);
 
         // Configurar mock do UserGateway para retornar um usuário válido
         when(userGateway.findById(ownerId)).thenReturn(Optional.of(mock(User.class)));
@@ -177,7 +179,7 @@ class CreateItemInteractorTest {
                 .price(price)
                 .availability(availability)
                 .photo(photo)
-                .ownerId(ownerId)
+                .ownerId(ownerUser)
                 .build();
 
         // Simular o ID sendo definido após o save
@@ -217,6 +219,7 @@ class CreateItemInteractorTest {
         String photo = "url_foto_delivery.jpg";
         Long itemId = 3L;
         Long ownerId = 3L;
+        User ownerUser = mock(User.class);
 
         // Configurar mock do UserGateway para retornar um usuário válido
         when(userGateway.findById(ownerId)).thenReturn(Optional.of(mock(User.class)));
@@ -238,7 +241,7 @@ class CreateItemInteractorTest {
                 .price(price)
                 .availability(availability)
                 .photo(photo)
-                .ownerId(ownerId)
+                .ownerId(ownerUser)
                 .build();
 
         // Simular o ID sendo definido após o save
@@ -278,6 +281,7 @@ class CreateItemInteractorTest {
         String photo = "url_foto.jpg";
         Long itemId = 4L;
         Long ownerId = 4L;
+        User ownerUser = mock(User.class);
 
         // Configurar mock do UserGateway para retornar um usuário válido
         when(userGateway.findById(ownerId)).thenReturn(Optional.of(mock(User.class)));
@@ -299,7 +303,7 @@ class CreateItemInteractorTest {
                 .price(price)
                 .availability(availability)
                 .photo(photo)
-                .ownerId(ownerId)
+                .ownerId(ownerUser)
                 .build();
 
         // Simular o ID sendo definido após o save

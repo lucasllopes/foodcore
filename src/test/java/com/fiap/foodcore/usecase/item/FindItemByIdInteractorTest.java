@@ -5,6 +5,7 @@ import com.fiap.foodcore.application.gateway.ItemGateway;
 import com.fiap.foodcore.application.usecase.item.FindItemByIdInteractor;
 import com.fiap.foodcore.application.usecase.output.ItemCreateOutput;
 import com.fiap.foodcore.domain.Item;
+import com.fiap.foodcore.domain.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,6 +38,11 @@ class FindItemByIdInteractorTest {
         // Arrange
         Long id = 1L;
         Long ownerId = 10L;
+
+        // Criar mock para User
+        User ownerUser = mock(User.class);
+        when(ownerUser.getId()).thenReturn(ownerId);
+
         Item item = mock(Item.class);
         when(item.getId()).thenReturn(id);
         when(item.getName()).thenReturn("Nome");
@@ -44,7 +50,8 @@ class FindItemByIdInteractorTest {
         when(item.getPrice()).thenReturn(new BigDecimal("10.00"));
         when(item.getAvailability()).thenReturn("LOCAL");
         when(item.getPhoto()).thenReturn("foto.jpg");
-        when(item.getOwnerId()).thenReturn(ownerId); // Adicionando mock para ownerId
+        when(item.getOwnerId()).thenReturn(ownerUser); // Agora retorna o objeto User
+
         when(itemGateway.findById(id)).thenReturn(Optional.of(item));
 
         // Act
@@ -58,7 +65,7 @@ class FindItemByIdInteractorTest {
         assertEquals(new BigDecimal("10.00"), output.price());
         assertEquals("LOCAL", output.availability());
         assertEquals("foto.jpg", output.photo());
-        assertEquals(ownerId, output.ownerId()); // Verificando ownerId no resultado
+        assertEquals(ownerId, output.ownerId()); // Verificando o ID do owner no resultado
         verify(itemGateway).findById(id);
     }
 

@@ -3,6 +3,7 @@ package com.fiap.foodcore.infrastructure.configuration;
 import com.fiap.foodcore.application.gateway.ItemGateway;
 import com.fiap.foodcore.application.gateway.MenuGateway;
 import com.fiap.foodcore.application.gateway.RestaurantGateway;
+import com.fiap.foodcore.application.gateway.UserGateway;
 import com.fiap.foodcore.application.usecase.menu.*;
 import com.fiap.foodcore.infrastructure.gateways.MenuRepositoryGateway;
 import com.fiap.foodcore.infrastructure.gateways.persistence.ItemRepository;
@@ -35,8 +36,8 @@ public class MenuConfig {
     }
 
     @Bean
-    public UpdateMenuInteractor updateMenuInteractor(MenuGateway menuGateway, RestaurantGateway restaurantGateway) {
-        return new UpdateMenuInteractor(menuGateway, restaurantGateway);
+    public UpdateMenuInteractor updateMenuInteractor(MenuGateway menuGateway, RestaurantGateway restaurantGateway, UserGateway gateway) {
+        return new UpdateMenuInteractor(menuGateway, restaurantGateway, gateway);
     }
 
     @Bean
