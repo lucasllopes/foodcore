@@ -3,9 +3,12 @@ package com.fiap.foodcore.usecase.menu;
 import com.fiap.foodcore.application.exception.DuplicatedDataException;
 import com.fiap.foodcore.application.gateway.MenuGateway;
 import com.fiap.foodcore.application.gateway.RestaurantGateway;
+import com.fiap.foodcore.application.gateway.UserGateway;
 import com.fiap.foodcore.application.usecase.menu.UpdateMenuInteractor;
 import com.fiap.foodcore.domain.Menu;
 import com.fiap.foodcore.domain.Restaurant;
+import com.fiap.foodcore.domain.User;
+import com.fiap.foodcore.domain.UserTypeDomain;
 import com.fiap.foodcore.infrastructure.web.controller.dto.item.ItemUpdateRequestDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.menu.MenuUpdateRequestDTO;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,13 +34,16 @@ class UpdateMenuInteractorTest {
     private MenuGateway menuGateway;
     @Mock
     private RestaurantGateway restaurantGateway;
+    @Mock
+    private UserGateway gateway;
+
 
     private UpdateMenuInteractor updateMenuInteractor;
 
 
     @BeforeEach
     void setUp() {
-        updateMenuInteractor = new UpdateMenuInteractor(menuGateway, restaurantGateway);
+        updateMenuInteractor = new UpdateMenuInteractor(menuGateway, restaurantGateway, gateway);
     }
 
     @Test
@@ -46,52 +52,55 @@ class UpdateMenuInteractorTest {
         // Arrange
         Long menuId = 1L;
         Long restaurantId = 2L;
+        Long ownerId = 3L;
+        UserTypeDomain ownerType = UserTypeDomain.DONO;
 
         String updatedMenuName = "Menu Atualizado";
         String updatedDescription = "Descrição Atualizada";
 
-        // Configurar restaurant mock - sem configuração de getId()
-        Restaurant restaurant = mock(Restaurant.class);
+        // Criar mock do User (proprietário do restaurante)
+        var owner = mock(User.class);
+        when(owner.getId()).thenReturn(ownerId);
+        when(owner.getTipo()).thenReturn(ownerType);
 
-        // Configurar menu original mock
+        // Configurar mock do restaurante com proprietário
+        Restaurant savedRestaurant = mock(Restaurant.class);
+        when(savedRestaurant.getId()).thenReturn(restaurantId);
+        // Usar a sintaxe alternativa do Mockito
+        doReturn(owner).when(savedRestaurant).getOwnerId();
+
+        // Configurar gateway para encontrar o proprietário quando solicitado
+        when(gateway.findById(ownerId)).thenReturn(Optional.of(owner));
+
+        // Resto do teste permanece o mesmo...
         Menu originalMenu = mock(Menu.class);
         lenient().when(originalMenu.getId()).thenReturn(menuId);
+        lenient().when(originalMenu.getRestaurantId()).thenReturn(savedRestaurant);
 
-        // Configurar menu atualizado mock
         Menu updatedMenu = mock(Menu.class);
         when(updatedMenu.getId()).thenReturn(menuId);
         when(updatedMenu.getName()).thenReturn(updatedMenuName);
         when(updatedMenu.getDescription()).thenReturn(updatedDescription);
-        when(updatedMenu.getRestaurantId()).thenReturn(restaurant);
-
-        // Configurar diretamente o restaurantId no mock
-        Restaurant savedRestaurant = mock(Restaurant.class);
-        when(savedRestaurant.getId()).thenReturn(restaurantId);
         when(updatedMenu.getRestaurantId()).thenReturn(savedRestaurant);
-
         when(updatedMenu.getItems()).thenReturn(Collections.emptyList());
 
-        // Configurar comportamento do gateway
         when(menuGateway.findById(menuId)).thenReturn(Optional.of(originalMenu));
         when(menuGateway.findByName(updatedMenuName)).thenReturn(Optional.empty());
         when(originalMenu.atualizarInformacoes(eq(updatedMenuName), eq(updatedDescription), eq(restaurantId), any())).thenReturn(updatedMenu);
         when(menuGateway.save(updatedMenu)).thenReturn(updatedMenu);
-
-        // Configurar comportamento do RestaurantGateway
         when(restaurantGateway.findById(restaurantId)).thenReturn(Optional.of(savedRestaurant));
 
-        // Configurar DTO
         var itemUpdateDTO = new ItemUpdateRequestDTO(
                 1L,
                 "Item Atualizado",
                 "Descrição do Item Atualizado",
                 BigDecimal.valueOf(15.0),
                 "LOCAL",
-                "photo-url-updated",
-                1L
+                "photo-url-updated"
         );
 
         var menuUpdateDTO = new MenuUpdateRequestDTO(
+                menuId,
                 updatedMenuName,
                 updatedDescription,
                 restaurantId,
@@ -113,6 +122,7 @@ class UpdateMenuInteractorTest {
         verify(menuGateway).findByName(updatedMenuName);
         verify(originalMenu).atualizarInformacoes(eq(updatedMenuName), eq(updatedDescription), eq(restaurantId), any());
         verify(menuGateway).save(updatedMenu);
+        verify(gateway).findById(ownerId);
     }
 
     @Test
@@ -135,6 +145,7 @@ class UpdateMenuInteractorTest {
         when(menuGateway.findByName(updatedName)).thenReturn(Optional.of(duplicateMenu));
 
         var menuUpdateDTO = new MenuUpdateRequestDTO(
+                menuId,
                 updatedName,
                 "Descrição Atualizada",
                 restaurantId,
@@ -168,6 +179,7 @@ class UpdateMenuInteractorTest {
         Restaurant restaurant = mock(Restaurant.class);
         when(restaurant.getId()).thenReturn(restaurantId);
 
+
         // Menu original e atualizado
         Menu originalMenu = mock(Menu.class);
         when(originalMenu.getId()).thenReturn(menuId);
@@ -192,6 +204,7 @@ class UpdateMenuInteractorTest {
         when(restaurantGateway.findById(restaurantId)).thenReturn(Optional.of(restaurant));
 
         var menuUpdateDTO = new MenuUpdateRequestDTO(
+                menuId,
                 menuName,
                 updatedDescription,
                 restaurantId,
