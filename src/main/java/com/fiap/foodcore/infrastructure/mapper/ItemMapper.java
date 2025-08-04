@@ -18,8 +18,8 @@ public class ItemMapper {
         entity.setAvailability(item.getAvailability());
         entity.setPhoto(item.getPhoto());
 
-        UserEntity owner = new UserEntity();
-        owner.setId(item.getOwnerId().getId());
+        var owner = UserEntityMapper.toEntity(item.getOwnerId());
+
         entity.setOwner(owner);
 
         return entity;
