@@ -7,8 +7,6 @@ import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 public record ItemUpdateRequestDTO(
-
-        @NotNull(message = "ID é obrigatório.")
         Long id,
 
         @NotBlank(message = "Nome é obrigatório.")
@@ -25,10 +23,7 @@ public record ItemUpdateRequestDTO(
         String availability,
 
         @NotBlank(message = "Caminho da foto é obrigatório.")
-        String photo,
-
-        @NotNull(message = "O ID de DONO é obrigatório.")
-        Long ownerId
+        String photo
 
 ) {
 }

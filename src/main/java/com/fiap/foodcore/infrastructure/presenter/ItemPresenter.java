@@ -76,7 +76,6 @@ public class ItemPresenter {
 
     public static UpdateItemInput toUpdateInput(ItemUpdateRequestDTO dto) {
         return new UpdateItemInput(
-                dto.id(),
                 dto.name(),
                 dto.description(),
                 dto.price(),

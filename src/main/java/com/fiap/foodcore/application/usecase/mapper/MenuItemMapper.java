@@ -6,14 +6,14 @@ import com.fiap.foodcore.infrastructure.web.controller.dto.item.ItemUpdateReques
 
 
 public class MenuItemMapper {
-    public static Item fromDto(ItemUpdateRequestDTO menuItemUpdateRequestDTO) {
+    public static Item fromDto(ItemUpdateRequestDTO itemUpdateRequestDTO) {
         return new Item.Builder()
-                .id(menuItemUpdateRequestDTO.id())
-                .name(menuItemUpdateRequestDTO.name())
-                .description(menuItemUpdateRequestDTO.description())
-                .price(menuItemUpdateRequestDTO.price())
-                .availability(menuItemUpdateRequestDTO.availability())
-                .photo(menuItemUpdateRequestDTO.photo())
+                .id(itemUpdateRequestDTO.id())
+                .name(itemUpdateRequestDTO.name())
+                .description(itemUpdateRequestDTO.description())
+                .price(itemUpdateRequestDTO.price())
+                .availability(itemUpdateRequestDTO.availability())
+                .photo(itemUpdateRequestDTO.photo())
                 .build();
     }
 

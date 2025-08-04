@@ -15,46 +15,6 @@ import java.util.stream.Collectors;
 
 public class MenuPresenter {
 
-    public static MenuCreateOutput fromCreateRequestDTO(MenuCreateRequestDTO dto) {
-        if (dto == null) return null;
-        return new MenuCreateOutput(
-                null, // id normalmente gerado pelo sistema
-                dto.name(),
-                dto.description(),
-                dto.restaurantId(),
-                dto.items().stream().map(
-                        item -> new ItemCreateOutput(
-                                null, // id normalmente gerado pelo sistema
-                                item.name(),
-                                item.description(),
-                                item.price(),
-                                item.availability(),
-                                item.photo(),
-                                item.ownerId()
-                        )
-                ).collect(Collectors.toList()
-                )
-        );
-    }
-
-    public static MenuCreateRequestDTO toCreateRequestDTO(MenuCreateOutput output) {
-        if (output == null) return null;
-        return new MenuCreateRequestDTO(
-                output.name(),
-                output.description(),
-                output.restaurantId(),
-                output.items() == null ? List.of() :
-                        output.items().stream().map(item -> new ItemMenuAssignDTO(
-                                item.id(),
-                                item.name(),
-                                item.description(),
-                                item.price(),
-                                item.availability(),
-                                item.photo(),
-                                item.ownerId()
-                        )).collect(Collectors.toList())
-        );
-    }
 
     public static MenuResponseDTO toResponseDTO(MenuCreateOutput output) {
         if (output == null) return null;
@@ -103,26 +63,5 @@ public class MenuPresenter {
                                 )).collect(Collectors.toList())
         );
     }
-
-
-    public static CreateMenuInput fromUpdateInputRequestDTO(MenuUpdateRequestDTO dto) {
-        if (dto == null) return null;
-        return new CreateMenuInput(
-                dto.name(),
-                dto.description(),
-                dto.restaurantId(),
-                dto.items().stream()
-                        .map(item -> new CreateItemInput(
-                                item.id(),
-                                item.name(),
-                                item.description(),
-                                item.price(),
-                                item.availability(),
-                                item.photo(),
-                                item.ownerId()
-                        )).collect(Collectors.toList())
-        );
-    }
-
 
 }

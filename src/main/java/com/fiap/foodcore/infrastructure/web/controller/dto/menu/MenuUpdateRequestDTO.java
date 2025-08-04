@@ -8,6 +8,8 @@ import jakarta.validation.constraints.NotNull;
 import java.util.List;
 
 public record MenuUpdateRequestDTO(
+        Long id,
+
         @NotBlank(message = "Nome é obrigatório.")
         String name,
 
