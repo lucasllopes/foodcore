@@ -38,23 +38,36 @@ class UpdateItemInteractorTest {
     @Test
     @DisplayName("Deve atualizar item com sucesso")
     void deveAtualizarItemComSucesso() {
-        Long id = 1L;
-        Long ownerId = 1L;
-        UpdateItemInput input = new UpdateItemInput("Novo", "Desc", new BigDecimal("10.00"), "LOCAL", "foto.jpg");
+        Long id = 4L;
+        Long ownerId = 4L;
+        UpdateItemInput input = new UpdateItemInput("MesmoNome", "Desc", new BigDecimal("12.00"), "DELIVERY", "foto4.jpg");
         Item existente = mock(Item.class);
-        Item atualizado = mock(Item.class);
-        Item salvo = mock(Item.class);
         User owner = mock(User.class);
 
         when(itemGateway.findById(id)).thenReturn(Optional.of(existente));
-        when(itemGateway.findByName(input.name())).thenReturn(Optional.empty());
+        when(itemGateway.findByName(input.name())).thenReturn(Optional.of(existente));
+        when(existente.getId()).thenReturn(id);
         when(existente.getOwnerId()).thenReturn(owner);
         when(owner.getId()).thenReturn(ownerId);
+
+        // Configurando adequadamente o objeto atualizado
+        Item atualizado = mock(Item.class);
+        when(atualizado.getName()).thenReturn(input.name());
+        when(atualizado.getDescription()).thenReturn(input.description());
+        when(atualizado.getPrice()).thenReturn(input.price());
+        when(atualizado.getAvailability()).thenReturn(input.availability());
+        when(atualizado.getPhoto()).thenReturn(input.photo());
+
+
         when(existente.atualizarInformacoes(
                 input.name(), input.description(), input.price(), input.availability(), input.photo(), owner
         )).thenReturn(atualizado);
+
+        // O resto permanece igual
+        Item salvo = mock(Item.class);
         when(itemGateway.save(any(Item.class))).thenReturn(salvo);
 
+        // Configurações do objeto salvo
         when(salvo.getId()).thenReturn(id);
         when(salvo.getName()).thenReturn("Novo");
         when(salvo.getDescription()).thenReturn("Desc");
@@ -62,6 +75,7 @@ class UpdateItemInteractorTest {
         when(salvo.getAvailability()).thenReturn("LOCAL");
         when(salvo.getPhoto()).thenReturn("foto.jpg");
         when(salvo.getOwnerId()).thenReturn(owner);
+
 
         ItemCreateOutput output = interactor.execute(id, input);
 
@@ -132,7 +146,14 @@ class UpdateItemInteractorTest {
         when(existente.getOwnerId()).thenReturn(owner);
         when(owner.getId()).thenReturn(ownerId);
 
+        // Configuração adequada do mock atualizado
         Item atualizado = mock(Item.class);
+        when(atualizado.getName()).thenReturn(input.name());
+        when(atualizado.getDescription()).thenReturn(input.description());
+        when(atualizado.getPrice()).thenReturn(input.price());
+        when(atualizado.getAvailability()).thenReturn(input.availability());
+        when(atualizado.getPhoto()).thenReturn(input.photo());
+
         Item salvo = mock(Item.class);
 
         when(existente.atualizarInformacoes(

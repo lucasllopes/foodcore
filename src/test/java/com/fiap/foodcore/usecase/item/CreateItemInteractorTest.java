@@ -5,6 +5,7 @@ import com.fiap.foodcore.application.usecase.input.CreateItemInput;
 import com.fiap.foodcore.application.usecase.item.CreateItemInteractor;
 import com.fiap.foodcore.domain.Item;
 import com.fiap.foodcore.domain.User;
+import com.fiap.foodcore.domain.UserTypeDomain;
 import com.fiap.foodcore.infrastructure.gateways.ItemRepositoryGateway;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -50,10 +51,14 @@ class CreateItemInteractorTest {
         String photo = "url_da_foto.jpg";
         Long itemId = 1L;
         Long ownerId = 1L;
-        User ownerUser = mock(User.class);
 
-        // Configurar mock do UserGateway para retornar um usuário válido
-        when(userGateway.findById(ownerId)).thenReturn(Optional.of(mock(User.class)));
+        // Criar um mock de usuário corretamente configurado
+        User ownerUser = mock(User.class);
+        when(ownerUser.getId()).thenReturn(ownerId);
+        when(ownerUser.getTipo()).thenReturn(UserTypeDomain.DONO); // Configura o tipo como DONO
+
+        // Usar o mesmo mock de usuário no gateway
+        when(userGateway.findById(ownerId)).thenReturn(Optional.of(ownerUser));
 
         // Verificar que não há item com o mesmo nome
         when(itemRepositoryGateway.findByName(name)).thenReturn(Optional.empty());
@@ -74,7 +79,7 @@ class CreateItemInteractorTest {
                 .price(price)
                 .availability(availability)
                 .photo(photo)
-                .ownerId(ownerUser)  // Agora incluímos o ownerId
+                .ownerId(ownerUser)
                 .build();
 
         // Simular o ID sendo definido após o save
@@ -112,7 +117,8 @@ class CreateItemInteractorTest {
         assertEquals(price, savedItem.getPrice());
         assertEquals(availability, savedItem.getAvailability());
         assertEquals(photo, savedItem.getPhoto());
-        assertEquals(ownerId, savedItem.getOwnerId());
+        assertNotNull(savedItem.getOwnerId());
+        assertEquals(ownerId, savedItem.getOwnerId().getId());
     }
 
     @Test
@@ -150,17 +156,21 @@ class CreateItemInteractorTest {
     @DisplayName("Deve criar um item sem foto")
     void shouldCreateItemWithoutPhoto() {
         // Arrange
-        String name = "Item sem Foto";
+        String name = "Item Local e Delivery";
         String description = "Descrição do Item";
-        BigDecimal price = new BigDecimal("15.90");
-        String availability = "LOCAL";
+        BigDecimal price = new BigDecimal("45.50");
+        String availability = "LOCAL_AND_DELIVERY";
         String photo = null;
-        Long itemId = 2L;
-        Long ownerId = 2L;
-        User ownerUser = mock(User.class);
+        Long itemId = 4L;
+        Long ownerId = 4L;
 
-        // Configurar mock do UserGateway para retornar um usuário válido
-        when(userGateway.findById(ownerId)).thenReturn(Optional.of(mock(User.class)));
+        // Configurar o mock do usuário corretamente
+        User ownerUser = mock(User.class);
+        when(ownerUser.getId()).thenReturn(ownerId);
+        when(ownerUser.getTipo()).thenReturn(UserTypeDomain.DONO);
+
+        // Usar o mesmo mock de usuário no gateway
+        when(userGateway.findById(ownerId)).thenReturn(Optional.of(ownerUser));
         when(itemRepositoryGateway.findByName(name)).thenReturn(Optional.empty());
 
         var createItemInput = new CreateItemInput(
@@ -219,10 +229,14 @@ class CreateItemInteractorTest {
         String photo = "url_foto_delivery.jpg";
         Long itemId = 3L;
         Long ownerId = 3L;
-        User ownerUser = mock(User.class);
 
-        // Configurar mock do UserGateway para retornar um usuário válido
-        when(userGateway.findById(ownerId)).thenReturn(Optional.of(mock(User.class)));
+        // Configurar o mock do usuário corretamente
+        User ownerUser = mock(User.class);
+        when(ownerUser.getId()).thenReturn(ownerId);
+        when(ownerUser.getTipo()).thenReturn(UserTypeDomain.DONO); // Configura o tipo como DONO
+
+        // Usar o mesmo mock de usuário configurado no gateway
+        when(userGateway.findById(ownerId)).thenReturn(Optional.of(ownerUser));
         when(itemRepositoryGateway.findByName(name)).thenReturn(Optional.empty());
 
         var createItemInput = new CreateItemInput(
@@ -281,10 +295,14 @@ class CreateItemInteractorTest {
         String photo = "url_foto.jpg";
         Long itemId = 4L;
         Long ownerId = 4L;
-        User ownerUser = mock(User.class);
 
-        // Configurar mock do UserGateway para retornar um usuário válido
-        when(userGateway.findById(ownerId)).thenReturn(Optional.of(mock(User.class)));
+        // Configurar o mock do usuário corretamente
+        User ownerUser = mock(User.class);
+        when(ownerUser.getId()).thenReturn(ownerId);
+        when(ownerUser.getTipo()).thenReturn(UserTypeDomain.DONO);
+
+        // Usar o mesmo mock de usuário no gateway
+        when(userGateway.findById(ownerId)).thenReturn(Optional.of(ownerUser));
         when(itemRepositoryGateway.findByName(name)).thenReturn(Optional.empty());
 
         var createItemInput = new CreateItemInput(

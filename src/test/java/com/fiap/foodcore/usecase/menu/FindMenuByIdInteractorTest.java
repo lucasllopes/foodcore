@@ -8,6 +8,7 @@ import com.fiap.foodcore.application.usecase.output.MenuCreateOutput;
 import com.fiap.foodcore.domain.Item;
 import com.fiap.foodcore.domain.Menu;
 import com.fiap.foodcore.domain.Restaurant;
+import com.fiap.foodcore.domain.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -41,9 +42,14 @@ class FindMenuByIdInteractorTest {
         Long menuId = 1L;
         Long restaurantId = 2L;
         Long itemId = 3L;
+        Long ownerId = 4L;  // ID do proprietário do item
 
         String menuName = "Menu Test";
         String menuDescription = "Menu Description";
+
+        // Criar mock do User (proprietário do item)
+        User owner = mock(User.class);
+        when(owner.getId()).thenReturn(ownerId);
 
         Restaurant restaurant = mock(Restaurant.class);
         when(restaurant.getId()).thenReturn(restaurantId);
@@ -55,6 +61,7 @@ class FindMenuByIdInteractorTest {
         when(item.getPrice()).thenReturn(BigDecimal.valueOf(10.0));
         when(item.getAvailability()).thenReturn("LOCAL");
         when(item.getPhoto()).thenReturn("photo-url");
+        when(item.getOwnerId()).thenReturn(owner);  // Configurar o proprietário do item
 
         Menu menu = mock(Menu.class);
         when(menu.getId()).thenReturn(menuId);
@@ -67,6 +74,7 @@ class FindMenuByIdInteractorTest {
 
         MenuCreateOutput result = findMenuByIdInteractor.execute(menuId);
 
+        // Verificações existentes...
         assertNotNull(result);
         assertEquals(menuId, result.id());
         assertEquals(menuName, result.name());
@@ -81,6 +89,7 @@ class FindMenuByIdInteractorTest {
         assertEquals(BigDecimal.valueOf(10.0), resultItem.price());
         assertEquals("LOCAL", resultItem.availability());
         assertEquals("photo-url", resultItem.photo());
+        assertEquals(ownerId, resultItem.ownerId());  // Verificar o ID do proprietário
 
         verify(menuGateway).findById(menuId);
     }

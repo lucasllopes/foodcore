@@ -60,19 +60,15 @@ class UpdateMenuInteractorTest {
 
         // Criar mock do User (proprietário do restaurante)
         var owner = mock(User.class);
-        when(owner.getId()).thenReturn(ownerId);
-        when(owner.getTipo()).thenReturn(ownerType);
 
-        // Configurar mock do restaurante com proprietário
+        // Configurar mock do restaurante com ID do proprietário (não o objeto User)
         Restaurant savedRestaurant = mock(Restaurant.class);
         when(savedRestaurant.getId()).thenReturn(restaurantId);
-        // Usar a sintaxe alternativa do Mockito
-        doReturn(owner).when(savedRestaurant).getOwnerId();
+        when(savedRestaurant.getOwnerId()).thenReturn(ownerId);  // Correção aqui: retornar Long, não User
 
         // Configurar gateway para encontrar o proprietário quando solicitado
         when(gateway.findById(ownerId)).thenReturn(Optional.of(owner));
 
-        // Resto do teste permanece o mesmo...
         Menu originalMenu = mock(Menu.class);
         lenient().when(originalMenu.getId()).thenReturn(menuId);
         lenient().when(originalMenu.getRestaurantId()).thenReturn(savedRestaurant);
@@ -172,13 +168,21 @@ class UpdateMenuInteractorTest {
         // Arrange
         Long menuId = 1L;
         Long restaurantId = 2L;
+        Long ownerId = 3L;  // ID do proprietário do restaurante
         String menuName = "Menu Test";
         String updatedDescription = "Descrição Atualizada";
 
-        // Configurar restaurant mock
+        // Mock de User (proprietário do restaurante)
+        User owner = mock(User.class);
+
+
+        // Configurar UserGateway para retornar o proprietário
+        when(gateway.findById(ownerId)).thenReturn(Optional.of(owner));
+
+        // Configurar restaurant mock com ID do proprietário
         Restaurant restaurant = mock(Restaurant.class);
         when(restaurant.getId()).thenReturn(restaurantId);
-
+        when(restaurant.getOwnerId()).thenReturn(ownerId);  // Configuração importante!
 
         // Menu original e atualizado
         Menu originalMenu = mock(Menu.class);
@@ -224,5 +228,6 @@ class UpdateMenuInteractorTest {
         verify(menuGateway).findByName(menuName);
         verify(originalMenu).atualizarInformacoes(eq(menuName), eq(updatedDescription), eq(restaurantId), any());
         verify(menuGateway).save(updatedMenu);
+        verify(gateway).findById(ownerId);
     }
 }

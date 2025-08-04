@@ -9,6 +9,7 @@ import com.fiap.foodcore.application.usecase.menu.CreateMenuInteractor;
 import com.fiap.foodcore.domain.Item;
 import com.fiap.foodcore.domain.Menu;
 import com.fiap.foodcore.domain.Restaurant;
+import com.fiap.foodcore.domain.User;
 import com.fiap.foodcore.infrastructure.gateways.MenuRepositoryGateway;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -48,6 +49,7 @@ class CreateMenuInteractorTest {
         Long restaurantId = 1L;
         Long menuId = 2L;
         Long itemId = 3L;
+        Long ownerId = 1L; // ID do proprietário do item
 
         String menuName = "Menu Test";
         String menuDescription = "Menu Description";
@@ -59,6 +61,10 @@ class CreateMenuInteractorTest {
         when(menuRepositoryGateway.findByNameAndRestaurantId(menuName, restaurantId))
                 .thenReturn(Optional.empty());
 
+        // Criar mock de User para o proprietário do item
+        User owner = mock(User.class);
+        when(owner.getId()).thenReturn(ownerId);
+
         Item savedItem = mock(Item.class);
         when(savedItem.getId()).thenReturn(itemId);
         when(savedItem.getName()).thenReturn("Item Name");
@@ -66,6 +72,7 @@ class CreateMenuInteractorTest {
         when(savedItem.getPrice()).thenReturn(BigDecimal.valueOf(10.0));
         when(savedItem.getAvailability()).thenReturn("LOCAL");
         when(savedItem.getPhoto()).thenReturn("photo-url");
+        when(savedItem.getOwnerId()).thenReturn(owner); // Configurar o proprietário do item
 
         Menu savedMenu = mock(Menu.class);
         when(savedMenu.getId()).thenReturn(menuId);
@@ -83,7 +90,7 @@ class CreateMenuInteractorTest {
                 BigDecimal.valueOf(10.0),
                 "LOCAL",
                 "photo-url",
-                1L
+                ownerId // Usar o ID do proprietário criado
         );
 
         var createMenuInput = new CreateMenuInput(
@@ -93,9 +100,9 @@ class CreateMenuInteractorTest {
                 List.of(itemInput)
         );
 
-
         var result = createMenuInteractor.execute(createMenuInput);
 
+        // Resto do teste permanece o mesmo
         assertNotNull(result);
         assertEquals(menuId, result.id());
         assertEquals(menuName, result.name());
@@ -110,6 +117,7 @@ class CreateMenuInteractorTest {
         assertEquals(BigDecimal.valueOf(10.0), resultItem.price());
         assertEquals("LOCAL", resultItem.availability());
         assertEquals("photo-url", resultItem.photo());
+        assertEquals(ownerId, resultItem.ownerId()); // Verificar ownerId no resultado
 
         verify(restaurantGateway).findById(restaurantId);
         verify(menuRepositoryGateway).findByNameAndRestaurantId(menuName, restaurantId);

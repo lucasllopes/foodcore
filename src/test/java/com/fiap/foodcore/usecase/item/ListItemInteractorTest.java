@@ -4,6 +4,8 @@ import com.fiap.foodcore.application.gateway.ItemGateway;
 import com.fiap.foodcore.application.usecase.item.ListItemInteractor;
 import com.fiap.foodcore.application.usecase.output.ItemCreateOutput;
 import com.fiap.foodcore.domain.Item;
+import com.fiap.foodcore.domain.User;
+import com.fiap.foodcore.domain.UserTypeDomain;
 import com.fiap.foodcore.domain.pagination.DomainPage;
 import com.fiap.foodcore.domain.pagination.PageRequestDomain;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,6 +39,15 @@ class ListItemInteractorTest {
     void shouldReturnPageWithItems() {
         // Arrange
         PageRequestDomain pageRequest = new PageRequestDomain(0, 2, List.of());
+
+        // Mock do User para o item1
+        User owner1 = mock(User.class);
+        when(owner1.getId()).thenReturn(10L);
+
+        User owner2 = mock(User.class);
+        when(owner2.getId()).thenReturn(20L);
+
+        // Configurando item1 com owner
         Item item1 = mock(Item.class);
         when(item1.getId()).thenReturn(1L);
         when(item1.getName()).thenReturn("Item 1");
@@ -44,7 +55,9 @@ class ListItemInteractorTest {
         when(item1.getPrice()).thenReturn(new BigDecimal("10.00"));
         when(item1.getAvailability()).thenReturn("LOCAL");
         when(item1.getPhoto()).thenReturn("foto1.jpg");
+        when(item1.getOwnerId()).thenReturn(owner1);
 
+        // Configurando item2 com owner
         Item item2 = mock(Item.class);
         when(item2.getId()).thenReturn(2L);
         when(item2.getName()).thenReturn("Item 2");
@@ -52,6 +65,7 @@ class ListItemInteractorTest {
         when(item2.getPrice()).thenReturn(new BigDecimal("20.00"));
         when(item2.getAvailability()).thenReturn("DELIVERY");
         when(item2.getPhoto()).thenReturn("foto2.jpg");
+        when(item2.getOwnerId()).thenReturn(owner2);
 
         DomainPage<Item> domainPage = new DomainPage<>(List.of(item1, item2), 0, 2, 2L);
         when(itemGateway.findAll(pageRequest)).thenReturn(domainPage);
