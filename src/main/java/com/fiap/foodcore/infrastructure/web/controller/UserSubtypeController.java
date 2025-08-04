@@ -21,7 +21,7 @@ public interface UserSubtypeController {
 
     @Operation(
             description = "Ao passar um json com os dados de um subtipo de usuário no corpo da requisição, " +
-                    "valida os dados fornecidos, caso estejam corretos, retorna os " +
+                    "valida se o usuário logado é do tipo DONO e os dados fornecidos, caso estejam corretos, retorna os " +
                     "dados do subtipo de usuário com um id (indicando que ele foi inserido no banco), caso contrário, " +
                     "devolve uma mensagem de erro indicando o porque a inserção não ocorreu.",
             summary = "Cria um subtipo de usuário com os dados fornecidos",
@@ -134,7 +134,7 @@ public interface UserSubtypeController {
 
     @Operation(
             description = "Ao passar um id de um subtipo de usuário existente e um json com os dados de um subtipo de usuário no corpo da requisição, " +
-                    "valida os dados fornecidos, caso estejam corretos, retorna os " +
+                    "valida se o usuário logado é do tipo DONO e os dados fornecidos, caso estejam corretos, retorna os " +
                     "dados do subtipo de usuário atualizados, caso contrário, " +
                     "devolve uma mensagem de erro indicando o porque a atualização não ocorreu.",
             summary = "Atualiza um subtipo de usuário com os dados fornecidos",
@@ -451,7 +451,7 @@ public interface UserSubtypeController {
 
     @Operation(
             description = "Ao passar um id de um subtipo de usuário como parâmetro, " +
-                    "verifica se o subtipo de usuário existe, caso exista, " +
+                    "verifica se o usuário logado é do tipo DONO e se o subtipo de usuário existe, caso exista, " +
                     "permite a exclusão dos dados, caso contrário, " +
                     "retorna uma mensagem de erro dizendo que ele não existe.",
             summary = "Exclui o subtipo de usuário do id especificado"

@@ -282,19 +282,7 @@ public interface UserController {
                                                         "mensagem": "Email já está em uso."
                                                     }
                                                     """
-                                            )
-                                    }
-                            )
-                    }
-            ),
-            @ApiResponse(
-                    description = "Conflict",
-                    responseCode = "409",
-                    content = {
-                            @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = MessageErrorDTO.class),
-                                    examples = {
+                                            ),
                                             @ExampleObject(
                                                     name = "Mensagem de erro para indicar que já " +
                                                             "existe um usuário com esse login",
