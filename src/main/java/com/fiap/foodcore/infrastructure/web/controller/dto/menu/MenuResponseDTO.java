@@ -1,6 +1,6 @@
 package com.fiap.foodcore.infrastructure.web.controller.dto.menu;
 
-import com.fiap.foodcore.infrastructure.web.controller.dto.item.ItemCreateResponseDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.item.ItemResponseDTO;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ public record MenuResponseDTO(
         String name,
         String description,
         Long restaurantId,
-        List<ItemCreateResponseDTO> items
+        List<ItemResponseDTO> items
 ){
 
 }

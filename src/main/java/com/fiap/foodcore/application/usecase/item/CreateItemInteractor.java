@@ -30,7 +30,7 @@ public class CreateItemInteractor {
             throw new IllegalArgumentException("ID do proprietário não pode ser nulo");
         }
 
-        userGateway.findById(createItemInput.ownerId())
+       var user =  userGateway.findById(createItemInput.ownerId())
                 .orElseThrow(() -> new EntityNotFoundException("Proprietário não encontrado com ID: " + createItemInput.ownerId()));
 
         var item = new Item.Builder()
@@ -39,7 +39,7 @@ public class CreateItemInteractor {
                 .price(createItemInput.price())
                 .availability(createItemInput.availability())
                 .photo(createItemInput.photo())
-                .ownerId(createItemInput.ownerId())
+                .ownerId(user)
                 .build();
 
         var savedItem = itemGateway.save(item);
@@ -51,7 +51,7 @@ public class CreateItemInteractor {
                 savedItem.getPrice(),
                 savedItem.getAvailability(),
                 savedItem.getPhoto(),
-                savedItem.getOwnerId()
+                savedItem.getOwnerId().getId()
         );
     }
 

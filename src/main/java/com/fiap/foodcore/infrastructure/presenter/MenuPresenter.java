@@ -4,7 +4,7 @@ import com.fiap.foodcore.application.usecase.input.CreateItemInput;
 import com.fiap.foodcore.application.usecase.input.CreateMenuInput;
 import com.fiap.foodcore.application.usecase.output.ItemCreateOutput;
 import com.fiap.foodcore.application.usecase.output.MenuCreateOutput;
-import com.fiap.foodcore.infrastructure.web.controller.dto.item.ItemCreateResponseDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.item.ItemResponseDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.item.ItemMenuAssignDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.menu.MenuCreateRequestDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.menu.MenuResponseDTO;
@@ -65,7 +65,7 @@ public class MenuPresenter {
                 output.restaurantId(),
                 output.items() == null ? List.of() :
                         output.items().stream()
-                                .map(item -> new ItemCreateResponseDTO(
+                                .map(item -> new ItemResponseDTO(
                                         item.id(),
                                         item.name(),
                                         item.description(),

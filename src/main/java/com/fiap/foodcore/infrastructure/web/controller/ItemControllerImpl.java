@@ -8,7 +8,7 @@ import com.fiap.foodcore.domain.pagination.SortOrder;
 import com.fiap.foodcore.infrastructure.presenter.ItemPresenter;
 import com.fiap.foodcore.infrastructure.security.UserDetailsAdapter;
 import com.fiap.foodcore.infrastructure.web.controller.dto.item.ItemCreateRequestDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.item.ItemCreateResponseDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.item.ItemResponseDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.item.ItemUpdateRequestDTO;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -44,7 +44,7 @@ public class ItemControllerImpl implements ItemController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<ItemCreateResponseDTO>> listItems(Pageable pageable) {
+    public ResponseEntity<Page<ItemResponseDTO>> listItems(Pageable pageable) {
         logger.info("Handling GET request to /cardapios/items");
         List<SortOrder> sortOrders = pageable.getSort().stream()
                 .map(order -> new SortOrder(order.getProperty(), order.isAscending()))
@@ -53,9 +53,9 @@ public class ItemControllerImpl implements ItemController {
         PageRequestDomain pr = new PageRequestDomain(pageable.getPageNumber(), pageable.getPageSize(), sortOrders);
 
         DomainPage<ItemCreateOutput> outputs = listItemInteractor.execute(pr);
-        List<ItemCreateResponseDTO> dtos = ItemPresenter.toDtoList(outputs.getItems());
+        List<ItemResponseDTO> dtos = ItemPresenter.toDtoList(outputs.getItems());
 
-        Page<ItemCreateResponseDTO> paginatedUser = new PageImpl<>(
+        Page<ItemResponseDTO> paginatedUser = new PageImpl<>(
                 dtos,
                 pageable,
                 outputs.getTotalElements()
@@ -65,11 +65,11 @@ public class ItemControllerImpl implements ItemController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ItemCreateResponseDTO> findById(@PathVariable Long id) {
+    public ResponseEntity<ItemResponseDTO> findById(@PathVariable Long id) {
         logger.info("Handling GET request to /cardapios/items/{}", id);
 
         ItemCreateOutput output = findItemByIdInteractor.execute(id);
-        ItemCreateResponseDTO dto = ItemPresenter.toDto(output);
+        ItemResponseDTO dto = ItemPresenter.toDto(output);
 
         return ResponseEntity.ok(dto);
     }
@@ -77,7 +77,7 @@ public class ItemControllerImpl implements ItemController {
 
     @PostMapping
     @PreAuthorize("hasRole('ROLE_DONO')")
-    public ResponseEntity<ItemCreateResponseDTO> createItem(@Valid @RequestBody ItemCreateRequestDTO itemDto, Authentication authentication) {
+    public ResponseEntity<ItemResponseDTO> createItem(@Valid @RequestBody ItemCreateRequestDTO itemDto, Authentication authentication) {
         logger.info("Handling POST request to /cardapios/items");
 
         var userDetails = (UserDetailsAdapter) authentication.getPrincipal();
@@ -88,18 +88,18 @@ public class ItemControllerImpl implements ItemController {
         ItemCreateOutput output = createItemInteractor.execute(
                 ItemPresenter.toInput(itemDto, userId)
         );
-        ItemCreateResponseDTO responseDto = ItemPresenter.toDto(output);
+        ItemResponseDTO responseDto = ItemPresenter.toDto(output);
 
         return ResponseEntity.ok(responseDto);
     }
 
     @PreAuthorize("@itemSecurity.isOwner(#id, authentication)")
     @PutMapping("/{id}")
-    public ResponseEntity<ItemCreateResponseDTO> updateItem(@PathVariable Long id, @RequestBody ItemUpdateRequestDTO itemDto) {
+    public ResponseEntity<ItemResponseDTO> updateItem(@PathVariable Long id, @RequestBody ItemUpdateRequestDTO itemDto) {
         logger.info("Handling PUT request to /cardapios/items/{}", id);
 
         ItemCreateOutput output = updateItemInteractor.execute(id, ItemPresenter.toUpdateInput(itemDto));
-        ItemCreateResponseDTO responseDto = ItemPresenter.toDto(output);
+        ItemResponseDTO responseDto = ItemPresenter.toDto(output);
 
         return ResponseEntity.ok(responseDto);
     }

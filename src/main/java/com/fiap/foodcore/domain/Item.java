@@ -11,7 +11,7 @@ public class Item {
     private final BigDecimal price;
     private final String availability;
     private final String photo;
-    private final Long ownerId;
+    private final User ownerId;
 
     private Item(Builder builder) {
         this.id = builder.id;
@@ -30,9 +30,9 @@ public class Item {
     public BigDecimal getPrice() { return price; }
     public String getAvailability() { return availability; }
     public String getPhoto() { return photo; }
-    public Long getOwnerId() { return ownerId; }
+    public User getOwnerId() { return ownerId; }
 
-    public Item atualizarInformacoes(String novoNome, String novaDescricao, BigDecimal novoPreco, String novaDisponibilidade, String novaFoto) {
+    public Item atualizarInformacoes(String novoNome, String novaDescricao, BigDecimal novoPreco, String novaDisponibilidade, String novaFoto, User ownerId) {
         return new Builder()
                 .id(this.id)
                 .name(novoNome != null ? novoNome : this.name)
@@ -40,7 +40,7 @@ public class Item {
                 .price(novoPreco != null ? novoPreco : this.price)
                 .availability(novaDisponibilidade != null ? novaDisponibilidade : this.availability)
                 .photo(novaFoto != null ? novaFoto : this.photo)
-                .ownerId(this.ownerId) //
+                .ownerId(ownerId != null ? ownerId : this.ownerId)
                 .build();
     }
 
@@ -52,7 +52,7 @@ public class Item {
         private BigDecimal price;
         private String availability;
         private String photo;
-        private Long ownerId;
+        private User ownerId;
 
         public Builder() {}
 
@@ -80,7 +80,7 @@ public class Item {
             this.photo = photo;
             return this;
         }
-        public Builder ownerId(Long ownerId) {
+        public Builder ownerId(User ownerId) {
             this.ownerId = ownerId;
             return this;
         }

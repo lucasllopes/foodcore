@@ -4,16 +4,16 @@ import com.fiap.foodcore.application.usecase.input.CreateItemInput;
 import com.fiap.foodcore.application.usecase.input.UpdateItemInput;
 import com.fiap.foodcore.application.usecase.output.ItemCreateOutput;
 import com.fiap.foodcore.infrastructure.web.controller.dto.item.ItemCreateRequestDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.item.ItemCreateResponseDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.item.ItemResponseDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.item.ItemUpdateRequestDTO;
 
 import java.util.List;
 
 public class ItemPresenter {
 
-    public static List<ItemCreateResponseDTO> toDtoList(List<ItemCreateOutput> outputs) {
+    public static List<ItemResponseDTO> toDtoList(List<ItemCreateOutput> outputs) {
         return outputs.stream()
-                .map(output -> new ItemCreateResponseDTO(
+                .map(output -> new ItemResponseDTO(
                         output.id(),
                         output.name(),
                         output.description(),
@@ -37,8 +37,8 @@ public class ItemPresenter {
         );
     }
 
-    public static ItemCreateResponseDTO toDto(ItemCreateOutput output) {
-        return new ItemCreateResponseDTO(
+    public static ItemResponseDTO toDto(ItemCreateOutput output) {
+        return new ItemResponseDTO(
                 output.id(),
                 output.name(),
                 output.description(),
@@ -81,8 +81,7 @@ public class ItemPresenter {
                 dto.description(),
                 dto.price(),
                 dto.availability(),
-                dto.photo(),
-                dto.ownerId()
+                dto.photo()
         );
     }
 

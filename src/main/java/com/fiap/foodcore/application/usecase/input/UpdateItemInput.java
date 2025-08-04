@@ -8,7 +8,6 @@ public record UpdateItemInput(
         String description,
         BigDecimal price,
         String availability,
-        String photo,
-        Long ownerId
+        String photo
 ) {
 }

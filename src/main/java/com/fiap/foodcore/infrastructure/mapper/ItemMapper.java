@@ -19,9 +19,9 @@ public class ItemMapper {
         entity.setPhoto(item.getPhoto());
 
         UserEntity owner = new UserEntity();
-        owner.setId(item.getOwnerId());
-
+        owner.setId(item.getOwnerId().getId());
         entity.setOwner(owner);
+
         return entity;
     }
 
@@ -34,7 +34,7 @@ public class ItemMapper {
                 .price(entity.getPrice())
                 .availability(entity.getAvailability())
                 .photo(entity.getPhoto())
-                .ownerId(entity.getOwner() != null ? entity.getOwner().getId() : null)
+                .ownerId(UserEntityMapper.toDomain(entity.getOwner()))
                 .build();
     }
 
@@ -47,7 +47,7 @@ public class ItemMapper {
                 item.getPrice(),
                 item.getAvailability(),
                 item.getPhoto(),
-                item.getOwnerId()
+                item.getOwnerId().getId()
         );
     }
 
@@ -59,7 +59,6 @@ public class ItemMapper {
                 .price(input.price())
                 .availability(input.availability())
                 .photo(input.photo())
-                .ownerId(input.ownerId())
                 .build();
     }
 

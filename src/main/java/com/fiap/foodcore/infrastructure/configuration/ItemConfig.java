@@ -6,6 +6,7 @@ import com.fiap.foodcore.application.gateway.UserGateway;
 import com.fiap.foodcore.application.usecase.item.*;
 import com.fiap.foodcore.infrastructure.gateways.ItemRepositoryGateway;
 import com.fiap.foodcore.infrastructure.gateways.persistence.ItemRepository;
+import jakarta.persistence.EntityManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

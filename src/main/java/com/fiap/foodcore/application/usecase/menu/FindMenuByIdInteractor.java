@@ -29,7 +29,7 @@ public class FindMenuByIdInteractor {
                                 item.getPrice(),
                                 item.getAvailability(),
                                 item.getPhoto(),
-                                item.getOwnerId()))
+                                item.getOwnerId().getId()))
                         .toList()
         );
     }

@@ -6,7 +6,11 @@ import com.fiap.foodcore.domain.pagination.DomainPage;
 import com.fiap.foodcore.domain.pagination.PageRequestDomain;
 import com.fiap.foodcore.domain.pagination.SortOrder;
 import com.fiap.foodcore.infrastructure.gateways.persistence.ItemRepository;
+import com.fiap.foodcore.infrastructure.gateways.persistence.entity.ItemEntity;
+import com.fiap.foodcore.infrastructure.gateways.persistence.entity.UserEntity;
 import com.fiap.foodcore.infrastructure.mapper.ItemMapper;
+import com.fiap.foodcore.infrastructure.mapper.UserEntityMapper;
+import jakarta.persistence.EntityManager;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -19,8 +23,10 @@ public class ItemRepositoryGateway implements ItemGateway {
 
     private final ItemRepository itemRepository;
 
+
     public ItemRepositoryGateway(ItemRepository itemRepository) {
         this.itemRepository = itemRepository;
+
     }
 
     @Override
@@ -50,13 +56,15 @@ public class ItemRepositoryGateway implements ItemGateway {
                         .price(entity.getPrice())
                         .availability(entity.getAvailability())
                         .photo(entity.getPhoto())
+                        .ownerId(UserEntityMapper.toDomain(entity.getOwner()))
                         .build());
     }
 
     @Override
     public Item save(Item item) {
-        var entity = ItemMapper.toEntity(item);
-        var savedEntity = itemRepository.save(entity);
+        ItemEntity entity = ItemMapper.toEntity(item);
+
+        ItemEntity savedEntity = itemRepository.save(entity);
         return ItemMapper.toDomain(savedEntity);
     }
 

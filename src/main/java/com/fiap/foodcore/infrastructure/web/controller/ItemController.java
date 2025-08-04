@@ -2,7 +2,7 @@ package com.fiap.foodcore.infrastructure.web.controller;
 
 import com.fiap.foodcore.infrastructure.web.controller.dto.*;
 import com.fiap.foodcore.infrastructure.web.controller.dto.item.ItemCreateRequestDTO;
-import com.fiap.foodcore.infrastructure.web.controller.dto.item.ItemCreateResponseDTO;
+import com.fiap.foodcore.infrastructure.web.controller.dto.item.ItemResponseDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.item.ItemUpdateRequestDTO;
 import com.fiap.foodcore.infrastructure.web.controller.dto.restaurant.RestaurantResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,12 +34,12 @@ public interface ItemController {
                     content = {
                             @Content(
                                     mediaType = "application/json",
-                                    schema = @Schema(implementation = ItemCreateResponseDTO.class)
+                                    schema = @Schema(implementation = ItemResponseDTO.class)
                             )
                     }
             )
     })
-    ResponseEntity<Page<ItemCreateResponseDTO>> listItems(@ParameterObject Pageable pageable);
+    ResponseEntity<Page<ItemResponseDTO>> listItems(@ParameterObject Pageable pageable);
 
     @Operation(
             description = "Ao passar um id de um item como parâmetro, verifica se o mesmo existe, caso exista, " +
@@ -54,7 +54,7 @@ public interface ItemController {
                     content = {
                             @Content(
                                     mediaType = "application/json",
-                                    schema = @Schema(implementation = ItemCreateResponseDTO.class)
+                                    schema = @Schema(implementation = ItemResponseDTO.class)
                             )
                     }
             ),
@@ -105,7 +105,7 @@ public interface ItemController {
                     }
             )
     })
-    ResponseEntity<ItemCreateResponseDTO> findById(Long id);
+    ResponseEntity<ItemResponseDTO> findById(Long id);
 
     @Operation(
             description = "Ao passar um json com os dados de um item no corpo da requisição, " +
@@ -145,7 +145,7 @@ public interface ItemController {
                     content = {
                             @Content(
                                     mediaType = "application/json",
-                                    schema = @Schema(implementation = ItemCreateResponseDTO.class)
+                                    schema = @Schema(implementation = ItemResponseDTO.class)
                             )
                     }
             )
@@ -175,7 +175,7 @@ public interface ItemController {
 //                    }
 //            )
     })
-    ResponseEntity<ItemCreateResponseDTO> createItem(ItemCreateRequestDTO itemDto, Authentication authentication);
+    ResponseEntity<ItemResponseDTO> createItem(ItemCreateRequestDTO itemDto, Authentication authentication);
 
     @Operation(
             description = "Ao passar um id de um item como parâmetro e um json dos dados atualizados no corpo da requisição, " +
@@ -269,7 +269,7 @@ public interface ItemController {
                     }
             )
     })
-    ResponseEntity<ItemCreateResponseDTO> updateItem(Long id, ItemUpdateRequestDTO itemDto);
+    ResponseEntity<ItemResponseDTO> updateItem(Long id, ItemUpdateRequestDTO itemDto);
 
     @Operation(
             description = "Ao passar um id de um item como parâmetro, " +

@@ -25,7 +25,7 @@ public class MenuItemMapper {
                 item.getPrice(),
                 item.getAvailability(),
                 item.getPhoto(),
-                item.getOwnerId()
+                item.getOwnerId().getId()
         );
     }
 
