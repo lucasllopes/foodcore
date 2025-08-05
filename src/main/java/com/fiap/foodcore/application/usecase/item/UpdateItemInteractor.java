@@ -40,15 +40,6 @@ public class UpdateItemInteractor {
                 existing.getOwnerId()
         );
 
-//        var itemComOwnerId = new Item.Builder()
-//                .id(atualizado.getId())
-//                .name(atualizado.getName())
-//                .description(atualizado.getDescription())
-//                .price(atualizado.getPrice())
-//                .availability(atualizado.getAvailability())
-//                .photo(atualizado.getPhoto())
-//                .build();
-
         // Garantir que o ownerId seja mantido
         Item itemComOwner = new Item.Builder()
                 .id(atualizado.getId())
