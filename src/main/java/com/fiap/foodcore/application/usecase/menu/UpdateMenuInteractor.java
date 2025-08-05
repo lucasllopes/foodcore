@@ -45,7 +45,7 @@ public class UpdateMenuInteractor {
                 menuUpdateRequestDTO.items().stream()
                         .map(itemDto -> {
                             // Cria o item básico através do mapper
-                            Item item = MenuItemMapper.fromDto(itemDto);
+                            Item item = MenuItemMapper.fromDto(itemDto, restaurantOwner);
                             // Garante que o item tenha um proprietário definido
                             return new Item.Builder()
                                     .id(item.getId())
