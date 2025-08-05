@@ -8,6 +8,7 @@ import com.fiap.foodcore.application.exception.DuplicatedDataException;
 import com.fiap.foodcore.application.exception.DataNotFoundException;
 import com.fiap.foodcore.domain.exception.UserSubtypeNotFoundException;
 import com.fiap.foodcore.application.exception.WrongPasswordException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -70,6 +71,11 @@ public class ExceptionHandlerController {
 
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<MessageErrorDTO> handleBusiness(BusinessException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageErrorDTO(ex.getMessage()));
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<MessageErrorDTO> handleDataIntegrityViolation(DataIntegrityViolationException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageErrorDTO(ex.getMessage()));
     }
 }

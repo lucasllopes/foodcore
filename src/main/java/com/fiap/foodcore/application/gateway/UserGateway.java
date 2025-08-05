@@ -13,5 +13,5 @@ public interface UserGateway {
     Optional<User> findByEmail(String email);
     User save(User user);
     void delete(User user);
-    boolean existsBySubType(Long id);
+    Boolean existsByUserSubType(Long id);
 }

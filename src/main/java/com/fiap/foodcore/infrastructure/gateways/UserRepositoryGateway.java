@@ -68,7 +68,7 @@ public class UserRepositoryGateway implements UserGateway {
     }
 
     @Override
-    public boolean existsBySubType(Long id) {
+    public Boolean existsByUserSubType(Long id) {
         return userRepository.existsBytipoUsuarioId(id);
     }
 

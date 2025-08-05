@@ -18,14 +18,16 @@ public class DeleteUserSubtypeInteractor implements DeleteUserSubtypeUseCase {
 
     @Override
     public void execute(Long id) {
-        validateSubTypeUser(id);
         var user = gateway.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Subtipo de usuário não encontrado"));
+
+        validateUserSubType(id);
         gateway.delete(user);
     }
-    private void validateSubTypeUser(Long id) {
-        if (this.userGateway.existsBySubType(id)) {
-            throw new DataIntegrityViolationException("ID do subtipo ja esta vinculado a um usuário");
+
+    private void validateUserSubType(Long id) {
+        if (this.userGateway.existsByUserSubType(id)) {
+            throw new DataIntegrityViolationException("O subtipo de usuário informado está vinculado a um ou mais usuários e não pode ser excluído.");
         }
     }
 }
