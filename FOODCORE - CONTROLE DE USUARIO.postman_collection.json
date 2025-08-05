@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "6eda6486-13da-4b69-8252-7f10e133c82e",
+		"_postman_id": "819c119e-f8ca-419c-a30c-9361de037b9c",
 		"name": "FOODCORE - CONTROLE DE USUARIO",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "13612493",
-		"_collection_link": "https://orange-escape-481905.postman.co/workspace/Foodcore~17d8b918-8b4a-4d71-a5ab-b3b9683df360/collection/13612493-6eda6486-13da-4b69-8252-7f10e133c82e?action=share&source=collection_link&creator=13612493"
+		"_exporter_id": "44286552",
+		"_collection_link": "https://carlospaulino-4598971.postman.co/workspace/Carlos-Paulino's-Workspace~37df3764-cc2b-40dc-8e1e-38e630fed7e9/collection/44286552-819c119e-f8ca-419c-a30c-9361de037b9c?action=share&source=collection_link&creator=44286552"
 	},
 	"item": [
 		{
@@ -806,7 +806,7 @@
 			"response": []
 		},
 		{
-			"name": "21-GET CARDAPIO - By ID",
+			"name": "21 - GET CARDAPIO  BY  ID",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -842,14 +842,14 @@
 			"response": []
 		},
 		{
-			"name": "22-POST CARDAPIO - CREATE - cardapios",
+			"name": "22 - POST CRIAR CARDAPIO",
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imp2aXRvciIsImV4cCI6MTc1MzkwOTE2N30.VqWSJJYiO1NmIp_3wyOXQzwdre3pyIfcMSTQ0W-y4mY",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imp2aXRvciIsImV4cCI6MTc1NDM0MDE3OX0.4LpLlclni0TmPktbFgdiB2N8pSW09WZO534OJOCQHw8",
 							"type": "string"
 						}
 					]
@@ -864,7 +864,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"name\": \"Cardápio Executivo 21072025\",\r\n  \"description\": \"Opções para o almoço\",\r\n  \"restaurantId\": 1,\r\n  \"items\": [\r\n    {\r\n      \"name\": \"Prato Feito\",\r\n      \"description\": \"Arroz, feijão, bife e batata frita\",\r\n      \"price\": 29.90,\r\n      \"availability\": \"DISPONIVEL\",\r\n      \"photo\": \"https://exemplo.com/imagem1.jpg\"\r\n    },\r\n    {\r\n      \"name\": \"Salada Caesar\",\r\n      \"description\": \"Alface, frango grelhado, parmesão e croutons\",\r\n      \"price\": 22.50,\r\n      \"availability\": \"INDISPONIVEL\",\r\n      \"photo\": \"https://exemplo.com/imagem2.jpg\"\r\n    }\r\n  ]\r\n}",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"Cardápio Executivo 21072025 TESTE PERMISSAO 40\",\r\n    \"description\": \"Opções para o almoço\",\r\n    \"restaurantId\": 1,\r\n    \"items\": []\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -886,14 +886,14 @@
 			"response": []
 		},
 		{
-			"name": "23-PUT - CARDAPIO - UPDATE cardapios",
+			"name": "23 - PUT - ALTERAR CARDAPIO",
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imp2aXRvciIsImV4cCI6MTc1MzkxMDMyNH0.O9aYKRJS5gatwVd5YkItKJhEA9RSv2HCuNcF5EIkCrE",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imp2aXRvciIsImV4cCI6MTc1NDM1MjkxMH0.T3OVDtK2zaqYasnTNL1632xhKong0ktHX6rmDGNrSsY",
 							"type": "string"
 						}
 					]
@@ -908,7 +908,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"Cardápio Executivo 21072025 MUDOU\",\r\n    \"description\": \"Opções para o JANTAR\",\r\n    \"restaurantId\": 1,\r\n    \"items\": [\r\n        {\r\n            \"id\": 1,\r\n            \"name\": \"Prato Feito\",\r\n            \"description\": \"Arroz, feijão, bife e batata frita\",\r\n            \"price\": 29.90,\r\n            \"availability\": \"DISPONIVEL\",\r\n            \"photo\": \"https://exemplo.com/imagem1.jpg\"\r\n        }\r\n    ]\r\n}",
+					"raw": "{\r\n    \"name\": \"Cardápio Executivo 21072025 TESTE PERMISSAO 40 xpto\",\r\n    \"description\": \"Opções para o almoço\",\r\n    \"restaurantId\": 1,\r\n    \"items\": [\r\n        {\r\n            \"id\": 2,\r\n            \"name\": \"Prato Feito - Feijoada 47 guilherme\",\r\n            \"description\": \"Arroz, feijoada, bife e batata frita\",\r\n            \"price\": 59.90,\r\n            \"availability\": \"DISPONIVEL\",\r\n            \"photo\": \"https://exemplo.com/imagem1.jpg\",\r\n            \"ownerId\": 4\r\n        }\r\n    ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -931,14 +931,14 @@
 			"response": []
 		},
 		{
-			"name": "24- PUT ITEM / CARDAPIO - update ITEM",
+			"name": "24 - PUT ALTERAR ITEM CARDAPIO",
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imp2aXRvciIsImV4cCI6MTc1MzkxMDMyNH0.O9aYKRJS5gatwVd5YkItKJhEA9RSv2HCuNcF5EIkCrE",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imd1aWxoZXJtZSIsImV4cCI6MTc1NDM0MDc0NX0.WHoa0aeAdjxlagBWMdcS7My8WOybD9pG0T5jyl_2HnE",
 							"type": "string"
 						}
 					]
@@ -953,7 +953,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"id\": 1,\n    \"name\": \"Prato Feito - Feijoada\",\n    \"description\": \"Arroz, feijoada, bife e batata frita\",\n    \"price\": 59.90,\n    \"availability\": \"DISPONIVEL\",\n    \"photo\": \"https://exemplo.com/imagem1.jpg\"\n}",
+					"raw": "{\n    \"name\": \"Prato Feito - Feijoada 4 xpto 21 gui\",\n    \"description\": \"Arroz, feijoada, bife e batata frita\",\n    \"price\": 59.90,\n    \"availability\": \"DISPONIVEL\",\n    \"photo\": \"https://exemplo.com/imagem1.jpg\",\n    \"ownerId\": 4\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -977,7 +977,7 @@
 			"response": []
 		},
 		{
-			"name": "25-GET - ITEM / CARDAPIO - find ITEM by ID",
+			"name": "25 - GET BUSCAR ITEM CARDAPIO",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -1026,14 +1026,14 @@
 			"response": []
 		},
 		{
-			"name": "26-DELETE CARDAPIO",
+			"name": "26 - DELETE CARDAPIO",
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imp2aXRvciIsImV4cCI6MTc1MzkxMzE3NX0.oRYNfGF8HbaAfG5YoK33V7xRFbRfGtyFhYrZONVTiOA",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imd1aWxoZXJtZSIsImV4cCI6MTc1NDM0MDc0NX0.WHoa0aeAdjxlagBWMdcS7My8WOybD9pG0T5jyl_2HnE",
 							"type": "string"
 						}
 					]
@@ -1047,7 +1047,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/cardapios/2",
+					"raw": "http://localhost:8080/cardapios/4",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1055,21 +1055,21 @@
 					"port": "8080",
 					"path": [
 						"cardapios",
-						"2"
+						"4"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "27-DELETE ITEM / CARDAPIO",
+			"name": "27 - DELETE ITEM / CARDAPIO",
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imp2aXRvciIsImV4cCI6MTc1MzkxMzE3NX0.oRYNfGF8HbaAfG5YoK33V7xRFbRfGtyFhYrZONVTiOA",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imd1aWxoZXJtZSIsImV4cCI6MTc1NDI2Mzk3OX0.4-PKAvRWeXZmDmxTsn8YIgYRxyN1Nrsgs50YX5uGHnE",
 							"type": "string"
 						}
 					]
@@ -1099,14 +1099,14 @@
 			"response": []
 		},
 		{
-			"name": "28- POST CRIAR ITEM / CARDAPIO",
+			"name": "28 - POST CRIAR ITEM / CARDAPIO",
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imp2aXRvciIsImV4cCI6MTc1MzkxNDM0MH0.EALP9ZAeG9-8oMuz0GdPQjDpmjl6kHUcz-FqijgiFyI",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imd1aWxoZXJtZSIsImV4cCI6MTc1NDM0MDc0NX0.WHoa0aeAdjxlagBWMdcS7My8WOybD9pG0T5jyl_2HnE",
 							"type": "string"
 						}
 					]
@@ -1121,7 +1121,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"Prato Feito - Feijoada\",\n    \"description\": \"Arroz, feijoada, bife e batata frita\",\n    \"price\": 59.90,\n    \"availability\": \"DISPONIVEL\",\n    \"photo\": \"https://exemplo.com/imagem1.jpg\"\n}",
+					"raw": "{\n    \"name\": \"Prato Feito - Feijoada 47 guilherme\",\n    \"description\": \"Arroz, feijoada, bife e batata frita\",\n    \"price\": 59.90,\n    \"availability\": \"DISPONIVEL\",\n    \"photo\": \"https://exemplo.com/imagem1.jpg\",\n    \"ownerId\": 4\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -1138,6 +1138,43 @@
 					"path": [
 						"cardapios",
 						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "29 - GET ITEM  BY  ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imp2aXRvciIsImV4cCI6MTc1MzkxMDMyNH0.O9aYKRJS5gatwVd5YkItKJhEA9RSv2HCuNcF5EIkCrE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGb29kY29yZSIsInN1YiI6Imp2aXRvciIsImV4cCI6MTc1MzEzMzg1Mn0.xG9veMDbtqQt7c4eKnzvmT5QaLStLA78tHJ4E6fkd2o",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/cardapios/items/8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cardapios",
+						"items",
+						"8"
 					]
 				}
 			},
