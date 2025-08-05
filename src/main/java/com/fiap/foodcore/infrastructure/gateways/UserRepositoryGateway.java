@@ -67,6 +67,11 @@ public class UserRepositoryGateway implements UserGateway {
         userRepository.delete(entity);
     }
 
+    @Override
+    public boolean existsBySubType(Long id) {
+        return userRepository.existsBytipoUsuarioId(id);
+    }
+
     private Sort toSpringSort(List<SortOrder> orders) {
         return Sort.by(
                 orders.stream().map(
